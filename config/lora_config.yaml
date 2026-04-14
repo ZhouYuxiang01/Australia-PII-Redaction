@@ -1,0 +1,38 @@
+model_name: "gpt2"
+train_file: "data/processed/train.jsonl"
+validation_file: "data/processed/val.jsonl"
+output_dir: "outputs/lora"
+text_key: "input_text"
+target_key: "target_text"
+max_length: 512
+train_ratio: 0.95
+seed: 42
+
+training:
+  per_device_train_batch_size: 4
+  per_device_eval_batch_size: 4
+  gradient_accumulation_steps: 4
+  learning_rate: 2e-4
+  weight_decay: 0.01
+  num_train_epochs: 3
+  logging_steps: 50
+  save_steps: 200
+  fp16: true
+  evaluation_strategy: "steps"
+  eval_steps: 200
+  save_total_limit: 3
+  warmup_steps: 100
+
+lora:
+  r: 16
+  lora_alpha: 32
+  lora_dropout: 0.1
+  target_modules:
+    - "q_proj"
+    - "v_proj"
+    - "k_proj"
+    - "o_proj"
+
+prompt:
+  template: "<|prompt|>{input_text}<|response|>"
+  use_prompt: true
