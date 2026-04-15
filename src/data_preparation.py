@@ -50,9 +50,18 @@ def prepare_dataset(input_path, output_dir, text_key, target_key, val_ratio, see
     raw = load_raw_json(input_path)
     random.seed(seed)
     random.shuffle(raw)
-    split = int(len(raw) * (1 - val_ratio))
-    train = raw[:split]
-    val = raw[split:]
+
+    if val_ratio <= 0:
+        train = raw
+        val = []
+    elif val_ratio >= 1:
+        train = []
+        val = raw
+    else:
+        split = int(len(raw) * (1 - val_ratio))
+        split = max(1, min(len(raw) - 1, split)) if len(raw) > 1 else len(raw)
+        train = raw[:split]
+        val = raw[split:]
 
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)

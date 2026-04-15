@@ -49,6 +49,8 @@ TEACHER_MODEL_PATH=/home/admin/model/Qwen3.5/Qwen3.5-27B-Q4_K_M-GGUF MAX_SAMPLES
 TEACHER_MODEL_PATH=/home/admin/model/Qwen3.5/Qwen3.5-27B-Q4_K_M-GGUF bash scripts/run_train.sh
 ```
 
+如果仓库中存在 `data/raw/cleaned_test_set.json`，脚本会自动把它当作独立验证集使用，而不是再从 teacher 训练数据里切一部分做验证。
+
 ### 3. 如果使用远程 teacher API
 
 ```bash

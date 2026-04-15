@@ -1,9 +1,86 @@
 import argparse
 import json
+import re
 from pathlib import Path
 from typing import Any
 
 from transformers import AutoTokenizer
+
+
+ENTITY_KEY_ALIASES = {
+    "person": "PERSON",
+    "name": "PERSON",
+    "full_name": "PERSON",
+    "date_of_birth": "DATE_OF_BIRTH",
+    "dob": "DATE_OF_BIRTH",
+    "address": "ADDRESS",
+    "email": "EMAIL_ADDRESS",
+    "email_address": "EMAIL_ADDRESS",
+    "phone": "AU_PHONE",
+    "phone_number": "AU_PHONE",
+    "tfn": "AU_TFN",
+    "tax_file_number": "AU_TFN",
+    "passport_number": "AU_PASSPORT",
+    "driver_license": "AU_DRIVERS_LICENCE",
+    "driver_licence": "AU_DRIVERS_LICENCE",
+    "medicare_number": "MEDICARE_NUMBER",
+    "medicare_expiry": "MEDICARE_EXPIRY",
+    "ihi": "IHI",
+    "ihl": "IHI",
+    "bank_name": "AU_BANK_NAME",
+    "bank": "AU_BANK_NAME",
+    "bsb": "BSB",
+    "account_number": "AU_BANK_ACCOUNT",
+    "card_number": "PAYMENT_CARD_NUMBER",
+    "credit_card_number": "PAYMENT_CARD_NUMBER",
+    "card_expiry": "CREDIT_CARD_EXPIRY",
+    "expiration_date": "CREDIT_CARD_EXPIRY",
+    "expiry_date": "CREDIT_CARD_EXPIRY",
+    "credit_card_expiry": "CREDIT_CARD_EXPIRY",
+    "cvv": "CREDIT_CARD_CVV",
+    "credit_card_cvv": "CREDIT_CARD_CVV",
+    "gross_salary": "SALARY",
+    "current_salary": "SALARY",
+    "salary": "SALARY",
+    "salary_expectation": "SALARY_WAGE_EXPECTATION",
+    "position": "EMPLOYMENT_INFORMATION",
+    "role": "EMPLOYMENT_INFORMATION",
+    "organization": "EMPLOYMENT_INFORMATION",
+    "contract_type": "CONTRACT_TYPE",
+    "employee_id": "EMPLOYEE_NUMBER",
+    "emp_id": "EMPLOYEE_NUMBER",
+    "personnel_id": "PERSONNEL_NUMBER",
+    "id": "STUDENT_ID",
+    "id_number": "STUDENT_ID",
+    "username": "USERNAME",
+    "ip_address": "IP_ADDRESS",
+    "imei": "DEVICE_ID",
+    "device_id": "DEVICE_ID",
+    "mac_address": "DEVICE_ID",
+    "auth_token": "COOKIE_INFORMATION",
+    "session_id": "COOKIE_INFORMATION",
+    "location": "GEOLOCATION_INFORMATION",
+    "geolocation": "GEOLOCATION_INFORMATION",
+    "latitude": "LATITUDE",
+    "longitude": "LONGITUDE",
+    "social_handle": "SOCIAL_MEDIA_ACCOUNT",
+    "social_media_account": "SOCIAL_MEDIA_ACCOUNT",
+    "social_id": "SOCIAL_MEDIA_ID",
+    "url": "WEBSITE_HISTORY",
+    "website": "WEBSITE_HISTORY",
+    "gender": "GENDER",
+    "pronouns": "PRONOUN",
+    "sexual_orientation": "SEXUAL_ORIENTATION",
+    "religion": "RELIGION_BELIEF",
+    "ethnicity": "RACIAL_ETHNIC_ORIGIN",
+    "indigenous_status": "ABORIGINALITY",
+    "ses_background": "SOCIO_ECONOMIC_STATUS",
+    "marital_status": "MARITAL_STATUS",
+    "military_status": "MILITARY_VETERAN_STATUS",
+    "caring_responsibilities": "CARING_RESPONSIBILITIES",
+    "debt": "PERSONAL_DEBT",
+    "registration": "VEHICLE_REGO",
+}
 
 
 def load_jsonl(path: str):
@@ -17,6 +94,46 @@ def load_jsonl(path: str):
             if line:
                 records.append(json.loads(line))
     return records
+
+
+def normalize_entity_type(name: str) -> str:
+    cleaned = re.sub(r"[^a-z0-9]+", "_", str(name).strip().lower()).strip("_")
+    return ENTITY_KEY_ALIASES.get(cleaned, cleaned.upper())
+
+
+def load_reference_confidences(path: str | None):
+    if not path:
+        return {}
+    file_path = Path(path)
+    if not file_path.exists() or file_path.stat().st_size == 0:
+        return {}
+
+    with file_path.open("r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    if isinstance(data, dict) and "records" in data and isinstance(data["records"], list):
+        data = data["records"]
+    if not isinstance(data, list):
+        return {}
+
+    lookup = {}
+    for record in data:
+        text = record.get("input", {}).get("text") or record.get("input_text", "")
+        labels = record.get("positive_sample", {}).get("labels", [])
+        normalized = []
+        for item in labels:
+            if not isinstance(item, dict):
+                continue
+            normalized.append({
+                "start": int(item.get("start", -1)),
+                "end": int(item.get("end", -1)),
+                "label": normalize_entity_type(item.get("type", "")),
+                "text": str(item.get("value", "")).strip(),
+                "confidence": float(item.get("confidence", 0.9)),
+            })
+        if text:
+            lookup[text] = normalized
+    return lookup
 
 
 def parse_json_object(text: str) -> dict[str, Any]:
@@ -124,10 +241,39 @@ def build_label_space(records: list[dict[str, Any]]):
     return label_names, label_to_id
 
 
-def encode_record(record, tokenizer, label_to_id, max_length: int):
+def match_confidence(span: dict[str, Any], reference_spans: list[dict[str, Any]], default_confidence: float):
+    best_conf = default_confidence
+    best_score = 0.0
+    for ref in reference_spans:
+        if ref.get("label") != span.get("label"):
+            continue
+        if (ref.get("start"), ref.get("end")) == (span.get("start"), span.get("end")):
+            return float(ref.get("confidence", default_confidence))
+        if ref.get("text") and span.get("text") and ref["text"].lower() == span["text"].lower():
+            return float(ref.get("confidence", default_confidence))
+        overlap = min(span["end"], ref["end"]) - max(span["start"], ref["start"])
+        if overlap <= 0:
+            continue
+        denom = max(span["end"] - span["start"], ref["end"] - ref["start"], 1)
+        score = overlap / denom
+        if score > best_score:
+            best_score = score
+            best_conf = float(ref.get("confidence", default_confidence))
+    return best_conf
+
+
+def encode_record(record, tokenizer, label_to_id, max_length: int, reference_lookup=None, default_confidence: float = 0.9):
     text = record.get("input_text", "")
     entities = parse_json_object(record.get("target_text", ""))
     spans, char_labels = build_spans(text, entities)
+    reference_spans = reference_lookup.get(text, []) if reference_lookup else []
+
+    char_confidences = [default_confidence] * len(text)
+    for span in spans:
+        confidence = match_confidence(span, reference_spans, default_confidence)
+        for idx in range(span["start"], span["end"]):
+            if 0 <= idx < len(char_confidences):
+                char_confidences[idx] = confidence
 
     encoded = tokenizer(
         text,
@@ -138,16 +284,22 @@ def encode_record(record, tokenizer, label_to_id, max_length: int):
     )
 
     labels = []
+    label_confidences = []
     previous_entity = None
     for (start, end), attention in zip(encoded["offset_mapping"], encoded["attention_mask"]):
         if attention == 0 or end <= start:
             labels.append(-100)
+            label_confidences.append(0.0)
             previous_entity = None
             continue
 
         token_entities = [char_labels[idx] for idx in range(start, min(end, len(char_labels))) if char_labels[idx] is not None]
+        token_conf_values = [char_confidences[idx] for idx in range(start, min(end, len(char_confidences)))]
+        token_confidence = max(token_conf_values) if token_conf_values else default_confidence
+
         if not token_entities:
             labels.append(label_to_id["O"])
+            label_confidences.append(float(token_confidence))
             previous_entity = None
             continue
 
@@ -155,12 +307,14 @@ def encode_record(record, tokenizer, label_to_id, max_length: int):
         is_begin = start == 0 or char_labels[start - 1] != entity or previous_entity != entity
         label_name = f"B-{entity}" if is_begin else f"I-{entity}"
         labels.append(label_to_id.get(label_name, label_to_id["O"]))
+        label_confidences.append(float(token_confidence))
         previous_entity = entity
 
     return {
         "input_ids": encoded["input_ids"],
         "attention_mask": encoded["attention_mask"],
         "labels": labels,
+        "label_confidences": label_confidences,
     }
 
 
@@ -178,6 +332,8 @@ def main():
     parser.add_argument("--output_dir", default="data/processed_bio", help="输出目录")
     parser.add_argument("--model_name", default="gpt2", help="student tokenizer/model 名称")
     parser.add_argument("--max_length", type=int, default=512, help="最大长度")
+    parser.add_argument("--raw_reference_input", default=None, help="可选原始数据文件，用于读取 span-level confidence")
+    parser.add_argument("--default_confidence", type=float, default=0.9, help="未命中原始 confidence 时的默认值")
     args = parser.parse_args()
 
     train_records = load_jsonl(args.train_input)
@@ -189,8 +345,10 @@ def main():
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    train_rows = [encode_record(row, tokenizer, label_to_id, args.max_length) for row in train_records]
-    val_rows = [encode_record(row, tokenizer, label_to_id, args.max_length) for row in val_records]
+    reference_lookup = load_reference_confidences(args.raw_reference_input)
+
+    train_rows = [encode_record(row, tokenizer, label_to_id, args.max_length, reference_lookup, args.default_confidence) for row in train_records]
+    val_rows = [encode_record(row, tokenizer, label_to_id, args.max_length, reference_lookup, args.default_confidence) for row in val_records]
 
     output_dir = Path(args.output_dir)
     write_jsonl(output_dir / "train.jsonl", train_rows)

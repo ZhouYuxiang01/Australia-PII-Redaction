@@ -10,8 +10,10 @@ fi
 
 CONFIG_FILE="config/lora_config.yaml"
 RAW_INPUT="data/raw/au_pii_19000.json"
+VALIDATION_RAW="${VALIDATION_RAW:-data/raw/cleaned_test_set.json}"
 TEACHER_DIR="data/teacher"
 PROCESSED_TEACHER_DIR="data/processed_teacher"
+PROCESSED_VALIDATION_DIR="data/processed_validation"
 PROCESSED_BIO_DIR="data/processed_bio"
 TRAIN_MODE="${TRAIN_MODE:-bio}"
 TEACHER_MAX_NEW_TOKENS="${TEACHER_MAX_NEW_TOKENS:-512}"
@@ -53,18 +55,36 @@ fi
 
 "$PYTHON_BIN" src/teacher/teacher_labeling.py "${LABEL_ARGS[@]}" "${MAX_SAMPLES_ARG[@]}"
 
+TRAIN_VAL_RATIO=0.05
+VALIDATION_INPUT="$PROCESSED_TEACHER_DIR/val.jsonl"
+if [[ -f "$VALIDATION_RAW" ]]; then
+  TRAIN_VAL_RATIO=0
+fi
+
 "$PYTHON_BIN" src/teacher/prepare_teacher_student_data.py \
   --input "$TEACHER_DIR/teacher_labels.jsonl" \
   --output_dir "$PROCESSED_TEACHER_DIR" \
-  --val_ratio 0.05
+  --val_ratio "$TRAIN_VAL_RATIO"
+
+if [[ -f "$VALIDATION_RAW" ]]; then
+  echo "检测到独立验证集：$VALIDATION_RAW"
+  "$PYTHON_BIN" src/data_preparation.py \
+    --input "$VALIDATION_RAW" \
+    --output_dir "$PROCESSED_VALIDATION_DIR" \
+    --text_key "input.text" \
+    --target_key "ground_truth_entities" \
+    --val_ratio 1.0
+  VALIDATION_INPUT="$PROCESSED_VALIDATION_DIR/val.jsonl"
+fi
 
 if [[ "$TRAIN_MODE" == "bio" ]]; then
   "$PYTHON_BIN" src/build_bio_dataset.py \
     --train_input "$PROCESSED_TEACHER_DIR/train.jsonl" \
-    --validation_input "$PROCESSED_TEACHER_DIR/val.jsonl" \
+    --validation_input "$VALIDATION_INPUT" \
     --output_dir "$PROCESSED_BIO_DIR" \
     --model_name "gpt2" \
-    --max_length 512
+    --max_length 512 \
+    --raw_reference_input "$RAW_INPUT"
 
   LABEL_COUNT=$("$PYTHON_BIN" - <<'PY'
 import json

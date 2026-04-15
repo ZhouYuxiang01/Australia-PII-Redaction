@@ -1,0 +1,3735 @@
+[
+  {
+    "id": "TEST-001",
+    "input": {
+      "text": "Applicaton Form [page 1 of 2]\nNme: Ingrid Murphy (corrcted from 'Ingrid Murphy')\nD.O.B: 21/05/1968\nAddres: 255 Parramatta Ave, Sydney NSW\nTel no.: 0414 904 749\ne-mail: ingrid_murphy@gmail.com\nT.F.N:  224 751 441\nPassp. no: X 7728826\n[Signed]",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Ingrid Murphy",
+      "DATE_OF_BIRTH": "21/05/1968",
+      "ADDRESS": "255 Parramatta Ave, Sydney NSW",
+      "AU_PHONE": "0414 904 749",
+      "EMAIL_ADDRESS": "ingrid_murphy@gmail.com",
+      "AU_TFN": "224 751 441",
+      "AU_PASSPORT": "X 7728826"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-002",
+    "input": {
+      "text": "Payment — Mohammed Nguyen-Smith, 252 King Ln, Devonport TAS\nCard: 349582031185454 | Exp: 11/26 | CVV: 851\nToken on file: **** **** **** 1948",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mohammed Nguyen-Smith",
+      "ADDRESS": "252 King Ln, Devonport TAS",
+      "PAYMENT_CARD_NUMBER": "349582031185454",
+      "CREDIT_CARD_EXPIRY": "11/26",
+      "CREDIT_CARD_CVV": "851",
+      "HASHED_PAYMENT_CARD_NUMBER": "**** **** **** 1948"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-003",
+    "input": {
+      "text": "Application submitted to Johnson & Williams Consulting. Applicant: Mei Thompson, DOB: 07.04.2002, phone +61 46 4423 590, address 137 Military Ave, Hobart TAS 7320.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mei Thompson",
+      "DATE_OF_BIRTH": "07.04.2002",
+      "AU_PHONE": "+61 46 4423 590",
+      "ADDRESS": "137 Military Ave, Hobart TAS 7320"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-004",
+    "input": {
+      "text": "Dear Aroha Reyes,\n\nRe your Centrelink payment arrangement.\nWe confirm your reference 109 850 200C is active.\nDOB on file: 18 October 1963. Address: 81 King St, Tuggeranong ACT 2601.\n\nServices Australia",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Aroha Reyes",
+      "CENTRELINK_REFERENCE_NUMBER": "109 850 200C",
+      "DATE_OF_BIRTH": "18 October 1963",
+      "ADDRESS": "81 King St, Tuggeranong ACT 2601"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-005",
+    "input": {
+      "text": "Marco Kowalski commenced employment on 01/07/2024. DOB: 25/06/1969. Contract expires: 31/12/2025. TFN: 832 109 111. Address: 305 George Ln, Darwin NT 0810.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Marco Kowalski",
+      "DATE_OF_BIRTH": "25/06/1969",
+      "AU_TFN": "832 109 111",
+      "ADDRESS": "305 George Ln, Darwin NT 0810"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-006",
+    "input": {
+      "text": "Multi-state licence check — Ibrahim Chen (DOB: 24 May 1989).\nNSW: NSW 35241543 | VIC: O8823757 | QLD: QLD: 993073270",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Ibrahim Chen",
+      "DATE_OF_BIRTH": "24 May 1989",
+      "AU_DRIVERS_LICENCE": "NSW 35241543, O8823757, QLD: 993073270"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-007",
+    "input": {
+      "text": "Session log — Aroha Lee (alee@hotmail.com)\nIPv6: c08c:99a5:782b:be6f:6431:e1ee:ed78:6305\nDevice: MAC: 6f:61:84:a2:b9:03\nSession: session_id=haxj4tannfp2hd8en2b82cveh5n0ncvd",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Aroha Lee",
+      "EMAIL_ADDRESS": "alee@hotmail.com",
+      "IP_ADDRESS": "c08c:99a5:782b:be6f:6431:e1ee:ed78:6305",
+      "DEVICE_ID": "MAC: 6f:61:84:a2:b9:03",
+      "COOKIE_INFORMATION": "session_id=haxj4tannfp2hd8en2b82cveh5n0ncvd"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-008",
+    "input": {
+      "text": "Contact record — Aroha Hassan\nPersonal email: aroha-hassan12@bigpond.com\nWork email: ahassan33@edu.au\nPhone: 0412146668\nAddress: 6 Collins St, Hobart TAS 7000",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Aroha Hassan",
+      "EMAIL_ADDRESS": "aroha-hassan12@bigpond.com",
+      "WORK_EMAIL": "ahassan33@edu.au",
+      "AU_PHONE": "0412146668",
+      "ADDRESS": "6 Collins St, Hobart TAS 7000"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-009",
+    "input": {
+      "text": "Verification — Mohammed Andersen, born 05.02.2003.\nAddress: 373 Collins Ln, Devonport TAS 7050\nLicence (ACT): ACT: 1640717\nPassport: M6546263",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mohammed Andersen",
+      "DATE_OF_BIRTH": "05.02.2003",
+      "ADDRESS": "373 Collins Ln, Devonport TAS 7050",
+      "AU_DRIVERS_LICENCE": "ACT: 1640717",
+      "AU_PASSPORT": "M6546263"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-010",
+    "input": {
+      "text": "Offer to Liam Murphy | Emp ID: Employee No: EMP35120\nContract: fixed-term\nSalary range: $109,000 – $120,000 per annum\nWork email: lmurphy@uts.edu.au",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Liam Murphy",
+      "EMPLOYEE_NUMBER": "Employee No: EMP35120",
+      "CONTRACT_TYPE": "fixed-term",
+      "SALARY": "$109,000 – $120,000 per annum",
+      "WORK_EMAIL": "lmurphy@uts.edu.au"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-011",
+    "input": {
+      "text": "Clinical record — Saoirse Nguyen-Smith (ID: Student ID 438161142, born September 13, 1966)\nDiagnosis: hypertension\nDisability: hearing impairment\nTreatment: counselling: mindfulness-based therapy\nEvidence: medical certificate from Dr. Jun Patel (15/07/2025)\nSC: spec con — mental health crisis (SC-58094)",
+      "metadata": {
+        "source_type": "clinical",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Saoirse Nguyen-Smith",
+      "STUDENT_ID": "Student ID 438161142",
+      "DATE_OF_BIRTH": "September 13, 1966",
+      "MEDICAL_INFORMATION": "hypertension",
+      "DISABILITY_OR_SPECIFIC_CONDITION": "hearing impairment",
+      "COUNSELLING_RECORDS": "counselling: mindfulness-based therapy",
+      "MEDICAL_CERTIFICATE": "medical certificate from Dr. Jun Patel (15/07/2025)",
+      "SPECIAL_CONSIDERATION": "spec con — mental health crisis (SC-58094)"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-012",
+    "input": {
+      "text": "Agent: Hi, how can I help today?\nUser: Hi, I'm Aroha Okonkwo and I'm having trouble with my account.\nAgent: Sure! Can I verify your date of birth?\nUser: It's 17 September 2000.\nAgent: And your email?\nUser: aroha.okonkwo@yahoo.com.au\nAgent: Got it. Phone number?\nUser: +61 47 1165 604\nAgent: Your student ID?\nUser: Oh it's Student ID 488568187\nAgent: And TFN for tax purposes?\nUser: 171 868 493\nAgent: Address on file?\nUser: 210 King Ln, Launceston TAS 7300",
+      "metadata": {
+        "source_type": "chat",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Aroha Okonkwo",
+      "DATE_OF_BIRTH": "17 September 2000",
+      "EMAIL_ADDRESS": "aroha.okonkwo@yahoo.com.au",
+      "AU_PHONE": "+61 47 1165 604",
+      "STUDENT_ID": "Student ID 488568187",
+      "AU_TFN": "171 868 493",
+      "ADDRESS": "210 King Ln, Launceston TAS 7300"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-013",
+    "input": {
+      "text": "Applicant: Ling-Fēng Wáng\nDOB: 1964-03-26\nEmail: ling.wang@gmail.com\nAddress: 252 Flinders Blvd, Darwin NT 0820\nTFN: 612 145 508",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Ling-Fēng Wáng",
+      "DATE_OF_BIRTH": "1964-03-26",
+      "EMAIL_ADDRESS": "ling.wang@gmail.com",
+      "ADDRESS": "252 Flinders Blvd, Darwin NT 0820",
+      "AU_TFN": "612 145 508"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-014",
+    "input": {
+      "text": "Comprehensive record — Mohammed Hassan (ID: Student ID 465726169)\nBiometrics: Face: face ID on file | Fingerprint: fingerprint registered | Voice: voiceprint on file | Sig: e-signature on file\nSensitive: gay | Religion: Hinduism | First Nations: Aboriginal Australian | SES: low socio-economic background\nGovernment: CRN CRN: 476-694-108X | UAC 5362389693 | USI W47RY4QRXZ\nNational ID: NIC (China): 347545725636 | Criminal: criminal history check: clear\nPension: PCC 849353847 | Next of kin: Jess Andersen (parent) ((0441) 373-343)\nWorkers comp: WorkCover claim WC-819152 | Audio: voice memo attached | CCTV: CCTV footage — main entrance — 30/11/2025",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mohammed Hassan",
+      "STUDENT_ID": "Student ID 465726169",
+      "FACIAL_RECOGNITION": "face ID on file",
+      "FINGERPRINT": "fingerprint registered",
+      "VOICE_RECOGNITION": "voiceprint on file",
+      "SIGNATURE": "e-signature on file",
+      "SEXUAL_ORIENTATION": "gay",
+      "RELIGION_BELIEF": "Hinduism",
+      "ABORIGINALITY": "Aboriginal Australian",
+      "SOCIO_ECONOMIC_STATUS": "low socio-economic background",
+      "CENTRELINK_REFERENCE_NUMBER": "CRN: 476-694-108X",
+      "UAC_ID": "5362389693",
+      "USI": "W47RY4QRXZ",
+      "NATIONAL_IDENTITY_CARD": "NIC (China): 347545725636",
+      "CRIMINAL_RECORDS": "criminal history check: clear",
+      "PENSION_CARD_NUMBER": "PCC 849353847",
+      "NEXT_OF_KIN": "Jess Andersen (parent)",
+      "WORKERS_COMPENSATION_CLAIM": "WorkCover claim WC-819152",
+      "AUDIO_INFORMATION": "voice memo attached",
+      "CAMERA_FOOTAGE_AUDIO": "CCTV footage — main entrance — 30/11/2025"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-015",
+    "input": {
+      "text": "User: Tariq Williams (twilliams@live.com.au)\nIP: 254.41.19.34 | Device: IMEI: 765961368544106\nCookie: PHPSESSID=rzl3yl5900znm8fljefa89be4ktg9tao\nGPS: -18.316527, 123.471073 (-18.316527, 123.471073)\nUsername: marco.al-rashid\n@saoirseal-rashid | Instagram ID: 9183400712\nActivity: Instagram account activity log\nLast URL: https://my.usyd.edu.au/portal/5270",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Tariq Williams",
+      "EMAIL_ADDRESS": "twilliams@live.com.au",
+      "IP_ADDRESS": "254.41.19.34",
+      "DEVICE_ID": "IMEI: 765961368544106",
+      "COOKIE_INFORMATION": "PHPSESSID=rzl3yl5900znm8fljefa89be4ktg9tao",
+      "GEOLOCATION_INFORMATION": "-18.316527, 123.471073",
+      "LATITUDE": "-18.316527",
+      "LONGITUDE": "123.471073",
+      "USERNAME": "marco.al-rashid",
+      "SOCIAL_MEDIA_ACCOUNT": "@saoirseal-rashid",
+      "SOCIAL_MEDIA_ID": "Instagram ID: 9183400712",
+      "SOCIAL_MEDIA_HISTORY": "Instagram account activity log",
+      "WEBSITE_HISTORY": "https://my.usyd.edu.au/portal/5270"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-016",
+    "input": {
+      "text": "Smith Technologies Pty Ltd (ABN 51 234 567 890, ACN 234 567 890) has entered into a service agreement. GST registered. Contact: admin@smithtech.com.au | 1300 000 123.",
+      "metadata": {
+        "source_type": "narrative",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-017",
+    "input": {
+      "text": "Enrolment — Mohammed Reyes\nDOB: 1963-04-21\nUAC ID: 5541366417\nUSI: WGW9XTM7YJ\nIntl phone: +61429636438\nAddress: 197 King St, Ballarat VIC 3000",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mohammed Reyes",
+      "DATE_OF_BIRTH": "1963-04-21",
+      "UAC_ID": "5541366417",
+      "USI": "WGW9XTM7YJ",
+      "AU_PHONE": "+61429636438",
+      "ADDRESS": "197 King St, Ballarat VIC 3000"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-018",
+    "input": {
+      "text": "Partially redacted record — Kwame Garcia\nDOB: 16 March 1964\nAddress: 108 Parramatta St, Belconnen ACT 2601\nEmail: kwame-garcia43@gmail.com\nPassport: O*****84 (partially redacted)\nTFN: 414 *** *** (partially redacted)\nFull identifiers available in secure vault only.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Kwame Garcia",
+      "DATE_OF_BIRTH": "16 March 1964",
+      "ADDRESS": "108 Parramatta St, Belconnen ACT 2601",
+      "EMAIL_ADDRESS": "kwame-garcia43@gmail.com",
+      "AU_PASSPORT": "O*****84",
+      "AU_TFN": "414 *** ***"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-019",
+    "input": {
+      "text": "Applicaton Form [page 1 of 2]\nNme: Dmitri Hassan (corrcted from 'Dmitri Kim')\nD.O.B: 01/04/1963\nAddres: Unit 40, 133 Parramatta Ln, Whyalla SA 5125\nTel no.: 0497 476 322\ne-mail: dmitri_hassan14@live.com.au\nT.F.N:  013 831 385\nPassp. no: B8029171\n[Signed]",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Dmitri Hassan",
+      "DATE_OF_BIRTH": "01/04/1963",
+      "ADDRESS": "Unit 40, 133 Parramatta Ln, Whyalla SA 5125",
+      "AU_PHONE": "0497 476 322",
+      "EMAIL_ADDRESS": "dmitri_hassan14@live.com.au",
+      "AU_TFN": "013 831 385",
+      "AU_PASSPORT": "B8029171"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-020",
+    "input": {
+      "text": "Invoice INV-739057249 was issued for services rendered. Order ORD-72449428 has been dispatched. Quote reference REF-1515460 in all correspondence. No personal information is contained in this notice.",
+      "metadata": {
+        "source_type": "narrative",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-021",
+    "input": {
+      "text": "Session log — Aroha Chen (achen@tpg.com.au)\nIPv6: 497e:64c7:f1dd:c381:ce6a:28d9:5439:26fc\nDevice: IMEI: 498232978824140\nSession: PHPSESSID=tflpvrj9a1l0btfy1ll7i017bhlk5509",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Aroha Chen",
+      "EMAIL_ADDRESS": "achen@tpg.com.au",
+      "IP_ADDRESS": "497e:64c7:f1dd:c381:ce6a:28d9:5439:26fc",
+      "DEVICE_ID": "IMEI: 498232978824140",
+      "COOKIE_INFORMATION": "PHPSESSID=tflpvrj9a1l0btfy1ll7i017bhlk5509"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-022",
+    "input": {
+      "text": "API response received:\n{\"name\":\"Emma Kowalski\",\"email\":\"ekowalski24@live.com.au\",\"phone\":\"+61 46 4742 401\",\"dob\":\"1991-11-05\",\"address\":\"225 Military Dr, Brisbane QLD 4101\",\"student_id\":\"519600213\"}\nPlease review the above payload for PII before forwarding.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Emma Kowalski",
+      "EMAIL_ADDRESS": "ekowalski24@live.com.au",
+      "AU_PHONE": "+61 46 4742 401",
+      "DATE_OF_BIRTH": "1991-11-05",
+      "ADDRESS": "225 Military Dr, Brisbane QLD 4101",
+      "STUDENT_ID": "519600213"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-023",
+    "input": {
+      "text": "PAYSLIP — Wei Kowalski, 166 Flinders Ave, Devonport TAS 7248.\nBank: Macquarie Bank, BSB: 062-823, Account: 82653861\nSalary: AUD 139,000",
+      "metadata": {
+        "source_type": "payslip",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Wei Kowalski",
+      "ADDRESS": "166 Flinders Ave, Devonport TAS 7248",
+      "BSB": "062-823",
+      "AU_BANK_ACCOUNT": "82653861",
+      "AU_BANK_NAME": "Macquarie Bank",
+      "SALARY": "AUD 139,000"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-024",
+    "input": {
+      "text": "Health record — Niamh Lee (DOB: October 17, 1985).\nMedicare: 4004252514/4, expires 04/2031.\nPrivate health insurance policy: 6373 87962 5/6 (this is a Medibank policy number, not Medicare).\nIHI: 3034052940182702.",
+      "metadata": {
+        "source_type": "clinical",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Niamh Lee",
+      "DATE_OF_BIRTH": "October 17, 1985",
+      "MEDICARE_NUMBER": "4004252514/4",
+      "MEDICARE_EXPIRY": "04/2031",
+      "IHI": "3034052940182702"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-025",
+    "input": {
+      "text": "Comprehensive record — Ingrid Garcia (ID: 405997905)\nBiometrics: Face: face ID on file | Fingerprint: fingerprint registered | Voice: voiceprint on file | Sig: e-signature on file\nSensitive: queer | Religion: Islam | First Nations: Aboriginal Australian | SES: low socio-economic background\nGovernment: CRN 585 024 614V | UAC 1234971208 | USI ZBLN6BSY6M\nNational ID: India National ID: 998941452672 | Criminal: criminal history check: clear\nPension: PCC 408451210 | Next of kin: Anh Hassan (spouse) (0467 419 919)\nWorkers comp: workers compensation claim WC-196526 (psychological injury) | Audio: voice memo attached | CCTV: CCTV footage — Building F Level 2 — 25/08/2025",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Ingrid Garcia",
+      "STUDENT_ID": "405997905",
+      "FACIAL_RECOGNITION": "face ID on file",
+      "FINGERPRINT": "fingerprint registered",
+      "VOICE_RECOGNITION": "voiceprint on file",
+      "SIGNATURE": "e-signature on file",
+      "SEXUAL_ORIENTATION": "queer",
+      "RELIGION_BELIEF": "Islam",
+      "ABORIGINALITY": "Aboriginal Australian",
+      "SOCIO_ECONOMIC_STATUS": "low socio-economic background",
+      "CENTRELINK_REFERENCE_NUMBER": "585 024 614V",
+      "UAC_ID": "1234971208",
+      "USI": "ZBLN6BSY6M",
+      "NATIONAL_IDENTITY_CARD": "India National ID: 998941452672",
+      "CRIMINAL_RECORDS": "criminal history check: clear",
+      "PENSION_CARD_NUMBER": "PCC 408451210",
+      "NEXT_OF_KIN": "Anh Hassan (spouse)",
+      "WORKERS_COMPENSATION_CLAIM": "workers compensation claim WC-196526 (psychological injury)",
+      "AUDIO_INFORMATION": "voice memo attached",
+      "CAMERA_FOOTAGE_AUDIO": "CCTV footage — Building F Level 2 — 25/08/2025"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-026",
+    "input": {
+      "text": "Please ensure your tax affairs are in order. Jun Hassan (born 03 June 1995) submitted their return. The TFN recorded is 098442642. Note: invoice 420185132 is outstanding and is NOT a Tax File Number. Correspondence address: 423 King Rd, Melbourne VIC 3121.",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Jun Hassan",
+      "DATE_OF_BIRTH": "03 June 1995",
+      "AU_TFN": "098442642",
+      "ADDRESS": "423 King Rd, Melbourne VIC 3121"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-027",
+    "input": {
+      "text": "The Johnson Hand Sanitiser and Williams Garden Tools product lines are now available at all major retailers. The Smith & Jones retail partnership begins 1 July 2025.",
+      "metadata": {
+        "source_type": "narrative",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-028",
+    "input": {
+      "text": "COMPREHENSIVE IDENTITY FILE — Kofi Thompson\nDOB: 03/01/1986 | Address: 342 George Ln, Ballarat VIC\nPhone: +61 41 0381 421 | Email: kthompson@tpg.com.au\nTFN: 107563388\nPassport: W9822645 (expires 09/04/2026)\nMedicare: 6918-5405-67-7 (exp March 2028)\nDriver's licence (NSW): NSW: 22666014\nBank: Macquarie Bank | BSB: 036860 | Acc: 747065735\nCard: **** **** **** 0074 | Exp: 02/26 | CVV: 465",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Kofi Thompson",
+      "DATE_OF_BIRTH": "03/01/1986",
+      "ADDRESS": "342 George Ln, Ballarat VIC",
+      "AU_PHONE": "+61 41 0381 421",
+      "EMAIL_ADDRESS": "kthompson@tpg.com.au",
+      "AU_TFN": "107563388",
+      "AU_PASSPORT": "W9822645",
+      "PASSPORT_EXPIRY": "09/04/2026",
+      "MEDICARE_NUMBER": "6918-5405-67-7",
+      "MEDICARE_EXPIRY": "March 2028",
+      "AU_DRIVERS_LICENCE": "NSW: 22666014",
+      "BSB": "036860",
+      "AU_BANK_ACCOUNT": "747065735",
+      "AU_BANK_NAME": "Macquarie Bank",
+      "PAYMENT_CARD_NUMBER": "**** **** **** 0074",
+      "CREDIT_CARD_EXPIRY": "02/26",
+      "CREDIT_CARD_CVV": "465"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-029",
+    "input": {
+      "text": "Verification — Priya Patel, born 01.04.1990.\nAddress: Unit 47, 147 King Dr, Ballarat VIC\nLicence (NT): 539058953\nPassport: I 1140477",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Priya Patel",
+      "DATE_OF_BIRTH": "01.04.1990",
+      "ADDRESS": "Unit 47, 147 King Dr, Ballarat VIC",
+      "AU_DRIVERS_LICENCE": "539058953",
+      "AU_PASSPORT": "I 1140477"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-030",
+    "input": {
+      "text": "Password reset link sent to Mei Hassan: https://portal.usyd.edu.au/reset?user=mei-hassan%40gmail.com\nIf you did not request this, contact support at helpdesk@sydney.edu.au.\nYour registered phone: (0457) 280-357. Address: 222 King Ln, Gold Coast QLD.",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mei Hassan",
+      "EMAIL_ADDRESS": "mei-hassan@gmail.com",
+      "AU_PHONE": "(0457) 280-357",
+      "ADDRESS": "222 King Ln, Gold Coast QLD"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-031",
+    "input": {
+      "text": "The server is reachable at 127.0.0.1 (localhost) and 192.168.0.1 (internal gateway). External traffic is routed via 0.0.0.0/0. Firewall rules apply from 10.0.0.0/8.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-032",
+    "input": {
+      "text": "Customer service: support@university.edu.au | (02) 9351 2000.\nAccounts: accounts@university.edu.au | (02) 9351 3000.\nThese are shared departmental contacts — no individual PII.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-033",
+    "input": {
+      "text": "Payment — Hana Hassan, 453 Collins Rd, Cairns QLD 4870\nCard: 5116 2588 5942 2689 | Exp: 06/2026 | CVV: 916\nToken on file: tok_200671_5878",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Hana Hassan",
+      "ADDRESS": "453 Collins Rd, Cairns QLD 4870",
+      "PAYMENT_CARD_NUMBER": "5116 2588 5942 2689",
+      "CREDIT_CARD_EXPIRY": "06/2026",
+      "CREDIT_CARD_CVV": "916",
+      "HASHED_PAYMENT_CARD_NUMBER": "tok_200671_5878"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-034",
+    "input": {
+      "text": "Carlos Petrov\n70/40 Geo. vic 3011\nPh: (0473) 607-078 | em: carlos.petrov@optusnet.com.au\nTFN 234921182",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Carlos Petrov",
+      "ADDRESS": "70/40 Geo. vic 3011",
+      "AU_PHONE": "(0473) 607-078",
+      "EMAIL_ADDRESS": "carlos.petrov@optusnet.com.au",
+      "AU_TFN": "234921182"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-035",
+    "input": {
+      "text": "Incident report: Yuki Hassan (ID: 503654792) stated: 'I identify as gay and my religious beliefs (Christianity) were mocked by another student.' The student also disclosed their cultural background as Asian Australian.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Yuki Hassan",
+      "STUDENT_ID": "503654792",
+      "SEXUAL_ORIENTATION": "gay",
+      "RELIGION_BELIEF": "Christianity",
+      "RACIAL_ETHNIC_ORIGIN": "Asian Australian"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-036",
+    "input": {
+      "text": "Payroll for Hana Andersen, 392 George Ave, Alice Springs NT 0820.\nReal bank details: Bendigo Bank, BSB 086383, Account 385471879.\nNote: department cost centre 402-665 is an internal branch routing code, not a BSB.\nGross: $131,000 p.a..",
+      "metadata": {
+        "source_type": "payslip",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Hana Andersen",
+      "ADDRESS": "392 George Ave, Alice Springs NT 0820",
+      "BSB": "086383",
+      "AU_BANK_ACCOUNT": "385471879",
+      "AU_BANK_NAME": "Bendigo Bank",
+      "SALARY": "$131,000 p.a."
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-037",
+    "input": {
+      "text": "Applicaton Form [page 1 of 2]\nNme: Jun Schmidt (corrcted from 'Jun Hassan')\nD.O.B: 20/12/1972\nAddres: Unit 49, 410 Parramatta Blvd, Devonport TAS 7000\nTel no.: (0453) 591-199\ne-mail: jun_schmidt34@live.com.au\nT.F.N:  814 980 403\nPassp. no: L7450689\n[Signed]",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Jun Schmidt",
+      "DATE_OF_BIRTH": "20/12/1972",
+      "ADDRESS": "Unit 49, 410 Parramatta Blvd, Devonport TAS 7000",
+      "AU_PHONE": "(0453) 591-199",
+      "EMAIL_ADDRESS": "jun_schmidt34@live.com.au",
+      "AU_TFN": "814 980 403",
+      "AU_PASSPORT": "L7450689"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-038",
+    "input": {
+      "text": "Health record — Aroha Kim (DOB: 17-12-1975).\nMedicare: 4978 67656 5/7, expires 07/2030.\nPrivate health insurance policy: 9572 97954 4/3 (this is a Medibank policy number, not Medicare).\nIHI: 6049131779938210.",
+      "metadata": {
+        "source_type": "clinical",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Aroha Kim",
+      "DATE_OF_BIRTH": "17-12-1975",
+      "MEDICARE_NUMBER": "4978 67656 5/7",
+      "MEDICARE_EXPIRY": "07/2030",
+      "IHI": "6049131779938210"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-039",
+    "input": {
+      "text": "Jun Brown\nPersonal: +61 42 8765 357\nWork: (08) 7409 1362\nEmail: jun_brown@outlook.com\nAddress: Unit 48, 103 Flinders Ave, Alice Springs NT",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Jun Brown",
+      "AU_PHONE": "+61 42 8765 357",
+      "WORK_PHONE": "(08) 7409 1362",
+      "EMAIL_ADDRESS": "jun_brown@outlook.com",
+      "ADDRESS": "Unit 48, 103 Flinders Ave, Alice Springs NT"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-040",
+    "input": {
+      "text": "Offer to Anh Garcia | Emp ID: EMP56086\nContract: permanent full-time\nSalary range: $126,000 – $143,000 per annum\nWork email: anh_garcia@uts.edu.au",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Anh Garcia",
+      "EMPLOYEE_NUMBER": "EMP56086",
+      "CONTRACT_TYPE": "permanent full-time",
+      "SALARY": "$126,000 – $143,000 per annum",
+      "WORK_EMAIL": "anh_garcia@uts.edu.au"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-041",
+    "input": {
+      "text": "Patient: Anh-Rafael Kim-Reyes\nDOB: 20 December 1970\nEmail: anh-kim@icloud.com\nPhone: +61 45 4377 304\nAddress: 186 George Rd, Melbourne VIC 3220",
+      "metadata": {
+        "source_type": "clinical",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Anh-Rafael Kim-Reyes",
+      "DATE_OF_BIRTH": "20 December 1970",
+      "EMAIL_ADDRESS": "anh-kim@icloud.com",
+      "AU_PHONE": "+61 45 4377 304",
+      "ADDRESS": "186 George Rd, Melbourne VIC 3220"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-042",
+    "input": {
+      "text": "Incident report — Jess Reyes (born November 04, 1994, 301 Parramatta Ln, Whyalla SA 5000)\nNational ID: China National ID: 371385908582\nCriminal history: spent conviction — minor traffic offence\nAudio evidence: recorded audio message on file\nCCTV: CCTV footage — Building F Level 2 — 12/09/2025",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Jess Reyes",
+      "DATE_OF_BIRTH": "November 04, 1994",
+      "ADDRESS": "301 Parramatta Ln, Whyalla SA 5000",
+      "NATIONAL_IDENTITY_CARD": "China National ID: 371385908582",
+      "CRIMINAL_RECORDS": "spent conviction — minor traffic offence",
+      "AUDIO_INFORMATION": "recorded audio message on file",
+      "CAMERA_FOOTAGE_AUDIO": "CCTV footage — Building F Level 2 — 12/09/2025"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-043",
+    "input": {
+      "text": "Full name: Jess van der Berg, Date of birth: 15/09/1982. Email: jess.van der berg@bigpond.com, Phone: 0468 142 973. Address: 475 Military St, Melbourne VIC 3220.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Jess van der Berg",
+      "DATE_OF_BIRTH": "15/09/1982",
+      "EMAIL_ADDRESS": "jess.van der berg@bigpond.com",
+      "AU_PHONE": "0468 142 973",
+      "ADDRESS": "475 Military St, Melbourne VIC 3220"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-044",
+    "input": {
+      "text": "Partially redacted record — Mohammed Mwangi\nDOB: 05 September 1970\nAddress: 447 Parramatta Blvd, Newcastle NSW 2010\nEmail: mohammed.mwangi@tpg.com.au\nPassport: G*****81 (partially redacted)\nTFN: 226 *** *** (partially redacted)\nFull identifiers available in secure vault only.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mohammed Mwangi",
+      "DATE_OF_BIRTH": "05 September 1970",
+      "ADDRESS": "447 Parramatta Blvd, Newcastle NSW 2010",
+      "EMAIL_ADDRESS": "mohammed.mwangi@tpg.com.au",
+      "AU_PASSPORT": "G*****81",
+      "AU_TFN": "226 *** ***"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-045",
+    "input": {
+      "text": "Exam results for MATH3971 have been released. The highest mark was 97.5, the lowest 43.0, class mean 71.3. Results are available via the student portal.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-046",
+    "input": {
+      "text": "Addressee: Yuki Reyes\nLevel 7\n34 King Street\nAlice Springs NT 0870\nContact: 0491 946 712 | yreyes80@yahoo.com.au\nTFN: 614-422-224",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Yuki Reyes",
+      "ADDRESS": "Level 7, 34 King Street, Alice Springs NT 0870",
+      "AU_PHONE": "0491 946 712",
+      "EMAIL_ADDRESS": "yreyes80@yahoo.com.au",
+      "AU_TFN": "614-422-224"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-047",
+    "input": {
+      "text": "Contact record — Hana Thompson\nPersonal email: hana-thompson@tpg.com.au\nWork email: hana.thompson@edu.au\nPhone: +61 44 9160 962\nAddress: Unit 49, 161 Flinders St, Fremantle WA",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Hana Thompson",
+      "EMAIL_ADDRESS": "hana-thompson@tpg.com.au",
+      "WORK_EMAIL": "hana.thompson@edu.au",
+      "AU_PHONE": "+61 44 9160 962",
+      "ADDRESS": "Unit 49, 161 Flinders St, Fremantle WA"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-048",
+    "input": {
+      "text": "Identity verification — Liam Schmidt (DOB 16.05.1983).\nDriver's licence number: 49274171 (NSW).\nPassport: R 1639004. TFN: TFN: 920401087.\nAddress: Unit 29, 399 Parramatta Ave, Canberra ACT 2617.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Liam Schmidt",
+      "DATE_OF_BIRTH": "16.05.1983",
+      "AU_DRIVERS_LICENCE": "49274171",
+      "AU_PASSPORT": "R 1639004",
+      "AU_TFN": "TFN: 920401087",
+      "ADDRESS": "Unit 29, 399 Parramatta Ave, Canberra ACT 2617"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-049",
+    "input": {
+      "text": "Identity check — Dmitri Reyes (DOB: 27/12/1988). TFN: 724 586 698. Passport: Q 9775853. Address: 28 George Blvd, Tuggeranong ACT 2601.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Dmitri Reyes",
+      "DATE_OF_BIRTH": "27/12/1988",
+      "AU_TFN": "724 586 698",
+      "AU_PASSPORT": "Q 9775853",
+      "ADDRESS": "28 George Blvd, Tuggeranong ACT 2601"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-050",
+    "input": {
+      "text": "Rafael Garcia\nPersonal: +61 48 7246 906\nWork: (08) 5141 8682 ext. 3883\nEmail: rgarcia@proton.me\nAddress: 406 King St, Sydney NSW",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Rafael Garcia",
+      "AU_PHONE": "+61 48 7246 906",
+      "WORK_PHONE": "(08) 5141 8682 ext. 3883",
+      "EMAIL_ADDRESS": "rgarcia@proton.me",
+      "ADDRESS": "406 King St, Sydney NSW"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-051",
+    "input": {
+      "text": "Faculty of Engineering — Semester 1 2025 results.\nCohort average WAM: 68.4. Median: 70.1. Top decile: 85.0+.\nThese are aggregate statistics. No individual data is contained in this report.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-052",
+    "input": {
+      "text": "Comprehensive record — Marco Hassan (ID: Student ID 475040779)\nBiometrics: Face: face ID on file | Fingerprint: fingerprint registered | Voice: voice biometric enrolled | Sig: digital signature registered\nSensitive: lesbian | Religion: Judaism | First Nations: Aboriginal Australian | SES: low socio-economic background\nGovernment: CRN CRN: 324-168-775B | UAC 1383540889 | USI 4ULLXR96YF\nNational ID: NIC (India): 864885045658 | Criminal: spent conviction — minor traffic offence\nPension: Pension Card No: 761662821 | Next of kin: Marco Lee (sibling) (0482 901 453)\nWorkers comp: WorkCover claim WC-956817 | Audio: voice memo attached | CCTV: CCTV footage — main entrance — 29/11/2025",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Marco Hassan",
+      "STUDENT_ID": "Student ID 475040779",
+      "FACIAL_RECOGNITION": "face ID on file",
+      "FINGERPRINT": "fingerprint registered",
+      "VOICE_RECOGNITION": "voice biometric enrolled",
+      "SIGNATURE": "digital signature registered",
+      "SEXUAL_ORIENTATION": "lesbian",
+      "RELIGION_BELIEF": "Judaism",
+      "ABORIGINALITY": "Aboriginal Australian",
+      "SOCIO_ECONOMIC_STATUS": "low socio-economic background",
+      "CENTRELINK_REFERENCE_NUMBER": "CRN: 324-168-775B",
+      "UAC_ID": "1383540889",
+      "USI": "4ULLXR96YF",
+      "NATIONAL_IDENTITY_CARD": "NIC (India): 864885045658",
+      "CRIMINAL_RECORDS": "spent conviction — minor traffic offence",
+      "PENSION_CARD_NUMBER": "Pension Card No: 761662821",
+      "NEXT_OF_KIN": "Marco Lee (sibling)",
+      "WORKERS_COMPENSATION_CLAIM": "WorkCover claim WC-956817",
+      "AUDIO_INFORMATION": "voice memo attached",
+      "CAMERA_FOOTAGE_AUDIO": "CCTV footage — main entrance — 29/11/2025"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-053",
+    "input": {
+      "text": "International student verification — Aroha Nguyen-Smith\nNationality: Indian | Visa: Student Visa (Subclass 500)\nNational ID: NIC (Malaysia): 730343806210\nPassport: N 3530089\nDOB: 27 Mar 1983 | Address: 122 Flinders Dr, Tuggeranong ACT 2617",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Aroha Nguyen-Smith",
+      "NATIONALITY": "Indian",
+      "CITIZENSHIP_STATUS": "Student Visa (Subclass 500)",
+      "NATIONAL_IDENTITY_CARD": "NIC (Malaysia): 730343806210",
+      "AU_PASSPORT": "N 3530089",
+      "DATE_OF_BIRTH": "27 Mar 1983",
+      "ADDRESS": "122 Flinders Dr, Tuggeranong ACT 2617"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-054",
+    "input": {
+      "text": "Addressee: Carlos Kim\nLevel 3\n95 King Street\nWollongong NSW 2060\nContact: +61 43 7853 773 | carlos.kim@outlook.com\nTFN: 482-957-739",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Carlos Kim",
+      "ADDRESS": "Level 3, 95 King Street, Wollongong NSW 2060",
+      "AU_PHONE": "+61 43 7853 773",
+      "EMAIL_ADDRESS": "carlos.kim@outlook.com",
+      "AU_TFN": "482-957-739"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-055",
+    "input": {
+      "text": "Hi Ingrid Chen,\n\nAs requested, your number is 253133281. Please keep this confidential. DOB: 18/08/1965, address: 196 King St, Whyalla SA 5043.\n\nRegards, ATO",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Ingrid Chen",
+      "AU_TFN": "253133281",
+      "DATE_OF_BIRTH": "18/08/1965",
+      "ADDRESS": "196 King St, Whyalla SA 5043"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-056",
+    "input": {
+      "text": "COMPREHENSIVE IDENTITY FILE — Yuki Singh\nDOB: 10/06/1975 | Address: 433 Pacific Dr, Perth WA 6000\nPhone: +61 47 0210 803 | Email: ysingh68@gmail.com\nTFN: Tax File Number: 505119956\nPassport: C1029887 (expires 03 July 2029)\nMedicare: 9484 00541 0/1 (exp 08/2025)\nDriver's licence (NT): NT 486379660\nBank: Westpac | BSB: 733-593 | Acc: 772990664\nCard: 5147 6241 7717 1980 | Exp: 03/2030 | CVV: 875",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Yuki Singh",
+      "DATE_OF_BIRTH": "10/06/1975",
+      "ADDRESS": "433 Pacific Dr, Perth WA 6000",
+      "AU_PHONE": "+61 47 0210 803",
+      "EMAIL_ADDRESS": "ysingh68@gmail.com",
+      "AU_TFN": "Tax File Number: 505119956",
+      "AU_PASSPORT": "C1029887",
+      "PASSPORT_EXPIRY": "03 July 2029",
+      "MEDICARE_NUMBER": "9484 00541 0/1",
+      "MEDICARE_EXPIRY": "08/2025",
+      "AU_DRIVERS_LICENCE": "NT 486379660",
+      "BSB": "733-593",
+      "AU_BANK_ACCOUNT": "772990664",
+      "AU_BANK_NAME": "Westpac",
+      "PAYMENT_CARD_NUMBER": "5147 6241 7717 1980",
+      "CREDIT_CARD_EXPIRY": "03/2030",
+      "CREDIT_CARD_CVV": "875"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-057",
+    "input": {
+      "text": "Record for O. Okonkwo (full name: Olivia Okonkwo).\nDOB: 19/4/1977 | TFN: 885 121 678\nAddress: 94 King Blvd, Launceston TAS | Ph: 0436 778 451",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Olivia Okonkwo",
+      "DATE_OF_BIRTH": "19/4/1977",
+      "AU_TFN": "885 121 678",
+      "ADDRESS": "94 King Blvd, Launceston TAS",
+      "AU_PHONE": "0436 778 451"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-058",
+    "input": {
+      "text": "Saoirse O'Sullivan (Student ID: Student ID 434879418)\nYour WAM is 85.72. The cohort average is 73.4 (not your WAM). Reference: WAM-292 (internal admin code — not your WAM score).",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Saoirse O'Sullivan",
+      "STUDENT_ID": "Student ID 434879418",
+      "WAM_SCORE": "85.72"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-059",
+    "input": {
+      "text": "Joint application:\nApplicant 1: Fatima Chen, DOB 30 Jun 1970, email fchen92@optusnet.com.au, phone 0469435519.\nApplicant 2: James Lee, DOB 11 Nov 1975, email jlee@proton.me, phone +61 48 7550 952.\nPrimary TFN (Applicant 1): TFN: 716819263.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Fatima Chen, James Lee",
+      "DATE_OF_BIRTH": "30 Jun 1970, 11 Nov 1975",
+      "EMAIL_ADDRESS": "fchen92@optusnet.com.au, jlee@proton.me",
+      "AU_PHONE": "0469435519, +61 48 7550 952",
+      "AU_TFN": "TFN: 716819263"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-060",
+    "input": {
+      "text": "Invoice INV-247803386 was issued for services rendered. Order ORD-85996468 has been dispatched. Quote reference REF-8662568 in all correspondence. No personal information is contained in this notice.",
+      "metadata": {
+        "source_type": "narrative",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-061",
+    "input": {
+      "text": "Diversity form — Ingrid O'Sullivan (SID: 555751966)\nGender: Female | Pronouns: he/him\nSexual orientation: queer\nReligion: Hinduism\nEthnicity: African Australian\nFirst Nations: First Nations Australian\nSES: SES disadvantage identified",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Ingrid O'Sullivan",
+      "STUDENT_ID": "SID: 555751966",
+      "GENDER": "Female",
+      "PRONOUN": "he/him",
+      "SEXUAL_ORIENTATION": "queer",
+      "RELIGION_BELIEF": "Hinduism",
+      "RACIAL_ETHNIC_ORIGIN": "African Australian",
+      "ABORIGINALITY": "First Nations Australian",
+      "SOCIO_ECONOMIC_STATUS": "SES disadvantage identified"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-062",
+    "input": {
+      "text": "Re: Amara Andersen (DOB: 09/10/1989, Unit 4, 475 Collins Ln, Hobart TAS 7300).\nPlease note: the number 115779761 is NOT your Tax File Number — it is an invoice reference. Your actual TFN is: 370 674 226.\nPlease keep your TFN confidential.",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Amara Andersen",
+      "DATE_OF_BIRTH": "09/10/1989",
+      "ADDRESS": "Unit 4, 475 Collins Ln, Hobart TAS 7300",
+      "AU_TFN": "370 674 226"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-063",
+    "input": {
+      "text": "Re: Priya Nakamura (DOB: 05 Mar 1998, Unit 26, 206 Collins St, Gawler SA).\nPlease note: the number 922765003 is NOT your Tax File Number — it is an invoice reference. Your actual TFN is: 994 419 567.\nPlease keep your TFN confidential.",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Priya Nakamura",
+      "DATE_OF_BIRTH": "05 Mar 1998",
+      "ADDRESS": "Unit 26, 206 Collins St, Gawler SA",
+      "AU_TFN": "994 419 567"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-064",
+    "input": {
+      "text": "Priya Chen (Student ID: 548385784)\nYour WAM is 82.03. The cohort average is 65.7 (not your WAM). Reference: WAM-452 (internal admin code — not your WAM score).",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Priya Chen",
+      "STUDENT_ID": "548385784",
+      "WAM_SCORE": "82.03"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-065",
+    "input": {
+      "text": "HR Record — Bao Petrov\n202 Collins Ave, Sydney NSW 2150\nEmp ID: EMP75120 | Personnel: P625875\nRole: Project Manager at Department of Education (casual)\nSalary: AUD 105,000 | Expectation: approximately $149k\nWork: bpetrov@health.nsw.gov.au / (07) 3713 0166",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Bao Petrov",
+      "ADDRESS": "202 Collins Ave, Sydney NSW 2150",
+      "EMPLOYEE_NUMBER": "EMP75120",
+      "PERSONNEL_NUMBER": "P625875",
+      "EMPLOYMENT_INFORMATION": "Project Manager at Department of Education",
+      "CONTRACT_TYPE": "casual",
+      "SALARY": "AUD 105,000",
+      "SALARY_WAGE_EXPECTATION": "approximately $149k",
+      "WORK_EMAIL": "bpetrov@health.nsw.gov.au",
+      "WORK_PHONE": "(07) 3713 0166"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-066",
+    "input": {
+      "text": "Passport holder: Marco Murphy (born 4/3/1970)\nPassport: V 4967223\nIssued: 19/09/2012\nExpires: 20 April 2032\nContact: marco-murphy@icloud.com | 236 King St, Adelaide SA 5062",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Marco Murphy",
+      "DATE_OF_BIRTH": "4/3/1970",
+      "AU_PASSPORT": "V 4967223",
+      "PASSPORT_START_DATE": "19/09/2012",
+      "PASSPORT_EXPIRY": "20 April 2032",
+      "EMAIL_ADDRESS": "marco-murphy@icloud.com",
+      "ADDRESS": "236 King St, Adelaide SA 5062"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-067",
+    "input": {
+      "text": "API response received:\n{\"name\":\"Bao Murphy\",\"email\":\"bao.murphy@yahoo.com.au\",\"phone\":\"+61 49 5518 104\",\"dob\":\"2003-07-12\",\"address\":\"Unit 50, 7 Pacific Dr, Wollongong NSW 2200\",\"student_id\":\"443135299\"}\nPlease review the above payload for PII before forwarding.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Bao Murphy",
+      "EMAIL_ADDRESS": "bao.murphy@yahoo.com.au",
+      "AU_PHONE": "+61 49 5518 104",
+      "DATE_OF_BIRTH": "2003-07-12",
+      "ADDRESS": "Unit 50, 7 Pacific Dr, Wollongong NSW 2200",
+      "STUDENT_ID": "443135299"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-068",
+    "input": {
+      "text": "Record for E. Mwangi (full name: Emma Mwangi).\nDOB: 11/05/1975 | TFN: 017 249 703\nAddress: 263 Military Blvd, Wollongong NSW 2150 | Ph: 0494 401 439",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Emma Mwangi",
+      "DATE_OF_BIRTH": "11/05/1975",
+      "AU_TFN": "017 249 703",
+      "ADDRESS": "263 Military Blvd, Wollongong NSW 2150",
+      "AU_PHONE": "0494 401 439"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-069",
+    "input": {
+      "text": "Student: Dmitri Ferreira (dferreira72@live.com.au)\nID: SID: 506570779\nWAM: 81.93/100\nResult: INFO3315: 92/100 (Credit)\nScholarship: Vice-Chancellor's Global Scholarship",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Dmitri Ferreira",
+      "EMAIL_ADDRESS": "dferreira72@live.com.au",
+      "STUDENT_ID": "SID: 506570779",
+      "WAM_SCORE": "81.93/100",
+      "SUBJECT_RESULTS": "INFO3315: 92/100 (Credit)",
+      "SCHOLARSHIP": "Vice-Chancellor's Global Scholarship"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-070",
+    "input": {
+      "text": "Applicaton Form [page 1 of 2]\nNme: Kwame Schmidt (corrcted from 'Kwame Kim')\nD.O.B: 10/01/1967\nAddres: 116 Flinders Blvd, Perth WA\nTel no.: +61 44 2854 712\ne-mail: kschmidt@yahoo.com.au\nT.F.N:  768 101 559\nPassp. no: T6346076\n[Signed]",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Kwame Schmidt",
+      "DATE_OF_BIRTH": "10/01/1967",
+      "ADDRESS": "116 Flinders Blvd, Perth WA",
+      "AU_PHONE": "+61 44 2854 712",
+      "EMAIL_ADDRESS": "kschmidt@yahoo.com.au",
+      "AU_TFN": "768 101 559",
+      "AU_PASSPORT": "T6346076"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-071",
+    "input": {
+      "text": "Exam results for MATH3971 have been released. The highest mark was 97.5, the lowest 43.0, class mean 71.3. Results are available via the student portal.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-072",
+    "input": {
+      "text": "James Williams (DOB: 24/11/1972, Unit 21, 361 Military Ln, Geelong VIC)\nVehicle: Ford Ranger — Rego: NWY146\nMarital: de facto | Military: veteran (RAAF)\nCarer: parent of two dependent children | Debt: HECS-HELP debt: $34,540\nPension card: PCC 551724707\nNext of kin: Dmitri Kim (sibling) — +61 45 8290 295\nWorkers comp: WorkCover claim WC-985547",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "James Williams",
+      "DATE_OF_BIRTH": "24/11/1972",
+      "ADDRESS": "Unit 21, 361 Military Ln, Geelong VIC",
+      "NUMBER_PLATE": "NWY146",
+      "VEHICLE_REGO": "NWY146",
+      "MARITAL_STATUS": "de facto",
+      "MILITARY_VETERAN_STATUS": "veteran (RAAF)",
+      "CARING_RESPONSIBILITIES": "parent of two dependent children",
+      "PERSONAL_DEBT": "HECS-HELP debt: $34,540",
+      "PENSION_CARD_NUMBER": "PCC 551724707",
+      "NEXT_OF_KIN": "Dmitri Kim (sibling)",
+      "WORKERS_COMPENSATION_CLAIM": "WorkCover claim WC-985547"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-073",
+    "input": {
+      "text": "Student: Amara Al-Rashid (amara-al-rashid@gmail.com)\nID: SID: 510435779\nWAM: WAM: 81.23\nResult: ENGG1801 - Engineering Practice: High Distinction\nScholarship: awarded the Faculty Excellence Award",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Amara Al-Rashid",
+      "EMAIL_ADDRESS": "amara-al-rashid@gmail.com",
+      "STUDENT_ID": "SID: 510435779",
+      "WAM_SCORE": "WAM: 81.23",
+      "SUBJECT_RESULTS": "ENGG1801 - Engineering Practice: High Distinction",
+      "SCHOLARSHIP": "awarded the Faculty Excellence Award"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-074",
+    "input": {
+      "text": "Applicaton Form [page 1 of 2]\nNme: Aroha Nguyen-Smith (corrcted from 'Aroha Andersen')\nD.O.B: 30/03/1966\nAddres: Unit 12, 387 Parramatta Blvd, Cairns QLD 4215\nTel no.: +61 41 6164 787\ne-mail: anguyen-smith@outlook.com\nT.F.N:  249 934 502\nPassp. no: R9471197\n[Signed]",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Aroha Nguyen-Smith",
+      "DATE_OF_BIRTH": "30/03/1966",
+      "ADDRESS": "Unit 12, 387 Parramatta Blvd, Cairns QLD 4215",
+      "AU_PHONE": "+61 41 6164 787",
+      "EMAIL_ADDRESS": "anguyen-smith@outlook.com",
+      "AU_TFN": "249 934 502",
+      "AU_PASSPORT": "R9471197"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-075",
+    "input": {
+      "text": "Addressee: Yuki Kim\nLevel 3\n199 George Street\nBrisbane QLD 4870\nContact: (0443) 279-370 | ykim@optusnet.com.au\nTFN: Tax File Number: 661373057",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Yuki Kim",
+      "ADDRESS": "Level 3, 199 George Street, Brisbane QLD 4870",
+      "AU_PHONE": "(0443) 279-370",
+      "EMAIL_ADDRESS": "ykim@optusnet.com.au",
+      "AU_TFN": "Tax File Number: 661373057"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-076",
+    "input": {
+      "text": "Patient: James Schmidt\nDOB: 27-05-1997\nMedicare: 8567 53619 1/2\nExpiry: September 2027\nIHI: 7083362050895728",
+      "metadata": {
+        "source_type": "clinical",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "James Schmidt",
+      "DATE_OF_BIRTH": "27-05-1997",
+      "MEDICARE_NUMBER": "8567 53619 1/2",
+      "MEDICARE_EXPIRY": "September 2027",
+      "IHI": "7083362050895728"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-077",
+    "input": {
+      "text": "Application submitted to Johnson & Williams Consulting. Applicant: Aroha Okonkwo, DOB: August 22, 1980, phone 0466 245 985, address 74 Military Dr, Melbourne VIC 3000.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Aroha Okonkwo",
+      "DATE_OF_BIRTH": "August 22, 1980",
+      "AU_PHONE": "0466 245 985",
+      "ADDRESS": "74 Military Dr, Melbourne VIC 3000"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-078",
+    "input": {
+      "text": "Congratulations to Yuki Kim (Student ID: SID: 444515251) who has maintained an average of 68.1 across all completed units this semester. This weighted average mark qualifies for Dean's Honours.",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Yuki Kim",
+      "STUDENT_ID": "SID: 444515251",
+      "WAM_SCORE": "68.1"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-079",
+    "input": {
+      "text": "Payroll for Mei Andersen, 496 Collins Ln, Sydney NSW.\nReal bank details: St George Bank, BSB 062207, Account 385496973.\nNote: department cost centre 426-395 is an internal branch routing code, not a BSB.\nGross: $132,000 p.a..",
+      "metadata": {
+        "source_type": "payslip",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mei Andersen",
+      "ADDRESS": "496 Collins Ln, Sydney NSW",
+      "BSB": "062207",
+      "AU_BANK_ACCOUNT": "385496973",
+      "AU_BANK_NAME": "St George Bank",
+      "SALARY": "$132,000 p.a."
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-080",
+    "input": {
+      "text": "Application submitted to Johnson & Williams Consulting. Applicant: Tariq Al-Rashid, DOB: 01 Mar 1979, phone 0450261477, address 284 Flinders Ln, Whyalla SA 5290.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Tariq Al-Rashid",
+      "DATE_OF_BIRTH": "01 Mar 1979",
+      "AU_PHONE": "0450261477",
+      "ADDRESS": "284 Flinders Ln, Whyalla SA 5290"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-081",
+    "input": {
+      "text": "Full name: Mohammed Ferreira, Date of birth: 21/10/1975. Email: mferreira78@icloud.com, Phone: 0489 108 497. Address: Unit 21, 367 Parramatta Rd, Canberra ACT 2615.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mohammed Ferreira",
+      "DATE_OF_BIRTH": "21/10/1975",
+      "EMAIL_ADDRESS": "mferreira78@icloud.com",
+      "AU_PHONE": "0489 108 497",
+      "ADDRESS": "Unit 21, 367 Parramatta Rd, Canberra ACT 2615"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-082",
+    "input": {
+      "text": "Application — Niamh Lee\nBorn: 1986-12-03 | Address: 102 King Blvd, Hobart TAS\nTax file: TFN: 416800283\nMobile: +61 41 9274 519 | niamh-lee94@yahoo.com.au",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Niamh Lee",
+      "DATE_OF_BIRTH": "1986-12-03",
+      "ADDRESS": "102 King Blvd, Hobart TAS",
+      "AU_TFN": "TFN: 416800283",
+      "AU_PHONE": "+61 41 9274 519",
+      "EMAIL_ADDRESS": "niamh-lee94@yahoo.com.au"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-083",
+    "input": {
+      "text": "API response received:\n{\"name\":\"Rafael Ferreira\",\"email\":\"rafael_ferreira19@tpg.com.au\",\"phone\":\"+61 43 2880 194\",\"dob\":\"1993-05-27\",\"address\":\"139 Flinders Rd, Gawler SA\",\"student_id\":\"525006937\"}\nPlease review the above payload for PII before forwarding.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Rafael Ferreira",
+      "EMAIL_ADDRESS": "rafael_ferreira19@tpg.com.au",
+      "AU_PHONE": "+61 43 2880 194",
+      "DATE_OF_BIRTH": "1993-05-27",
+      "ADDRESS": "139 Flinders Rd, Gawler SA",
+      "STUDENT_ID": "525006937"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-084",
+    "input": {
+      "text": "Offer to Wei Brown | Emp ID: EMP17292\nContract: permanent full-time\nSalary range: $86,000 – $101,000 per annum\nWork email: wei-brown@uts.edu.au",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Wei Brown",
+      "EMPLOYEE_NUMBER": "EMP17292",
+      "CONTRACT_TYPE": "permanent full-time",
+      "SALARY": "$86,000 – $101,000 per annum",
+      "WORK_EMAIL": "wei-brown@uts.edu.au"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-085",
+    "input": {
+      "text": "Joint application:\nApplicant 1: Jun Ferreira, DOB 1968-04-09, email jun-ferreira77@proton.me, phone 0446 914 416.\nApplicant 2: Amara Hassan, DOB 01/10/1962, email ahassan@gmail.com, phone +61 42 8124 442.\nPrimary TFN (Applicant 1): 879 525 242.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Jun Ferreira, Amara Hassan",
+      "DATE_OF_BIRTH": "1968-04-09, 01/10/1962",
+      "EMAIL_ADDRESS": "jun-ferreira77@proton.me, ahassan@gmail.com",
+      "AU_PHONE": "0446 914 416, +61 42 8124 442",
+      "AU_TFN": "879 525 242"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-086",
+    "input": {
+      "text": "Partially redacted record — Olivia Mwangi\nDOB: 05/03/1972\nAddress: Unit 27, 123 Pacific Dr, Brisbane QLD\nEmail: olivia_mwangi@bigpond.com\nPassport: M*****75 (partially redacted)\nTFN: 640 *** *** (partially redacted)\nFull identifiers available in secure vault only.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Olivia Mwangi",
+      "DATE_OF_BIRTH": "05/03/1972",
+      "ADDRESS": "Unit 27, 123 Pacific Dr, Brisbane QLD",
+      "EMAIL_ADDRESS": "olivia_mwangi@bigpond.com",
+      "AU_PASSPORT": "M*****75",
+      "AU_TFN": "640 *** ***"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-087",
+    "input": {
+      "text": "Partially redacted record — Olivia Singh\nDOB: 07 April 1977\nAddress: 197 Parramatta Blvd, Darwin NT\nEmail: osingh@icloud.com\nPassport: J*****27 (partially redacted)\nTFN: 785 *** *** (partially redacted)\nFull identifiers available in secure vault only.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Olivia Singh",
+      "DATE_OF_BIRTH": "07 April 1977",
+      "ADDRESS": "197 Parramatta Blvd, Darwin NT",
+      "EMAIL_ADDRESS": "osingh@icloud.com",
+      "AU_PASSPORT": "J*****27",
+      "AU_TFN": "785 *** ***"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-088",
+    "input": {
+      "text": "Academic record — Hana Patel (Student ID: Student ID 532760561)\nWAM: WAM: 51.43 | BIOL2011: 71/100 (Distinction)\nScholarship: awarded the Vice-Chancellor's Global Scholarship\nSanction: late submission penalty (Ref: SANC-93251)\nSC application: special consideration: family emergency\nSupporting doc: medical certificate from Dr. Lena Mwangi (27/08/2024)",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Hana Patel",
+      "STUDENT_ID": "Student ID 532760561",
+      "WAM_SCORE": "WAM: 51.43",
+      "SUBJECT_RESULTS": "BIOL2011: 71/100 (Distinction)",
+      "SCHOLARSHIP": "awarded the Vice-Chancellor's Global Scholarship",
+      "SANCTIONS": "late submission penalty (Ref: SANC-93251)",
+      "SPECIAL_CONSIDERATION": "special consideration: family emergency",
+      "MEDICAL_CERTIFICATE": "medical certificate from Dr. Lena Mwangi (27/08/2024)"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-089",
+    "input": {
+      "text": "Full name: Carlos Kowalski, Date of birth: 18/03/2003. Email: carlos_kowalski@proton.me, Phone: 0485 568 500. Address: 450 Flinders St, Fremantle WA 6230.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Carlos Kowalski",
+      "DATE_OF_BIRTH": "18/03/2003",
+      "EMAIL_ADDRESS": "carlos_kowalski@proton.me",
+      "AU_PHONE": "0485 568 500",
+      "ADDRESS": "450 Flinders St, Fremantle WA 6230"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-090",
+    "input": {
+      "text": "Comprehensive record — Carlos Nguyen-Smith (ID: SID: 578169512)\nBiometrics: Face: facial recognition enrolled | Fingerprint: thumbprint on file | Voice: voice biometric enrolled | Sig: e-signature on file\nSensitive: gay | Religion: Sikhism | First Nations: Torres Strait Islander | SES: low socio-economic background\nGovernment: CRN CRN: 491-095-837S | UAC 5037053008 | USI XEBUAXPNV2\nNational ID: NIC (Malaysia): 765403394452 | Criminal: criminal history check: clear\nPension: Pension Card No: 169599946 | Next of kin: Emma Petrov (sibling) ((0448) 610-292)\nWorkers comp: workers compensation claim WC-487840 (psychological injury) | Audio: voice memo attached | CCTV: CCTV footage — carpark B1 — 03/09/2024",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Carlos Nguyen-Smith",
+      "STUDENT_ID": "SID: 578169512",
+      "FACIAL_RECOGNITION": "facial recognition enrolled",
+      "FINGERPRINT": "thumbprint on file",
+      "VOICE_RECOGNITION": "voice biometric enrolled",
+      "SIGNATURE": "e-signature on file",
+      "SEXUAL_ORIENTATION": "gay",
+      "RELIGION_BELIEF": "Sikhism",
+      "ABORIGINALITY": "Torres Strait Islander",
+      "SOCIO_ECONOMIC_STATUS": "low socio-economic background",
+      "CENTRELINK_REFERENCE_NUMBER": "CRN: 491-095-837S",
+      "UAC_ID": "5037053008",
+      "USI": "XEBUAXPNV2",
+      "NATIONAL_IDENTITY_CARD": "NIC (Malaysia): 765403394452",
+      "CRIMINAL_RECORDS": "criminal history check: clear",
+      "PENSION_CARD_NUMBER": "Pension Card No: 169599946",
+      "NEXT_OF_KIN": "Emma Petrov (sibling)",
+      "WORKERS_COMPENSATION_CLAIM": "workers compensation claim WC-487840 (psychological injury)",
+      "AUDIO_INFORMATION": "voice memo attached",
+      "CAMERA_FOOTAGE_AUDIO": "CCTV footage — carpark B1 — 03/09/2024"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-091",
+    "input": {
+      "text": "Academic record — Mei Chen (Student ID: SID: 570032552)\nWAM: 62.98/100 | MATH3971 - Mathematical Statistics: Distinction\nScholarship: awarded the Vice-Chancellor's Global Scholarship\nSanction: plagiarism finding (Ref: SANC-90742)\nSC application: special consideration: family emergency\nSupporting doc: med cert — Dr. Bao Chen, 17 October 2025",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mei Chen",
+      "STUDENT_ID": "SID: 570032552",
+      "WAM_SCORE": "62.98/100",
+      "SUBJECT_RESULTS": "MATH3971 - Mathematical Statistics: Distinction",
+      "SCHOLARSHIP": "awarded the Vice-Chancellor's Global Scholarship",
+      "SANCTIONS": "plagiarism finding (Ref: SANC-90742)",
+      "SPECIAL_CONSIDERATION": "special consideration: family emergency",
+      "MEDICAL_CERTIFICATE": "med cert — Dr. Bao Chen, 17 October 2025"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-092",
+    "input": {
+      "text": "Incident report — Emma Schmidt (born 2/3/1999, 300 Military St, Ballarat VIC 3000)\nNational ID: NIC (India): 638055717494\nCriminal history: spent conviction — minor traffic offence\nAudio evidence: voice memo attached\nCCTV: CCTV footage — Building F Level 2 — 14/08/2024",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Emma Schmidt",
+      "DATE_OF_BIRTH": "2/3/1999",
+      "ADDRESS": "300 Military St, Ballarat VIC 3000",
+      "NATIONAL_IDENTITY_CARD": "NIC (India): 638055717494",
+      "CRIMINAL_RECORDS": "spent conviction — minor traffic offence",
+      "AUDIO_INFORMATION": "voice memo attached",
+      "CAMERA_FOOTAGE_AUDIO": "CCTV footage — Building F Level 2 — 14/08/2024"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-093",
+    "input": {
+      "text": "Identity check — Liam Lee (DOB: 01/02/1999). TFN: 935 101 195. Passport: A 3158016. Address: 190 Flinders Ln, Whyalla SA 5125.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Liam Lee",
+      "DATE_OF_BIRTH": "01/02/1999",
+      "AU_TFN": "935 101 195",
+      "AU_PASSPORT": "A 3158016",
+      "ADDRESS": "190 Flinders Ln, Whyalla SA 5125"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-094",
+    "input": {
+      "text": "Application — Liam Nguyen-Smith\nBorn: 1998-02-11 | Address: 16 Flinders Ave, Belconnen ACT\nTax file: Tax File Number: 360088634\nMobile: +61 43 8737 261 | lnguyen-smith@yahoo.com.au",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Liam Nguyen-Smith",
+      "DATE_OF_BIRTH": "1998-02-11",
+      "ADDRESS": "16 Flinders Ave, Belconnen ACT",
+      "AU_TFN": "Tax File Number: 360088634",
+      "AU_PHONE": "+61 43 8737 261",
+      "EMAIL_ADDRESS": "lnguyen-smith@yahoo.com.au"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-095",
+    "input": {
+      "text": "Student Carlos Hassan (ID: 415736662) enrolled in COMP5703. Reference ticket SID502911346 was raised for an IT issue — this is a ticket ref, not a student ID. WAM on file: 57.02. Email: chassan61@live.com.au.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Carlos Hassan",
+      "STUDENT_ID": "415736662",
+      "WAM_SCORE": "57.02",
+      "EMAIL_ADDRESS": "chassan61@live.com.au"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-096",
+    "input": {
+      "text": "Student: Ibrahim Schmidt (ibrahim_schmidt98@icloud.com)\nID: SID: 575318425\nWAM: WAM: 81.36\nResult: MATH3971: 75/100 (Pass)\nScholarship: awarded the Sydney Achiever Scholarship",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Ibrahim Schmidt",
+      "EMAIL_ADDRESS": "ibrahim_schmidt98@icloud.com",
+      "STUDENT_ID": "SID: 575318425",
+      "WAM_SCORE": "WAM: 81.36",
+      "SUBJECT_RESULTS": "MATH3971: 75/100 (Pass)",
+      "SCHOLARSHIP": "awarded the Sydney Achiever Scholarship"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-097",
+    "input": {
+      "text": "Our head office is located at 1 Macquarie Place, Sydney NSW 2000. For enquiries, contact info@company.com.au or call 1800 123 456. ABN: 12 345 678 901.",
+      "metadata": {
+        "source_type": "narrative",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-098",
+    "input": {
+      "text": "API response received:\n{\"name\":\"Rafael Williams\",\"email\":\"rafael.williams80@yahoo.com.au\",\"phone\":\"0479 373 621\",\"dob\":\"1998-09-27\",\"address\":\"479 George Ave, Geelong VIC\",\"student_id\":\"494085064\"}\nPlease review the above payload for PII before forwarding.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Rafael Williams",
+      "EMAIL_ADDRESS": "rafael.williams80@yahoo.com.au",
+      "AU_PHONE": "0479 373 621",
+      "DATE_OF_BIRTH": "1998-09-27",
+      "ADDRESS": "479 George Ave, Geelong VIC",
+      "STUDENT_ID": "494085064"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-099",
+    "input": {
+      "text": "Student Liam Nakamura (ID: 596619938) enrolled in COMP5703. Reference ticket SID497216322 was raised for an IT issue — this is a ticket ref, not a student ID. WAM on file: WAM: 88.43. Email: lnakamura@gmail.com.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Liam Nakamura",
+      "STUDENT_ID": "596619938",
+      "WAM_SCORE": "WAM: 88.43",
+      "EMAIL_ADDRESS": "lnakamura@gmail.com"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-100",
+    "input": {
+      "text": "Joint application:\nApplicant 1: Fatima Lee, DOB 27 Dec 1983, email fatima_lee@hotmail.com, phone 0438410314.\nApplicant 2: Ingrid Murphy, DOB July 16, 2003, email ingrid.murphy@tpg.com.au, phone 0470 881 173.\nPrimary TFN (Applicant 1): 606832072.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Fatima Lee, Ingrid Murphy",
+      "DATE_OF_BIRTH": "27 Dec 1983, July 16, 2003",
+      "EMAIL_ADDRESS": "fatima_lee@hotmail.com, ingrid.murphy@tpg.com.au",
+      "AU_PHONE": "0438410314, 0470 881 173",
+      "AU_TFN": "606832072"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-101",
+    "input": {
+      "text": "Faculty of Engineering — Semester 1 2025 results.\nCohort average WAM: 68.4. Median: 70.1. Top decile: 85.0+.\nThese are aggregate statistics. No individual data is contained in this report.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-102",
+    "input": {
+      "text": "Hi Kwame Garcia,\n\nAs requested, your number is 402662280. Please keep this confidential. DOB: 29 November 1986, address: Unit 35, 482 Collins Rd, Bunbury WA 6163.\n\nRegards, ATO",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Kwame Garcia",
+      "AU_TFN": "402662280",
+      "DATE_OF_BIRTH": "29 November 1986",
+      "ADDRESS": "Unit 35, 482 Collins Rd, Bunbury WA 6163"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-103",
+    "input": {
+      "text": "Verification — Aroha Kowalski, born 23.01.1970.\nAddress: 299 Flinders Rd, Melbourne VIC 3121\nLicence (ACT): ACT 7358903\nPassport: F7917193",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Aroha Kowalski",
+      "DATE_OF_BIRTH": "23.01.1970",
+      "ADDRESS": "299 Flinders Rd, Melbourne VIC 3121",
+      "AU_DRIVERS_LICENCE": "ACT 7358903",
+      "AU_PASSPORT": "F7917193"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-104",
+    "input": {
+      "text": "The Johnson Hand Sanitiser and Williams Garden Tools product lines are now available at all major retailers. The Smith & Jones retail partnership begins 1 July 2025.",
+      "metadata": {
+        "source_type": "narrative",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-105",
+    "input": {
+      "text": "Patient: Anh Hassan\nDOB: 13 March 1992\nMedicare: 5712-9337-46-9\nExpiry: June 2025\nIHI: 9742 3953 4421 4058",
+      "metadata": {
+        "source_type": "clinical",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Anh Hassan",
+      "DATE_OF_BIRTH": "13 March 1992",
+      "MEDICARE_NUMBER": "5712-9337-46-9",
+      "MEDICARE_EXPIRY": "June 2025",
+      "IHI": "9742 3953 4421 4058"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-106",
+    "input": {
+      "text": "Application — Olivia Mwangi\nBorn: 1981-04-09 | Address: 146 Parramatta Ave, Whyalla SA\nTax file: 762813393\nMobile: +61 47 7379 393 | olivia-mwangi8@icloud.com",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Olivia Mwangi",
+      "DATE_OF_BIRTH": "1981-04-09",
+      "ADDRESS": "146 Parramatta Ave, Whyalla SA",
+      "AU_TFN": "762813393",
+      "AU_PHONE": "+61 47 7379 393",
+      "EMAIL_ADDRESS": "olivia-mwangi8@icloud.com"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-107",
+    "input": {
+      "text": "Mohammed Garcia (Student ID: SID: 453536948)\nYour WAM is 64.74. The cohort average is 78.3 (not your WAM). Reference: WAM-437 (internal admin code — not your WAM score).",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mohammed Garcia",
+      "STUDENT_ID": "SID: 453536948",
+      "WAM_SCORE": "64.74"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-108",
+    "input": {
+      "text": "Biometric record — Ibrahim Andersen (ID: SID: 571478036)\nFace: face ID on file\nFingerprint: fingerprint registered\nVoice: voiceprint on file\nSignature: e-signature on file",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Ibrahim Andersen",
+      "STUDENT_ID": "SID: 571478036",
+      "FACIAL_RECOGNITION": "face ID on file",
+      "FINGERPRINT": "fingerprint registered",
+      "VOICE_RECOGNITION": "voiceprint on file",
+      "SIGNATURE": "e-signature on file"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-109",
+    "input": {
+      "text": "COMPREHENSIVE IDENTITY FILE — Olivia Chen\nDOB: 17/10/1982 | Address: 390 Parramatta St, Perth WA 6000\nPhone: (0414) 171-298 | Email: ochen@gmail.com\nTFN: Tax File Number: 205887982\nPassport: R4338361 (expires 23/12/2028)\nMedicare: 0738650251/6 (exp 05/2025)\nDriver's licence (QLD): QLD: 142660009\nBank: Bendigo Bank | BSB: 633-986 | Acc: 648676654\nCard: 4807 4444 0412 7257 | Exp: 04/26 | CVV: 713",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Olivia Chen",
+      "DATE_OF_BIRTH": "17/10/1982",
+      "ADDRESS": "390 Parramatta St, Perth WA 6000",
+      "AU_PHONE": "(0414) 171-298",
+      "EMAIL_ADDRESS": "ochen@gmail.com",
+      "AU_TFN": "Tax File Number: 205887982",
+      "AU_PASSPORT": "R4338361",
+      "PASSPORT_EXPIRY": "23/12/2028",
+      "MEDICARE_NUMBER": "0738650251/6",
+      "MEDICARE_EXPIRY": "05/2025",
+      "AU_DRIVERS_LICENCE": "QLD: 142660009",
+      "BSB": "633-986",
+      "AU_BANK_ACCOUNT": "648676654",
+      "AU_BANK_NAME": "Bendigo Bank",
+      "PAYMENT_CARD_NUMBER": "4807 4444 0412 7257",
+      "CREDIT_CARD_EXPIRY": "04/26",
+      "CREDIT_CARD_CVV": "713"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-110",
+    "input": {
+      "text": "Joint application:\nApplicant 1: Jun Al-Rashid, DOB 22 March 1970, email jal-rashid19@proton.me, phone +61 43 2965 902.\nApplicant 2: Fatima Ferreira, DOB August 29, 1978, email fferreira@tpg.com.au, phone +61 46 2475 099.\nPrimary TFN (Applicant 1): Tax File Number: 010482763.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Jun Al-Rashid, Fatima Ferreira",
+      "DATE_OF_BIRTH": "22 March 1970, August 29, 1978",
+      "EMAIL_ADDRESS": "jal-rashid19@proton.me, fferreira@tpg.com.au",
+      "AU_PHONE": "+61 43 2965 902, +61 46 2475 099",
+      "AU_TFN": "Tax File Number: 010482763"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-111",
+    "input": {
+      "text": "Payroll for Yuki Garcia, 156 Parramatta Rd, Brisbane QLD 4101.\nReal bank details: Bendigo Bank, BSB 633884, Account 323965781.\nNote: department cost centre 387-284 is an internal branch routing code, not a BSB.\nGross: AUD 177,000.",
+      "metadata": {
+        "source_type": "payslip",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Yuki Garcia",
+      "ADDRESS": "156 Parramatta Rd, Brisbane QLD 4101",
+      "BSB": "633884",
+      "AU_BANK_ACCOUNT": "323965781",
+      "AU_BANK_NAME": "Bendigo Bank",
+      "SALARY": "AUD 177,000"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-112",
+    "input": {
+      "text": "Congratulations to Emma Singh (Student ID: Student ID 461333955) who has maintained an average of 69.2 across all completed units this semester. This weighted average mark qualifies for Dean's Honours.",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Emma Singh",
+      "STUDENT_ID": "Student ID 461333955",
+      "WAM_SCORE": "69.2"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-113",
+    "input": {
+      "text": "Smith Technologies Pty Ltd (ABN 51 234 567 890, ACN 234 567 890) has entered into a service agreement. GST registered. Contact: admin@smithtech.com.au | 1300 000 123.",
+      "metadata": {
+        "source_type": "narrative",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-114",
+    "input": {
+      "text": "User: Anh Reyes (areyes81@tpg.com.au)\nIP: 432c:e7db:4f64:1ced:df00:7b7e:11cb:a70e | Device: MAC: e9:e7:d8:7b:28:72\nCookie: PHPSESSID=vx78xs0mp1j1dk06vygz5zpwgydrwywr\nGPS: -38.496262, 139.159983 (-38.496262, 139.159983)\nUsername: saoirse.lee\n@amaraschmidt | Instagram ID: 4011378001\nActivity: social media history on Instagram\nLast URL: https://www.ato.gov.au/account/43567",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Anh Reyes",
+      "EMAIL_ADDRESS": "areyes81@tpg.com.au",
+      "IP_ADDRESS": "432c:e7db:4f64:1ced:df00:7b7e:11cb:a70e",
+      "DEVICE_ID": "MAC: e9:e7:d8:7b:28:72",
+      "COOKIE_INFORMATION": "PHPSESSID=vx78xs0mp1j1dk06vygz5zpwgydrwywr",
+      "GEOLOCATION_INFORMATION": "-38.496262, 139.159983",
+      "LATITUDE": "-38.496262",
+      "LONGITUDE": "139.159983",
+      "USERNAME": "saoirse.lee",
+      "SOCIAL_MEDIA_ACCOUNT": "@amaraschmidt",
+      "SOCIAL_MEDIA_ID": "Instagram ID: 4011378001",
+      "SOCIAL_MEDIA_HISTORY": "social media history on Instagram",
+      "WEBSITE_HISTORY": "https://www.ato.gov.au/account/43567"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-115",
+    "input": {
+      "text": "COMPREHENSIVE IDENTITY FILE — Anh Lee\nDOB: 6/10/2000 | Address: 482 King Rd, Ballarat VIC 3121\nPhone: 0460631707 | Email: anh_lee@live.com.au\nTFN: TFN: 596429758\nPassport: G 3857661 (expires 21/06/2028)\nMedicare: 0303-3977-94-4 (exp December 2028)\nDriver's licence (QLD): QLD: 986602920\nBank: Macquarie Bank | BSB: 633213 | Acc: 642959577\nCard: 5178249681395602 | Exp: 06/2026 | CVV: 594",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Anh Lee",
+      "DATE_OF_BIRTH": "6/10/2000",
+      "ADDRESS": "482 King Rd, Ballarat VIC 3121",
+      "AU_PHONE": "0460631707",
+      "EMAIL_ADDRESS": "anh_lee@live.com.au",
+      "AU_TFN": "TFN: 596429758",
+      "AU_PASSPORT": "G 3857661",
+      "PASSPORT_EXPIRY": "21/06/2028",
+      "MEDICARE_NUMBER": "0303-3977-94-4",
+      "MEDICARE_EXPIRY": "December 2028",
+      "AU_DRIVERS_LICENCE": "QLD: 986602920",
+      "BSB": "633213",
+      "AU_BANK_ACCOUNT": "642959577",
+      "AU_BANK_NAME": "Macquarie Bank",
+      "PAYMENT_CARD_NUMBER": "5178249681395602",
+      "CREDIT_CARD_EXPIRY": "06/2026",
+      "CREDIT_CARD_CVV": "594"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-116",
+    "input": {
+      "text": "The University of Sydney was founded on 1 October 1850, making it Australia's oldest university. The Faculty of Medicine was established in 1883. The Camperdown campus opened in 1914.",
+      "metadata": {
+        "source_type": "narrative",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-117",
+    "input": {
+      "text": "Diversity form — Mohammed Nakamura (427372405)\nGender: Male | Pronouns: xe/xem\nSexual orientation: bisexual\nReligion: Sikhism\nEthnicity: Pacific Islander\nFirst Nations: Aboriginal Australian\nSES: SES disadvantage identified",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mohammed Nakamura",
+      "STUDENT_ID": "427372405",
+      "GENDER": "Male",
+      "PRONOUN": "xe/xem",
+      "SEXUAL_ORIENTATION": "bisexual",
+      "RELIGION_BELIEF": "Sikhism",
+      "RACIAL_ETHNIC_ORIGIN": "Pacific Islander",
+      "ABORIGINALITY": "Aboriginal Australian",
+      "SOCIO_ECONOMIC_STATUS": "SES disadvantage identified"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-118",
+    "input": {
+      "text": "Patient: Yuki-Tariq Mwangi-Singh\nDOB: 22/02/1967\nEmail: ymwangi@outlook.com\nPhone: (0480) 277-155\nAddress: 256 Parramatta Dr, Ballarat VIC 3000",
+      "metadata": {
+        "source_type": "clinical",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Yuki-Tariq Mwangi-Singh",
+      "DATE_OF_BIRTH": "22/02/1967",
+      "EMAIL_ADDRESS": "ymwangi@outlook.com",
+      "AU_PHONE": "(0480) 277-155",
+      "ADDRESS": "256 Parramatta Dr, Ballarat VIC 3000"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-119",
+    "input": {
+      "text": "PAYSLIP — Aroha Thompson, Unit 18, 135 George Blvd, Tuggeranong ACT 2600.\nBank: Commonwealth Bank, BSB: 012-309, Account: 329104617\nSalary: $166,000 per annum",
+      "metadata": {
+        "source_type": "payslip",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Aroha Thompson",
+      "ADDRESS": "Unit 18, 135 George Blvd, Tuggeranong ACT 2600",
+      "BSB": "012-309",
+      "AU_BANK_ACCOUNT": "329104617",
+      "AU_BANK_NAME": "Commonwealth Bank",
+      "SALARY": "$166,000 per annum"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-120",
+    "input": {
+      "text": "Applicant: Nguyễn Thị Ánh\nDOB: 07 November 1982\nEmail: anh.nguyen@gmail.com\nAddress: Unit 47, 7 Collins Dr, Newcastle NSW\nTFN: 019 144 537",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Nguyễn Thị Ánh",
+      "DATE_OF_BIRTH": "07 November 1982",
+      "EMAIL_ADDRESS": "anh.nguyen@gmail.com",
+      "ADDRESS": "Unit 47, 7 Collins Dr, Newcastle NSW",
+      "AU_TFN": "019 144 537"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-121",
+    "input": {
+      "text": "Passport holder: Amara Reyes (born November 02, 1995)\nPassport: P1395824\nIssued: 04/11/2010\nExpires: 24 August 2027\nContact: amara_reyes@yahoo.com.au | 251 Pacific St, Wollongong NSW 2060",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Amara Reyes",
+      "DATE_OF_BIRTH": "November 02, 1995",
+      "AU_PASSPORT": "P1395824",
+      "PASSPORT_START_DATE": "04/11/2010",
+      "PASSPORT_EXPIRY": "24 August 2027",
+      "EMAIL_ADDRESS": "amara_reyes@yahoo.com.au",
+      "ADDRESS": "251 Pacific St, Wollongong NSW 2060"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-122",
+    "input": {
+      "text": "Student: Mei van der Berg (mei-van der berg@gmail.com)\nID: 590899622\nWAM: WAM: 55.75\nResult: BIOL2011 - Cell Biology: Distinction\nScholarship: Vice-Chancellor's Global Scholarship",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mei van der Berg",
+      "EMAIL_ADDRESS": "mei-van der berg@gmail.com",
+      "STUDENT_ID": "590899622",
+      "WAM_SCORE": "WAM: 55.75",
+      "SUBJECT_RESULTS": "BIOL2011 - Cell Biology: Distinction",
+      "SCHOLARSHIP": "Vice-Chancellor's Global Scholarship"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-123",
+    "input": {
+      "text": "Comprehensive record — Rafael Thompson (ID: 588649091)\nBiometrics: Face: facial recognition enrolled | Fingerprint: thumbprint on file | Voice: voice biometric enrolled | Sig: e-signature on file\nSensitive: queer | Religion: Christianity | First Nations: Aboriginal Australian | SES: low socio-economic background\nGovernment: CRN 364 973 656Q | UAC 8707707455 | USI 4CMHVTTCU2\nNational ID: Singapore National ID: 344775477403 | Criminal: spent conviction — minor traffic offence\nPension: Pension Card No: 778267567 | Next of kin: Liam Al-Rashid (sibling) (0479 391 156)\nWorkers comp: workers compensation claim WC-590257 (psychological injury) | Audio: recorded audio message on file | CCTV: CCTV footage — Building F Level 2 — 24/01/2025",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Rafael Thompson",
+      "STUDENT_ID": "588649091",
+      "FACIAL_RECOGNITION": "facial recognition enrolled",
+      "FINGERPRINT": "thumbprint on file",
+      "VOICE_RECOGNITION": "voice biometric enrolled",
+      "SIGNATURE": "e-signature on file",
+      "SEXUAL_ORIENTATION": "queer",
+      "RELIGION_BELIEF": "Christianity",
+      "ABORIGINALITY": "Aboriginal Australian",
+      "SOCIO_ECONOMIC_STATUS": "low socio-economic background",
+      "CENTRELINK_REFERENCE_NUMBER": "364 973 656Q",
+      "UAC_ID": "8707707455",
+      "USI": "4CMHVTTCU2",
+      "NATIONAL_IDENTITY_CARD": "Singapore National ID: 344775477403",
+      "CRIMINAL_RECORDS": "spent conviction — minor traffic offence",
+      "PENSION_CARD_NUMBER": "Pension Card No: 778267567",
+      "NEXT_OF_KIN": "Liam Al-Rashid (sibling)",
+      "WORKERS_COMPENSATION_CLAIM": "workers compensation claim WC-590257 (psychological injury)",
+      "AUDIO_INFORMATION": "recorded audio message on file",
+      "CAMERA_FOOTAGE_AUDIO": "CCTV footage — Building F Level 2 — 24/01/2025"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-124",
+    "input": {
+      "text": "PAYSLIP — Marco Lee, 13 Flinders St, Devonport TAS 7050.\nBank: NAB, BSB: 012-628, Account: 78862519\nSalary: $101,000 p.a.",
+      "metadata": {
+        "source_type": "payslip",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Marco Lee",
+      "ADDRESS": "13 Flinders St, Devonport TAS 7050",
+      "BSB": "012-628",
+      "AU_BANK_ACCOUNT": "78862519",
+      "AU_BANK_NAME": "NAB",
+      "SALARY": "$101,000 p.a."
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-125",
+    "input": {
+      "text": "Please ensure your tax affairs are in order. Emma Williams (born 26 March 2005) submitted their return. The TFN recorded is 717734593. Note: invoice 246967971 is outstanding and is NOT a Tax File Number. Correspondence address: 337 Military Ave, Whyalla SA 5290.",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Emma Williams",
+      "DATE_OF_BIRTH": "26 March 2005",
+      "AU_TFN": "717734593",
+      "ADDRESS": "337 Military Ave, Whyalla SA 5290"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-126",
+    "input": {
+      "text": "Clinical record — Jun Petrov (ID: SID: 485781537, born 06 May 1965)\nDiagnosis: rheumatoid arthritis\nDisability: depression and anxiety\nTreatment: grief counselling (×19 sessions)\nEvidence: medical certificate from Dr. Yuki Murphy (23/10/2024)\nSC: special consideration: mental health crisis",
+      "metadata": {
+        "source_type": "clinical",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Jun Petrov",
+      "STUDENT_ID": "SID: 485781537",
+      "DATE_OF_BIRTH": "06 May 1965",
+      "MEDICAL_INFORMATION": "rheumatoid arthritis",
+      "DISABILITY_OR_SPECIFIC_CONDITION": "depression and anxiety",
+      "COUNSELLING_RECORDS": "grief counselling (×19 sessions)",
+      "MEDICAL_CERTIFICATE": "medical certificate from Dr. Yuki Murphy (23/10/2024)",
+      "SPECIAL_CONSIDERATION": "special consideration: mental health crisis"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-127",
+    "input": {
+      "text": "API response received:\n{\"name\":\"Carlos Lee\",\"email\":\"carlos.lee@optusnet.com.au\",\"phone\":\"0426851021\",\"dob\":\"1969-12-22\",\"address\":\"163 George St, Perth WA\",\"student_id\":\"461760516\"}\nPlease review the above payload for PII before forwarding.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Carlos Lee",
+      "EMAIL_ADDRESS": "carlos.lee@optusnet.com.au",
+      "AU_PHONE": "0426851021",
+      "DATE_OF_BIRTH": "1969-12-22",
+      "ADDRESS": "163 George St, Perth WA",
+      "STUDENT_ID": "461760516"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-128",
+    "input": {
+      "text": "Under Section 17 of the Privacy Act 1988, entities must not collect sensitive information including health information, racial or ethnic origin, sexual orientation, or religious beliefs without consent. Refer to APP 3.3 for exemptions.",
+      "metadata": {
+        "source_type": "narrative",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-129",
+    "input": {
+      "text": "The University of Sydney was founded on 1 October 1850, making it Australia's oldest university. The Faculty of Medicine was established in 1883. The Camperdown campus opened in 1914.",
+      "metadata": {
+        "source_type": "narrative",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-130",
+    "input": {
+      "text": "HR Record — Marco Petrov\nUnit 10, 138 King Blvd, Perth WA 6005\nEmp ID: Employee No: EMP78534 | Personnel: P684907\nRole: Project Manager at University of Sydney (permanent full-time)\nSalary: AUD 61,000 | Expectation: approximately $107k\nWork: mpetrov@uts.edu.au / (03) 2663 6005 ext. 6011",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Marco Petrov",
+      "ADDRESS": "Unit 10, 138 King Blvd, Perth WA 6005",
+      "EMPLOYEE_NUMBER": "Employee No: EMP78534",
+      "PERSONNEL_NUMBER": "P684907",
+      "EMPLOYMENT_INFORMATION": "Project Manager at University of Sydney",
+      "CONTRACT_TYPE": "permanent full-time",
+      "SALARY": "AUD 61,000",
+      "SALARY_WAGE_EXPECTATION": "approximately $107k",
+      "WORK_EMAIL": "mpetrov@uts.edu.au",
+      "WORK_PHONE": "(03) 2663 6005 ext. 6011"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-131",
+    "input": {
+      "text": "The server is reachable at 127.0.0.1 (localhost) and 192.168.0.1 (internal gateway). External traffic is routed via 0.0.0.0/0. Firewall rules apply from 10.0.0.0/8.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-132",
+    "input": {
+      "text": "Applicant: José García\nDOB: 04-10-1998\nEmail: jose.garcía@gmail.com\nAddress: Unit 2, 42 Flinders Rd, Cairns QLD\nTFN: 099 139 678",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "José García",
+      "DATE_OF_BIRTH": "04-10-1998",
+      "EMAIL_ADDRESS": "jose.garcía@gmail.com",
+      "ADDRESS": "Unit 2, 42 Flinders Rd, Cairns QLD",
+      "AU_TFN": "099 139 678"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-133",
+    "input": {
+      "text": "Re: Jun Singh (DOB: 1985-10-05, 18 Parramatta Ave, Ballarat VIC).\nPlease note: the number 916673244 is NOT your Tax File Number — it is an invoice reference. Your actual TFN is: TFN: 610964362.\nPlease keep your TFN confidential.",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Jun Singh",
+      "DATE_OF_BIRTH": "1985-10-05",
+      "ADDRESS": "18 Parramatta Ave, Ballarat VIC",
+      "AU_TFN": "TFN: 610964362"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-134",
+    "input": {
+      "text": "Health record — Fatima Patel (DOB: 02.03.1986).\nMedicare: 5525-6146-74-9, expires June 2030.\nPrivate health insurance policy: 4376 72267 3/9 (this is a Medibank policy number, not Medicare).\nIHI: 6479118907887591.",
+      "metadata": {
+        "source_type": "clinical",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Fatima Patel",
+      "DATE_OF_BIRTH": "02.03.1986",
+      "MEDICARE_NUMBER": "5525-6146-74-9",
+      "MEDICARE_EXPIRY": "June 2030",
+      "IHI": "6479118907887591"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-135",
+    "input": {
+      "text": "Applicant Mohammed Thompson is 27 years old (born 1998). Address: 278 Flinders Blvd, Alice Springs NT 0810. Contact: mohammed_thompson@yahoo.com.au. Note: the applicant's full DOB is required for identity verification.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mohammed Thompson",
+      "DATE_OF_BIRTH": "1998",
+      "ADDRESS": "278 Flinders Blvd, Alice Springs NT 0810",
+      "EMAIL_ADDRESS": "mohammed_thompson@yahoo.com.au"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-136",
+    "input": {
+      "text": "Dmitri Nguyen-Smith\n191/20 Geo. act 2601\nPh: (0423) 124-810 | em: dmitri.nguyen-smith35@bigpond.com\nTFN 637848703",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Dmitri Nguyen-Smith",
+      "ADDRESS": "191/20 Geo. act 2601",
+      "AU_PHONE": "(0423) 124-810",
+      "EMAIL_ADDRESS": "dmitri.nguyen-smith35@bigpond.com",
+      "AU_TFN": "637848703"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-137",
+    "input": {
+      "text": "Record for L. Brown (full name: Liam Brown).\nDOB: March 11, 1994 | TFN: 585 709 685\nAddress: Unit 4, 432 King Ln, Geelong VIC 3011 | Ph: (0450) 761-636",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Liam Brown",
+      "DATE_OF_BIRTH": "March 11, 1994",
+      "AU_TFN": "585 709 685",
+      "ADDRESS": "Unit 4, 432 King Ln, Geelong VIC 3011",
+      "AU_PHONE": "(0450) 761-636"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-138",
+    "input": {
+      "text": "Enrolment — James Nguyen-Smith (DOB: 10/7/1990, 451 Pacific Ave, Palmerston NT 0800)\nCentrelink CRN: 542 177 656A\nUAC: 8218733334 | USI: KLBBBLN8C7\nNationality: Chinese | Status: Australian Citizen",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "James Nguyen-Smith",
+      "DATE_OF_BIRTH": "10/7/1990",
+      "ADDRESS": "451 Pacific Ave, Palmerston NT 0800",
+      "CENTRELINK_REFERENCE_NUMBER": "542 177 656A",
+      "UAC_ID": "8218733334",
+      "USI": "KLBBBLN8C7",
+      "NATIONALITY": "Chinese",
+      "CITIZENSHIP_STATUS": "Australian Citizen"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-139",
+    "input": {
+      "text": "Accommodation Request — Kwame Nguyen-Smith (ID: SID: 470422890).\nThe applicant has requested housing with other queer students as part of the LGBTQ+ residential community. Sexual orientation: queer.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Kwame Nguyen-Smith",
+      "STUDENT_ID": "SID: 470422890",
+      "SEXUAL_ORIENTATION": "queer"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-140",
+    "input": {
+      "text": "Incident report: Kwame Al-Rashid (ID: 552652088) stated: 'I identify as bisexual and my religious beliefs (Judaism) were mocked by another student.' The student also disclosed their cultural background as Asian Australian.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Kwame Al-Rashid",
+      "STUDENT_ID": "552652088",
+      "SEXUAL_ORIENTATION": "bisexual",
+      "RELIGION_BELIEF": "Judaism",
+      "RACIAL_ETHNIC_ORIGIN": "Asian Australian"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-141",
+    "input": {
+      "text": "Identity check — Aroha van der Berg (DOB: 09/07/1991). TFN: 088 454 380. Passport: X5429768. Address: 25 Flinders Rd, Geelong VIC 3350.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Aroha van der Berg",
+      "DATE_OF_BIRTH": "09/07/1991",
+      "AU_TFN": "088 454 380",
+      "AU_PASSPORT": "X5429768",
+      "ADDRESS": "25 Flinders Rd, Geelong VIC 3350"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-142",
+    "input": {
+      "text": "Incident report — Lena Kim (born 13 May 1965, 249 George St, Launceston TAS 7320)\nNational ID: China National ID: 336417572691\nCriminal history: spent conviction — minor traffic offence\nAudio evidence: recorded audio message on file\nCCTV: CCTV footage — Building F Level 2 — 16/04/2025",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Lena Kim",
+      "DATE_OF_BIRTH": "13 May 1965",
+      "ADDRESS": "249 George St, Launceston TAS 7320",
+      "NATIONAL_IDENTITY_CARD": "China National ID: 336417572691",
+      "CRIMINAL_RECORDS": "spent conviction — minor traffic offence",
+      "AUDIO_INFORMATION": "recorded audio message on file",
+      "CAMERA_FOOTAGE_AUDIO": "CCTV footage — Building F Level 2 — 16/04/2025"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-143",
+    "input": {
+      "text": "Amara Lee\nPersonal: +61 42 5511 137\nWork: (02) 3934 9343\nEmail: amara_lee@outlook.com\nAddress: 170 Pacific Blvd, Belconnen ACT 2600",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Amara Lee",
+      "AU_PHONE": "+61 42 5511 137",
+      "WORK_PHONE": "(02) 3934 9343",
+      "EMAIL_ADDRESS": "amara_lee@outlook.com",
+      "ADDRESS": "170 Pacific Blvd, Belconnen ACT 2600"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-144",
+    "input": {
+      "text": "Accommodation Request — James Kim (ID: 572724099).\nThe applicant has requested housing with other queer students as part of the LGBTQ+ residential community. Sexual orientation: queer.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "James Kim",
+      "STUDENT_ID": "572724099",
+      "SEXUAL_ORIENTATION": "queer"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-145",
+    "input": {
+      "text": "Academic record — Layla Brown (Student ID: Student ID 464296431)\nWAM: 76.62 | DATA3001: 54/100 (Pass)\nScholarship: Sydney Achiever Scholarship\nSanction: plagiarism finding\nSC application: spec con — bereavement (SC-93744)\nSupporting doc: med cert — Dr. Liam Nguyen-Smith, 07 December 2024",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Layla Brown",
+      "STUDENT_ID": "Student ID 464296431",
+      "WAM_SCORE": "76.62",
+      "SUBJECT_RESULTS": "DATA3001: 54/100 (Pass)",
+      "SCHOLARSHIP": "Sydney Achiever Scholarship",
+      "SANCTIONS": "plagiarism finding",
+      "SPECIAL_CONSIDERATION": "spec con — bereavement (SC-93744)",
+      "MEDICAL_CERTIFICATE": "med cert — Dr. Liam Nguyen-Smith, 07 December 2024"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-146",
+    "input": {
+      "text": "Clinical record — Kofi Garcia (ID: 410680932, born 03 August 1970)\nDiagnosis: hypertension\nDisability: epilepsy\nTreatment: trauma-informed therapy (×16 sessions)\nEvidence: medical certificate from Dr. Yuki Brown (14/08/2024)\nSC: special consideration: bereavement",
+      "metadata": {
+        "source_type": "clinical",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Kofi Garcia",
+      "STUDENT_ID": "410680932",
+      "DATE_OF_BIRTH": "03 August 1970",
+      "MEDICAL_INFORMATION": "hypertension",
+      "DISABILITY_OR_SPECIFIC_CONDITION": "epilepsy",
+      "COUNSELLING_RECORDS": "trauma-informed therapy (×16 sessions)",
+      "MEDICAL_CERTIFICATE": "medical certificate from Dr. Yuki Brown (14/08/2024)",
+      "SPECIAL_CONSIDERATION": "special consideration: bereavement"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-147",
+    "input": {
+      "text": "Identity verification — Liam Ferreira (DOB 1975-10-15).\nDriver's licence number: 11983422 (NSW).\nPassport: Y4735799. TFN: Tax File Number: 478167135.\nAddress: 343 Parramatta Ave, Fremantle WA 6163.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Liam Ferreira",
+      "DATE_OF_BIRTH": "1975-10-15",
+      "AU_DRIVERS_LICENCE": "11983422",
+      "AU_PASSPORT": "Y4735799",
+      "AU_TFN": "Tax File Number: 478167135",
+      "ADDRESS": "343 Parramatta Ave, Fremantle WA 6163"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-148",
+    "input": {
+      "text": "HR Record — Niamh Patel\nUnit 24, 226 George Dr, Devonport TAS\nEmp ID: Employee No: EMP76548 | Personnel: P756234\nRole: Project Manager at City of Sydney Council (casual)\nSalary: $148,000 per annum | Expectation: approximately $90k\nWork: npatel@edu.au / (02) 4563 1866",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Niamh Patel",
+      "ADDRESS": "Unit 24, 226 George Dr, Devonport TAS",
+      "EMPLOYEE_NUMBER": "Employee No: EMP76548",
+      "PERSONNEL_NUMBER": "P756234",
+      "EMPLOYMENT_INFORMATION": "Project Manager at City of Sydney Council",
+      "CONTRACT_TYPE": "casual",
+      "SALARY": "$148,000 per annum",
+      "SALARY_WAGE_EXPECTATION": "approximately $90k",
+      "WORK_EMAIL": "npatel@edu.au",
+      "WORK_PHONE": "(02) 4563 1866"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-149",
+    "input": {
+      "text": "Biometric record — Emma Patel (ID: 539197603)\nFace: facial recognition enrolled\nFingerprint: thumbprint on file\nVoice: voiceprint on file\nSignature: digital signature registered",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Emma Patel",
+      "STUDENT_ID": "539197603",
+      "FACIAL_RECOGNITION": "facial recognition enrolled",
+      "FINGERPRINT": "thumbprint on file",
+      "VOICE_RECOGNITION": "voiceprint on file",
+      "SIGNATURE": "digital signature registered"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-150",
+    "input": {
+      "text": "Agent: Hi, how can I help today?\nUser: Hi, I'm Yuki Kim and I'm having trouble with my account.\nAgent: Sure! Can I verify your date of birth?\nUser: It's 30 October 2001.\nAgent: And your email?\nUser: ykim@optusnet.com.au\nAgent: Got it. Phone number?\nUser: 0473898216\nAgent: Your student ID?\nUser: Oh it's SID: 576308990\nAgent: And TFN for tax purposes?\nUser: 466-051-854\nAgent: Address on file?\nUser: 277 Military Ave, Geelong VIC",
+      "metadata": {
+        "source_type": "chat",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Yuki Kim",
+      "DATE_OF_BIRTH": "30 October 2001",
+      "EMAIL_ADDRESS": "ykim@optusnet.com.au",
+      "AU_PHONE": "0473898216",
+      "STUDENT_ID": "SID: 576308990",
+      "AU_TFN": "466-051-854",
+      "ADDRESS": "277 Military Ave, Geelong VIC"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-151",
+    "input": {
+      "text": "Student Layla van der Berg (ID: 553884601) enrolled in COMP5703. Reference ticket SID449636206 was raised for an IT issue — this is a ticket ref, not a student ID. WAM on file: 68.17/100. Email: layla-van der berg@bigpond.com.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Layla van der Berg",
+      "STUDENT_ID": "553884601",
+      "WAM_SCORE": "68.17/100",
+      "EMAIL_ADDRESS": "layla-van der berg@bigpond.com"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-152",
+    "input": {
+      "text": "Incident report: Kwame Nakamura (ID: SID: 453919614) stated: 'I identify as bisexual and my religious beliefs (Judaism) were mocked by another student.' The student also disclosed their cultural background as South Asian.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Kwame Nakamura",
+      "STUDENT_ID": "SID: 453919614",
+      "SEXUAL_ORIENTATION": "bisexual",
+      "RELIGION_BELIEF": "Judaism",
+      "RACIAL_ETHNIC_ORIGIN": "South Asian"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-153",
+    "input": {
+      "text": "Re: Kwame Al-Rashid (DOB: January 15, 1976, 69 King Rd, Fremantle WA 6163).\nPlease note: the number 921050941 is NOT your Tax File Number — it is an invoice reference. Your actual TFN is: 052-753-443.\nPlease keep your TFN confidential.",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Kwame Al-Rashid",
+      "DATE_OF_BIRTH": "January 15, 1976",
+      "ADDRESS": "69 King Rd, Fremantle WA 6163",
+      "AU_TFN": "052-753-443"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-154",
+    "input": {
+      "text": "Dmitri Mwangi\n22/3 Geo. nt 0800\nPh: 0485 115 929 | em: dmwangi@hotmail.com\nTFN 751 081 551",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Dmitri Mwangi",
+      "ADDRESS": "22/3 Geo. nt 0800",
+      "AU_PHONE": "0485 115 929",
+      "EMAIL_ADDRESS": "dmwangi@hotmail.com",
+      "AU_TFN": "751 081 551"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-155",
+    "input": {
+      "text": "Passport holder: James Al-Rashid (born 13-02-1964)\nPassport: F 6283013\nIssued: 22 May 2012\nExpires: 23/08/2026\nContact: james.al-rashid@optusnet.com.au | 36 Military St, Tuggeranong ACT 2615",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "James Al-Rashid",
+      "DATE_OF_BIRTH": "13-02-1964",
+      "AU_PASSPORT": "F 6283013",
+      "PASSPORT_START_DATE": "22 May 2012",
+      "PASSPORT_EXPIRY": "23/08/2026",
+      "EMAIL_ADDRESS": "james.al-rashid@optusnet.com.au",
+      "ADDRESS": "36 Military St, Tuggeranong ACT 2615"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-156",
+    "input": {
+      "text": "Enrolment — Yuki O'Sullivan (DOB: 31 Jul 2005, 39 Flinders St, Geelong VIC 3000)\nCentrelink CRN: 021 879 220P\nUAC: 7978314999 | USI: EYK578PXD3\nNationality: Indian | Status: Australian Citizen",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Yuki O'Sullivan",
+      "DATE_OF_BIRTH": "31 Jul 2005",
+      "ADDRESS": "39 Flinders St, Geelong VIC 3000",
+      "CENTRELINK_REFERENCE_NUMBER": "021 879 220P",
+      "UAC_ID": "7978314999",
+      "USI": "EYK578PXD3",
+      "NATIONALITY": "Indian",
+      "CITIZENSHIP_STATUS": "Australian Citizen"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-157",
+    "input": {
+      "text": "Multi-state licence check — Carlos Nakamura (DOB: 15.02.1997).\nNSW: NSW 90681417 | VIC: VIC: E1226679 | QLD: 567178060",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Carlos Nakamura",
+      "DATE_OF_BIRTH": "15.02.1997",
+      "AU_DRIVERS_LICENCE": "NSW 90681417, VIC: E1226679, 567178060"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-158",
+    "input": {
+      "text": "Application — Mei Singh\nBorn: 1967-09-23 | Address: 475 Flinders Rd, Wollongong NSW\nTax file: 659-764-330\nMobile: +61 48 4589 748 | mei.singh@hotmail.com",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mei Singh",
+      "DATE_OF_BIRTH": "1967-09-23",
+      "ADDRESS": "475 Flinders Rd, Wollongong NSW",
+      "AU_TFN": "659-764-330",
+      "AU_PHONE": "+61 48 4589 748",
+      "EMAIL_ADDRESS": "mei.singh@hotmail.com"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-159",
+    "input": {
+      "text": "Patient: Niamh Kowalski\nDOB: 1989-09-05\nMedicare: 4234028228/2\nExpiry: June 2029\nIHI: 8231 8261 2804 2619",
+      "metadata": {
+        "source_type": "clinical",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Niamh Kowalski",
+      "DATE_OF_BIRTH": "1989-09-05",
+      "MEDICARE_NUMBER": "4234028228/2",
+      "MEDICARE_EXPIRY": "June 2029",
+      "IHI": "8231 8261 2804 2619"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-160",
+    "input": {
+      "text": "Dear Bao Hassan,\n\nRe your Centrelink payment arrangement.\nWe confirm your reference 184 326 425F is active.\nDOB on file: 1960-07-29. Address: 67 George Ln, Devonport TAS 7300.\n\nServices Australia",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Bao Hassan",
+      "CENTRELINK_REFERENCE_NUMBER": "184 326 425F",
+      "DATE_OF_BIRTH": "1960-07-29",
+      "ADDRESS": "67 George Ln, Devonport TAS 7300"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-161",
+    "input": {
+      "text": "Full name: Jun Nguyen-Smith, Date of birth: 25/03/1991. Email: jnguyen-smith@outlook.com, Phone: 0437 990 132. Address: Unit 48, 362 Pacific Rd, Launceston TAS 7320.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Jun Nguyen-Smith",
+      "DATE_OF_BIRTH": "25/03/1991",
+      "EMAIL_ADDRESS": "jnguyen-smith@outlook.com",
+      "AU_PHONE": "0437 990 132",
+      "ADDRESS": "Unit 48, 362 Pacific Rd, Launceston TAS 7320"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-162",
+    "input": {
+      "text": "Under Section 17 of the Privacy Act 1988, entities must not collect sensitive information including health information, racial or ethnic origin, sexual orientation, or religious beliefs without consent. Refer to APP 3.3 for exemptions.",
+      "metadata": {
+        "source_type": "narrative",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-163",
+    "input": {
+      "text": "Applicant Ibrahim Andersen is 61 years old (born 1964). Address: 92 Collins Ave, Ballarat VIC. Contact: iandersen@outlook.com. Note: the applicant's full DOB is required for identity verification.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Ibrahim Andersen",
+      "DATE_OF_BIRTH": "1964",
+      "ADDRESS": "92 Collins Ave, Ballarat VIC",
+      "EMAIL_ADDRESS": "iandersen@outlook.com"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-164",
+    "input": {
+      "text": "Password reset link sent to Anh Al-Rashid: https://portal.usyd.edu.au/reset?user=aal-rashid%40gmail.com\nIf you did not request this, contact support at helpdesk@sydney.edu.au.\nYour registered phone: (0422) 144-582. Address: Unit 23, 44 George Rd, Palmerston NT.",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Anh Al-Rashid",
+      "EMAIL_ADDRESS": "aal-rashid@gmail.com",
+      "AU_PHONE": "(0422) 144-582",
+      "ADDRESS": "Unit 23, 44 George Rd, Palmerston NT"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-165",
+    "input": {
+      "text": "Enrolment — Jess Williams\nDOB: 1974-05-19\nUAC ID: 4666648162\nUSI: T7MAVAXY4L\nIntl phone: +61440415864\nAddress: 458 George St, Devonport TAS",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Jess Williams",
+      "DATE_OF_BIRTH": "1974-05-19",
+      "UAC_ID": "4666648162",
+      "USI": "T7MAVAXY4L",
+      "AU_PHONE": "+61440415864",
+      "ADDRESS": "458 George St, Devonport TAS"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-166",
+    "input": {
+      "text": "Contact record — Saoirse Petrov\nPersonal email: spetrov@yahoo.com.au\nWork email: saoirse_petrov@gov.au\nPhone: +61 49 7406 924\nAddress: 291 Parramatta Ln, Tuggeranong ACT 2600",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Saoirse Petrov",
+      "EMAIL_ADDRESS": "spetrov@yahoo.com.au",
+      "WORK_EMAIL": "saoirse_petrov@gov.au",
+      "AU_PHONE": "+61 49 7406 924",
+      "ADDRESS": "291 Parramatta Ln, Tuggeranong ACT 2600"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-167",
+    "input": {
+      "text": "Password reset link sent to Rafael Chen: https://portal.usyd.edu.au/reset?user=rchen%40bigpond.com\nIf you did not request this, contact support at helpdesk@sydney.edu.au.\nYour registered phone: +61 49 3446 074. Address: 58 Flinders St, Sydney NSW.",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Rafael Chen",
+      "EMAIL_ADDRESS": "rchen@bigpond.com",
+      "AU_PHONE": "+61 49 3446 074",
+      "ADDRESS": "58 Flinders St, Sydney NSW"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-168",
+    "input": {
+      "text": "Dmitri Brown (Student ID: Student ID 573297613)\nYour WAM is 83.11. The cohort average is 70.0 (not your WAM). Reference: WAM-782 (internal admin code — not your WAM score).",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Dmitri Brown",
+      "STUDENT_ID": "Student ID 573297613",
+      "WAM_SCORE": "83.11"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-169",
+    "input": {
+      "text": "Dmitri Nakamura (Student ID: SID: 499429278)\nYour WAM is 72.19. The cohort average is 71.9 (not your WAM). Reference: WAM-375 (internal admin code — not your WAM score).",
+      "metadata": {
+        "source_type": "letter",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Dmitri Nakamura",
+      "STUDENT_ID": "SID: 499429278",
+      "WAM_SCORE": "72.19"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-170",
+    "input": {
+      "text": "COMPREHENSIVE IDENTITY FILE — Wei Reyes\nDOB: 19/7/2005 | Address: 337 King Dr, Brisbane QLD 4215\nPhone: 0423869670 | Email: wreyes@yahoo.com.au\nTFN: Tax File Number: 654509923\nPassport: C 6173660 (expires 17 February 2031)\nMedicare: 9322 06010 0/8 (exp October 2028)\nDriver's licence (VIC): VIC: I5020316\nBank: Bendigo Bank | BSB: 082-436 | Acc: 704904045\nCard: 5164018499159534 | Exp: 05/27 | CVV: 910",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Wei Reyes",
+      "DATE_OF_BIRTH": "19/7/2005",
+      "ADDRESS": "337 King Dr, Brisbane QLD 4215",
+      "AU_PHONE": "0423869670",
+      "EMAIL_ADDRESS": "wreyes@yahoo.com.au",
+      "AU_TFN": "Tax File Number: 654509923",
+      "AU_PASSPORT": "C 6173660",
+      "PASSPORT_EXPIRY": "17 February 2031",
+      "MEDICARE_NUMBER": "9322 06010 0/8",
+      "MEDICARE_EXPIRY": "October 2028",
+      "AU_DRIVERS_LICENCE": "VIC: I5020316",
+      "BSB": "082-436",
+      "AU_BANK_ACCOUNT": "704904045",
+      "AU_BANK_NAME": "Bendigo Bank",
+      "PAYMENT_CARD_NUMBER": "5164018499159534",
+      "CREDIT_CARD_EXPIRY": "05/27",
+      "CREDIT_CARD_CVV": "910"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-171",
+    "input": {
+      "text": "Biometric record — Emma Hassan (ID: Student ID 428936368)\nFace: facial recognition enrolled\nFingerprint: fingerprint registered\nVoice: voiceprint on file\nSignature: digital signature registered",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Emma Hassan",
+      "STUDENT_ID": "Student ID 428936368",
+      "FACIAL_RECOGNITION": "facial recognition enrolled",
+      "FINGERPRINT": "fingerprint registered",
+      "VOICE_RECOGNITION": "voiceprint on file",
+      "SIGNATURE": "digital signature registered"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-172",
+    "input": {
+      "text": "Agent: Hi, how can I help today?\nUser: Hi, I'm Mohammed Nakamura and I'm having trouble with my account.\nAgent: Sure! Can I verify your date of birth?\nUser: It's 03 September 1984.\nAgent: And your email?\nUser: mohammed_nakamura84@yahoo.com.au\nAgent: Got it. Phone number?\nUser: (0448) 511-294\nAgent: Your student ID?\nUser: Oh it's SID: 494040266\nAgent: And TFN for tax purposes?\nUser: Tax File Number: 761229379\nAgent: Address on file?\nUser: 330 George Ln, Palmerston NT 0820",
+      "metadata": {
+        "source_type": "chat",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mohammed Nakamura",
+      "DATE_OF_BIRTH": "03 September 1984",
+      "EMAIL_ADDRESS": "mohammed_nakamura84@yahoo.com.au",
+      "AU_PHONE": "(0448) 511-294",
+      "STUDENT_ID": "SID: 494040266",
+      "AU_TFN": "Tax File Number: 761229379",
+      "ADDRESS": "330 George Ln, Palmerston NT 0820"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-173",
+    "input": {
+      "text": "Customer service: support@university.edu.au | (02) 9351 2000.\nAccounts: accounts@university.edu.au | (02) 9351 3000.\nThese are shared departmental contacts — no individual PII.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  },
+  {
+    "id": "TEST-174",
+    "input": {
+      "text": "Verification — Lena Thompson, born 19.07.1994.\nAddress: 431 Parramatta Rd, Launceston TAS 7000\nLicence (WA): 9757952\nPassport: I 7431988",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Lena Thompson",
+      "DATE_OF_BIRTH": "19.07.1994",
+      "ADDRESS": "431 Parramatta Rd, Launceston TAS 7000",
+      "AU_DRIVERS_LICENCE": "9757952",
+      "AU_PASSPORT": "I 7431988"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-175",
+    "input": {
+      "text": "Please ensure your tax affairs are in order. Lena Patel (born 07 April 2001) submitted their return. The TFN recorded is 267074827. Note: invoice 598410676 is outstanding and is NOT a Tax File Number. Correspondence address: 67 Pacific St, Brisbane QLD 4101.",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Lena Patel",
+      "DATE_OF_BIRTH": "07 April 2001",
+      "AU_TFN": "267074827",
+      "ADDRESS": "67 Pacific St, Brisbane QLD 4101"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-176",
+    "input": {
+      "text": "Joint application:\nApplicant 1: James Williams, DOB 12 Jun 2002, email james_williams@tpg.com.au, phone (0475) 931-580.\nApplicant 2: Marco Garcia, DOB 21/11/1984, email marco-garcia@yahoo.com.au, phone +61 46 4573 866.\nPrimary TFN (Applicant 1): 211854713.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "James Williams, Marco Garcia",
+      "DATE_OF_BIRTH": "12 Jun 2002, 21/11/1984",
+      "EMAIL_ADDRESS": "james_williams@tpg.com.au, marco-garcia@yahoo.com.au",
+      "AU_PHONE": "(0475) 931-580, +61 46 4573 866",
+      "AU_TFN": "211854713"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-177",
+    "input": {
+      "text": "Ibrahim Singh commenced employment on 01/07/2024. DOB: 19/04/2000. Contract expires: 31/12/2025. TFN: 323 830 268. Address: 43 George Rd, Belconnen ACT 2615.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Ibrahim Singh",
+      "DATE_OF_BIRTH": "19/04/2000",
+      "AU_TFN": "323 830 268",
+      "ADDRESS": "43 George Rd, Belconnen ACT 2615"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-178",
+    "input": {
+      "text": "User: Carlos Reyes (carlos-reyes10@bigpond.com)\nIP: a2ad:23e5:5195:18f7:806f:4f3c:a39d:940d | Device: MAC: 0b:9c:dc:96:a1:da\nCookie: session_id=tbpt32ltc4sbbutgq6vtggu959hq45w3\nGPS: -27.109699, 114.87497 (-27.109699, 114.87497)\nUsername: rafael.chen\n@liamokonkwo | Twitter/X ID: 7423371816\nActivity: social media history on Instagram\nLast URL: https://my.usyd.edu.au/portal/5362",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Carlos Reyes",
+      "EMAIL_ADDRESS": "carlos-reyes10@bigpond.com",
+      "IP_ADDRESS": "a2ad:23e5:5195:18f7:806f:4f3c:a39d:940d",
+      "DEVICE_ID": "MAC: 0b:9c:dc:96:a1:da",
+      "COOKIE_INFORMATION": "session_id=tbpt32ltc4sbbutgq6vtggu959hq45w3",
+      "GEOLOCATION_INFORMATION": "-27.109699, 114.87497",
+      "LATITUDE": "-27.109699",
+      "LONGITUDE": "114.87497",
+      "USERNAME": "rafael.chen",
+      "SOCIAL_MEDIA_ACCOUNT": "@liamokonkwo",
+      "SOCIAL_MEDIA_ID": "Twitter/X ID: 7423371816",
+      "SOCIAL_MEDIA_HISTORY": "social media history on Instagram",
+      "WEBSITE_HISTORY": "https://my.usyd.edu.au/portal/5362"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-179",
+    "input": {
+      "text": "Agent: Hi, how can I help today?\nUser: Hi, I'm Anh Andersen and I'm having trouble with my account.\nAgent: Sure! Can I verify your date of birth?\nUser: It's 31 May 1964.\nAgent: And your email?\nUser: anh.andersen23@proton.me\nAgent: Got it. Phone number?\nUser: 0467 852 721\nAgent: Your student ID?\nUser: Oh it's SID: 513984328\nAgent: And TFN for tax purposes?\nUser: Tax File Number: 331359491\nAgent: Address on file?\nUser: 486 Flinders Blvd, Alice Springs NT 0870",
+      "metadata": {
+        "source_type": "chat",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Anh Andersen",
+      "DATE_OF_BIRTH": "31 May 1964",
+      "EMAIL_ADDRESS": "anh.andersen23@proton.me",
+      "AU_PHONE": "0467 852 721",
+      "STUDENT_ID": "SID: 513984328",
+      "AU_TFN": "Tax File Number: 331359491",
+      "ADDRESS": "486 Flinders Blvd, Alice Springs NT 0870"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-180",
+    "input": {
+      "text": "Multi-state licence check — Kwame van der Berg (DOB: 08-07-2005).\nNSW: NSW 47862600 | VIC: VIC: I1859930 | QLD: QLD: 640317386",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Kwame van der Berg",
+      "DATE_OF_BIRTH": "08-07-2005",
+      "AU_DRIVERS_LICENCE": "NSW 47862600, VIC: I1859930, QLD: 640317386"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-181",
+    "input": {
+      "text": "James Kowalski (DOB: 26 February 1994, 54 George Dr, Adelaide SA 5290)\nVehicle: Honda Civic — Rego: WQY183\nMarital: widowed | Military: retired veteran, Royal Australian Navy\nCarer: primary carer for elderly parent | Debt: HECS-HELP debt: $47,489\nPension card: PCC 493574690\nNext of kin: Olivia Schmidt (guardian) — 0425 448 565\nWorkers comp: workers compensation claim WC-389740 (psychological injury)",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "James Kowalski",
+      "DATE_OF_BIRTH": "26 February 1994",
+      "ADDRESS": "54 George Dr, Adelaide SA 5290",
+      "NUMBER_PLATE": "WQY183",
+      "VEHICLE_REGO": "WQY183",
+      "MARITAL_STATUS": "widowed",
+      "MILITARY_VETERAN_STATUS": "retired veteran, Royal Australian Navy",
+      "CARING_RESPONSIBILITIES": "primary carer for elderly parent",
+      "PERSONAL_DEBT": "HECS-HELP debt: $47,489",
+      "PENSION_CARD_NUMBER": "PCC 493574690",
+      "NEXT_OF_KIN": "Olivia Schmidt (guardian)",
+      "WORKERS_COMPENSATION_CLAIM": "workers compensation claim WC-389740 (psychological injury)"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-182",
+    "input": {
+      "text": "International student verification — Anh Petrov\nNationality: Australian | Visa: Student Visa (Subclass 500)\nNational ID: China National ID: 308445115848\nPassport: F9552309\nDOB: 21-03-1964 | Address: Unit 13, 308 Pacific Dr, Brisbane QLD",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Anh Petrov",
+      "NATIONALITY": "Australian",
+      "CITIZENSHIP_STATUS": "Student Visa (Subclass 500)",
+      "NATIONAL_IDENTITY_CARD": "China National ID: 308445115848",
+      "AU_PASSPORT": "F9552309",
+      "DATE_OF_BIRTH": "21-03-1964",
+      "ADDRESS": "Unit 13, 308 Pacific Dr, Brisbane QLD"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-183",
+    "input": {
+      "text": "Session log — Yuki Mwangi (yuki-mwangi18@proton.me)\nIPv6: b043:22b3:9e22:d182:47b6:0318:1747:042a\nDevice: MAC: d8:e0:14:32:ed:5b\nSession: session_id=7nedsa4258ofnrge6zj0b6w8r09spnle",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Yuki Mwangi",
+      "EMAIL_ADDRESS": "yuki-mwangi18@proton.me",
+      "IP_ADDRESS": "b043:22b3:9e22:d182:47b6:0318:1747:042a",
+      "DEVICE_ID": "MAC: d8:e0:14:32:ed:5b",
+      "COOKIE_INFORMATION": "session_id=7nedsa4258ofnrge6zj0b6w8r09spnle"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-184",
+    "input": {
+      "text": "Hi Layla Williams,\n\nAs requested, your number is 497590169. Please keep this confidential. DOB: 15.04.1978, address: 108 Pacific Ave, Adelaide SA.\n\nRegards, ATO",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Layla Williams",
+      "AU_TFN": "497590169",
+      "DATE_OF_BIRTH": "15.04.1978",
+      "ADDRESS": "108 Pacific Ave, Adelaide SA"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-185",
+    "input": {
+      "text": "Aroha Lee commenced employment on 01/07/2024. DOB: 18/07/1973. Contract expires: 31/12/2025. TFN: 971-463-798. Address: 349 George Rd, Tuggeranong ACT 2617.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Aroha Lee",
+      "DATE_OF_BIRTH": "18/07/1973",
+      "AU_TFN": "971-463-798",
+      "ADDRESS": "349 George Rd, Tuggeranong ACT 2617"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-186",
+    "input": {
+      "text": "Tariq Lee (DOB: 25/11/1980, 316 Parramatta Ln, Launceston TAS)\nVehicle: Honda Civic — Rego: ZYZ409\nMarital: single | Military: veteran (RAAF)\nCarer: primary carer for elderly parent | Debt: HECS-HELP debt: $18,795\nPension card: PCC 538998722\nNext of kin: Liam Patel (parent) — +61 48 2207 891\nWorkers comp: WorkCover claim WC-915395",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Tariq Lee",
+      "DATE_OF_BIRTH": "25/11/1980",
+      "ADDRESS": "316 Parramatta Ln, Launceston TAS",
+      "NUMBER_PLATE": "ZYZ409",
+      "VEHICLE_REGO": "ZYZ409",
+      "MARITAL_STATUS": "single",
+      "MILITARY_VETERAN_STATUS": "veteran (RAAF)",
+      "CARING_RESPONSIBILITIES": "primary carer for elderly parent",
+      "PERSONAL_DEBT": "HECS-HELP debt: $18,795",
+      "PENSION_CARD_NUMBER": "PCC 538998722",
+      "NEXT_OF_KIN": "Liam Patel (parent)",
+      "WORKERS_COMPENSATION_CLAIM": "WorkCover claim WC-915395"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-187",
+    "input": {
+      "text": "Re: Anh Nguyen-Smith (DOB: January 16, 1994, 118 King Ln, Whyalla SA).\nPlease note: the number 164767107 is NOT your Tax File Number — it is an invoice reference. Your actual TFN is: Tax File Number: 394563344.\nPlease keep your TFN confidential.",
+      "metadata": {
+        "source_type": "email",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Anh Nguyen-Smith",
+      "DATE_OF_BIRTH": "January 16, 1994",
+      "ADDRESS": "118 King Ln, Whyalla SA",
+      "AU_TFN": "Tax File Number: 394563344"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-188",
+    "input": {
+      "text": "Incident report: Dmitri Al-Rashid (ID: SID: 567300522) stated: 'I identify as gay and my religious beliefs (Christianity) were mocked by another student.' The student also disclosed their cultural background as South Asian.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Dmitri Al-Rashid",
+      "STUDENT_ID": "SID: 567300522",
+      "SEXUAL_ORIENTATION": "gay",
+      "RELIGION_BELIEF": "Christianity",
+      "RACIAL_ETHNIC_ORIGIN": "South Asian"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-189",
+    "input": {
+      "text": "Agent: Hi, how can I help today?\nUser: Hi, I'm Olivia Kim and I'm having trouble with my account.\nAgent: Sure! Can I verify your date of birth?\nUser: It's 31 March 1999.\nAgent: And your email?\nUser: olivia.kim@optusnet.com.au\nAgent: Got it. Phone number?\nUser: 0421 504 513\nAgent: Your student ID?\nUser: Oh it's SID: 566850869\nAgent: And TFN for tax purposes?\nUser: 903069317\nAgent: Address on file?\nUser: 64 Military Ave, Palmerston NT 0800",
+      "metadata": {
+        "source_type": "chat",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Olivia Kim",
+      "DATE_OF_BIRTH": "31 March 1999",
+      "EMAIL_ADDRESS": "olivia.kim@optusnet.com.au",
+      "AU_PHONE": "0421 504 513",
+      "STUDENT_ID": "SID: 566850869",
+      "AU_TFN": "903069317",
+      "ADDRESS": "64 Military Ave, Palmerston NT 0800"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-190",
+    "input": {
+      "text": "Identity check — Yuki Petrov (DOB: 21/02/1993). TFN: 950 890 809. Passport: Z 9895442. Address: 7 King Dr, Cairns QLD 4101.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Yuki Petrov",
+      "DATE_OF_BIRTH": "21/02/1993",
+      "AU_TFN": "950 890 809",
+      "AU_PASSPORT": "Z 9895442",
+      "ADDRESS": "7 King Dr, Cairns QLD 4101"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-191",
+    "input": {
+      "text": "Patient: Mohammed-Liam Kim-Kowalski\nDOB: 1997-08-03\nEmail: mkim@outlook.com\nPhone: 0435 124 275\nAddress: 131 Parramatta Rd, Tuggeranong ACT 2620",
+      "metadata": {
+        "source_type": "clinical",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Mohammed-Liam Kim-Kowalski",
+      "DATE_OF_BIRTH": "1997-08-03",
+      "EMAIL_ADDRESS": "mkim@outlook.com",
+      "AU_PHONE": "0435 124 275",
+      "ADDRESS": "131 Parramatta Rd, Tuggeranong ACT 2620"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-192",
+    "input": {
+      "text": "Partially redacted record — Kwame Brown\nDOB: February 02, 1961\nAddress: 230 George Dr, Brisbane QLD 4215\nEmail: kwame.brown@bigpond.com\nPassport: J*****60 (partially redacted)\nTFN: 769 *** *** (partially redacted)\nFull identifiers available in secure vault only.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Kwame Brown",
+      "DATE_OF_BIRTH": "February 02, 1961",
+      "ADDRESS": "230 George Dr, Brisbane QLD 4215",
+      "EMAIL_ADDRESS": "kwame.brown@bigpond.com",
+      "AU_PASSPORT": "J*****60",
+      "AU_TFN": "769 *** ***"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-193",
+    "input": {
+      "text": "Payment — Olivia Brown, 224 Parramatta Ln, Brisbane QLD 4350\nCard: **** **** **** 4363 | Exp: 01/2029 | CVV: 611\nToken on file: **** **** **** 6459",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Olivia Brown",
+      "ADDRESS": "224 Parramatta Ln, Brisbane QLD 4350",
+      "PAYMENT_CARD_NUMBER": "**** **** **** 4363",
+      "CREDIT_CARD_EXPIRY": "01/2029",
+      "CREDIT_CARD_CVV": "611",
+      "HASHED_PAYMENT_CARD_NUMBER": "**** **** **** 6459"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-194",
+    "input": {
+      "text": "Diversity form — Yuki O'Sullivan (Student ID 516757294)\nGender: Non-binary | Pronouns: they/them\nSexual orientation: gay\nReligion: Islam\nEthnicity: Middle Eastern\nFirst Nations: Aboriginal Australian\nSES: low socio-economic background",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Yuki O'Sullivan",
+      "STUDENT_ID": "Student ID 516757294",
+      "GENDER": "Non-binary",
+      "PRONOUN": "they/them",
+      "SEXUAL_ORIENTATION": "gay",
+      "RELIGION_BELIEF": "Islam",
+      "RACIAL_ETHNIC_ORIGIN": "Middle Eastern",
+      "ABORIGINALITY": "Aboriginal Australian",
+      "SOCIO_ECONOMIC_STATUS": "low socio-economic background"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-195",
+    "input": {
+      "text": "PAYSLIP — Jess Williams, 120 Collins Dr, Hobart TAS 7300.\nBank: NAB, BSB: 062-108, Account: 853079851\nSalary: AUD 76,000",
+      "metadata": {
+        "source_type": "payslip",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Jess Williams",
+      "ADDRESS": "120 Collins Dr, Hobart TAS 7300",
+      "BSB": "062-108",
+      "AU_BANK_ACCOUNT": "853079851",
+      "AU_BANK_NAME": "NAB",
+      "SALARY": "AUD 76,000"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-196",
+    "input": {
+      "text": "Enrolment — Aroha Chen (DOB: 12.02.2002, 343 King Rd, Whyalla SA)\nCentrelink CRN: 301 165 741P\nUAC: 5331234070 | USI: CB2C2QED5N\nNationality: Malaysian | Status: Australian Citizen",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Aroha Chen",
+      "DATE_OF_BIRTH": "12.02.2002",
+      "ADDRESS": "343 King Rd, Whyalla SA",
+      "CENTRELINK_REFERENCE_NUMBER": "301 165 741P",
+      "UAC_ID": "5331234070",
+      "USI": "CB2C2QED5N",
+      "NATIONALITY": "Malaysian",
+      "CITIZENSHIP_STATUS": "Australian Citizen"
+    },
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "TEST-197",
+    "input": {
+      "text": "Patient: Amara Williams\nDOB: 07/02/1999\nMedicare: 9315-1038-81-6\nExpiry: 05/2025\nIHI: 2259548904361970",
+      "metadata": {
+        "source_type": "clinical",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Amara Williams",
+      "DATE_OF_BIRTH": "07/02/1999",
+      "MEDICARE_NUMBER": "9315-1038-81-6",
+      "MEDICARE_EXPIRY": "05/2025",
+      "IHI": "2259548904361970"
+    },
+    "difficulty": "EASY"
+  },
+  {
+    "id": "TEST-198",
+    "input": {
+      "text": "Incident report: Layla Chen (ID: 547693294) stated: 'I identify as queer and my religious beliefs (Catholicism) were mocked by another student.' The student also disclosed their cultural background as Aboriginal and Torres Strait Islander.",
+      "metadata": {
+        "source_type": "record",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Layla Chen",
+      "STUDENT_ID": "547693294",
+      "SEXUAL_ORIENTATION": "queer",
+      "RELIGION_BELIEF": "Catholicism",
+      "RACIAL_ETHNIC_ORIGIN": "Aboriginal and Torres Strait Islander"
+    },
+    "difficulty": "EXPERT"
+  },
+  {
+    "id": "TEST-199",
+    "input": {
+      "text": "Applicant Carlos Mwangi is 63 years old (born 1962). Address: 485 George Ln, Hobart TAS. Contact: carlos_mwangi@gmail.com. Note: the applicant's full DOB is required for identity verification.",
+      "metadata": {
+        "source_type": "form",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {
+      "PERSON": "Carlos Mwangi",
+      "DATE_OF_BIRTH": "1962",
+      "ADDRESS": "485 George Ln, Hobart TAS",
+      "EMAIL_ADDRESS": "carlos_mwangi@gmail.com"
+    },
+    "difficulty": "HARD"
+  },
+  {
+    "id": "TEST-200",
+    "input": {
+      "text": "Our head office is located at 1 Macquarie Place, Sydney NSW 2000. For enquiries, contact info@company.com.au or call 1800 123 456. ABN: 12 345 678 901.",
+      "metadata": {
+        "source_type": "narrative",
+        "language": "en-AU"
+      }
+    },
+    "ground_truth_entities": {},
+    "difficulty": "TRAP"
+  }
+]

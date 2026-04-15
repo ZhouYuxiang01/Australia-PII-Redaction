@@ -111,27 +111,38 @@ class BioDistillTrainer(Trainer):
         self.teacher_confidence = teacher_confidence
         self.num_labels = self.model.config.num_labels
 
-    def build_soft_targets(self, labels: torch.Tensor) -> torch.Tensor:
+    def build_soft_targets(self, labels: torch.Tensor, label_confidences: torch.Tensor | None = None) -> torch.Tensor:
+        valid_mask = labels.ne(-100)
+        base_conf = torch.full(labels.shape, self.teacher_confidence, device=labels.device, dtype=torch.float32)
+        if label_confidences is not None:
+            label_confidences = label_confidences.to(labels.device, dtype=torch.float32).clamp(0.0, 1.0)
+            base_conf = torch.where(valid_mask, label_confidences, torch.zeros_like(base_conf))
+            base_conf = torch.where((base_conf <= 0) & valid_mask, torch.full_like(base_conf, self.teacher_confidence), base_conf)
+
         probs = torch.full(
             (*labels.shape, self.num_labels),
-            fill_value=(1.0 - self.teacher_confidence) / max(self.num_labels - 1, 1),
+            fill_value=0.0,
             device=labels.device,
             dtype=torch.float32,
         )
 
-        valid_mask = labels.ne(-100)
+        if self.num_labels > 1:
+            other_probs = ((1.0 - base_conf) / (self.num_labels - 1)).unsqueeze(-1)
+            probs += other_probs
+
         safe_labels = labels.masked_fill(~valid_mask, 0)
-        probs.scatter_(2, safe_labels.unsqueeze(-1), self.teacher_confidence)
+        probs.scatter_(2, safe_labels.unsqueeze(-1), base_conf.unsqueeze(-1))
         probs = probs * valid_mask.unsqueeze(-1)
         return probs
 
     def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
         labels = inputs.get("labels")
+        label_confidences = inputs.pop("label_confidences", None)
         outputs = model(**inputs)
         logits = outputs.logits
         ce_loss = outputs.loss
 
-        teacher_probs = self.build_soft_targets(labels).to(logits.device)
+        teacher_probs = self.build_soft_targets(labels, label_confidences=label_confidences).to(logits.device)
         valid_mask = labels.ne(-100)
         student_log_probs = F.log_softmax(logits / self.temperature, dim=-1)
 
@@ -170,7 +181,7 @@ def main(config_path: str):
     if has_validation:
         data_files["validation"] = validation_file
     dataset = load_dataset("json", data_files=data_files, field=None)
-    keep_columns = {"input_ids", "attention_mask", "labels"}
+    keep_columns = {"input_ids", "attention_mask", "labels", "label_confidences"}
     for split_name in list(dataset.keys()):
         drop_columns = [col for col in dataset[split_name].column_names if col not in keep_columns]
         if drop_columns:
