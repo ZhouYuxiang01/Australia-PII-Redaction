@@ -6,3 +6,4 @@ accelerate>=1.9.0
 safetensors
 pyyaml
 sentencepiece
+requests

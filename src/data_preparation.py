@@ -9,13 +9,38 @@ def load_raw_json(path):
     with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
     if isinstance(data, dict):
-        raise ValueError("数据文件应当是 JSON 数组格式，而不是对象。")
+        if "records" in data and isinstance(data["records"], list):
+            return data["records"]
+        raise ValueError("数据文件应当是 JSON 数组格式，或包含 records 列表的对象。")
     return data
 
 
+def get_nested_value(record, key_path):
+    if not key_path:
+        return ""
+    if isinstance(record, dict) and "." in key_path:
+        value = record
+        for part in key_path.split("."):
+            if not isinstance(value, dict):
+                return ""
+            value = value.get(part, "")
+        return value if value is not None else ""
+    if isinstance(record, dict):
+        return record.get(key_path, "")
+    return ""
+
+
+def serialize_value(value):
+    if isinstance(value, (dict, list)):
+        return json.dumps(value, ensure_ascii=False)
+    if value is None:
+        return ""
+    return str(value)
+
+
 def make_example(record, text_key, target_key, prompt_template=None):
-    text = record.get(text_key, "")
-    target = record.get(target_key, "")
+    text = serialize_value(get_nested_value(record, text_key))
+    target = serialize_value(get_nested_value(record, target_key))
     if prompt_template:
         return prompt_template.replace("{input_text}", text).replace("{target_text}", target)
     return json.dumps({"input_text": text, "target_text": target}, ensure_ascii=False)
@@ -37,11 +62,17 @@ def prepare_dataset(input_path, output_dir, text_key, target_key, val_ratio, see
 
     with train_path.open("w", encoding="utf-8") as f_train:
         for record in train:
-            f_train.write(json.dumps({"input_text": record.get(text_key, ""), "target_text": record.get(target_key, "")}, ensure_ascii=False) + "\n")
+            f_train.write(json.dumps({
+                "input_text": serialize_value(get_nested_value(record, text_key)),
+                "target_text": serialize_value(get_nested_value(record, target_key)),
+            }, ensure_ascii=False) + "\n")
 
     with val_path.open("w", encoding="utf-8") as f_val:
         for record in val:
-            f_val.write(json.dumps({"input_text": record.get(text_key, ""), "target_text": record.get(target_key, "")}, ensure_ascii=False) + "\n")
+            f_val.write(json.dumps({
+                "input_text": serialize_value(get_nested_value(record, text_key)),
+                "target_text": serialize_value(get_nested_value(record, target_key)),
+            }, ensure_ascii=False) + "\n")
 
     print(f"已生成: {train_path} ({len(train)} 条), {val_path} ({len(val)} 条)")
 
