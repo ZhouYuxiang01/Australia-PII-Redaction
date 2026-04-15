@@ -1,5 +1,11 @@
 import argparse
+import inspect
+import sys
+from pathlib import Path
 from typing import Optional
+
+if str(Path(__file__).resolve().parents[1]) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from datasets import load_dataset
 from transformers import (
@@ -31,19 +37,29 @@ def tokenize_fn(examples, tokenizer, cfg):
     return output
 
 
+def file_has_content(path: str) -> bool:
+    file_path = Path(path)
+    return file_path.exists() and file_path.stat().st_size > 0
+
+
 def main(config_path: str):
     cfg = load_config(config_path)
     model_name = cfg["model_name"]
     train_file = cfg["train_file"]
     validation_file = cfg["validation_file"]
+    has_validation = file_has_content(validation_file)
 
     tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False)
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
 
+    data_files = {"train": train_file}
+    if has_validation:
+        data_files["validation"] = validation_file
+
     dataset = load_dataset(
         "json",
-        data_files={"train": train_file, "validation": validation_file},
+        data_files=data_files,
         field=None,
     )
 
@@ -56,33 +72,37 @@ def main(config_path: str):
     lora_cfg = LoraConfig(
         task_type="CAUSAL_LM",
         inference_mode=False,
-        r=cfg["lora"]["r"],
-        lora_alpha=cfg["lora"]["lora_alpha"],
-        lora_dropout=cfg["lora"]["lora_dropout"],
+        r=int(cfg["lora"]["r"]),
+        lora_alpha=float(cfg["lora"]["lora_alpha"]),
+        lora_dropout=float(cfg["lora"]["lora_dropout"]),
         target_modules=cfg["lora"]["target_modules"],
     )
 
     model = AutoModelForCausalLM.from_pretrained(model_name)
     model = get_peft_model(model, lora_cfg)
 
-    training_args = TrainingArguments(
-        output_dir=cfg["output_dir"],
-        per_device_train_batch_size=cfg["training"]["per_device_train_batch_size"],
-        per_device_eval_batch_size=cfg["training"]["per_device_eval_batch_size"],
-        gradient_accumulation_steps=cfg["training"]["gradient_accumulation_steps"],
-        learning_rate=cfg["training"]["learning_rate"],
-        weight_decay=cfg["training"]["weight_decay"],
-        num_train_epochs=cfg["training"]["num_train_epochs"],
-        logging_steps=cfg["training"]["logging_steps"],
-        save_steps=cfg["training"]["save_steps"],
-        evaluation_strategy=cfg["training"]["evaluation_strategy"],
-        eval_steps=cfg["training"]["eval_steps"],
-        save_total_limit=cfg["training"]["save_total_limit"],
-        fp16=cfg["training"].get("fp16", False),
-        report_to="none",
-        load_best_model_at_end=True,
-        metric_for_best_model="loss",
-    )
+    eval_arg_name = "eval_strategy" if "eval_strategy" in inspect.signature(TrainingArguments.__init__).parameters else "evaluation_strategy"
+    training_kwargs = {
+        "output_dir": cfg["output_dir"],
+        "per_device_train_batch_size": int(cfg["training"]["per_device_train_batch_size"]),
+        "per_device_eval_batch_size": int(cfg["training"]["per_device_eval_batch_size"]),
+        "gradient_accumulation_steps": int(cfg["training"]["gradient_accumulation_steps"]),
+        "learning_rate": float(cfg["training"]["learning_rate"]),
+        "weight_decay": float(cfg["training"]["weight_decay"]),
+        "num_train_epochs": float(cfg["training"]["num_train_epochs"]),
+        "logging_steps": int(cfg["training"]["logging_steps"]),
+        "save_steps": int(cfg["training"]["save_steps"]),
+        "eval_steps": int(cfg["training"]["eval_steps"]),
+        "save_total_limit": int(cfg["training"]["save_total_limit"]),
+        "fp16": bool(cfg["training"].get("fp16", False)),
+        "report_to": "none",
+        "load_best_model_at_end": has_validation,
+    }
+    training_kwargs[eval_arg_name] = cfg["training"]["evaluation_strategy"] if has_validation else "no"
+    if has_validation:
+        training_kwargs["metric_for_best_model"] = "loss"
+
+    training_args = TrainingArguments(**training_kwargs)
 
     data_collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)
 
@@ -90,7 +110,7 @@ def main(config_path: str):
         model=model,
         args=training_args,
         train_dataset=dataset["train"],
-        eval_dataset=dataset["validation"],
+        eval_dataset=dataset["validation"] if has_validation else None,
         data_collator=data_collator,
     )
 

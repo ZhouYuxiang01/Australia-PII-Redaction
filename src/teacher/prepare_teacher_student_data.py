@@ -80,9 +80,14 @@ def prepare_teacher_student_dataset(input_path, output_dir, val_ratio, seed):
             "target_text": target_text,
         })
 
-    split = int(len(cleaned_records) * (1 - val_ratio))
-    train_records = cleaned_records[:split]
-    val_records = cleaned_records[split:]
+    if len(cleaned_records) <= 1:
+        train_records = cleaned_records
+        val_records = []
+    else:
+        split = int(len(cleaned_records) * (1 - val_ratio))
+        split = max(1, min(len(cleaned_records) - 1, split))
+        train_records = cleaned_records[:split]
+        val_records = cleaned_records[split:]
 
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)

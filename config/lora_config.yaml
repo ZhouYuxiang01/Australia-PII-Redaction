@@ -1,7 +1,11 @@
 model_name: "gpt2"
-train_file: "data/processed/train.jsonl"
-validation_file: "data/processed/val.jsonl"
+train_file: "data/processed_teacher/train.jsonl"
+validation_file: "data/processed_teacher/val.jsonl"
+bio_train_file: "data/processed_bio/train.jsonl"
+bio_validation_file: "data/processed_bio/val.jsonl"
+bio_label_map: "data/processed_bio/label_map.json"
 output_dir: "outputs/lora"
+bio_output_dir: "outputs/bio_distill"
 text_key: "input.text"
 target_key: "ground_truth_entities"
 max_length: 512
@@ -28,16 +32,15 @@ lora:
   lora_alpha: 32
   lora_dropout: 0.1
   target_modules:
-    - "q_proj"
-    - "v_proj"
-    - "k_proj"
-    - "o_proj"
+    - "c_attn"
+    - "c_proj"
 
 distillation:
   teacher_model_name: "gpt2"
   temperature: 2.0
   alpha_distill: 0.5
   alpha_ce: 0.5
+  teacher_confidence: 0.9
 
 prompt:
   template: "Extract all PII entities from the following text:\n\n{input_text}\n\nOutput a JSON mapping entity type to entity text:\n{target_text}"

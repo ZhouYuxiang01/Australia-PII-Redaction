@@ -7,3 +7,4 @@ safetensors
 pyyaml
 sentencepiece
 requests
+llama-cpp-python
