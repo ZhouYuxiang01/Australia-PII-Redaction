@@ -1,99 +1,101 @@
 # Teacher-Student LoRA Distillation Project
 
-这个项目当前采用的是一条更明确的 teacher-student 流程：
+This project follows a clear teacher-student workflow for PII extraction:
 
-1. 原始文本放在 `data/raw/au_pii_19000.json`
-2. teacher 先做 span 标注
-3. teacher 输出被清洗成 student 可训练数据
-4. 再构造成 BIO token 标签
-5. 最后进行 student 的 LoRA / BIO distillation 训练
+1. Raw text is stored in `data/raw/au_pii_19000.json`
+2. The teacher model performs span-level annotation
+3. Teacher outputs are cleaned into student-trainable data
+4. The cleaned labels are converted into BIO token tags
+5. The student model is trained with LoRA / BIO distillation
 
-## 当前推荐流程
+## Recommended Workflow
 
-对于你现在的本地环境，**推荐使用一键脚本**，不要直接运行 `src/train_distill.py`。
+For the current local environment, the recommended entry point is the one-shot script rather than running `src/train_distill.py` directly.
 
-原因是：
+Why:
 
-- 你当前使用的是本地 `Qwen3.5-27B` GGUF teacher
-- GGUF teacher 适合做 teacher labelling
-- 但 `src/train_distill.py` 需要的是 Hugging Face 格式的 teacher 模型，不适合直接拿 GGUF 跑
+- The current teacher is a local `Qwen3.5-27B` GGUF model
+- GGUF works well for teacher labeling
+- `src/train_distill.py` expects a Hugging Face teacher model and is not designed for direct GGUF use
 
-因此，当前最稳妥的做法是通过 `scripts/run_train.sh` 走完整流程。
+The safest workflow is therefore to use `scripts/run_train.sh` for the full pipeline.
 
-## 项目结构
+## Project Structure
 
-- `config/` - 配置文件
-- `data/raw/` - 原始数据
-- `data/teacher/` - teacher 标注输出（运行时自动生成）
-- `data/processed_teacher/` - teacher 清洗后的中间数据（自动生成）
-- `data/processed_bio/` - BIO token 数据（自动生成）
-- `outputs/` - 训练输出（自动生成）
-- `src/` - 数据与训练脚本
-- `scripts/` - 一键运行脚本
+- `config/` - configuration files
+- `data/raw/` - raw datasets
+- `data/teacher/` - teacher labeling outputs generated at runtime
+- `data/processed_teacher/` - cleaned teacher supervision data
+- `data/processed_validation/` - external validation data prepared for evaluation
+- `data/processed_bio/` - BIO token datasets generated for training
+- `outputs/` - training outputs
+- `src/` - data processing and training scripts
+- `scripts/` - one-shot run scripts
 
-## 快速开始
+## Quick Start
 
-### 1. 小样本 smoke test
+### 1. Small smoke test
 
-建议先只跑少量样本，确认 teacher 输出质量：
+Start with a small sample to verify teacher output quality:
 
 ```bash
 TEACHER_MODEL_PATH=/home/admin/model/Qwen3.5/Qwen3.5-27B-Q4_K_M-GGUF MAX_SAMPLES=10 bash scripts/run_train.sh
 ```
 
-### 2. 全量运行
+### 2. Larger run
 
-确认 teacher 输出没问题后，再跑全量：
+Once the teacher output looks stable, run a larger experiment:
 
 ```bash
-TEACHER_MODEL_PATH=/home/admin/model/Qwen3.5/Qwen3.5-27B-Q4_K_M-GGUF bash scripts/run_train.sh
+TEACHER_MODEL_PATH=/home/admin/model/Qwen3.5/Qwen3.5-27B-Q4_K_M-GGUF MAX_SAMPLES=1000 TEACHER_MAX_NEW_TOKENS=256 bash scripts/run_train.sh
 ```
 
-如果仓库中存在 `data/raw/cleaned_test_set.json`，脚本会自动把它当作独立验证集使用，而不是再从 teacher 训练数据里切一部分做验证。
+If `data/raw/cleaned_test_set.json` exists, the script will automatically use it as an independent validation set instead of splitting validation samples from the teacher-generated training data.
 
-### 3. 如果使用远程 teacher API
+### 3. Remote teacher API option
 
 ```bash
 TEACHER_API_URL=https://api.example.com TEACHER_API_KEY=xxx bash scripts/run_train.sh
 ```
 
-## 训练过程中会自动生成的目录
+## Automatically Generated Directories
 
-下面这些目录都是**中间产物或输出**，删除后可以再次生成：
+These directories contain intermediate artifacts or outputs and can be regenerated if removed:
 
 - `data/teacher/`
 - `data/processed_teacher/`
+- `data/processed_validation/`
 - `data/processed_bio/`
 - `outputs/`
 
-## 常见问题
+## FAQ
 
-### 为什么不要直接运行 `src/train_distill.py`
+### Why not run `src/train_distill.py` directly?
 
-如果 teacher 是 GGUF 文件或只包含 GGUF 的目录，`src/train_distill.py` 会报错；这属于预期行为。
+If the teacher is a GGUF file, or a directory that only contains GGUF files, `src/train_distill.py` will fail by design. That path is intended for Hugging Face teacher checkpoints rather than llama.cpp-style inference models.
 
-### 如果脚本中途停止怎么办
+### What if the script stops midway?
 
-如果 `scripts/run_train.sh` 提示 teacher 没有解析出有效 BIO 标签，说明 teacher 输出里仍然混入了 reasoning 或非 JSON 文本。此时应先检查：
+If `scripts/run_train.sh` reports that no valid BIO labels were parsed from the teacher output, it usually means the teacher response still contains reasoning text or malformed JSON. In that case, check:
 
 - `data/teacher/teacher_labels.jsonl`
-- teacher 是否真的只输出 JSON
-- `MAX_SAMPLES` 小样本下是否已经稳定
+- whether the teacher is producing JSON only
+- whether output remains stable on a small `MAX_SAMPLES` run first
 
-## 当前配置位置
+## Key Configuration Files
 
-- 训练与 LoRA 参数：`config/lora_config.yaml`
-- teacher 标注脚本：`src/teacher/teacher_labeling.py`
-- BIO 数据构建：`src/build_bio_dataset.py`
-- BIO distillation 训练：`src/train_bio_distill.py`
-- 一键运行入口：`scripts/run_train.sh`
+- Training and LoRA settings: `config/lora_config.yaml`
+- Teacher labeling: `src/teacher/teacher_labeling.py`
+- BIO dataset building: `src/build_bio_dataset.py`
+- BIO distillation training: `src/train_bio_distill.py`
+- One-shot pipeline entry point: `scripts/run_train.sh`
 
-## 下一步建议
+## Suggested Next Steps
 
-当前仓库已经清理完旧产物，所以下一步最合理的是：
+The repository is already cleaned up and the pipeline is running, so the most sensible next steps are:
 
-1. 先做一次小样本 smoke test
-2. 检查 teacher 输出是不是干净 JSON
-3. 再决定是否跑全量训练
+1. Run a small smoke test
+2. Inspect whether the teacher output is valid JSON
+3. Scale up to larger training runs once the labels are stable
 
-这样可以避免直接全量运行后才发现 teacher 输出格式不稳定。
+This helps avoid expensive full runs before confirming that the teacher output format is consistent.
