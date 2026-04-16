@@ -1,4 +1,4 @@
-model_name: "gpt2"
+model_name: "/home/admin/model/Qwen2.5-VL-7B-Instruct"
 train_file: "data/processed_teacher/train.jsonl"
 validation_file: "data/processed_validation/val.jsonl"
 validation_raw_file: "data/raw/cleaned_test_set.json"
@@ -6,7 +6,7 @@ bio_train_file: "data/processed_bio/train.jsonl"
 bio_validation_file: "data/processed_bio/val.jsonl"
 bio_label_map: "data/processed_bio/label_map.json"
 output_dir: "outputs/lora"
-bio_output_dir: "outputs/bio_distill"
+bio_output_dir: "outputs/qwen7b_bio_distill"
 text_key: "input.text"
 target_key: "ground_truth_entities"
 max_length: 512
@@ -14,15 +14,16 @@ train_ratio: 0.95
 seed: 42
 
 training:
-  per_device_train_batch_size: 4
-  per_device_eval_batch_size: 4
-  gradient_accumulation_steps: 4
+  per_device_train_batch_size: 1
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 8
   learning_rate: 2e-4
   weight_decay: 0.01
   num_train_epochs: 3
   logging_steps: 50
   save_steps: 200
-  fp16: true
+  fp16: false
+  bf16: true
   evaluation_strategy: "steps"
   eval_steps: 200
   save_total_limit: 3
@@ -33,8 +34,10 @@ lora:
   lora_alpha: 32
   lora_dropout: 0.1
   target_modules:
-    - "c_attn"
-    - "c_proj"
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
 
 distillation:
   teacher_model_name: "gpt2"

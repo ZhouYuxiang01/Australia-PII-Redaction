@@ -10,9 +10,11 @@ import torch.nn.functional as F
 from datasets import load_dataset
 from peft import LoraConfig, get_peft_model
 from transformers import (
+    AutoConfig,
     AutoModelForTokenClassification,
     AutoTokenizer,
     DefaultDataCollator,
+    Qwen2Config,
     Trainer,
     TrainingArguments,
 )
@@ -26,6 +28,50 @@ from src.config import load_config
 def file_has_content(path: str) -> bool:
     file_path = Path(path)
     return file_path.exists() and file_path.stat().st_size > 0
+
+
+def build_model_config(model_name: str, num_labels: int, id2label: dict[int, str], label2id: dict[str, int]):
+    raw_config = AutoConfig.from_pretrained(model_name, trust_remote_code=True)
+    raw_config.id2label = {int(k): v for k, v in id2label.items()}
+    raw_config.label2id = label2id
+    raw_config.num_labels = num_labels
+
+    if getattr(raw_config, "model_type", None) != "qwen2_5_vl":
+        return raw_config, raw_config
+
+    text_cfg = raw_config.text_config
+    model_config = Qwen2Config(
+        vocab_size=text_cfg.vocab_size,
+        hidden_size=text_cfg.hidden_size,
+        intermediate_size=text_cfg.intermediate_size,
+        num_hidden_layers=text_cfg.num_hidden_layers,
+        num_attention_heads=text_cfg.num_attention_heads,
+        num_key_value_heads=text_cfg.num_key_value_heads,
+        max_position_embeddings=text_cfg.max_position_embeddings,
+        rms_norm_eps=text_cfg.rms_norm_eps,
+        hidden_act=text_cfg.hidden_act,
+        bos_token_id=text_cfg.bos_token_id,
+        eos_token_id=text_cfg.eos_token_id,
+        num_labels=num_labels,
+        id2label={int(k): v for k, v in id2label.items()},
+        label2id=label2id,
+    )
+    rope_theta = getattr(text_cfg, "rope_theta", None)
+    if rope_theta is not None:
+        model_config.rope_theta = rope_theta
+    tie_word_embeddings = getattr(text_cfg, "tie_word_embeddings", None)
+    if tie_word_embeddings is not None:
+        model_config.tie_word_embeddings = tie_word_embeddings
+    torch_dtype = getattr(raw_config, "torch_dtype", None) or getattr(text_cfg, "torch_dtype", None)
+    if torch_dtype is not None:
+        model_config.torch_dtype = torch_dtype
+    return raw_config, model_config
+
+
+def resolve_target_modules(model_type: str, configured_modules: list[str]) -> list[str]:
+    if model_type == "qwen2_5_vl" and any(module.startswith("c_") for module in configured_modules):
+        return ["q_proj", "k_proj", "v_proj", "o_proj"]
+    return configured_modules
 
 
 def bio_spans(tags):
@@ -173,9 +219,11 @@ def main(config_path: str):
     label_to_id = {k: int(v) for k, v in label_map["label_to_id"].items()}
     id2label = {idx: label for label, idx in label_to_id.items()}
 
-    tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
+    raw_config, model_config = build_model_config(model_name, len(label_names), id2label, label_to_id)
+
+    tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True, trust_remote_code=True)
     if tokenizer.pad_token_id is None:
-        tokenizer.pad_token = tokenizer.eos_token
+        tokenizer.pad_token = tokenizer.eos_token or tokenizer.unk_token
 
     data_files = {"train": train_file}
     if has_validation:
@@ -189,9 +237,9 @@ def main(config_path: str):
 
     model = AutoModelForTokenClassification.from_pretrained(
         model_name,
-        num_labels=len(label_names),
-        id2label={int(k): v for k, v in id2label.items()},
-        label2id=label_to_id,
+        config=model_config,
+        trust_remote_code=True,
+        ignore_mismatched_sizes=True,
     )
     model.config.pad_token_id = tokenizer.pad_token_id
 
@@ -201,7 +249,7 @@ def main(config_path: str):
         r=int(cfg["lora"]["r"]),
         lora_alpha=float(cfg["lora"]["lora_alpha"]),
         lora_dropout=float(cfg["lora"]["lora_dropout"]),
-        target_modules=cfg["lora"]["target_modules"],
+        target_modules=resolve_target_modules(getattr(raw_config, "model_type", ""), cfg["lora"]["target_modules"]),
     )
     model = get_peft_model(model, lora_cfg)
 
@@ -219,6 +267,7 @@ def main(config_path: str):
         "eval_steps": int(cfg["training"]["eval_steps"]),
         "save_total_limit": int(cfg["training"]["save_total_limit"]),
         "fp16": bool(cfg["training"].get("fp16", False)),
+        "bf16": bool(cfg["training"].get("bf16", False)),
         "report_to": "none",
         "load_best_model_at_end": has_validation,
         "remove_unused_columns": False,
