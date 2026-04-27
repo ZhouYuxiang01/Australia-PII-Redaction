@@ -1,13 +1,57 @@
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.venv/
-venv/
-outputs/
-*.pt
-*.bin
-*.log
-*.ckpt
-*.cache/
+# OS / Editor
 .DS_Store
+Thumbs.db
+.ipynb_checkpoints/
+.vscode/
+.claude/
+.claude
+
+# Python cache / env
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.venv/
+**/.venv-*/
+**/.venv*/
+**/venv/
+.venv*/
+**/*.egg-info/
+**/site-packages/
+
+# Logs
+**/logs/
+**/*.log
+
+# Training / model artifacts (usually very large)
+**/outputs/
+**/runs/
+**/checkpoint/
+**/checkpoint-*/
+**/checkpoints/
+**/*.safetensors
+**/*.pt
+**/*.pth
+**/*.ckpt
+**/*.bin
+**/*.onnx
+
+# Dataset artifacts (usually very large)
+**/data/raw/
+**/data/processed/
+**/data/external_eval/
+**/data/eval_external_1000/
+
+# Temporary / local files
+*.tmp
+*.swp
+
+# Local repository metadata backup
+opf_au_pii/privacy-filter/.git.local-backup/
+
+# Archive artifacts
+*.tar
+*.tar.gz
+*.tgz
+*.zip

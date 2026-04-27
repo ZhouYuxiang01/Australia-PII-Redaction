@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.internal/schemas/redaction-output-v1.schema.json",
+  "title": "AU PII Redaction Output V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["spans", "metadata"],
+  "properties": {
+    "redacted_text": {
+      "type": "string",
+      "description": "Text after applying policy-approved redactions. Optional for detection-only responses."
+    },
+    "spans": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/span"
+      }
+    },
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Non-fatal issues such as uncalibrated confidence or repaired offsets."
+    }
+  },
+  "$defs": {
+    "pii_type": {
+      "type": "string",
+      "enum": [
+        "PERSON",
+        "DATE_OF_BIRTH",
+        "ADDRESS",
+        "EMAIL_ADDRESS",
+        "AU_PHONE",
+        "AU_TFN",
+        "AU_PASSPORT",
+        "PASSPORT_EXPIRY",
+        "AU_DRIVERS_LICENCE",
+        "MEDICARE_NUMBER",
+        "MEDICARE_EXPIRY",
+        "IHI",
+        "STUDENT_ID",
+        "PAYMENT_CARD_NUMBER",
+        "CREDIT_CARD_EXPIRY",
+        "CREDIT_CARD_CVV",
+        "BSB",
+        "AU_BANK_ACCOUNT",
+        "IP_ADDRESS",
+        "DEVICE_ID",
+        "VEHICLE_REGO",
+        "SALARY",
+        "WORK_EMAIL",
+        "WORK_PHONE",
+        "EMPLOYEE_NUMBER",
+        "PERSONNEL_NUMBER",
+        "UAC_ID",
+        "USI",
+        "CENTRELINK_REFERENCE_NUMBER"
+      ]
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["AUTO_REDACT", "REVIEW", "PASS"]
+    },
+    "span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "type", "confidence"],
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Inclusive character offset in normalized text unless raw_offset_mapping_applied is true."
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Exclusive character offset in normalized text unless raw_offset_mapping_applied is true."
+        },
+        "type": {
+          "$ref": "#/$defs/pii_type"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Calibrated confidence when available. Null means the model output has not yet been calibrated."
+        },
+        "decision": {
+          "$ref": "#/$defs/decision"
+        },
+        "replacement": {
+          "type": "string",
+          "description": "Replacement string used when the span is redacted, for example [AU_TFN]."
+        },
+        "raw_score": {
+          "type": "number",
+          "description": "Optional uncalibrated model score for diagnostics."
+        },
+        "value": {
+          "type": "string",
+          "description": "The exact text slice at start:end after any offset repair."
+        },
+        "source": {
+          "type": "string",
+          "enum": ["model", "postprocess", "rule"]
+        },
+        "postprocess": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model_version",
+        "taxonomy_version",
+        "schema_version",
+        "policy_id",
+        "normalization"
+      ],
+      "properties": {
+        "model_version": {
+          "type": "string"
+        },
+        "taxonomy_version": {
+          "type": "string"
+        },
+        "schema_version": {
+          "type": "string",
+          "const": "redaction-output-v1"
+        },
+        "policy_id": {
+          "type": "string"
+        },
+        "normalization": {
+          "type": "string",
+          "const": "NFC"
+        },
+        "raw_offset_mapping_applied": {
+          "type": "boolean",
+          "default": false
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

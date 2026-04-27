@@ -1,0 +1,300 @@
+{
+  "source_predictions": "outputs\\qwen3.5-9b-adapter-cleaned-200\\cleaned_200_predictions.jsonl",
+  "source_summary": "outputs\\qwen3.5-9b-adapter-cleaned-200\\cleaned_200_value_level_summary.json",
+  "predictions_out": "outputs\\qwen3.5-9b-adapter-cleaned-200\\postprocessed_predictions.jsonl",
+  "rules": {
+    "strip_known_prefixes": true,
+    "add_date_variants": true,
+    "collapse_work_contact": true,
+    "add_encoded_emails": true
+  },
+  "overall": {
+    "rows": 200,
+    "sample_exact_acc": 0.72,
+    "precision": 0.9425675675675675,
+    "recall": 0.9415073115860517,
+    "f1": 0.9420371412492965,
+    "tp": 837,
+    "fp": 51,
+    "fn": 52
+  },
+  "difficulty_breakdown": [
+    {
+      "difficulty": "EASY",
+      "rows": 20,
+      "sample_exact_acc": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 88,
+      "fp": 0,
+      "fn": 0
+    },
+    {
+      "difficulty": "EXPERT",
+      "rows": 50,
+      "sample_exact_acc": 0.58,
+      "precision": 0.9329268292682927,
+      "recall": 0.9415384615384615,
+      "f1": 0.9372128637059726,
+      "tp": 306,
+      "fp": 22,
+      "fn": 19
+    },
+    {
+      "difficulty": "HARD",
+      "rows": 60,
+      "sample_exact_acc": 0.7,
+      "precision": 0.9404761904761905,
+      "recall": 0.9294117647058824,
+      "f1": 0.9349112426035503,
+      "tp": 237,
+      "fp": 15,
+      "fn": 18
+    },
+    {
+      "difficulty": "MEDIUM",
+      "rows": 50,
+      "sample_exact_acc": 0.66,
+      "precision": 0.9363636363636364,
+      "recall": 0.9321266968325792,
+      "f1": 0.9342403628117915,
+      "tp": 206,
+      "fp": 14,
+      "fn": 15
+    },
+    {
+      "difficulty": "TRAP",
+      "rows": 20,
+      "sample_exact_acc": 1.0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 0
+    }
+  ],
+  "per_type_breakdown": {
+    "PERSON": {
+      "precision": 0.9485714285714286,
+      "recall": 0.8972972972972973,
+      "f1": 0.9222222222222223,
+      "tp": 166,
+      "fp": 9,
+      "fn": 19
+    },
+    "ADDRESS": {
+      "precision": 0.990990990990991,
+      "recall": 0.9322033898305084,
+      "f1": 0.9606986899563319,
+      "tp": 110,
+      "fp": 1,
+      "fn": 8
+    },
+    "DATE_OF_BIRTH": {
+      "precision": 0.8962962962962963,
+      "recall": 0.9758064516129032,
+      "f1": 0.9343629343629344,
+      "tp": 121,
+      "fp": 14,
+      "fn": 3
+    },
+    "EMAIL_ADDRESS": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 83,
+      "fp": 0,
+      "fn": 0
+    },
+    "AU_PHONE": {
+      "precision": 0.9142857142857143,
+      "recall": 1.0,
+      "f1": 0.955223880597015,
+      "tp": 64,
+      "fp": 6,
+      "fn": 0
+    },
+    "AU_TFN": {
+      "precision": 0.7540983606557377,
+      "recall": 0.7540983606557377,
+      "f1": 0.7540983606557377,
+      "tp": 46,
+      "fp": 15,
+      "fn": 15
+    },
+    "AU_PASSPORT": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 30,
+      "fp": 0,
+      "fn": 0
+    },
+    "AU_DRIVERS_LICENCE": {
+      "precision": 0.9523809523809523,
+      "recall": 1.0,
+      "f1": 0.975609756097561,
+      "tp": 20,
+      "fp": 1,
+      "fn": 0
+    },
+    "STUDENT_ID": {
+      "precision": 0.8936170212765957,
+      "recall": 0.875,
+      "f1": 0.8842105263157894,
+      "tp": 42,
+      "fp": 5,
+      "fn": 6
+    },
+    "MEDICARE_NUMBER": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "AU_BANK_ACCOUNT": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "BSB": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "PAYMENT_CARD_NUMBER": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 8,
+      "fp": 0,
+      "fn": 0
+    },
+    "IP_ADDRESS": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 6,
+      "fp": 0,
+      "fn": 0
+    },
+    "VEHICLE_REGO": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+    },
+    "SALARY": {
+      "precision": 1.0,
+      "recall": 0.9230769230769231,
+      "f1": 0.9600000000000001,
+      "tp": 12,
+      "fp": 0,
+      "fn": 1
+    },
+    "WORK_EMAIL": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 9,
+      "fp": 0,
+      "fn": 0
+    },
+    "WORK_PHONE": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 6,
+      "fp": 0,
+      "fn": 0
+    },
+    "EMPLOYEE_NUMBER": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 6,
+      "fp": 0,
+      "fn": 0
+    },
+    "PERSONNEL_NUMBER": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+    },
+    "MEDICARE_EXPIRY": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 12,
+      "fp": 0,
+      "fn": 0
+    },
+    "PASSPORT_EXPIRY": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 8,
+      "fp": 0,
+      "fn": 0
+    },
+    "UAC_ID": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 10,
+      "fp": 0,
+      "fn": 0
+    },
+    "USI": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 10,
+      "fp": 0,
+      "fn": 0
+    },
+    "CENTRELINK_REFERENCE_NUMBER": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 10,
+      "fp": 0,
+      "fn": 0
+    },
+    "CREDIT_CARD_EXPIRY": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 8,
+      "fp": 0,
+      "fn": 0
+    },
+    "CREDIT_CARD_CVV": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 8,
+      "fp": 0,
+      "fn": 0
+    }
+  },
+  "fixed_fp_count": 32,
+  "fixed_fn_count": 54,
+  "rows_improved": 35,
+  "rows_worsened": 13
+}

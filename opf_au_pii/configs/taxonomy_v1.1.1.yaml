@@ -1,0 +1,754 @@
+version: 1.1.1-draft
+label_scheme: BIOES
+outside_label: O
+unicode_normalisation: do_not_mutate_after_labelling
+newline_policy: do_not_mutate_after_labelling
+student_model: openai/privacy-filter
+training_strategy:
+  approach: 'Use OPF official custom label space via `opf train --label-space-json`; do not manually edit
+    the classification head.
+
+    '
+  span_class_count: 73
+  token_label_count: 293
+  token_label_formula: 1 + 4*K, where K is the number of non-background span classes
+  label_space_file: custom_label_space_73.v1.1.1.json
+  dataset_schema: Clean OPF JSONL with only example_id, text, and spans; audit metadata is written to
+    audit.jsonl.
+  source_of_truth: taxonomy_v1.1.1.yaml; scripts must derive source_type -> trainable class mapping from
+    this YAML, not hard-code it.
+  recommended_dataset_format: dict first, list fallback after OPF smoke test
+  notes:
+  - prepare_dataset_v2.py reads this taxonomy directly.
+  - validate_taxonomy.py checks class count, source-type coverage, label-space alignment, optional data
+    frequencies, and offset validity.
+policy_modes:
+  block:
+    description: Precision-first. Auto-masking disrupts workflows; minimise FP.
+    default_precision_floor: 0.98
+    default_recall_floor: 0.9
+  review:
+    description: Recall-first. Ambiguous types; require human confirmation.
+    default_precision_floor: 0.85
+    default_recall_floor: 0.95
+under_redaction_weights:
+  critical: 5
+  high: 3
+  medium: 2
+  low: 1
+classes:
+- code: PERSON
+  parent_group: PERSON
+  description: Natural person name.
+  policy: block
+  cost_weight: high
+  freq: 19000
+  source_types:
+  - PERSON
+- code: NEXT_OF_KIN
+  parent_group: PERSON
+  description: Name of a nominated next-of-kin / emergency contact.
+  policy: block
+  cost_weight: high
+  freq: 700
+  source_types:
+  - NEXT_OF_KIN
+- code: ADDRESS
+  parent_group: ADDRESS
+  description: Residential, postal, or delivery address.
+  policy: block
+  cost_weight: high
+  freq: 11582
+  source_types:
+  - ADDRESS
+- code: EMAIL
+  parent_group: EMAIL
+  description: Email address (personal or work).
+  policy: block
+  cost_weight: high
+  freq: 6346
+  merged_from:
+  - EMAIL_ADDRESS
+  - WORK_EMAIL
+  merge_rationale: 'Validation of au_pii_19000_final.json shows EMAIL_ADDRESS and WORK_EMAIL have zero
+    domain overlap in the synthetic data (personal webmail vs institutional domains). Training them as
+    separate classes would teach a domain-whitelist shortcut that does not generalise to real-world usage
+    (e.g., personal Gmail used for work correspondence). Redaction action and risk profile are identical
+    either way.
+
+    '
+  source_types:
+  - EMAIL_ADDRESS
+  - WORK_EMAIL
+- code: PHONE
+  parent_group: PHONE
+  description: Phone number (personal or work).
+  policy: block
+  cost_weight: high
+  freq: 6271
+  merged_from:
+  - AU_PHONE
+  - WORK_PHONE
+  merge_rationale: 'AU_PHONE and WORK_PHONE number strings are disjoint in the synthetic data, and the
+    distinction is context-only (presence of a signature block or institutional mention). Cannot be reliably
+    inferred from the phone string itself; redaction action is identical.
+
+    '
+  source_types:
+  - AU_PHONE
+  - WORK_PHONE
+- code: DATE_OF_BIRTH
+  parent_group: DATE_OF_BIRTH
+  description: Date of birth specifically, not arbitrary dates.
+  policy: block
+  cost_weight: high
+  freq: 10817
+  source_types:
+  - DATE_OF_BIRTH
+- code: CREDIT_CARD_EXPIRY
+  parent_group: CREDENTIAL_DATE
+  description: Payment card expiry date when attached to a card credential.
+  policy: block
+  cost_weight: medium
+  freq: 1698
+  source_types:
+  - CREDIT_CARD_EXPIRY
+- code: MEDICARE_EXPIRY
+  parent_group: CREDENTIAL_DATE
+  description: Medicare card expiry date.
+  policy: block
+  cost_weight: medium
+  freq: 1500
+  source_types:
+  - MEDICARE_EXPIRY
+- code: PASSPORT_EXPIRY
+  parent_group: CREDENTIAL_DATE
+  description: Passport expiry date.
+  policy: block
+  cost_weight: medium
+  freq: 900
+  source_types:
+  - PASSPORT_EXPIRY
+- code: PASSPORT_START_DATE
+  parent_group: CREDENTIAL_DATE
+  description: Passport issue / start date.
+  policy: block
+  cost_weight: medium
+  freq: 900
+  source_types:
+  - PASSPORT_START_DATE
+- code: AU_TFN
+  parent_group: AU_TFN
+  description: Australian Tax File Number (9 digits). Statutory, strongly controlled.
+  policy: block
+  cost_weight: critical
+  precision_floor: 0.99
+  freq: 2500
+  source_types:
+  - AU_TFN
+- code: AU_PASSPORT
+  parent_group: AU_PASSPORT
+  description: Australian passport number.
+  policy: block
+  cost_weight: critical
+  precision_floor: 0.99
+  freq: 3400
+  source_types:
+  - AU_PASSPORT
+- code: AU_DRIVERS_LICENCE
+  parent_group: AU_DRIVERS_LICENCE
+  description: Australian driver's licence number (per-state formats vary).
+  policy: block
+  cost_weight: critical
+  precision_floor: 0.99
+  freq: 2500
+  source_types:
+  - AU_DRIVERS_LICENCE
+- code: MEDICARE_NUMBER
+  parent_group: MEDICARE_NUMBER
+  description: Medicare card number (10 or 11 digits, position-aware).
+  policy: block
+  cost_weight: critical
+  precision_floor: 0.99
+  freq: 1500
+  source_types:
+  - MEDICARE_NUMBER
+- code: IHI
+  parent_group: IHI
+  description: Individual Healthcare Identifier (16 digits).
+  policy: block
+  cost_weight: critical
+  precision_floor: 0.99
+  freq: 1500
+  source_types:
+  - IHI
+- code: CENTRELINK_REFERENCE_NUMBER
+  parent_group: GOV_ID_OTHER
+  description: Centrelink Customer Reference Number or equivalent identifier.
+  policy: block
+  cost_weight: critical
+  freq: 900
+  source_types:
+  - CENTRELINK_REFERENCE_NUMBER
+- code: NATIONAL_IDENTITY_CARD
+  parent_group: GOV_ID_OTHER
+  description: National identity card number or identifier.
+  policy: block
+  cost_weight: critical
+  freq: 900
+  source_types:
+  - NATIONAL_IDENTITY_CARD
+- code: PENSION_CARD_NUMBER
+  parent_group: GOV_ID_OTHER
+  description: Pension card number or identifier.
+  policy: block
+  cost_weight: critical
+  freq: 700
+  source_types:
+  - PENSION_CARD_NUMBER
+- code: PAYMENT_CARD_NUMBER
+  parent_group: PAYMENT_CARD_NUMBER
+  description: Payment card PAN, including hashed / tokenised forms.
+  policy: block
+  cost_weight: critical
+  precision_floor: 0.99
+  freq: 2198
+  merged_from:
+  - PAYMENT_CARD_NUMBER
+  - HASHED_PAYMENT_CARD_NUMBER
+  merge_rationale: 'HASHED_PAYMENT_CARD_NUMBER and PAYMENT_CARD_NUMBER have identical redaction action
+    and risk profile under PCI-DSS when hashing is reversible or the hash pre-image is derivable from
+    transaction context. If AI Hub later requires passthrough for verified non-reversible hashes, split
+    again via runtime policy layer, not a separate label.
+
+    '
+  source_types:
+  - PAYMENT_CARD_NUMBER
+  - HASHED_PAYMENT_CARD_NUMBER
+- code: CREDIT_CARD_CVV
+  parent_group: PAYMENT_CARD_CVV
+  description: Card verification value (CVV / CVC). PCI-DSS prohibits storage in plain.
+  policy: block
+  cost_weight: critical
+  precision_floor: 0.99
+  freq: 500
+  source_types:
+  - CREDIT_CARD_CVV
+- code: AU_BANK_ACCOUNT
+  parent_group: AU_BANK_DETAILS
+  description: Australian bank account number.
+  policy: block
+  cost_weight: critical
+  precision_floor: 0.99
+  freq: 1800
+  source_types:
+  - AU_BANK_ACCOUNT
+- code: BSB
+  parent_group: AU_BANK_DETAILS
+  description: Australian Bank State Branch code (6 digits, XXX-XXX).
+  policy: block
+  cost_weight: critical
+  precision_floor: 0.99
+  freq: 1800
+  source_types:
+  - BSB
+- code: VEHICLE_ID
+  parent_group: VEHICLE_ID
+  description: Vehicle number plate / registration identifier.
+  policy: block
+  cost_weight: medium
+  freq: 1800
+  merged_from:
+  - NUMBER_PLATE
+  - VEHICLE_REGO
+  merge_rationale: 'In au_pii_19000_final.json every record with a plate annotation has BOTH NUMBER_PLATE
+    and VEHICLE_REGO labelled, always at the same value (zero mismatches across 900 records). The teacher
+    is annotating the same physical identifier twice under two synonyms. A single class is semantically
+    correct and avoids training on a non-existent distinction.
+
+    '
+  source_types:
+  - NUMBER_PLATE
+  - VEHICLE_REGO
+- code: STUDENT_ID
+  parent_group: STUDENT_ID
+  description: University or school student identifier (e.g., USyd SID).
+  policy: block
+  cost_weight: medium
+  freq: 3200
+  source_types:
+  - STUDENT_ID
+- code: UAC_ID
+  parent_group: STUDENT_ID
+  description: UAC application identifier.
+  policy: block
+  cost_weight: medium
+  freq: 900
+  source_types:
+  - UAC_ID
+- code: USI
+  parent_group: STUDENT_ID
+  description: Unique Student Identifier (Commonwealth).
+  policy: block
+  cost_weight: medium
+  freq: 900
+  source_types:
+  - USI
+- code: EMPLOYEE_NUMBER
+  parent_group: EMPLOYEE_ID
+  description: Employee number.
+  policy: block
+  cost_weight: medium
+  freq: 1200
+  source_types:
+  - EMPLOYEE_NUMBER
+- code: PERSONNEL_NUMBER
+  parent_group: EMPLOYEE_ID
+  description: Personnel number.
+  policy: block
+  cost_weight: medium
+  freq: 1200
+  source_types:
+  - PERSONNEL_NUMBER
+- code: IP_ADDRESS
+  parent_group: IP_ADDRESS
+  description: IPv4 or IPv6 address.
+  policy: block
+  cost_weight: medium
+  freq: 900
+  source_types:
+  - IP_ADDRESS
+- code: DEVICE_ID
+  parent_group: DEVICE_ID
+  description: Device identifier (MAC, IMEI, advertising ID, device fingerprint).
+  policy: block
+  cost_weight: medium
+  freq: 900
+  source_types:
+  - DEVICE_ID
+- code: USERNAME
+  parent_group: ONLINE_ACCOUNT
+  description: Username or login handle.
+  policy: block
+  cost_weight: medium
+  freq: 900
+  source_types:
+  - USERNAME
+- code: SOCIAL_MEDIA_ACCOUNT
+  parent_group: ONLINE_ACCOUNT
+  description: Social-media account handle or profile identifier.
+  policy: block
+  cost_weight: medium
+  freq: 900
+  source_types:
+  - SOCIAL_MEDIA_ACCOUNT
+- code: SOCIAL_MEDIA_ID
+  parent_group: ONLINE_ACCOUNT
+  description: Numeric or opaque social-media account ID.
+  policy: block
+  cost_weight: medium
+  freq: 900
+  source_types:
+  - SOCIAL_MEDIA_ID
+- code: COOKIE_INFORMATION
+  parent_group: ONLINE_ACTIVITY
+  description: Cookie value or cookie-derived tracking identifier.
+  policy: review
+  cost_weight: low
+  freq: 900
+  source_types:
+  - COOKIE_INFORMATION
+- code: WEBSITE_HISTORY
+  parent_group: ONLINE_ACTIVITY
+  description: Browsing / website history linked to a person.
+  policy: review
+  cost_weight: low
+  freq: 900
+  source_types:
+  - WEBSITE_HISTORY
+- code: SOCIAL_MEDIA_HISTORY
+  parent_group: ONLINE_ACTIVITY
+  description: Social-media activity history linked to a person.
+  policy: review
+  cost_weight: low
+  freq: 900
+  source_types:
+  - SOCIAL_MEDIA_HISTORY
+- code: LATITUDE
+  parent_group: GEOLOCATION
+  description: Latitude coordinate.
+  policy: block
+  cost_weight: medium
+  freq: 900
+  source_types:
+  - LATITUDE
+- code: LONGITUDE
+  parent_group: GEOLOCATION
+  description: Longitude coordinate.
+  policy: block
+  cost_weight: medium
+  freq: 900
+  source_types:
+  - LONGITUDE
+- code: GEOLOCATION_INFORMATION
+  parent_group: GEOLOCATION
+  description: Narrative or structured geolocation information.
+  policy: review
+  cost_weight: medium
+  freq: 900
+  source_types:
+  - GEOLOCATION_INFORMATION
+- code: MEDICAL_INFORMATION
+  parent_group: HEALTH_INFO
+  description: Medical or health information.
+  policy: block
+  cost_weight: high
+  freq: 1200
+  source_types:
+  - MEDICAL_INFORMATION
+- code: MEDICAL_CERTIFICATE
+  parent_group: HEALTH_INFO
+  description: Medical certificate content or identifier.
+  policy: block
+  cost_weight: high
+  freq: 1200
+  source_types:
+  - MEDICAL_CERTIFICATE
+- code: DISABILITY_OR_SPECIFIC_CONDITION
+  parent_group: HEALTH_INFO
+  description: Disability status or specific medical condition.
+  policy: block
+  cost_weight: high
+  freq: 1200
+  source_types:
+  - DISABILITY_OR_SPECIFIC_CONDITION
+- code: COUNSELLING_RECORDS
+  parent_group: HEALTH_INFO
+  description: Counselling or wellbeing service records.
+  policy: block
+  cost_weight: high
+  freq: 1200
+  source_types:
+  - COUNSELLING_RECORDS
+- code: WORKERS_COMPENSATION_CLAIM
+  parent_group: HEALTH_INFO
+  description: Workers compensation claim information.
+  policy: block
+  cost_weight: high
+  freq: 700
+  source_types:
+  - WORKERS_COMPENSATION_CLAIM
+- code: ABORIGINALITY
+  parent_group: RACE_ORIGIN
+  description: Aboriginality or Torres Strait Islander status.
+  policy: block
+  cost_weight: high
+  freq: 1000
+  policy_rationale: Privacy Act 1988 s.6 — racial or ethnic origin is sensitive information.
+  source_types:
+  - ABORIGINALITY
+- code: RACIAL_ETHNIC_ORIGIN
+  parent_group: RACE_ORIGIN
+  description: Racial or ethnic origin.
+  policy: block
+  cost_weight: high
+  freq: 1000
+  policy_rationale: Privacy Act 1988 s.6 — racial or ethnic origin is sensitive information.
+  source_types:
+  - RACIAL_ETHNIC_ORIGIN
+- code: NATIONALITY
+  parent_group: RACE_ORIGIN
+  description: Nationality.
+  policy: block
+  cost_weight: high
+  freq: 900
+  policy_rationale: 'NOT directly listed as sensitive information in Privacy Act 1988 s.6. Block/high
+    is chosen on the basis of (a) University privacy policy''s conservative default, (b) re-identification
+    risk when combined with other fields, and (c) potential inference of ethnic origin (which IS statutory
+    sensitive information) from nationality data.
+
+    '
+  source_types:
+  - NATIONALITY
+- code: CITIZENSHIP_STATUS
+  parent_group: RACE_ORIGIN
+  description: Citizenship or visa-related status.
+  policy: block
+  cost_weight: high
+  freq: 900
+  policy_rationale: 'Same rationale as NATIONALITY. Additionally, visa-status disclosure can expose protected
+    categories (refugee status, immigration history).
+
+    '
+  source_types:
+  - CITIZENSHIP_STATUS
+- code: FINGERPRINT
+  parent_group: BIOMETRIC_MEDIA
+  description: Fingerprint identifier or fingerprint-derived biometric reference.
+  policy: block
+  cost_weight: high
+  freq: 700
+  source_types:
+  - FINGERPRINT
+- code: FACIAL_RECOGNITION
+  parent_group: BIOMETRIC_MEDIA
+  description: Facial-recognition identifier or facial biometric reference.
+  policy: block
+  cost_weight: high
+  freq: 700
+  source_types:
+  - FACIAL_RECOGNITION
+- code: VOICE_RECOGNITION
+  parent_group: BIOMETRIC_MEDIA
+  description: Voice-recognition identifier or voice biometric reference.
+  policy: block
+  cost_weight: high
+  freq: 700
+  source_types:
+  - VOICE_RECOGNITION
+- code: SIGNATURE
+  parent_group: BIOMETRIC_MEDIA
+  description: Handwritten or digital signature.
+  policy: block
+  cost_weight: high
+  freq: 700
+  source_types:
+  - SIGNATURE
+- code: AUDIO_INFORMATION
+  parent_group: BIOMETRIC_MEDIA
+  description: Audio information that may identify a person.
+  policy: block
+  cost_weight: high
+  freq: 700
+  source_types:
+  - AUDIO_INFORMATION
+- code: CAMERA_FOOTAGE_AUDIO
+  parent_group: BIOMETRIC_MEDIA
+  description: Camera footage or audio-footage reference containing identifying media.
+  policy: block
+  cost_weight: high
+  freq: 700
+  source_types:
+  - CAMERA_FOOTAGE_AUDIO
+- code: CRIMINAL_RECORDS
+  parent_group: LEGAL_HISTORY
+  description: Criminal record information.
+  policy: block
+  cost_weight: high
+  freq: 900
+  policy_rationale: Privacy Act 1988 s.6 — criminal record is sensitive information.
+  source_types:
+  - CRIMINAL_RECORDS
+- code: SANCTIONS
+  parent_group: LEGAL_HISTORY
+  description: Sanctions-list match or sanctions-related identifier.
+  policy: block
+  cost_weight: high
+  freq: 1500
+  source_types:
+  - SANCTIONS
+- code: GENDER
+  parent_group: DEMOGRAPHIC_ATTRIBUTE
+  description: Gender descriptor.
+  policy: review
+  cost_weight: low
+  freq: 502
+  source_types:
+  - GENDER
+- code: PRONOUN
+  parent_group: DEMOGRAPHIC_ATTRIBUTE
+  description: Pronoun descriptor.
+  policy: review
+  cost_weight: low
+  freq: 1000
+  source_types:
+  - PRONOUN
+- code: MARITAL_STATUS
+  parent_group: DEMOGRAPHIC_ATTRIBUTE
+  description: Marital or relationship status.
+  policy: review
+  cost_weight: low
+  freq: 900
+  source_types:
+  - MARITAL_STATUS
+- code: RELIGION_BELIEF
+  parent_group: DEMOGRAPHIC_ATTRIBUTE
+  description: Religion or belief descriptor.
+  policy: block
+  cost_weight: high
+  freq: 1000
+  policy_rationale: Privacy Act 1988 s.6 — religious beliefs are sensitive information.
+  source_types:
+  - RELIGION_BELIEF
+- code: SEXUAL_ORIENTATION
+  parent_group: DEMOGRAPHIC_ATTRIBUTE
+  description: Sexual orientation descriptor.
+  policy: block
+  cost_weight: high
+  freq: 1000
+  policy_rationale: Privacy Act 1988 s.6 — sexual orientation is sensitive information.
+  source_types:
+  - SEXUAL_ORIENTATION
+- code: CARING_RESPONSIBILITIES
+  parent_group: DEMOGRAPHIC_ATTRIBUTE
+  description: Caring responsibilities descriptor.
+  policy: review
+  cost_weight: low
+  freq: 900
+  source_types:
+  - CARING_RESPONSIBILITIES
+- code: MILITARY_VETERAN_STATUS
+  parent_group: DEMOGRAPHIC_ATTRIBUTE
+  description: Military or veteran status.
+  policy: review
+  cost_weight: low
+  freq: 900
+  source_types:
+  - MILITARY_VETERAN_STATUS
+- code: SOCIO_ECONOMIC_STATUS
+  parent_group: DEMOGRAPHIC_ATTRIBUTE
+  description: Socio-economic status descriptor.
+  policy: review
+  cost_weight: low
+  freq: 1000
+  source_types:
+  - SOCIO_ECONOMIC_STATUS
+- code: SUBJECT_RESULTS
+  parent_group: ACADEMIC_RECORD
+  description: Subject or course result information.
+  policy: review
+  cost_weight: medium
+  freq: 1500
+  source_types:
+  - SUBJECT_RESULTS
+- code: WAM_SCORE
+  parent_group: ACADEMIC_RECORD
+  description: Weighted Average Mark or similar academic score.
+  policy: review
+  cost_weight: medium
+  freq: 1500
+  source_types:
+  - WAM_SCORE
+- code: SCHOLARSHIP
+  parent_group: ACADEMIC_RECORD
+  description: Scholarship information.
+  policy: review
+  cost_weight: medium
+  freq: 1500
+  source_types:
+  - SCHOLARSHIP
+- code: SPECIAL_CONSIDERATION
+  parent_group: ACADEMIC_RECORD
+  description: Special consideration information.
+  policy: review
+  cost_weight: medium
+  freq: 1200
+  source_types:
+  - SPECIAL_CONSIDERATION
+- code: SALARY
+  parent_group: FINANCIAL_INFO
+  description: Salary amount or salary band.
+  policy: review
+  cost_weight: medium
+  freq: 3000
+  source_types:
+  - SALARY
+- code: SALARY_WAGE_EXPECTATION
+  parent_group: FINANCIAL_INFO
+  description: Salary or wage expectation.
+  policy: review
+  cost_weight: medium
+  freq: 618
+  source_types:
+  - SALARY_WAGE_EXPECTATION
+- code: PERSONAL_DEBT
+  parent_group: FINANCIAL_INFO
+  description: Personal debt information.
+  policy: review
+  cost_weight: medium
+  freq: 900
+  source_types:
+  - PERSONAL_DEBT
+- code: EMPLOYMENT_INFORMATION
+  parent_group: EMPLOYMENT_INFO
+  description: Employment information narrative.
+  policy: review
+  cost_weight: low
+  freq: 1200
+  source_types:
+  - EMPLOYMENT_INFORMATION
+- code: CONTRACT_TYPE
+  parent_group: EMPLOYMENT_INFO
+  description: Employment contract type.
+  policy: review
+  cost_weight: low
+  freq: 1200
+  source_types:
+  - CONTRACT_TYPE
+evaluation_label_views:
+  typed_73:
+    description: Primary span-level evaluation over the 73 trainable classes.
+  family_31:
+    description: Fold 73 classes back to 31 parent groups (see parent_group on each class) for cross-taxonomy
+      comparison.
+  untyped:
+    description: Boundary-only evaluation; ignore the PII type.
+  source_77_audit:
+    description: Reconstruct the original 77-source-type view from audit.jsonl. Training JSONL intentionally
+      stays clean for OPF compatibility.
+mapping_assertions:
+  expected_class_count: 73
+  expected_source_type_count: 77
+  merges_total: 4
+  merges:
+  - class: EMAIL
+    source_types:
+    - EMAIL_ADDRESS
+    - WORK_EMAIL
+  - class: PHONE
+    source_types:
+    - AU_PHONE
+    - WORK_PHONE
+  - class: VEHICLE_ID
+    source_types:
+    - NUMBER_PLATE
+    - VEHICLE_REGO
+  - class: PAYMENT_CARD_NUMBER
+    source_types:
+    - PAYMENT_CARD_NUMBER
+    - HASHED_PAYMENT_CARD_NUMBER
+  allow_unmapped: false
+  allow_duplicates: false
+  token_label_count: 293
+open_questions_for_ai_hub_signoff:
+- 'Confirm whether the wrapper''s external API should expose the 73 trainable labels, or auto-collapse
+  to the 31 parent groups for downstream consumers.
+
+  '
+- 'For PAYMENT_CARD_NUMBER: confirm that verified non-reversible hashes should NOT be passthrough. If
+  passthrough is required, add a runtime policy rule; do not introduce a separate label.
+
+  '
+- 'Confirm NATIONALITY / CITIZENSHIP_STATUS block/high policy. Reasoning is University-policy + re-identification
+  risk + ethnic-origin inference; NOT statutory under Privacy Act 1988 s.6.
+
+  '
+- 'Confirm LATITUDE / LONGITUDE default is block (current) or review. In log-style pipelines lat/long
+  often appear without a person link.
+
+  '
+- 'Set the minimum positive-span gate for production thresholding. Proposed default: 500 train spans;
+  below this, hold the class behind `--warn-only` in the runtime policy layer until more data is collected.
+
+  '
+- 'Confirm rare-class handling strategy after the first OPF baseline. Current recommendation: use official
+  OPF training first; if rare classes fail, prefer controlled oversampling or a custom training-loop change
+  only after confirming the CLI exposes no weighted-loss option.
+
+  '
+offset_policy:
+  unit: Python/JSON Unicode code-point character offsets
+  rule: After spans are labelled, dataset preparation must not normalise Unicode, repair mojibake, or
+    rewrite newlines because this can invalidate offsets.
+  validation: Every labelled span must satisfy text[start:end] == recorded value before it is emitted
+    to OPF JSONL.
