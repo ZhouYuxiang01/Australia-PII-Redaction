@@ -5,13 +5,16 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import shutil
 import subprocess
 import tempfile
 import threading
 import time
+from io import StringIO
 from pathlib import Path
 from typing import Any
+import csv
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import HTMLResponse
@@ -122,14 +125,101 @@ def decode_text_upload(data: bytes) -> str:
     return data.decode("utf-8", errors="replace")
 
 
-def extract_text_with_tesseract(path: Path) -> str:
+def preprocess_image_for_ocr(path: Path) -> Path | None:
+    try:
+        from PIL import Image, ImageFilter, ImageOps
+    except ImportError:
+        return None
+
+    with Image.open(path) as image:
+        grayscale = ImageOps.grayscale(image)
+        enhanced = ImageOps.autocontrast(grayscale)
+        denoised = enhanced.filter(ImageFilter.MedianFilter(size=3))
+        upscaled = denoised.resize((denoised.width * 2, denoised.height * 2), Image.Resampling.LANCZOS)
+        sharpened = upscaled.filter(ImageFilter.SHARPEN)
+
+        with tempfile.NamedTemporaryFile(prefix="redact_ocr_pre_", suffix=".png", delete=False) as tmp:
+            out_path = Path(tmp.name)
+        sharpened.save(out_path, format="PNG", dpi=(300, 300))
+        return out_path
+
+
+def score_ocr_text(text: str) -> float:
+    alnum = sum(character.isalnum() for character in text)
+    weird = len(re.findall(r"[^\w\s,./:@&()\-]", text))
+    short_lines = sum(1 for line in text.splitlines() if 0 < len(line.strip()) <= 2)
+    useful_lines = sum(1 for line in text.splitlines() if len(line.strip()) >= 4)
+    return float((alnum * 2) + (useful_lines * 5) - (weird * 6) - (short_lines * 4))
+
+
+def _tesseract_base_command(path: Path, *, psm: int) -> list[str]:
+    return [
+        "tesseract",
+        str(path),
+        "stdout",
+        "-l",
+        "eng",
+        "--psm",
+        str(psm),
+        "-c",
+        "preserve_interword_spaces=1",
+    ]
+
+
+def run_tesseract_candidate(path: Path, *, psm: int) -> tuple[str, float]:
     if not command_exists("tesseract"):
         raise HTTPException(status_code=500, detail="Tesseract OCR is not installed on the server")
-    result = run_command(["tesseract", str(path), "stdout", "-l", "eng"], timeout=180.0)
+    result = run_command(_tesseract_base_command(path, psm=psm), timeout=180.0)
     if result.returncode != 0:
         detail = result.stderr.strip() or "Tesseract OCR failed"
         raise HTTPException(status_code=422, detail=detail[:500])
-    return result.stdout
+    text = result.stdout.strip()
+
+    # Prefer candidates with higher OCR confidence, then fall back to heuristic text quality.
+    tsv_result = run_command([*_tesseract_base_command(path, psm=psm), "tsv"], timeout=180.0)
+    confidence_score = 0.0
+    if tsv_result.returncode == 0 and tsv_result.stdout.strip():
+        confidences: list[float] = []
+        tokens = 0
+        reader = csv.DictReader(StringIO(tsv_result.stdout), delimiter="\t")
+        for row in reader:
+            token = (row.get("text") or "").strip()
+            conf_raw = (row.get("conf") or "").strip()
+            if not token:
+                continue
+            try:
+                conf = float(conf_raw)
+            except ValueError:
+                continue
+            if conf >= 0:
+                confidences.append(conf)
+                tokens += 1
+        if confidences:
+            confidence_score = (sum(confidences) / len(confidences)) + min(tokens, 40) * 0.5
+
+    return text, confidence_score + score_ocr_text(text)
+
+
+def extract_text_with_tesseract(path: Path) -> str:
+    candidates: list[tuple[str, float]] = []
+    preprocessed_path = preprocess_image_for_ocr(path)
+    candidate_paths = [path]
+    if preprocessed_path is not None:
+        candidate_paths.append(preprocessed_path)
+
+    try:
+        for candidate_path in candidate_paths:
+            for psm in (6, 4):
+                text, score = run_tesseract_candidate(candidate_path, psm=psm)
+                if text:
+                    candidates.append((text, score))
+    finally:
+        if preprocessed_path is not None:
+            preprocessed_path.unlink(missing_ok=True)
+
+    if not candidates:
+        return ""
+    return max(candidates, key=lambda item: item[1])[0]
 
 
 def extract_pdf_text_layer(path: Path) -> str:
