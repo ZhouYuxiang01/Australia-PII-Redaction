@@ -1,0 +1,53 @@
+{
+  "policy_id": "qwen-safe-default-v1",
+  "description": "Default safe redaction policy for the Qwen3.5 9B LoRA adapter route.",
+  "model_version": "qwen3.5-9b-base-lora-tagged-28-fastretry",
+  "taxonomy_version": "qwen-pii-27-safe-v1",
+  "schema_version": "redaction-output-v1",
+  "redaction_mode": "replace_with_tag",
+  "default_action": "AUTO_REDACT",
+  "confidence": {
+    "calibrated": false,
+    "default_value": null,
+    "note": "Qwen tagged-text generation does not expose calibrated span confidence in the current wrapper."
+  },
+  "type_actions": {
+    "PERSON": "AUTO_REDACT",
+    "ADDRESS": "AUTO_REDACT",
+    "DATE_OF_BIRTH": "AUTO_REDACT",
+    "EMAIL_ADDRESS": "AUTO_REDACT",
+    "AU_PHONE": "AUTO_REDACT",
+    "AU_TFN": "AUTO_REDACT",
+    "AU_PASSPORT": "AUTO_REDACT",
+    "AU_DRIVERS_LICENCE": "AUTO_REDACT",
+    "STUDENT_ID": "AUTO_REDACT",
+    "MEDICARE_NUMBER": "AUTO_REDACT",
+    "AU_BANK_ACCOUNT": "AUTO_REDACT",
+    "BSB": "AUTO_REDACT",
+    "PAYMENT_CARD_NUMBER": "AUTO_REDACT",
+    "IP_ADDRESS": "AUTO_REDACT",
+    "VEHICLE_REGO": "AUTO_REDACT",
+    "SALARY": "REVIEW",
+    "WORK_EMAIL": "AUTO_REDACT",
+    "WORK_PHONE": "AUTO_REDACT",
+    "EMPLOYEE_NUMBER": "AUTO_REDACT",
+    "PERSONNEL_NUMBER": "AUTO_REDACT",
+    "MEDICARE_EXPIRY": "AUTO_REDACT",
+    "PASSPORT_EXPIRY": "AUTO_REDACT",
+    "UAC_ID": "AUTO_REDACT",
+    "USI": "AUTO_REDACT",
+    "CENTRELINK_REFERENCE_NUMBER": "AUTO_REDACT",
+    "CREDIT_CARD_EXPIRY": "AUTO_REDACT",
+    "CREDIT_CARD_CVV": "AUTO_REDACT"
+  },
+  "postprocess": {
+    "strip_known_prefixes": true,
+    "collapse_generic_work_contacts": true,
+    "add_url_encoded_emails": true,
+    "benchmark_dob_variants": false
+  },
+  "overlap_resolution": {
+    "strategy": "keep_longer_then_earlier",
+    "note": "When spans overlap after post-processing, keep the longer span; ties keep the earlier span."
+  }
+}

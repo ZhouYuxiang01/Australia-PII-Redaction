@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redaction</title>
+  <style>
+    /* ------------------------------------------------------------
+       Palette — restrained Swiss-spa neutrals + a single forest sage
+       ------------------------------------------------------------ */
+    :root {
+      color-scheme: light;
+      --bg:          #f7f7f8;
+      --surface:     #ffffff;
+      --surface-2:   #f9f9f9;
+      --ink:         #0d0d0d;
+      --ink-soft:    #353740;
+      --muted:       #6e6e80;
+      --muted-2:     #9b9ba7;
+      --line:        #e5e5e5;
+      --line-soft:   #ececf1;
+      --accent:      #10a37f;
+      --accent-hover:#0d8f6e;
+      --accent-tint: #e7f8f2;
+      --danger:      #b42318;
+      --shadow-1:    none;
+      --sans:        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      --mono:        "SF Mono", "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ------------------------------------------------------------
+       Layout
+       ------------------------------------------------------------ */
+    .shell {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 8px 16px 16px;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 40px;
+      padding: 0 4px 8px 4px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 10px;
+    }
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .brand-mark {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .brand-sub {
+      font-size: 12px;
+      color: var(--muted-2);
+      letter-spacing: 0.04em;
+    }
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+    .meta-row .pipe {
+      width: 1px;
+      height: 12px;
+      background: var(--line);
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .status .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--muted-2);
+      flex: 0 0 6px;
+    }
+    .status .dot.ok { background: var(--accent); }
+    .status .dot.err { background: var(--danger); }
+
+    main.grid {
+      display: grid;
+      grid-template-columns: minmax(360px, 0.9fr) minmax(520px, 1.1fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    /* ------------------------------------------------------------
+       Card
+       ------------------------------------------------------------ */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: var(--shadow-1);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card-title {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .section-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .section-meta {
+      font-size: 11px;
+      color: var(--muted-2);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+
+    /* ------------------------------------------------------------
+       Form controls
+       ------------------------------------------------------------ */
+    textarea {
+      width: 100%;
+      min-height: 170px;
+      max-height: 480px;
+      resize: vertical;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.55;
+      transition: border-color 120ms ease, box-shadow 120ms ease;
+    }
+    textarea::placeholder { color: var(--muted-2); }
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-tint);
+    }
+
+    /* File picker — hidden input + custom label */
+    input[type="file"].hidden-file {
+      position: absolute;
+      width: 1px; height: 1px; opacity: 0;
+      pointer-events: none;
+    }
+    .file-trigger {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      background: var(--surface-2);
+      cursor: pointer;
+      transition: border-color 120ms ease, background 120ms ease;
+    }
+    .file-trigger:hover {
+      border-color: var(--muted-2);
+      background: var(--surface);
+    }
+    .file-trigger:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-tint);
+    }
+    .file-trigger svg { color: var(--muted); flex: 0 0 18px; }
+    .file-trigger .file-text {
+      font-size: 13px;
+      color: var(--muted);
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-trigger .file-name {
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
+    .file-clear {
+      background: none;
+      border: none;
+      padding: 4px;
+      color: var(--muted-2);
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .file-clear:hover { color: var(--ink); background: var(--line-soft); }
+
+    /* Buttons */
+    .actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
+    }
+    button svg { flex: 0 0 14px; }
+    button:hover { border-color: var(--muted-2); }
+    button:active { transform: translateY(1px); }
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+    button.primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+    button.primary.busy {
+      background: var(--ink-soft);
+      border-color: var(--ink-soft);
+    }
+
+    .message {
+      min-height: 16px;
+      font-size: 13px;
+      color: var(--danger);
+      letter-spacing: 0.01em;
+    }
+    .message:empty { min-height: 0; }
+
+    /* ------------------------------------------------------------
+       Output panels
+       ------------------------------------------------------------ */
+    .canvas {
+      border: 1px solid var(--line-soft);
+      background: var(--surface-2);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--ink);
+      min-height: 56px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-feature-settings: "tnum";
+    }
+    .canvas.placeholder {
+      color: var(--muted-2);
+      font-style: italic;
+    }
+    .canvas.mono {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    /* highlight mark — vellum bg with hairline underline + tiny tracked label */
+    mark.pii {
+      background: #f1f5f9;
+      color: var(--ink);
+      padding: 0.04em 0.32em;
+      border-radius: 4px;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+      box-shadow: inset 0 -1px 0 #d0d7de;
+      position: relative;
+      font-weight: 500;
+    }
+    mark.pii small {
+      display: inline-block;
+      margin-left: 6px;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      vertical-align: 0.18em;
+    }
+
+    /* Span table */
+    .spans-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      font-feature-settings: "tnum";
+    }
+    .spans-table thead th {
+      text-align: left;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0 8px 7px 8px;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+    }
+    .spans-table tbody td {
+      padding: 8px;
+      border-bottom: 1px solid var(--line-soft);
+      vertical-align: top;
+      color: var(--ink-soft);
+    }
+    .spans-table tbody tr:last-child td { border-bottom: none; }
+    .spans-table .col-type {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .spans-table .col-pos {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .spans-table .col-conf {
+      font-variant-numeric: tabular-nums;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .spans-table .col-conf .bar {
+      display: inline-block;
+      vertical-align: middle;
+      width: 36px;
+      height: 3px;
+      margin-right: 8px;
+      background: var(--line-soft);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+    .spans-table .col-conf .bar i {
+      display: block;
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .spans-table .col-value {
+      color: var(--ink);
+      max-width: 320px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .spans-table .pill {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: var(--surface);
+    }
+    .spans-table .pill.auto    { color: var(--accent); border-color: var(--accent); background: var(--accent-tint); }
+    .spans-table .pill.review  { color: var(--ink-soft); border-color: var(--line); background: var(--surface-2); }
+    .spans-table .empty {
+      color: var(--muted-2);
+      text-align: center;
+      padding: 12px;
+      font-style: italic;
+    }
+
+    /* Disclosure for raw response */
+    details.raw {
+      margin-top: 12px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow-1);
+      overflow: hidden;
+    }
+    details.raw > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      user-select: none;
+    }
+    details.raw > summary::-webkit-details-marker { display: none; }
+    details.raw > summary .chev {
+      transition: transform 180ms ease;
+      color: var(--muted-2);
+    }
+    details.raw[open] > summary .chev { transform: rotate(180deg); }
+    details.raw .raw-body {
+      padding: 0 16px 16px 16px;
+      border-top: 1px solid var(--line-soft);
+    }
+    details.raw pre {
+      margin: 16px 0 0 0;
+      padding: 12px;
+      max-height: 420px;
+      overflow: auto;
+      background: var(--surface-2);
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--ink-soft);
+    }
+
+    /* Loading shimmer for placeholder */
+    .placeholder { color: var(--muted-2); }
+
+    /* Responsive */
+    @media (max-width: 920px) {
+      .shell { padding: 8px 10px 12px; }
+      .topbar { flex-wrap: wrap; gap: 6px; }
+      main.grid { grid-template-columns: 1fr; gap: 10px; }
+      .card { padding: 14px; }
+      details.raw > summary { padding: 12px 14px; }
+      details.raw .raw-body { padding: 0 14px 14px 14px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Inline icon library — single <symbol> set, referenced via <use> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="18" y2="12"/>
+        <polyline points="12 6 18 12 12 18"/>
+      </symbol>
+      <symbol id="i-rotate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3 12 3 6 9 6"/>
+        <path d="M3.5 12a8.5 8.5 0 1 0 2.5-6.5L3 8"/>
+      </symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="17 8 12 3 7 8"/>
+        <line x1="12" y1="3" x2="12" y2="15"/>
+      </symbol>
+      <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+        <polyline points="14 3 14 9 20 9"/>
+      </symbol>
+      <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="6" y1="6" x2="18" y2="18"/>
+        <line x1="6" y1="18" x2="18" y2="6"/>
+      </symbol>
+      <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">Redact</span>
+        <span class="brand-sub">PII detection &amp; redaction</span>
+      </div>
+      <div class="meta-row">
+        <span id="model-tag">—</span>
+        <span class="pipe"></span>
+        <span class="status">
+          <span id="status-dot" class="dot"></span>
+          <span id="status-text">Connecting</span>
+        </span>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- INPUT ============================================================ -->
+      <section class="card" aria-label="Input">
+        <h2 class="card-title">Input</h2>
+
+        <div class="section">
+          <div class="section-head">
+            <span class="section-label">Text</span>
+            <span class="section-meta" id="char-count">0 / 3000</span>
+          </div>
+          <textarea id="input-text" spellcheck="false" maxlength="3000"
+            placeholder="Paste a passage of text. Names, contact details, identifiers, financial fields will be detected."></textarea>
+        </div>
+
+        <div class="section">
+          <span class="section-label">File</span>
+          <label class="file-trigger" for="file-input">
+            <svg width="18" height="18" aria-hidden="true"><use href="#i-upload"/></svg>
+            <span class="file-text" id="file-text">Choose a PDF, image, or text file</span>
+            <button type="button" class="file-clear" id="file-clear" hidden aria-label="Clear file">
+              <svg width="14" height="14" aria-hidden="true"><use href="#i-x"/></svg>
+            </button>
+            <input id="file-input" class="hidden-file" type="file"
+              accept=".pdf,.png,.jpg,.jpeg,.tif,.tiff,.bmp,.webp,.txt,.csv,.json,.md,text/plain,application/pdf,image/*">
+          </label>
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="run-model" type="button">
+            <span id="run-label">Run</span>
+            <svg width="14" height="14" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+          </button>
+          <button id="clear" type="button">
+            <svg width="14" height="14" aria-hidden="true"><use href="#i-rotate"/></svg>
+            <span>Clear</span>
+          </button>
+        </div>
+
+        <div class="message" id="message"></div>
+      </section>
+
+      <!-- OUTPUT =========================================================== -->
+      <section class="card" aria-label="Output">
+        <div class="section-head" style="align-items:center;">
+          <h2 class="card-title">Output</h2>
+          <span class="section-meta" id="latency">—</span>
+        </div>
+
+        <div class="section" id="ocr-band" hidden>
+          <span class="section-label">File details</span>
+          <div class="canvas mono" id="ocr-text"></div>
+        </div>
+
+        <div class="section">
+          <span class="section-label">Entities</span>
+          <div class="canvas" id="highlighted">Run a request to inspect detected entities.</div>
+        </div>
+
+        <div class="section">
+          <span class="section-label">Auto-redacted</span>
+          <div class="canvas mono" id="redacted">—</div>
+        </div>
+
+        <div class="section">
+          <div class="section-head">
+            <span class="section-label">Detected</span>
+            <span class="section-meta" id="span-count"></span>
+          </div>
+          <table class="spans-table">
+            <thead>
+              <tr>
+                <th style="width: 28%">Type</th>
+                <th style="width: 14%">Pos</th>
+                <th style="width: 18%">Confidence</th>
+                <th style="width: 14%">Decision</th>
+                <th style="width: 26%">Replacement</th>
+              </tr>
+            </thead>
+            <tbody id="span-rows">
+              <tr><td colspan="5" class="empty">Run a request to populate detected entities.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <details class="raw">
+      <summary>
+        <span>Raw response</span>
+        <svg width="14" height="14" class="chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+      </summary>
+      <div class="raw-body">
+        <pre id="response-json">{}</pre>
+      </div>
+    </details>
+  </div>
+
+  <script>
+    const MAX_TEXT_CHARS = 3000;
+    const state = { lastPayload: null };
+
+    const input          = document.getElementById("input-text");
+    const charCount      = document.getElementById("char-count");
+    const fileInput      = document.getElementById("file-input");
+    const fileText       = document.getElementById("file-text");
+    const fileClear      = document.getElementById("file-clear");
+    const messageEl      = document.getElementById("message");
+    const ocrBand        = document.getElementById("ocr-band");
+    const ocrTextEl      = document.getElementById("ocr-text");
+    const highlightedEl  = document.getElementById("highlighted");
+    const redactedEl     = document.getElementById("redacted");
+    const spanRowsEl     = document.getElementById("span-rows");
+    const spanCountEl    = document.getElementById("span-count");
+    const runButton      = document.getElementById("run-model");
+    const runLabel       = document.getElementById("run-label");
+    const statusDot      = document.getElementById("status-dot");
+    const statusText     = document.getElementById("status-text");
+    const modelTag       = document.getElementById("model-tag");
+    const responseJsonEl = document.getElementById("response-json");
+    const latencyEl      = document.getElementById("latency");
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+    const toPrettyJson = (v) => JSON.stringify(v, null, 2);
+
+    function updateCharCount() {
+      charCount.textContent = `${input.value.length} / ${MAX_TEXT_CHARS}`;
+    }
+
+    function updateFileChip() {
+      const f = fileInput.files && fileInput.files[0];
+      if (f) {
+        fileText.innerHTML = `<span class="file-name">${escapeHtml(f.name)}</span>`;
+        fileClear.hidden = false;
+      } else {
+        fileText.textContent = "Choose a PDF, image, or text file";
+        fileClear.hidden = true;
+      }
+    }
+
+    function renderHighlighted(text, spans) {
+      if (!text) {
+        highlightedEl.textContent = "Source text is not returned by the API response.";
+        return;
+      }
+      const ordered = [...spans]
+        .filter((s) => Number.isInteger(s.start) && Number.isInteger(s.end))
+        .filter((s) => s.decision === "AUTO_REDACT" || s.decision === "REVIEW")
+        .sort((a, b) => a.start - b.start || a.end - b.end);
+      let cursor = 0;
+      let html = "";
+      for (const span of ordered) {
+        if (span.start < cursor) continue;
+        html += escapeHtml(text.slice(cursor, span.start));
+        html += `<mark class="pii">${escapeHtml(text.slice(span.start, span.end))}<small>${escapeHtml(span.type)}</small></mark>`;
+        cursor = span.end;
+      }
+      html += escapeHtml(text.slice(cursor));
+      highlightedEl.innerHTML = html;
+    }
+
+    function maskSensitiveText(text, spans) {
+      const chars = Array.from(text || "");
+      const ordered = [...spans]
+        .filter((s) => Number.isInteger(s.start) && Number.isInteger(s.end))
+        .filter((s) => s.decision === "AUTO_REDACT")
+        .sort((a, b) => a.start - b.start || b.end - a.end);
+      let cursor = 0;
+      for (const span of ordered) {
+        const start = Math.max(cursor, Math.max(0, span.start));
+        const end = Math.max(start, Math.min(chars.length, span.end));
+        for (let i = start; i < end; i += 1) chars[i] = "•";
+        cursor = Math.max(cursor, end);
+      }
+      return chars.join("");
+    }
+
+    function decisionPill(decision) {
+      const cls = decision === "AUTO_REDACT" ? "auto" : "review";
+      return `<span class="pill ${cls}">${escapeHtml(decision || "REVIEW")}</span>`;
+    }
+
+    function confidenceCell(conf) {
+      if (typeof conf !== "number") return `<span class="col-conf">—</span>`;
+      const pct = Math.max(0, Math.min(1, conf));
+      const w = Math.round(pct * 100);
+      return `<span class="col-conf"><span class="bar"><i style="width:${w}%"></i></span>${conf.toFixed(3)}</span>`;
+    }
+
+    function renderSpans(spans) {
+      spanRowsEl.innerHTML = "";
+      if (!spans.length) {
+        spanRowsEl.innerHTML = '<tr><td colspan="5" class="empty">No entities detected.</td></tr>';
+        spanCountEl.textContent = "";
+        return;
+      }
+      const auto = spans.filter((s) => s.decision === "AUTO_REDACT").length;
+      const review = spans.filter((s) => s.decision === "REVIEW").length;
+      const parts = [];
+      if (auto)   parts.push(`${auto} redact`);
+      if (review) parts.push(`${review} review`);
+      spanCountEl.textContent = parts.join(" · ");
+
+      for (const span of spans) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td class="col-type">${escapeHtml(span.type || "")}</td>
+          <td class="col-pos">${span.start}–${span.end}</td>
+          <td>${confidenceCell(span.confidence)}</td>
+          <td>${decisionPill(span.decision)}</td>
+          <td class="col-value">${escapeHtml(span.replacement || "")}</td>
+        `;
+        spanRowsEl.appendChild(row);
+      }
+    }
+
+    function renderDetection(payload, sourceText) {
+      state.lastPayload = payload;
+      const spans = payload.spans || [];
+      renderHighlighted(sourceText, spans);
+      redactedEl.textContent = payload.redacted_text || (sourceText ? maskSensitiveText(sourceText, spans) : "—");
+      highlightedEl.classList.remove("placeholder");
+      redactedEl.classList.remove("placeholder");
+      renderSpans(spans);
+      responseJsonEl.textContent = toPrettyJson(payload);
+      const ms = payload.metadata && payload.metadata.latency_ms;
+      latencyEl.textContent = ms != null ? `${ms} ms` : "completed";
+    }
+
+    function renderPayload(payload) {
+      ocrBand.hidden = true;
+      ocrTextEl.textContent = "";
+      ocrTextEl.classList.remove("placeholder");
+      renderDetection(payload, input.value || "");
+    }
+
+    function renderFilePayload(payload) {
+      const metadata = payload.metadata || {};
+      const ocr = metadata.ocr || {};
+      const file = metadata.file || {};
+      const details = [
+        file.name ? `File: ${file.name}` : "",
+        ocr.text_source ? `Text source: ${ocr.text_source}` : "",
+        Number.isInteger(ocr.pages) && ocr.pages > 0 ? `Pages: ${ocr.pages}` : "",
+        "Extracted text omitted"
+      ].filter(Boolean);
+      ocrBand.hidden = details.length === 0;
+      ocrTextEl.textContent = details.join(" · ");
+      ocrTextEl.classList.remove("placeholder");
+      renderDetection(payload, "");
+    }
+
+    function setBusy(isBusy) {
+      document.querySelectorAll("button").forEach((b) => { b.disabled = isBusy; });
+      fileInput.disabled = isBusy;
+      runLabel.textContent = isBusy ? "Running" : "Run";
+      runButton.classList.toggle("busy", isBusy);
+      if (isBusy) {
+        messageEl.textContent = "";
+        if (fileInput.files.length) {
+          ocrBand.hidden = false;
+          ocrTextEl.textContent = "Extracting…";
+          ocrTextEl.classList.add("placeholder");
+        }
+        highlightedEl.textContent = "Working…";
+        redactedEl.textContent = "—";
+        highlightedEl.classList.add("placeholder");
+        redactedEl.classList.add("placeholder");
+        spanRowsEl.innerHTML = '<tr><td colspan="5" class="empty">Working…</td></tr>';
+        spanCountEl.textContent = "";
+        latencyEl.textContent = "Running…";
+      }
+    }
+
+    async function postRedact(body) {
+      setBusy(true);
+      try {
+        const r = await fetch("/api/redact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        const payload = await r.json();
+        if (!r.ok) throw new Error(payload.detail || "Request failed");
+        renderPayload(payload);
+      } catch (err) {
+        messageEl.textContent = err.message;
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    async function postFileRedact(file) {
+      setBusy(true);
+      try {
+        const fd = new FormData();
+        fd.append("file", file);
+        const r = await fetch("/api/redact-file", { method: "POST", body: fd });
+        const payload = await r.json();
+        if (!r.ok) throw new Error(payload.detail || "Request failed");
+        renderFilePayload(payload);
+      } catch (err) {
+        messageEl.textContent = err.message;
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    async function loadHealth() {
+      try {
+        const r = await fetch("/api/health");
+        const p = await r.json();
+        statusDot.classList.remove("err");
+        statusDot.classList.add("ok");
+        statusText.textContent = "Ready";
+        const ver = (p.backend && p.backend.model_version) || p.model_version || "model";
+        modelTag.textContent = ver;
+      } catch {
+        statusDot.classList.remove("ok");
+        statusDot.classList.add("err");
+        statusText.textContent = "Unavailable";
+        modelTag.textContent = "—";
+      }
+    }
+
+    runButton.addEventListener("click", () => {
+      messageEl.textContent = "";
+      const f = fileInput.files[0];
+      if (f) postFileRedact(f);
+      else postRedact({ text: input.value });
+    });
+
+    document.getElementById("clear").addEventListener("click", () => {
+      input.value = "";
+      fileInput.value = "";
+      updateFileChip();
+      messageEl.textContent = "";
+      highlightedEl.textContent = "Run a request to inspect detected entities.";
+      redactedEl.textContent = "—";
+      ocrTextEl.textContent = "";
+      ocrBand.hidden = true;
+      spanRowsEl.innerHTML = '<tr><td colspan="5" class="empty">Run a request to populate detected entities.</td></tr>';
+      spanCountEl.textContent = "";
+      responseJsonEl.textContent = "{}";
+      latencyEl.textContent = "—";
+      highlightedEl.classList.add("placeholder");
+      redactedEl.classList.add("placeholder");
+      updateCharCount();
+    });
+
+    fileClear.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      fileInput.value = "";
+      updateFileChip();
+    });
+
+    input.addEventListener("input", updateCharCount);
+    fileInput.addEventListener("change", updateFileChip);
+
+    loadHealth().then(() => {
+      updateCharCount();
+      updateFileChip();
+      highlightedEl.classList.add("placeholder");
+      redactedEl.classList.add("placeholder");
+    });
+  </script>
+</body>
+</html>

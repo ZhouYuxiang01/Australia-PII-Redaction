@@ -1,0 +1,402 @@
+{
+  "policy_id": "opf-v3-default-v1",
+  "description": "Default policy for OPF v3 73-class. type_actions are calibration-informed: high-risk under-redaction classes default to REVIEW. Per-type thresholds are dev-calibrated and ready for confidence-based override when the backend exposes calibrated confidence.",
+  "model_version": "opf-73class-v3-full",
+  "taxonomy_version": "taxonomy_v1.1.1-draft-73class",
+  "schema_version": "redaction-output-v1",
+  "redaction_mode": "replace_with_tag",
+  "default_action": "AUTO_REDACT",
+  "confidence": {
+    "calibrated": true,
+    "default_value": null,
+    "aggregation": "mean_exp_token_logprob",
+    "note": "Per-span confidence computed at runtime by the OpfBackend (mean exp(logprob) over overlapping tokens). When confidence is non-null, type_thresholds drive AUTO_REDACT/REVIEW/PASS via core.policy.apply_policy."
+  },
+  "global_block_threshold": 0.7699,
+  "global_review_threshold": 0.5605,
+  "calibration": {
+    "source": "runs/final/opf_73class_v3_full/dev_with_logprobs/thresholds_dev.json",
+    "calibration_set": "data_opf_v2b/dev.jsonl (7100 in-distribution examples)",
+    "block_precision_floor": 0.98,
+    "review_recall_floor": 0.95,
+    "ECE_dev_global": 0.0135
+  },
+  "type_actions": {
+    "PERSON": "AUTO_REDACT",
+    "NEXT_OF_KIN": "REVIEW",
+    "ADDRESS": "AUTO_REDACT",
+    "EMAIL": "AUTO_REDACT",
+    "PHONE": "AUTO_REDACT",
+    "DATE_OF_BIRTH": "AUTO_REDACT",
+    "CREDIT_CARD_EXPIRY": "AUTO_REDACT",
+    "MEDICARE_EXPIRY": "AUTO_REDACT",
+    "PASSPORT_EXPIRY": "AUTO_REDACT",
+    "PASSPORT_START_DATE": "AUTO_REDACT",
+    "AU_TFN": "REVIEW",
+    "AU_PASSPORT": "AUTO_REDACT",
+    "AU_DRIVERS_LICENCE": "REVIEW",
+    "MEDICARE_NUMBER": "REVIEW",
+    "IHI": "AUTO_REDACT",
+    "CENTRELINK_REFERENCE_NUMBER": "AUTO_REDACT",
+    "NATIONAL_IDENTITY_CARD": "AUTO_REDACT",
+    "PENSION_CARD_NUMBER": "AUTO_REDACT",
+    "PAYMENT_CARD_NUMBER": "AUTO_REDACT",
+    "CREDIT_CARD_CVV": "REVIEW",
+    "AU_BANK_ACCOUNT": "REVIEW",
+    "BSB": "AUTO_REDACT",
+    "VEHICLE_ID": "AUTO_REDACT",
+    "STUDENT_ID": "AUTO_REDACT",
+    "UAC_ID": "AUTO_REDACT",
+    "USI": "AUTO_REDACT",
+    "EMPLOYEE_NUMBER": "AUTO_REDACT",
+    "PERSONNEL_NUMBER": "AUTO_REDACT",
+    "IP_ADDRESS": "AUTO_REDACT",
+    "DEVICE_ID": "AUTO_REDACT",
+    "USERNAME": "AUTO_REDACT",
+    "SOCIAL_MEDIA_ACCOUNT": "AUTO_REDACT",
+    "SOCIAL_MEDIA_ID": "AUTO_REDACT",
+    "COOKIE_INFORMATION": "AUTO_REDACT",
+    "WEBSITE_HISTORY": "AUTO_REDACT",
+    "SOCIAL_MEDIA_HISTORY": "AUTO_REDACT",
+    "LATITUDE": "AUTO_REDACT",
+    "LONGITUDE": "AUTO_REDACT",
+    "GEOLOCATION_INFORMATION": "AUTO_REDACT",
+    "MEDICAL_INFORMATION": "REVIEW",
+    "MEDICAL_CERTIFICATE": "AUTO_REDACT",
+    "DISABILITY_OR_SPECIFIC_CONDITION": "REVIEW",
+    "COUNSELLING_RECORDS": "REVIEW",
+    "WORKERS_COMPENSATION_CLAIM": "AUTO_REDACT",
+    "ABORIGINALITY": "AUTO_REDACT",
+    "RACIAL_ETHNIC_ORIGIN": "AUTO_REDACT",
+    "NATIONALITY": "AUTO_REDACT",
+    "CITIZENSHIP_STATUS": "AUTO_REDACT",
+    "FINGERPRINT": "AUTO_REDACT",
+    "FACIAL_RECOGNITION": "AUTO_REDACT",
+    "VOICE_RECOGNITION": "AUTO_REDACT",
+    "SIGNATURE": "AUTO_REDACT",
+    "AUDIO_INFORMATION": "AUTO_REDACT",
+    "CAMERA_FOOTAGE_AUDIO": "AUTO_REDACT",
+    "CRIMINAL_RECORDS": "REVIEW",
+    "SANCTIONS": "REVIEW",
+    "GENDER": "AUTO_REDACT",
+    "PRONOUN": "AUTO_REDACT",
+    "MARITAL_STATUS": "AUTO_REDACT",
+    "RELIGION_BELIEF": "AUTO_REDACT",
+    "SEXUAL_ORIENTATION": "AUTO_REDACT",
+    "CARING_RESPONSIBILITIES": "REVIEW",
+    "MILITARY_VETERAN_STATUS": "AUTO_REDACT",
+    "SOCIO_ECONOMIC_STATUS": "REVIEW",
+    "SUBJECT_RESULTS": "AUTO_REDACT",
+    "WAM_SCORE": "AUTO_REDACT",
+    "SCHOLARSHIP": "AUTO_REDACT",
+    "SPECIAL_CONSIDERATION": "REVIEW",
+    "SALARY": "REVIEW",
+    "SALARY_WAGE_EXPECTATION": "REVIEW",
+    "PERSONAL_DEBT": "REVIEW",
+    "EMPLOYMENT_INFORMATION": "AUTO_REDACT",
+    "CONTRACT_TYPE": "AUTO_REDACT"
+  },
+  "type_thresholds": {
+    "PERSON": {
+      "block_threshold": 0.2906,
+      "review_threshold": 0.9368
+    },
+    "IHI": {
+      "block_threshold": 0.9643,
+      "review_threshold": 0.9955
+    },
+    "DATE_OF_BIRTH": {
+      "block_threshold": 0.8125,
+      "review_threshold": 0.9168
+    },
+    "MEDICARE_EXPIRY": {
+      "block_threshold": 0.897,
+      "review_threshold": 0.9748
+    },
+    "MEDICARE_NUMBER": {
+      "block_threshold": 0.847,
+      "review_threshold": 0.9778
+    },
+    "PHONE": {
+      "block_threshold": 0.4609,
+      "review_threshold": 0.9799
+    },
+    "IP_ADDRESS": {
+      "block_threshold": 0.6603,
+      "review_threshold": 0.77
+    },
+    "WEBSITE_HISTORY": {
+      "block_threshold": 0.9544,
+      "review_threshold": 0.9861
+    },
+    "SOCIAL_MEDIA_ACCOUNT": {
+      "block_threshold": 0.4196,
+      "review_threshold": 0.7655
+    },
+    "USERNAME": {
+      "block_threshold": 0.1836,
+      "review_threshold": 0.698
+    },
+    "GEOLOCATION_INFORMATION": {
+      "block_threshold": 0.9719,
+      "review_threshold": 0.4425
+    },
+    "COOKIE_INFORMATION": {
+      "block_threshold": 0.8588,
+      "review_threshold": 0.9286
+    },
+    "SOCIAL_MEDIA_HISTORY": {
+      "block_threshold": 0.6456,
+      "review_threshold": 0.5605
+    },
+    "DEVICE_ID": {
+      "block_threshold": 0.6828,
+      "review_threshold": 0.8226
+    },
+    "SOCIAL_MEDIA_ID": {
+      "block_threshold": 0.5541,
+      "review_threshold": 0.7657
+    },
+    "SALARY": {
+      "block_threshold": 0.505,
+      "review_threshold": 0.7775
+    },
+    "BSB": {
+      "block_threshold": 0.5307,
+      "review_threshold": 0.7136
+    },
+    "AU_BANK_ACCOUNT": {
+      "block_threshold": 0.6612,
+      "review_threshold": 0.8745
+    },
+    "PAYMENT_CARD_NUMBER": {
+      "block_threshold": 0.98,
+      "review_threshold": 0.9
+    },
+    "CREDIT_CARD_EXPIRY": {
+      "block_threshold": 0.95,
+      "review_threshold": 0.8
+    },
+    "ADDRESS": {
+      "block_threshold": 0.4751,
+      "review_threshold": 0.5762
+    },
+    "NATIONALITY": {
+      "block_threshold": 0.6034,
+      "review_threshold": 0.5605
+    },
+    "CITIZENSHIP_STATUS": {
+      "block_threshold": 0.4909,
+      "review_threshold": 0.4909
+    },
+    "NATIONAL_IDENTITY_CARD": {
+      "block_threshold": 0.4988,
+      "review_threshold": 0.854
+    },
+    "UAC_ID": {
+      "block_threshold": 0.3199,
+      "review_threshold": 0.5765
+    },
+    "CENTRELINK_REFERENCE_NUMBER": {
+      "block_threshold": 0.7639,
+      "review_threshold": 0.803
+    },
+    "CRIMINAL_RECORDS": {
+      "block_threshold": 0.5536,
+      "review_threshold": 0.7544
+    },
+    "USI": {
+      "block_threshold": 0.7053,
+      "review_threshold": 0.8431
+    },
+    "EMAIL": {
+      "block_threshold": 0.9635,
+      "review_threshold": 0.5554
+    },
+    "COUNSELLING_RECORDS": {
+      "block_threshold": 0.648,
+      "review_threshold": 0.8404
+    },
+    "DISABILITY_OR_SPECIFIC_CONDITION": {
+      "block_threshold": 0.5576,
+      "review_threshold": 0.2809
+    },
+    "MEDICAL_CERTIFICATE": {
+      "block_threshold": 0.8865,
+      "review_threshold": 0.963
+    },
+    "MEDICAL_INFORMATION": {
+      "block_threshold": 0.3749,
+      "review_threshold": 0.3749
+    },
+    "SPECIAL_CONSIDERATION": {
+      "block_threshold": 0.9155,
+      "review_threshold": 0.9804
+    },
+    "AU_TFN": {
+      "block_threshold": 0.9,
+      "review_threshold": 0.75
+    },
+    "AU_PASSPORT": {
+      "block_threshold": 0.95,
+      "review_threshold": 0.8
+    },
+    "AU_DRIVERS_LICENCE": {
+      "block_threshold": 0.2778,
+      "review_threshold": 0.5576
+    },
+    "SUBJECT_RESULTS": {
+      "block_threshold": 0.5214,
+      "review_threshold": 0.7475
+    },
+    "SANCTIONS": {
+      "block_threshold": 0.5952,
+      "review_threshold": 0.5952
+    },
+    "SCHOLARSHIP": {
+      "block_threshold": 0.9884,
+      "review_threshold": 0.5729
+    },
+    "STUDENT_ID": {
+      "block_threshold": 0.5211,
+      "review_threshold": 0.8977
+    },
+    "WAM_SCORE": {
+      "block_threshold": 0.6537,
+      "review_threshold": 0.91
+    },
+    "VOICE_RECOGNITION": {
+      "block_threshold": 0.5869,
+      "review_threshold": 0.7284
+    },
+    "FACIAL_RECOGNITION": {
+      "block_threshold": 0.9001,
+      "review_threshold": 0.933
+    },
+    "FINGERPRINT": {
+      "block_threshold": 0.6014,
+      "review_threshold": 0.9581
+    },
+    "SIGNATURE": {
+      "block_threshold": 0.67,
+      "review_threshold": 0.9757
+    },
+    "EMPLOYMENT_INFORMATION": {
+      "block_threshold": 0.6954,
+      "review_threshold": 0.8823
+    },
+    "CONTRACT_TYPE": {
+      "block_threshold": 0.147,
+      "review_threshold": 0.5605
+    },
+    "SALARY_WAGE_EXPECTATION": {
+      "block_threshold": 0.9135,
+      "review_threshold": 0.4235
+    },
+    "EMPLOYEE_NUMBER": {
+      "block_threshold": 0.9736,
+      "review_threshold": 0.3057
+    },
+    "PERSONNEL_NUMBER": {
+      "block_threshold": 0.6622,
+      "review_threshold": 0.8274
+    },
+    "VEHICLE_ID": {
+      "block_threshold": 0.9709,
+      "review_threshold": 0.5605
+    },
+    "CARING_RESPONSIBILITIES": {
+      "block_threshold": 0.3679,
+      "review_threshold": 0.8817
+    },
+    "PERSONAL_DEBT": {
+      "block_threshold": 0.859,
+      "review_threshold": 0.9103
+    },
+    "MILITARY_VETERAN_STATUS": {
+      "block_threshold": 0.3337,
+      "review_threshold": 0.4437
+    },
+    "PASSPORT_START_DATE": {
+      "block_threshold": 0.67,
+      "review_threshold": 0.9227
+    },
+    "PASSPORT_EXPIRY": {
+      "block_threshold": 0.9,
+      "review_threshold": 0.75
+    },
+    "MARITAL_STATUS": {
+      "block_threshold": 0.7102,
+      "review_threshold": 0.5605
+    },
+    "NEXT_OF_KIN": {
+      "block_threshold": 0.9006,
+      "review_threshold": 0.9246
+    },
+    "PENSION_CARD_NUMBER": {
+      "block_threshold": 0.3867,
+      "review_threshold": 0.8715
+    },
+    "WORKERS_COMPENSATION_CLAIM": {
+      "block_threshold": 0.6456,
+      "review_threshold": 0.9322
+    },
+    "CAMERA_FOOTAGE_AUDIO": {
+      "block_threshold": 0.8269,
+      "review_threshold": 0.969
+    },
+    "AUDIO_INFORMATION": {
+      "block_threshold": 0.6118,
+      "review_threshold": 0.7509
+    },
+    "CREDIT_CARD_CVV": {
+      "block_threshold": 0.95,
+      "review_threshold": 0.8
+    },
+    "SOCIO_ECONOMIC_STATUS": {
+      "block_threshold": 0.5742,
+      "review_threshold": 0.6217
+    },
+    "ABORIGINALITY": {
+      "block_threshold": 0.8,
+      "review_threshold": 0.5605
+    },
+    "GENDER": {
+      "block_threshold": 0.7699,
+      "review_threshold": 0.5605
+    },
+    "RELIGION_BELIEF": {
+      "block_threshold": 0.6197,
+      "review_threshold": 0.5605
+    },
+    "PRONOUN": {
+      "block_threshold": 0.6955,
+      "review_threshold": 0.8547
+    },
+    "SEXUAL_ORIENTATION": {
+      "block_threshold": 0.3711,
+      "review_threshold": 0.5605
+    },
+    "RACIAL_ETHNIC_ORIGIN": {
+      "block_threshold": 0.5618,
+      "review_threshold": 0.5605
+    },
+    "LONGITUDE": {
+      "block_threshold": 0.8066,
+      "review_threshold": 0.5605
+    },
+    "LATITUDE": {
+      "block_threshold": 0.487,
+      "review_threshold": 0.5605
+    }
+  },
+  "postprocess": {
+    "strip_known_prefixes": true,
+    "collapse_generic_work_contacts": true,
+    "add_url_encoded_emails": true
+  },
+  "overlap_resolution": {
+    "strategy": "keep_longer_then_earlier",
+    "note": "When spans overlap after post-processing, keep the longer span; ties keep the earlier."
+  }
+}

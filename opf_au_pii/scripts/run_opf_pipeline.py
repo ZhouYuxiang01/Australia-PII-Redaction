@@ -319,14 +319,14 @@ def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     p.add_argument("--raw-json", default=None, help="raw au_pii_19000_final.json; if set, run prepare_dataset_v2.py")
-    p.add_argument("--data-dir", default="data_opf", help="OPF JSONL directory containing train/dev/test.jsonl")
-    p.add_argument("--taxonomy", default="taxonomy_v1.1.1.yaml")
-    p.add_argument("--label-space", default="custom_label_space_73.v1.1.1.json")
-    p.add_argument("--prepare-script", default="prepare_dataset_v2.py")
-    p.add_argument("--validate-script", default="validate_taxonomy.py")
-    p.add_argument("--char-eval-script", default="eval_char_spans.py")
+    p.add_argument("--data-dir", default="data/processed/data_opf", help="OPF JSONL directory containing train/dev/test.jsonl")
+    p.add_argument("--taxonomy", default="configs/taxonomy_v1.1.1.yaml")
+    p.add_argument("--label-space", default="configs/custom_label_space_73.v1.1.1.json")
+    p.add_argument("--prepare-script", default="scripts/prepare_dataset_v2.py")
+    p.add_argument("--validate-script", default=None, help="optional taxonomy validation script")
+    p.add_argument("--char-eval-script", default="scripts/eval_char_spans_v2.py")
     p.add_argument("--run-dir", default="runs/opf_73class_v1")
-    p.add_argument("--opf-cmd", default="opf", help="OPF command, e.g. `opf` or `python -m opf`")
+    p.add_argument("--opf-cmd", default="/home/admin/miniconda3/envs/opf/bin/opf", help="OPF command, e.g. `opf` or `python -m opf`")
     p.add_argument("--checkpoint", default=None, help="optional base checkpoint path if your OPF train supports --checkpoint")
 
     p.add_argument("--prepare-format", choices=("dict", "list"), default="dict")
@@ -384,8 +384,8 @@ def main() -> int:
     (run_dir / "run_config.json").write_text(json.dumps(run_config, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     # Optional full taxonomy/data validation.
-    validate_script = Path(args.validate_script).resolve()
-    if validate_script.is_file():
+    validate_script = Path(args.validate_script).resolve() if args.validate_script else None
+    if validate_script and validate_script.is_file():
         validate_cmd = [sys.executable, str(validate_script), "--taxonomy", str(taxonomy), "--label-space", str(label_space), "--report", str(run_dir / "taxonomy_validation_report.json")]
         if args.raw_json:
             validate_cmd += ["--data", str(Path(args.raw_json).resolve())]
@@ -393,7 +393,7 @@ def main() -> int:
             run_logged(validate_cmd, logs_dir / "00_validate_taxonomy.log")
         else:
             print(f"[dry-run] {quote_cmd(validate_cmd)}")
-    else:
+    elif validate_script:
         print(f"[warn] validate script not found: {validate_script}")
 
     # Optional dataset preparation.

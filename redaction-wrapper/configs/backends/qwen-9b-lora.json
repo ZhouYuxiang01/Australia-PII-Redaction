@@ -1,0 +1,19 @@
+{
+  "type": "qwen_lora",
+  "name": "qwen-9b-lora",
+  "model_version": "qwen3.5-9b-base-lora-tagged-28-fastretry",
+  "mode": "lora",
+  "base_model_path": "/home/admin/model/Qwen3.5-9B-Base",
+  "adapter_path": "/home/admin/ZYX/Qwen3.5_9b_base_Distill/outputs/qwen3_5_9b_base_lora_tagged_28_fastretry",
+  "max_new_tokens": 512,
+  "max_concurrent_generate": 4,
+  "supported_types": [
+    "PERSON", "ADDRESS", "DATE_OF_BIRTH", "EMAIL_ADDRESS", "AU_PHONE",
+    "AU_TFN", "AU_PASSPORT", "AU_DRIVERS_LICENCE", "STUDENT_ID",
+    "MEDICARE_NUMBER", "AU_BANK_ACCOUNT", "BSB", "PAYMENT_CARD_NUMBER",
+    "IP_ADDRESS", "VEHICLE_REGO", "SALARY", "WORK_EMAIL", "WORK_PHONE",
+    "EMPLOYEE_NUMBER", "PERSONNEL_NUMBER", "MEDICARE_EXPIRY", "PASSPORT_EXPIRY",
+    "UAC_ID", "USI", "CENTRELINK_REFERENCE_NUMBER",
+    "CREDIT_CARD_EXPIRY", "CREDIT_CARD_CVV"
+  ]
+}

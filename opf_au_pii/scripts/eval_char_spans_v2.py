@@ -18,10 +18,12 @@ Matching strategy:
   3. If text matching is poor, optionally fall back to line-order matching.
 
 Metrics:
-  - typed exact char-span P/R/F1
-  - untyped exact char-span P/R/F1
-  - family/parent_group exact char-span P/R/F1
-  - overlap diagnostic for boundary drift
+   - typed exact char-span P/R/F1
+   - untyped exact char-span P/R/F1
+   - family/parent_group exact char-span P/R/F1
+   - partial-overlap P/R/F1 for boundary drift
+   - over-redaction cost (false-positive character count)
+   - under-redaction cost (missed span character count weighted by taxonomy cost)
 """
 
 from __future__ import annotations
@@ -63,6 +65,19 @@ def load_parent_groups(taxonomy: Path | None) -> dict[str, str]:
     for entry in doc.get("classes", []):
         code = entry["code"]
         out[code] = entry.get("parent_group", code)
+    return out
+
+
+def load_cost_weights(taxonomy: Path | None) -> dict[str, int]:
+    if taxonomy is None:
+        return {}
+    doc = yaml.safe_load(taxonomy.read_text(encoding="utf-8"))
+    weights = doc.get("under_redaction_weights", {})
+    out: dict[str, int] = {}
+    for entry in doc.get("classes", []):
+        code = entry["code"]
+        weight_name = entry.get("cost_weight")
+        out[code] = int(weights.get(weight_name, 1))
     return out
 
 
@@ -258,14 +273,47 @@ def overlap(a: Span, b: Span, same_label: bool = True) -> bool:
     return max(sa, sb) < min(ea, eb)
 
 
-def evaluate(gold: dict[str, list[Span]], pred: dict[str, list[Span]], parent: dict[str, str], diag: dict[str, Any]) -> dict[str, Any]:
+def span_len(span: Span) -> int:
+    _, start, end = span
+    return max(0, end - start)
+
+
+def partial_prf(gold_spans: Iterable[Span], pred_spans: Iterable[Span]) -> dict[str, float]:
+    gold_list = list(gold_spans)
+    pred_list = list(pred_spans)
+    matched_gold: set[int] = set()
+    tp = 0
+    for ps in pred_list:
+        for gi, gs in enumerate(gold_list):
+            if gi in matched_gold:
+                continue
+            if overlap(ps, gs, same_label=True):
+                matched_gold.add(gi)
+                tp += 1
+                break
+    fp = len(pred_list) - tp
+    fn = len(gold_list) - tp
+    return prf(tp, fp, fn)
+
+
+def evaluate(
+    gold: dict[str, list[Span]],
+    pred: dict[str, list[Span]],
+    parent: dict[str, str],
+    diag: dict[str, Any],
+    cost_weights: dict[str, int] | None = None,
+) -> dict[str, Any]:
     ids = sorted(set(gold) | set(pred))
     result: dict[str, Any] = {"examples": len(ids), "matching": diag}
+    cost_weights = cost_weights or {}
 
     for mode in ("typed", "untyped", "family"):
         if mode == "family" and not parent:
             continue
         tp = fp = fn = 0
+        partial_tp = partial_fp = partial_fn = 0
+        over_redaction_cost = 0
+        under_redaction_cost = 0
         fp_by_label: Counter[str] = Counter()
         fn_by_label: Counter[str] = Counter()
         tp_by_label: Counter[str] = Counter()
@@ -280,6 +328,14 @@ def evaluate(gold: dict[str, list[Span]], pred: dict[str, list[Span]], parent: d
             tp += len(inter)
             fp += len(fp_set)
             fn += len(fn_set)
+            partial = partial_prf(g, p)
+            partial_tp += int(partial["tp"])
+            partial_fp += int(partial["fp"])
+            partial_fn += int(partial["fn"])
+            over_redaction_cost += sum(span_len(s) for s in fp_set)
+            under_redaction_cost += sum(
+                span_len(s) * int(cost_weights.get(s[0], 1)) for s in fn_set
+            )
             for label, _, _ in inter:
                 tp_by_label[label] += 1
             for label, _, _ in fp_set:
@@ -291,7 +347,10 @@ def evaluate(gold: dict[str, list[Span]], pred: dict[str, list[Span]], parent: d
                     overlap_tp += 1
 
         mode_result = prf(tp, fp, fn)
+        mode_result["partial"] = prf(partial_tp, partial_fp, partial_fn)
         mode_result["overlapping_non_exact_predictions"] = overlap_tp
+        mode_result["over_redaction_cost"] = over_redaction_cost
+        mode_result["under_redaction_cost"] = under_redaction_cost
         mode_result["tp_by_label"] = dict(tp_by_label)
         mode_result["fp_by_label"] = dict(fp_by_label)
         mode_result["fn_by_label"] = dict(fn_by_label)
@@ -313,9 +372,11 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
-    parent = load_parent_groups(Path(args.taxonomy)) if args.taxonomy else {}
+    taxonomy = Path(args.taxonomy) if args.taxonomy else None
+    parent = load_parent_groups(taxonomy) if taxonomy else {}
+    cost_weights = load_cost_weights(taxonomy) if taxonomy else {}
     gold, pred, diag = load_paired(Path(args.gold), Path(args.pred), args.match)
-    metrics = evaluate(gold, pred, parent, diag)
+    metrics = evaluate(gold, pred, parent, diag, cost_weights=cost_weights)
     Path(args.out).write_text(json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8")
     preview = {
         "matching": metrics["matching"],

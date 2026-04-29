@@ -1,0 +1,272 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.internal/schemas/redaction-output-v1.schema.json",
+  "title": "AU PII Redaction Output V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["spans", "metadata"],
+  "properties": {
+    "redacted_text": {
+      "type": "string",
+      "description": "Text after applying policy-approved redactions. Optional for detection-only responses."
+    },
+    "spans": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/span"
+      }
+    },
+    "metadata": {
+      "$ref": "#/$defs/metadata"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Non-fatal issues such as uncalibrated confidence or repaired offsets."
+    }
+  },
+  "$defs": {
+    "pii_type": {
+      "type": "string",
+      "enum": [
+        "PERSON",
+        "NEXT_OF_KIN",
+        "ADDRESS",
+        "EMAIL",
+        "EMAIL_ADDRESS",
+        "PHONE",
+        "AU_PHONE",
+        "DATE_OF_BIRTH",
+        "CREDIT_CARD_EXPIRY",
+        "MEDICARE_EXPIRY",
+        "PASSPORT_EXPIRY",
+        "PASSPORT_START_DATE",
+        "AU_TFN",
+        "AU_PASSPORT",
+        "AU_DRIVERS_LICENCE",
+        "MEDICARE_NUMBER",
+        "IHI",
+        "CENTRELINK_REFERENCE_NUMBER",
+        "NATIONAL_IDENTITY_CARD",
+        "PENSION_CARD_NUMBER",
+        "PAYMENT_CARD_NUMBER",
+        "CREDIT_CARD_CVV",
+        "AU_BANK_ACCOUNT",
+        "BSB",
+        "VEHICLE_ID",
+        "VEHICLE_REGO",
+        "STUDENT_ID",
+        "UAC_ID",
+        "USI",
+        "EMPLOYEE_NUMBER",
+        "PERSONNEL_NUMBER",
+        "IP_ADDRESS",
+        "DEVICE_ID",
+        "USERNAME",
+        "SOCIAL_MEDIA_ACCOUNT",
+        "SOCIAL_MEDIA_ID",
+        "COOKIE_INFORMATION",
+        "WEBSITE_HISTORY",
+        "SOCIAL_MEDIA_HISTORY",
+        "LATITUDE",
+        "LONGITUDE",
+        "GEOLOCATION_INFORMATION",
+        "MEDICAL_INFORMATION",
+        "MEDICAL_CERTIFICATE",
+        "DISABILITY_OR_SPECIFIC_CONDITION",
+        "COUNSELLING_RECORDS",
+        "WORKERS_COMPENSATION_CLAIM",
+        "ABORIGINALITY",
+        "RACIAL_ETHNIC_ORIGIN",
+        "NATIONALITY",
+        "CITIZENSHIP_STATUS",
+        "FINGERPRINT",
+        "FACIAL_RECOGNITION",
+        "VOICE_RECOGNITION",
+        "SIGNATURE",
+        "AUDIO_INFORMATION",
+        "CAMERA_FOOTAGE_AUDIO",
+        "CRIMINAL_RECORDS",
+        "SANCTIONS",
+        "GENDER",
+        "PRONOUN",
+        "MARITAL_STATUS",
+        "RELIGION_BELIEF",
+        "SEXUAL_ORIENTATION",
+        "CARING_RESPONSIBILITIES",
+        "MILITARY_VETERAN_STATUS",
+        "SOCIO_ECONOMIC_STATUS",
+        "SUBJECT_RESULTS",
+        "WAM_SCORE",
+        "SCHOLARSHIP",
+        "SPECIAL_CONSIDERATION",
+        "SALARY",
+        "SALARY_WAGE_EXPECTATION",
+        "PERSONAL_DEBT",
+        "WORK_EMAIL",
+        "WORK_PHONE",
+        "EMPLOYMENT_INFORMATION",
+        "CONTRACT_TYPE"
+      ]
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["AUTO_REDACT", "REVIEW"]
+    },
+    "span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "type", "confidence"],
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Inclusive character offset in normalized text unless raw_offset_mapping_applied is true."
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Exclusive character offset in normalized text unless raw_offset_mapping_applied is true."
+        },
+        "type": {
+          "$ref": "#/$defs/pii_type"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Calibrated confidence when available. Null means the model output has not yet been calibrated."
+        },
+        "decision": {
+          "$ref": "#/$defs/decision"
+        },
+        "replacement": {
+          "type": "string",
+          "description": "Replacement string used when the span is redacted, for example [AU_TFN]."
+        },
+        "raw_score": {
+          "type": "number",
+          "description": "Optional uncalibrated model score for diagnostics."
+        },
+        "source": {
+          "type": "string",
+          "enum": ["model", "postprocess", "rule"]
+        },
+        "postprocess": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model_version",
+        "taxonomy_version",
+        "schema_version",
+        "policy_id",
+        "normalization"
+      ],
+      "properties": {
+        "model_version": {
+          "type": "string"
+        },
+        "taxonomy_version": {
+          "type": "string"
+        },
+        "schema_version": {
+          "type": "string",
+          "const": "redaction-output-v1"
+        },
+        "policy_id": {
+          "type": "string"
+        },
+        "normalization": {
+          "type": "string",
+          "const": "NFC"
+        },
+        "raw_offset_mapping_applied": {
+          "type": "boolean",
+          "default": false
+        },
+        "redaction_mode": {
+          "type": "string",
+          "enum": ["replace_with_tag", "mask", "remove"]
+        },
+        "backend_name": {
+          "type": "string"
+        },
+        "backend_route": {
+          "type": "string"
+        },
+        "latency_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "input_length": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "file": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "kind", "size_bytes"],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "content_type": {
+              "anyOf": [
+                {"type": "string"},
+                {"type": "null"}
+              ]
+            },
+            "kind": {
+              "type": "string"
+            },
+            "size_bytes": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "ocr": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["text_source", "pages", "warnings"],
+          "properties": {
+            "text_source": {
+              "type": "string"
+            },
+            "pages": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "warnings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}
