@@ -45,7 +45,6 @@ redaction-wrapper/
 │   └── redaction_demo.html          single-page demo UI
 ├── docs/                            api.md, backends.md
 ├── scripts/                         run_server.sh, cli.py
-├── examples/                        demo input examples (optional override)
 └── tests/
 ```
 
