@@ -192,14 +192,10 @@
       "phase": "phase_2",
       "positive_triggers": [
         "bank",
-        "bank name",
-        "account name",
-        "payee name",
         "banking details",
         "bank details",
         "BSB",
-        "branch",
-        "account holder"
+        "branch"
       ],
       "negative_triggers": [
         "invoice",
@@ -210,8 +206,6 @@
         "placeholder"
       ],
       "patterns": [
-        "BANK_NAME_TEXT",
-        "ACCOUNT_NAME_TEXT",
         "BSB"
       ],
       "require_positive_trigger": true,

@@ -348,9 +348,9 @@ def test_registry_driven_contextual_text_fields() -> None:
         {"postprocess": {"add_contextual_identifier_spans": False, "add_registry_contextual_spans": True}},
     )
     pairs = [(s.type, s.value) for s in cleaned]
-    assert ("AU_BANK_ACCOUNT", "Mia-Louise Martinez-Rivera") in pairs
-    assert ("AU_BANK_ACCOUNT", "Southern Mutual Bank") in pairs
-    assert ("AU_BANK_ACCOUNT", "Campus Mutual") in pairs
+    assert ("AU_BANK_ACCOUNT", "Mia-Louise Martinez-Rivera") not in pairs
+    assert ("AU_BANK_ACCOUNT", "Southern Mutual Bank") not in pairs
+    assert ("AU_BANK_ACCOUNT", "Campus Mutual") not in pairs
     assert ("EMPLOYMENT_INFORMATION", "lab demonstrator") in pairs
     assert ("CONTRACT_TYPE", "continuing, part-time 0.8 FTE") in pairs
     assert ("CITIZENSHIP_STATUS", "Permanent Resident") in pairs
@@ -440,7 +440,7 @@ def test_account_name_and_bank_name_are_not_account_numbers() -> None:
     cleaned, _ = safe_postprocess_spans(
         text,
         [],
-        {"postprocess": {"add_contextual_identifier_spans": True, "add_registry_contextual_spans": False}},
+        {"postprocess": {"add_contextual_identifier_spans": True, "add_registry_contextual_spans": True}},
     )
     pairs = [(s.type, s.value) for s in cleaned]
     assert ("AU_BANK_ACCOUNT", "639 178 972") in pairs
