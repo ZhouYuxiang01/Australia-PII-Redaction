@@ -52,6 +52,7 @@
         "NATIONAL_IDENTITY_CARD",
         "PENSION_CARD_NUMBER",
         "PAYMENT_CARD_NUMBER",
+        "HASHED_PAYMENT_CARD_NUMBER",
         "CREDIT_CARD_CVV",
         "AU_BANK_ACCOUNT",
         "BSB",

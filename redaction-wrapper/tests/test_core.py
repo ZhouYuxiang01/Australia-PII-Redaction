@@ -289,8 +289,14 @@ def test_postprocess_registry_files_load_without_new_taxonomy() -> None:
         "MEDICAL_CERTIFICATE",
         "RELIGION_BELIEF",
         "SOCIO_ECONOMIC_STATUS",
+        "HASHED_PAYMENT_CARD_NUMBER",
+        "CAMERA_FOOTAGE_AUDIO",
+        "AUDIO_INFORMATION",
+        "FACIAL_RECOGNITION",
+        "FINGERPRINT",
+        "VOICE_RECOGNITION",
+        "SIGNATURE",
     }.issubset(labels)
-    assert "HASHED_PAYMENT_CARD_NUMBER" not in labels
 
 
 def test_registry_driven_contextual_fallback_rules() -> None:
@@ -354,6 +360,79 @@ def test_registry_driven_contextual_text_fields() -> None:
     assert ("NEXT_OF_KIN", "Tahlia Park") in pairs
     assert ("PRONOUN", "he/they") in pairs
     assert ("MEDICAL_INFORMATION", "migraine + anxiety flare-up") in pairs
+
+
+def test_registry_driven_finance_biometric_and_evidence_fields() -> None:
+    text = (
+        "acct 70929767\n"
+        "account number 639 178 972\n"
+        "refund account 0789378676\n"
+        "Stored hashed card ref card_hash:4723b26560741ff3c4951cd9ae00ef2a.\n"
+        "Payment hash sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef\n"
+        "camera footage audio clip CCTV-2026-PF-4959\n"
+        "audible conversation ref AUD-2026-42054\n"
+        "facial recognition template FACE-XDB-990130\n"
+        "fingerprint scan FP-4161-XOR-11\n"
+        "voice recognition sample VOICE-JE-266631\n"
+        "signature image ref SIG-2025-87634\n"
+        "Pension Card: SEN-448812\n"
+    )
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [],
+        {"postprocess": {"add_contextual_identifier_spans": False, "add_registry_contextual_spans": True}},
+    )
+    pairs = [(s.type, s.value) for s in cleaned]
+    assert ("AU_BANK_ACCOUNT", "70929767") in pairs
+    assert ("AU_BANK_ACCOUNT", "639 178 972") in pairs
+    assert ("AU_BANK_ACCOUNT", "0789378676") in pairs
+    assert ("HASHED_PAYMENT_CARD_NUMBER", "card_hash:4723b26560741ff3c4951cd9ae00ef2a") in pairs
+    assert (
+        "HASHED_PAYMENT_CARD_NUMBER",
+        "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    ) in pairs
+    assert ("CAMERA_FOOTAGE_AUDIO", "CCTV-2026-PF-4959") in pairs
+    assert ("AUDIO_INFORMATION", "AUD-2026-42054") in pairs
+    assert ("FACIAL_RECOGNITION", "FACE-XDB-990130") in pairs
+    assert ("FINGERPRINT", "FP-4161-XOR-11") in pairs
+    assert ("VOICE_RECOGNITION", "VOICE-JE-266631") in pairs
+    assert ("SIGNATURE", "SIG-2025-87634") in pairs
+    assert ("PENSION_CARD_NUMBER", "SEN-448812") in pairs
+
+
+def test_registry_evidence_fields_still_require_context() -> None:
+    text = (
+        "Invoice ref AUD-2026-42054\n"
+        "Reference token CCTV-2026-PF-4959\n"
+        "Ticket FACE-XDB-990130\n"
+        "System-generated FP-4161-XOR-11\n"
+        "Placeholder VOICE-JE-266631\n"
+        "Public example SIG-2025-87634\n"
+        "test token sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef\n"
+        "bare SEN-448812\n"
+    )
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [],
+        {"postprocess": {"add_contextual_identifier_spans": False, "add_registry_contextual_spans": True}},
+    )
+    assert cleaned == []
+
+
+def test_context_normalization_relabels_account_and_personnel_conflicts() -> None:
+    text = "acct 70929767\nPersonnel Number: P74749731\n"
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [
+            Span(start=text.index("70929767"), end=text.index("70929767") + 8, type="AU_DRIVERS_LICENCE", value="70929767", confidence=0.98),
+            Span(start=text.index("P74749731"), end=text.index("P74749731") + 9, type="EMPLOYEE_NUMBER", value="P74749731", confidence=0.98),
+        ],
+        {"postprocess": {"add_contextual_identifier_spans": False, "add_registry_contextual_spans": True}},
+    )
+    assert [(s.type, s.value) for s in cleaned] == [
+        ("AU_BANK_ACCOUNT", "70929767"),
+        ("PERSONNEL_NUMBER", "P74749731"),
+    ]
 
 
 def test_registry_text_fields_still_require_context() -> None:
@@ -605,6 +684,30 @@ def test_build_response_hides_pass_spans() -> None:
     assert [s["decision"] for s in payload["spans"]] == ["AUTO_REDACT", "REVIEW"]
 
 
+def test_build_response_masks_configured_review_types_in_redacted_text() -> None:
+    text = "USI Q7XH22PL9A phone 0412 345 678 note low."
+    spans = [
+        Span(start=4, end=14, type="USI", value="Q7XH22PL9A", decision="REVIEW"),
+        Span(start=21, end=33, type="PHONE", value="0412 345 678", decision="REVIEW"),
+        Span(start=39, end=42, type="PRONOUN", value="low", decision="REVIEW"),
+    ]
+    payload = build_response(
+        text=text,
+        spans=spans,
+        policy={
+            "policy_id": "p",
+            "model_version": "m",
+            "taxonomy_version": "t",
+            "schema_version": "redaction-output-v1",
+            "redact_review_types": ["USI", "PHONE"],
+        },
+        raw_offset_mapping_applied=False,
+        warnings=[],
+    )
+    assert payload["redacted_text"] == "USI [USI] phone [PHONE] note low."
+    assert [s["decision"] for s in payload["spans"]] == ["REVIEW", "REVIEW", "REVIEW"]
+
+
 def test_backend_configs_use_schema_types() -> None:
     schema = json.loads((PROJECT_ROOT / "schemas" / "redaction-output-v1.schema.json").read_text())
     allowed = set(schema["$defs"]["pii_type"]["enum"])
@@ -617,6 +720,7 @@ def test_backend_configs_use_schema_types() -> None:
 def test_schema_exposes_only_actionable_decisions() -> None:
     schema = json.loads((PROJECT_ROOT / "schemas" / "redaction-output-v1.schema.json").read_text())
     assert schema["$defs"]["decision"]["enum"] == ["AUTO_REDACT", "REVIEW"]
+    assert "HASHED_PAYMENT_CARD_NUMBER" in schema["$defs"]["pii_type"]["enum"]
 
 
 def test_opf_clear_payment_fields_reach_auto_redact() -> None:

@@ -52,6 +52,14 @@
     "SANCTION_REF": "\\bSAN[- ]?\\d{4}[- ]\\d{2,6}\\b",
     "WORKERS_COMP_REF": "\\b(?:WC|WCC)[- ]?\\d{4}[- ]?[A-Z0-9]{3,10}\\b",
     "PENSION_CARD_REF": "\\b(?:SEN|PEN|PCC)[- ]?[A-Z0-9]{5,12}\\b",
+    "CARD_HASH_REF": "\\bcard_hash:[A-Fa-f0-9]{16,128}\\b",
+    "SHA256_HASH_REF": "\\bsha256:[A-Fa-f0-9]{64}\\b",
+    "CCTV_REF": "\\bCCTV-\\d{4}-[A-Z]{2}-\\d{4}\\b",
+    "AUDIO_REF": "\\bAUD-\\d{4}-\\d{5}\\b",
+    "FACE_REF": "\\bFACE-[A-Z]{3}-\\d{6}\\b",
+    "FINGERPRINT_REF": "\\bFP-\\d{4}-[A-Z]{3}-\\d{2}\\b",
+    "VOICE_REF": "\\bVOICE-[A-Z]{2}-\\d{6}\\b",
+    "SIGNATURE_REF": "\\bSIG-\\d{4}-\\d{5}\\b",
     "USERNAME_TOKEN": "\\b[A-Za-z][A-Za-z0-9_\\.]{3,30}\\b",
     "PRONOUN_TEXT": "(?i)\\b(?:he/him|she/her|they/them|he/they|she/they|he|she|they)\\b",
     "PERSON_NAME_TEXT": "(?im)^\\s*(?:\\d+\\.\\s+|(?:student|name|full name|name on passport|employee|patient)\\s*[:=]\\s*)(?P<value>[A-Z][A-Za-z'\\-]+(?:[ -][A-Z][A-Za-z'\\-]+){1,3})\\s*$",
@@ -154,7 +162,6 @@
         "receipt",
         "ticket",
         "reference",
-        "ref",
         "student id",
         "sid",
         "uac",
@@ -1887,15 +1894,21 @@
         "encrypted card",
         "secure card number",
         "tokenized card",
-        "card hash"
+        "card hash",
+        "card_hash",
+        "sha256",
+        "payment hash"
       ],
       "negative_triggers": [
         "test token",
         "placeholder token",
         "public hash example"
       ],
-      "patterns": [],
-      "require_positive_trigger": true,
+      "patterns": [
+        "CARD_HASH_REF",
+        "SHA256_HASH_REF"
+      ],
+      "require_positive_trigger": false,
       "window_left_chars": 50,
       "window_right_chars": 30,
       "priority": 68,
@@ -1903,6 +1916,181 @@
       "rule_mode": "context_required",
       "suppress_if_negative_trigger_in_window": true,
       "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "CAMERA_FOOTAGE_AUDIO": {
+      "csv_label_name": "Camera footage Audio",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "camera footage",
+        "cctv",
+        "footage",
+        "video audio"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "ticket",
+        "reference token",
+        "system-generated",
+        "placeholder",
+        "public example"
+      ],
+      "patterns": [
+        "CCTV_REF"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 60,
+      "window_right_chars": 30,
+      "priority": 78,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Context-anchored CCTV evidence identifiers."
+    },
+    "AUDIO_INFORMATION": {
+      "csv_label_name": "Audio Information",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "audio",
+        "audible",
+        "conversation ref",
+        "audio clip"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "ticket",
+        "reference token",
+        "system-generated",
+        "placeholder",
+        "public example"
+      ],
+      "patterns": [
+        "AUDIO_REF"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 60,
+      "window_right_chars": 30,
+      "priority": 78,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Context-anchored audio evidence identifiers."
+    },
+    "FACIAL_RECOGNITION": {
+      "csv_label_name": "Facial Recognition",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "facial recognition",
+        "face template",
+        "face"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "ticket",
+        "reference token",
+        "system-generated",
+        "placeholder",
+        "public example"
+      ],
+      "patterns": [
+        "FACE_REF"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 60,
+      "window_right_chars": 30,
+      "priority": 78,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Context-anchored facial-recognition template identifiers."
+    },
+    "FINGERPRINT": {
+      "csv_label_name": "Fingerprint",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "fingerprint",
+        "fingerprint scan"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "ticket",
+        "reference token",
+        "system-generated",
+        "placeholder",
+        "public example"
+      ],
+      "patterns": [
+        "FINGERPRINT_REF"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 60,
+      "window_right_chars": 30,
+      "priority": 78,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Context-anchored fingerprint scan identifiers."
+    },
+    "VOICE_RECOGNITION": {
+      "csv_label_name": "Voice Recognition",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "voice recognition",
+        "voice sample",
+        "voice"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "ticket",
+        "reference token",
+        "system-generated",
+        "placeholder",
+        "public example"
+      ],
+      "patterns": [
+        "VOICE_REF"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 60,
+      "window_right_chars": 30,
+      "priority": 78,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Context-anchored voice-recognition sample identifiers."
+    },
+    "SIGNATURE": {
+      "csv_label_name": "Signature",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "signature",
+        "signature image",
+        "digital signature"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "ticket",
+        "reference token",
+        "system-generated",
+        "placeholder",
+        "public example"
+      ],
+      "patterns": [
+        "SIGNATURE_REF"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 60,
+      "window_right_chars": 30,
+      "priority": 78,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Context-anchored signature image identifiers."
     },
     "PRONOUN": {
       "csv_label_name": "Pronoun",

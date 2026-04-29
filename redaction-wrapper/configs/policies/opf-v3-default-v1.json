@@ -5,6 +5,20 @@
   "taxonomy_version": "taxonomy_v1.1.1-draft-73class",
   "schema_version": "redaction-output-v1",
   "redaction_mode": "replace_with_tag",
+  "redact_review_types": [
+    "PHONE",
+    "USI",
+    "STUDENT_ID",
+    "PAYMENT_CARD_NUMBER",
+    "CREDIT_CARD_CVV",
+    "AU_BANK_ACCOUNT",
+    "AU_TFN",
+    "MEDICARE_NUMBER",
+    "VEHICLE_ID",
+    "AU_DRIVERS_LICENCE",
+    "USERNAME",
+    "SOCIAL_MEDIA_ID"
+  ],
   "default_action": "AUTO_REDACT",
   "confidence": {
     "calibrated": true,
@@ -41,6 +55,7 @@
     "NATIONAL_IDENTITY_CARD": "AUTO_REDACT",
     "PENSION_CARD_NUMBER": "AUTO_REDACT",
     "PAYMENT_CARD_NUMBER": "AUTO_REDACT",
+    "HASHED_PAYMENT_CARD_NUMBER": "AUTO_REDACT",
     "CREDIT_CARD_CVV": "REVIEW",
     "AU_BANK_ACCOUNT": "REVIEW",
     "BSB": "AUTO_REDACT",

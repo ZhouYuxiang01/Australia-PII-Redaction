@@ -84,12 +84,23 @@ def apply_policy(spans: list[Span], policy: dict[str, Any]) -> list[Span]:
     return out
 
 
-def redact_text(text: str, spans: list[Span], mode: str = "replace_with_tag", mask_char: str = "*") -> str:
+def redact_text(
+    text: str,
+    spans: list[Span],
+    mode: str = "replace_with_tag",
+    mask_char: str = "*",
+    redact_review_types: set[str] | None = None,
+) -> str:
     """Apply deterministic redaction for spans approved for automatic replacement."""
+    redact_review_types = redact_review_types or set()
     pieces: list[str] = []
     cursor = 0
     for span in sorted(spans, key=lambda s: (s.start, s.end)):
-        if span.decision != "AUTO_REDACT":
+        should_redact = span.decision == "AUTO_REDACT" or (
+            span.decision == "REVIEW"
+            and (span.type in redact_review_types or "*" in redact_review_types)
+        )
+        if not should_redact:
             continue
         pieces.append(text[cursor:span.start])
         if mode == "remove":
@@ -108,7 +119,8 @@ def build_response(*, text: str, spans: list[Span], policy: dict[str, Any],
                    raw_offset_mapping_applied: bool, warnings: list[str],
                    extra_metadata: dict[str, Any] | None = None) -> dict[str, Any]:
     mode = policy.get("redaction_mode", "replace_with_tag")
-    redacted = redact_text(text, spans, mode=mode)
+    redact_review_types = set(policy.get("redact_review_types", []))
+    redacted = redact_text(text, spans, mode=mode, redact_review_types=redact_review_types)
     visible_spans = [span for span in spans if span.decision in {"AUTO_REDACT", "REVIEW"}]
     if policy.get("confidence", {}).get("calibrated") is False:
         warnings = [*warnings, "confidence_uncalibrated_null"]
@@ -120,6 +132,7 @@ def build_response(*, text: str, spans: list[Span], policy: dict[str, Any],
         "normalization": "NFC",
         "raw_offset_mapping_applied": raw_offset_mapping_applied,
         "redaction_mode": mode,
+        "redact_review_types": sorted(redact_review_types),
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
     if extra_metadata:

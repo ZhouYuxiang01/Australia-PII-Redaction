@@ -701,6 +701,11 @@ def _has_later_competing_trigger(label: str, line_before: str, current_pos: int)
     for other_label, triggers in COMPETING_CONTEXT_TRIGGERS.items():
         if other_label == label:
             continue
+        if other_label == "PAYMENT_CARD_NUMBER" and label in {
+            "HASHED_PAYMENT_CARD_NUMBER",
+            "PENSION_CARD_NUMBER",
+        }:
+            continue
         if _latest_trigger_position(line_before, triggers) > current_pos:
             return True
     return False
