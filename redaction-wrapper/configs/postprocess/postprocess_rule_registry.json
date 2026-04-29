@@ -40,6 +40,8 @@
     "VEHICLE_PLATE_STATE_HYPHEN": "\\b(?:NSW|VIC|QLD|SA|WA|TAS|ACT|NT)-\\d{2,4}-[A-Z]{2,4}\\b",
     "IPV4": "\\b(?:(?:25[0-5]|2[0-4]\\d|1?\\d?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|1?\\d?\\d)\\b",
     "GPS_PAIR": "(?<!\\d)-?\\d{1,2}\\.\\d{3,}\\s*,\\s*-?\\d{2,3}\\.\\d{3,}(?!\\d)",
+    "LATITUDE_FLOAT": "(?<![\\d.])(?P<value>-(?:[1-4]\\d|[1-9])\\.\\d{3,})(?![\\d.])",
+    "LONGITUDE_FLOAT": "(?<![\\d.])(?P<value>(?:1[0-7]\\d|180)\\.\\d{3,})(?![\\d.])",
     "CENTRELINK_CRN": "\\b(?:CRN\\s*)?\\d{3}\\s?\\d{3}\\s?\\d{3}[A-Z]\\b",
     "NATIONAL_ID_ALNUM_DASH": "\\b[A-Z]{2,4}(?:-[A-Z0-9]{1,6}){2,5}\\b",
     "SOCIAL_HANDLE": "(?<![\\w.])@[A-Za-z0-9_\\.]{3,30}\\b",
@@ -62,20 +64,27 @@
     "SIGNATURE_REF": "\\bSIG-\\d{4}-\\d{5}\\b",
     "USERNAME_TOKEN": "\\b[A-Za-z][A-Za-z0-9_\\.]{3,30}\\b",
     "PRONOUN_TEXT": "(?i)\\b(?:he/him|she/her|they/them|he/they|she/they|he|she|they)\\b",
-    "PERSON_NAME_TEXT": "(?im)^\\s*(?:\\d+\\.\\s+|(?:student|name|full name|name on passport|employee|patient)\\s*[:=]\\s*)(?P<value>[A-Z][A-Za-z'\\-]+(?:[ -][A-Z][A-Za-z'\\-]+){1,3})\\s*$",
+    "PERSON_NAME_TEXT": "(?im)^\\s*(?:(?:student|name|full name|name on passport|employee|patient)\\s*[:=]\\s*)(?P<value>[A-Z][A-Za-z'\\-]+(?:[ -][A-Z][A-Za-z'\\-]+){1,3})\\s*$",
+    "PERSON_NUMBERED_STUDENT_TEXT": "(?im)^\\s*\\d+\\.\\s+(?P<value>[A-Z][A-Za-z'\\-]+(?:[ -][A-Z][A-Za-z'\\-]+){1,3})\\s*(?=\\n\\s*(?:SID|Student\\s+(?:ID|number)|Email|Mobile|Phone)\\b)",
     "NEXT_OF_KIN_TEXT": "(?im)\\bnext\\s+of\\s+kin\\s+is\\s+(?P<value>[A-Z][A-Za-z'\\-]+(?:[ -][A-Z][A-Za-z'\\-]+){1,3})\\b",
     "RELIGION_TEXT": "(?im)\\b(?:religion|religious beliefs?)\\b(?:\\s*/\\s*[^:\\n]+)?\\s*:\\s*(?P<value>[A-Za-z][A-Za-z -]{1,40}?)(?=\\s*$|[.;,\\n])",
+    "NATIONALITY_TEXT": "(?im)\\bnationality\\s*[:#=\\-]?\\s*(?P<value>[A-Z][A-Za-z -]{2,40}?)(?=\\s*$|[.;,\\n])",
     "SES_TEXT": "(?im)\\b(?:socio economic status|socioeconomic status|ses)\\s*:\\s*(?P<value>[A-Za-z][A-Za-z -]{2,80}?)(?=\\s*$|[.;,\\n])",
     "MEDICAL_CERTIFICATE_DATE": "(?i)\\b(?:from|to)\\s+(?P<value>(?:0?[1-9]|[12]\\d|3[01])[/.-](?:0?[1-9]|1[0-2])[/.-](?:19|20)\\d{2})\\b",
     "MEDICAL_CERTIFICATE_MENTION": "(?i)\\bmedical certificate\\.(?P<value>medical certificate)\\b",
     "ACCOUNT_NAME_TEXT": "(?im)\\baccount\\s+name\\s*[:#=\\-]?\\s*(?P<value>[A-Z][A-Za-z'\\-]+(?:[ -][A-Z][A-Za-z'\\-]+){0,4})\\s*(?=$|[\\n\\r])",
     "BANK_NAME_TEXT": "(?im)\\bbank\\s*[:#=\\-]?\\s*(?P<value>[A-Z][A-Za-z '&\\-]+(?:Bank|Credit Union|Mutual))\\s*(?=$|[\\n\\r])",
     "FREE_TEXT_ADDRESS": "(?im)\\b(?:postal\\s+address|home\\s+address|residential\\s+address|mailing\\s+address|new\\s+address|address)\\s*(?:[:#=\\-]|is)?\\s*(?P<value>(?:(?:Level|Unit|Room)\\s+\\d+[A-Za-z]?\\s*,\\s*)?(?:\\d+[A-Za-z]?/\\d+\\s*,\\s*)?\\d+[A-Za-z]?\\s+[A-Za-z][A-Za-z '\\-]+\\s+(?:Street|St|Road|Rd|Avenue|Ave|Lane|Ln|Drive|Dr|Court|Ct|Parade|Pde),?\\s+[A-Za-z][A-Za-z '\\-]+\\s+(?:NSW|VIC|QLD|WA|SA|TAS|ACT|NT)\\s+\\d{4})\\s*(?=$|[\\n\\r])",
-    "EMPLOYMENT_ROLE_TEXT": "(?im)\\brole\\s*[:#=\\-]?\\s*(?P<value>[A-Za-z][A-Za-z /\\-]{2,60})\\s*(?=$|[\\n\\r])",
+    "EMPLOYMENT_ROLE_TEXT": "(?im)\\brole\\s*[:#=\\-]?\\s*(?P<value>(?:lab demonstrator|[A-Za-z][A-Za-z /\\-]*(?:manager|officer|analyst|engineer|developer|lecturer|tutor|coordinator|assistant))[^\\n\\r]*)\\s*(?=$|[\\n\\r])",
     "CONTRACT_TYPE_TEXT": "(?im)\\bcontract\\s+type\\s*[:#=\\-]?\\s*(?P<value>(?:continuing|permanent|temporary|fixed-term|fixed term|casual|ongoing)[^\\n\\r]*)",
+    "SUBJECT_RESULT_TEXT": "(?im)\\b(?:[A-Z]{4}\\d{4}\\s+result|subject\\s+results?)\\s*[:#=\\-]?\\s*(?P<value>[A-Z]{1,2}(?:\\s*\\d{1,3})?)\\b",
+    "SPECIAL_CONSIDERATION_TEXT": "(?im)\\bspecial\\s+consideration(?:\\s+reason)?\\s*[:#=\\-]?\\s*(?P<value>[A-Za-z][A-Za-z ,'\\-]{2,80}?)(?=\\s*$|[.;,\\n])",
+    "DEBT_TEXT": "(?im)\\b(?:personal debt|student debt|outstanding debt|unpaid balance|arrears)\\s*[:#=\\-]?\\s*(?P<value>\\$\\s?\\d{1,3}(?:,\\d{3})*(?:\\.\\d{2})?|\\d{2,3}k)\\b",
+    "DECIMAL_SCORE": "(?<!\\d)(?P<value>\\d{1,2}\\.\\d{1,2}|100\\.0{1,2})(?!\\d)",
+    "INTEGER_SCORE": "(?<!\\d)(?P<value>\\d{1,2}|100)(?!\\d)",
     "CITIZENSHIP_TEXT": "(?im)\\bcitizenship\\s+status\\s*[:#=\\-]?\\s*(?P<value>(?:Australian citizen|Permanent Resident|Temporary visa holder|New Zealand citizen|PR))",
     "CARING_RESPONSIBILITY_TEXT": "(?im)\\bcaring\\s+responsibilities\\s*[:#=\\-]?\\s*(?P<value>(?:cares for [^\\n\\r]+|has shared caring duties|parent/carer responsibilities))",
-    "MEDICAL_FREE_TEXT": "(?im)\\b(?:reason|medical detail|medical reason)\\s*[:#=\\-]?\\s*(?P<value>(?!(?:illness in group)\\b)[A-Za-z][^\\n\\r]{2,80})"
+    "MEDICAL_FREE_TEXT": "(?im)\\b(?:medical detail|medical reason|reason)\\s*[:#=\\-]?\\s*(?P<value>(?!(?:illness in group)\\b)(?=[^\\n\\r]*(?:migraine|anxiety|depression|injury|illness|condition|flare-up|symptoms|disease|syndrome|ailment))[A-Za-z][^\\n\\r]{2,80})"
   },
   "label_alias_normalization": {
     "BANK_ACCOUNT_INFORMATION": "AU_BANK_ACCOUNT",
@@ -637,7 +646,8 @@
         "field name"
       ],
       "patterns": [
-        "PERSON_NAME_TEXT"
+        "PERSON_NAME_TEXT",
+        "PERSON_NUMBERED_STUDENT_TEXT"
       ],
       "require_positive_trigger": false,
       "window_left_chars": 50,
@@ -1037,7 +1047,7 @@
         "percentage"
       ],
       "patterns": [
-        "DOMAIN_OR_URL"
+        "LATITUDE_FLOAT"
       ],
       "require_positive_trigger": true,
       "window_left_chars": 50,
@@ -1066,8 +1076,7 @@
         "percentage"
       ],
       "patterns": [
-        "MEDICAL_CERTIFICATE_DATE",
-        "MEDICAL_CERTIFICATE_MENTION"
+        "LONGITUDE_FLOAT"
       ],
       "require_positive_trigger": true,
       "window_left_chars": 50,
@@ -1815,7 +1824,10 @@
         "percentage unrelated",
         "score in game"
       ],
-      "patterns": [],
+      "patterns": [
+        "DECIMAL_SCORE",
+        "INTEGER_SCORE"
+      ],
       "require_positive_trigger": true,
       "window_left_chars": 50,
       "window_right_chars": 30,

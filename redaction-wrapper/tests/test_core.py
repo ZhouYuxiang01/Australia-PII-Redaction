@@ -362,6 +362,57 @@ def test_registry_driven_contextual_text_fields() -> None:
     assert ("MEDICAL_INFORMATION", "migraine + anxiety flare-up") in pairs
 
 
+def test_registry_driven_academic_geo_and_finance_text_fields() -> None:
+    text = (
+        "Latitude: -33.884210\n"
+        "Longitude: 151.201770\n"
+        "Nationality: Chinese\n"
+        "COMP5318 result: D 78\n"
+        "Special consideration reason: illness\n"
+        "Personal debt: $1,280.50\n"
+        "WAM score: 81.4\n"
+    )
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [],
+        {"postprocess": {"add_contextual_identifier_spans": False, "add_registry_contextual_spans": True}},
+    )
+    pairs = [(s.type, s.value) for s in cleaned]
+    assert ("LATITUDE", "-33.884210") in pairs
+    assert ("LONGITUDE", "151.201770") in pairs
+    assert ("NATIONALITY", "Chinese") in pairs
+    assert ("SUBJECT_RESULTS", "D 78") in pairs
+    assert ("SPECIAL_CONSIDERATION", "illness") in pairs
+    assert ("PERSONAL_DEBT", "$1,280.50") in pairs
+    assert ("WAM_SCORE", "81.4") in pairs
+
+    unrelated = "medical certificate from 12/05/2026 to 16/05/2026\nWebsite portal.example.test/profile"
+    cleaned, _ = safe_postprocess_spans(
+        unrelated,
+        [],
+        {"postprocess": {"add_contextual_identifier_spans": False, "add_registry_contextual_spans": True}},
+    )
+    assert all(s.type not in {"LATITUDE", "LONGITUDE"} for s in cleaned)
+
+
+def test_registry_enabled_rules_reference_existing_patterns() -> None:
+    registry = json.loads((PROJECT_ROOT / "configs" / "postprocess" / "postprocess_rule_registry.json").read_text())
+    pattern_defs = set(registry["pattern_definitions"])
+    missing = {
+        label: [name for name in cfg.get("patterns", []) if name not in pattern_defs]
+        for label, cfg in registry["rules"].items()
+        if cfg.get("enabled", False)
+    }
+    missing = {label: names for label, names in missing.items() if names}
+    assert missing == {}
+
+    empty_enabled = sorted(
+        label for label, cfg in registry["rules"].items()
+        if cfg.get("enabled", False) and not cfg.get("patterns", [])
+    )
+    assert empty_enabled == []
+
+
 def test_registry_driven_finance_biometric_and_evidence_fields() -> None:
     text = (
         "acct 70929767\n"
@@ -495,6 +546,17 @@ def test_registry_text_fields_still_require_context() -> None:
         {"postprocess": {"add_contextual_identifier_spans": False, "add_registry_contextual_spans": True}},
     )
     assert cleaned == []
+
+
+def test_broad_semantic_rescues_avoid_common_false_positives() -> None:
+    text = (
+        "Reason: meeting rescheduled\n"
+        "Role: admin\n"
+        "1. Project Alpha\n"
+        "2. Course Outline\n"
+    )
+    cleaned, _ = safe_postprocess_spans(text, [], {"postprocess": {}})
+    assert all(s.type not in {"MEDICAL_INFORMATION", "EMPLOYMENT_INFORMATION", "PERSON"} for s in cleaned)
 
 
 def test_vehicle_context_conflicts_are_routed_to_review() -> None:

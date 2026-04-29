@@ -356,7 +356,8 @@ CONTEXTUAL_RESCUE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     (
         "PERSON",
         re.compile(
-            r"(?m)^\s*\d+\.\s+(?P<value>[A-Z][A-Za-z'\-]+(?:\s+[A-Z][A-Za-z'\-]+){1,3})\s*$",
+            r"(?m)^\s*\d+\.\s+(?P<value>[A-Z][A-Za-z'\-]+(?:\s+[A-Z][A-Za-z'\-]+){1,3})\s*"
+            r"(?=\n\s*(?:SID|Student\s+(?:ID|number)|Email|Mobile|Phone)\b)",
             re.IGNORECASE,
         ),
     ),
@@ -384,7 +385,16 @@ CONTEXTUAL_RESCUE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ),
     (
         "MEDICAL_INFORMATION",
-        re.compile(r"\b(?:Reason|Medical detail)\s*[:#=\-]?\s*(?P<value>[^\n\r]+)", re.IGNORECASE),
+        re.compile(r"\b(?:Medical detail|Medical reason)\s*[:#=\-]?\s*(?P<value>[^\n\r]+)", re.IGNORECASE),
+    ),
+    (
+        "MEDICAL_INFORMATION",
+        re.compile(
+            r"\bReason\s*[:#=\-]?\s*(?P<value>[^\n\r]*"
+            r"(?:migraine|anxiety|depression|injury|illness|condition|flare-up|symptoms|disease|syndrome|ailment)"
+            r"[^\n\r]*)",
+            re.IGNORECASE,
+        ),
     ),
     (
         "MEDICAL_CERTIFICATE",
@@ -416,7 +426,12 @@ CONTEXTUAL_RESCUE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ),
     (
         "EMPLOYMENT_INFORMATION",
-        re.compile(r"\bRole\s*[:#=\-]?\s*(?P<value>[^\n\r]+)", re.IGNORECASE),
+        re.compile(
+            r"\bRole\s*[:#=\-]?\s*(?P<value>(?:lab demonstrator|"
+            r"[A-Za-z][A-Za-z /-]*(?:manager|officer|analyst|engineer|developer|lecturer|tutor|coordinator|assistant))"
+            r"[^\n\r]*)",
+            re.IGNORECASE,
+        ),
     ),
     (
         "CONTRACT_TYPE",
@@ -707,6 +722,8 @@ def _registry_rule_context_allowed(label: str, line_before: str, line_ctx: str) 
         return "medicare" in line_ctx
     if label == "PASSPORT_EXPIRY":
         return "passport" in line_ctx
+    if label == "MEDICAL_INFORMATION":
+        return "special consideration" not in line_ctx
     return True
 
 
