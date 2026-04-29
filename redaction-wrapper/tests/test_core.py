@@ -289,7 +289,7 @@ def test_postprocess_registry_files_load_without_new_taxonomy() -> None:
         "MEDICAL_CERTIFICATE",
         "RELIGION_BELIEF",
         "SOCIO_ECONOMIC_STATUS",
-        "HASHED_PAYMENT_CARD_NUMBER",
+        "PAYMENT_CARD_NUMBER",
         "CAMERA_FOOTAGE_AUDIO",
         "AUDIO_INFORMATION",
         "FACIAL_RECOGNITION",
@@ -386,9 +386,9 @@ def test_registry_driven_finance_biometric_and_evidence_fields() -> None:
     assert ("AU_BANK_ACCOUNT", "70929767") in pairs
     assert ("AU_BANK_ACCOUNT", "639 178 972") in pairs
     assert ("AU_BANK_ACCOUNT", "0789378676") in pairs
-    assert ("HASHED_PAYMENT_CARD_NUMBER", "card_hash:4723b26560741ff3c4951cd9ae00ef2a") in pairs
+    assert ("PAYMENT_CARD_NUMBER", "card_hash:4723b26560741ff3c4951cd9ae00ef2a") in pairs
     assert (
-        "HASHED_PAYMENT_CARD_NUMBER",
+        "PAYMENT_CARD_NUMBER",
         "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
     ) in pairs
     assert ("CAMERA_FOOTAGE_AUDIO", "CCTV-2026-PF-4959") in pairs
@@ -417,6 +417,48 @@ def test_registry_evidence_fields_still_require_context() -> None:
         {"postprocess": {"add_contextual_identifier_spans": False, "add_registry_contextual_spans": True}},
     )
     assert cleaned == []
+
+
+def test_legacy_contact_rescues_emit_canonical_opf_labels() -> None:
+    url_text = "Portal callback alice%40student.example.edu.au"
+    url_cleaned, _ = safe_postprocess_spans(url_text, [], {"postprocess": {"add_url_encoded_emails": True}})
+    assert [(s.type, s.value) for s in url_cleaned] == [("EMAIL", "alice%40student.example.edu.au")]
+
+    email_text = "personal email looked like aisha@example.edu.au"
+    email_span = Span(start=27, end=48, type="WORK_EMAIL", value="aisha@example.edu.au")
+    email_cleaned, _ = safe_postprocess_spans(email_text, [email_span], {"postprocess": {}})
+    assert [(s.type, s.value) for s in email_cleaned] == [("EMAIL", "aisha@example.edu.au")]
+
+    phone_text = "phone 0412 345 678"
+    phone_span = Span(start=6, end=18, type="WORK_PHONE", value="0412 345 678")
+    phone_cleaned, _ = safe_postprocess_spans(phone_text, [phone_span], {"postprocess": {}})
+    assert [(s.type, s.value) for s in phone_cleaned] == [("PHONE", "0412 345 678")]
+
+
+def test_account_name_and_bank_name_are_not_account_numbers() -> None:
+    text = "Account name: Aisha Kareem\nBank: National Australia Bank\naccount number 639 178 972"
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [],
+        {"postprocess": {"add_contextual_identifier_spans": True, "add_registry_contextual_spans": False}},
+    )
+    pairs = [(s.type, s.value) for s in cleaned]
+    assert ("AU_BANK_ACCOUNT", "639 178 972") in pairs
+    assert all(value != "Aisha Kareem" for label, value in pairs if label == "AU_BANK_ACCOUNT")
+    assert all(value != "National Australia Bank" for label, value in pairs if label == "AU_BANK_ACCOUNT")
+
+
+def test_opf_policy_declares_all_postprocess_flags() -> None:
+    policy = json.loads((PROJECT_ROOT / "configs" / "policies" / "opf-v3-default-v1.json").read_text())
+    assert policy["postprocess"] == {
+        "drop_common_hard_negatives": True,
+        "normalize_contextual_labels": True,
+        "collapse_generic_work_contacts": True,
+        "strip_known_prefixes": True,
+        "add_url_encoded_emails": True,
+        "add_builtin_contextual_identifier_spans": True,
+        "add_registry_contextual_spans": True,
+    }
 
 
 def test_context_normalization_relabels_account_and_personnel_conflicts() -> None:
@@ -720,7 +762,7 @@ def test_backend_configs_use_schema_types() -> None:
 def test_schema_exposes_only_actionable_decisions() -> None:
     schema = json.loads((PROJECT_ROOT / "schemas" / "redaction-output-v1.schema.json").read_text())
     assert schema["$defs"]["decision"]["enum"] == ["AUTO_REDACT", "REVIEW"]
-    assert "HASHED_PAYMENT_CARD_NUMBER" in schema["$defs"]["pii_type"]["enum"]
+    assert "HASHED_PAYMENT_CARD_NUMBER" not in schema["$defs"]["pii_type"]["enum"]
 
 
 def test_opf_clear_payment_fields_reach_auto_redact() -> None:

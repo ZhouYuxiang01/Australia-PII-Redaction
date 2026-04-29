@@ -287,14 +287,6 @@ CONTEXTUAL_RESCUE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
         ),
     ),
     (
-        "AU_BANK_ACCOUNT",
-        re.compile(r"\bAccount\s+name\s*[:#=\-]?\s*(?P<value>[^\n\r]+)", re.IGNORECASE),
-    ),
-    (
-        "AU_BANK_ACCOUNT",
-        re.compile(r"\bBank\s*[:#=\-]?\s*(?P<value>[A-Z][A-Za-z &'\-]+(?:Bank|Credit Union))\b", re.IGNORECASE),
-    ),
-    (
         "EMPLOYEE_NUMBER",
         re.compile(r"\b(?:Staff|Employee)\s+ID\s*[:#=\-]?\s*(?P<value>E\d{6})\b", re.IGNORECASE),
     ),
@@ -512,11 +504,11 @@ def collapse_work_contact_type(span: Span, text: str) -> Span:
     if span.type == "WORK_EMAIL":
         explicit = any(m in ctx for m in ["work email", "office email", "staff email", "business email"])
         if not explicit and "email" in ctx:
-            new_type = "EMAIL_ADDRESS"
+            new_type = "EMAIL"
     elif span.type == "WORK_PHONE":
         explicit = any(m in ctx for m in ["work phone", "office phone", "business phone", "staff phone", "work:"])
         if not explicit and any(m in ctx for m in ["phone", "ph:", "tel"]):
-            new_type = "AU_PHONE"
+            new_type = "PHONE"
     if new_type == span.type:
         return span
     out = Span(**{**span.__dict__})
@@ -558,11 +550,11 @@ def add_url_encoded_email_spans(text: str, existing: list[Span]) -> list[Span]:
     spans = list(existing)
     occupied = {(span.start, span.end, span.type) for span in spans}
     for m in ENCODED_EMAIL_RE.finditer(text):
-        key = (m.start(), m.end(), "EMAIL_ADDRESS")
+        key = (m.start(), m.end(), "EMAIL")
         if key in occupied:
             continue
         spans.append(Span(
-            start=m.start(), end=m.end(), type="EMAIL_ADDRESS",
+            start=m.start(), end=m.end(), type="EMAIL",
             value=text[m.start():m.end()], confidence=None,
             source="rule", postprocess=["url_encoded_email"],
         ))
@@ -701,10 +693,7 @@ def _has_later_competing_trigger(label: str, line_before: str, current_pos: int)
     for other_label, triggers in COMPETING_CONTEXT_TRIGGERS.items():
         if other_label == label:
             continue
-        if other_label == "PAYMENT_CARD_NUMBER" and label in {
-            "HASHED_PAYMENT_CARD_NUMBER",
-            "PENSION_CARD_NUMBER",
-        }:
+        if other_label == "PAYMENT_CARD_NUMBER" and label == "PENSION_CARD_NUMBER":
             continue
         if _latest_trigger_position(line_before, triggers) > current_pos:
             return True

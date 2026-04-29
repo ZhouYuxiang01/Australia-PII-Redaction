@@ -55,7 +55,6 @@
     "NATIONAL_IDENTITY_CARD": "AUTO_REDACT",
     "PENSION_CARD_NUMBER": "AUTO_REDACT",
     "PAYMENT_CARD_NUMBER": "AUTO_REDACT",
-    "HASHED_PAYMENT_CARD_NUMBER": "AUTO_REDACT",
     "CREDIT_CARD_CVV": "REVIEW",
     "AU_BANK_ACCOUNT": "REVIEW",
     "BSB": "AUTO_REDACT",
@@ -406,9 +405,13 @@
     }
   },
   "postprocess": {
-    "strip_known_prefixes": true,
+    "drop_common_hard_negatives": true,
+    "normalize_contextual_labels": true,
     "collapse_generic_work_contacts": true,
-    "add_url_encoded_emails": true
+    "strip_known_prefixes": true,
+    "add_url_encoded_emails": true,
+    "add_builtin_contextual_identifier_spans": true,
+    "add_registry_contextual_spans": true
   },
   "overlap_resolution": {
     "strategy": "keep_longer_then_earlier",
