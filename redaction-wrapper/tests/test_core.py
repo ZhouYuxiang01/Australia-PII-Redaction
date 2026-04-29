@@ -321,6 +321,61 @@ def test_registry_driven_contextual_fallback_rules() -> None:
     assert ("VEHICLE_ID", "NSW CXT-72Q") in pairs
 
 
+def test_registry_driven_contextual_text_fields() -> None:
+    text = (
+        "Account name: Mia-Louise Martinez-Rivera\n"
+        "Bank: Southern Mutual Bank\n"
+        "Bank: Campus Mutual\n"
+        "Role: lab demonstrator\n"
+        "Contract type: continuing, part-time 0.8 FTE\n"
+        "Citizenship Status: Permanent Resident\n"
+        "Caring responsibilities: cares for younger sibling after school\n"
+        "Postal address: Level 6, 76 High Street, Redfern NSW 2016\n"
+        "Phoebe: new address is 7/68, 178 City Road, Northbridge WA 6003\n"
+        "Fatima: next of kin is Tahlia Park, phone (08) 7786 4519\n"
+        "Priya: pronouns he/they\n"
+        "Reason: migraine + anxiety flare-up\n"
+    )
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [],
+        {"postprocess": {"add_contextual_identifier_spans": False, "add_registry_contextual_spans": True}},
+    )
+    pairs = [(s.type, s.value) for s in cleaned]
+    assert ("AU_BANK_ACCOUNT", "Mia-Louise Martinez-Rivera") in pairs
+    assert ("AU_BANK_ACCOUNT", "Southern Mutual Bank") in pairs
+    assert ("AU_BANK_ACCOUNT", "Campus Mutual") in pairs
+    assert ("EMPLOYMENT_INFORMATION", "lab demonstrator") in pairs
+    assert ("CONTRACT_TYPE", "continuing, part-time 0.8 FTE") in pairs
+    assert ("CITIZENSHIP_STATUS", "Permanent Resident") in pairs
+    assert ("CARING_RESPONSIBILITIES", "cares for younger sibling after school") in pairs
+    assert ("ADDRESS", "Level 6, 76 High Street, Redfern NSW 2016") in pairs
+    assert ("ADDRESS", "7/68, 178 City Road, Northbridge WA 6003") in pairs
+    assert ("NEXT_OF_KIN", "Tahlia Park") in pairs
+    assert ("PRONOUN", "he/they") in pairs
+    assert ("MEDICAL_INFORMATION", "migraine + anxiety flare-up") in pairs
+
+
+def test_registry_text_fields_still_require_context() -> None:
+    text = (
+        "Permanent Resident\n"
+        "continuing, part-time 0.8 FTE\n"
+        "lab demonstrator\n"
+        "Southern Mutual Bank\n"
+        "Level 6, 76 High Street, Redfern NSW 2016\n"
+        "Tahlia Park\n"
+        "he/they\n"
+        "migraine + anxiety flare-up\n"
+        "cares for younger sibling after school\n"
+    )
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [],
+        {"postprocess": {"add_contextual_identifier_spans": False, "add_registry_contextual_spans": True}},
+    )
+    assert cleaned == []
+
+
 def test_vehicle_context_conflicts_are_routed_to_review() -> None:
     text = "Vehicle Registration (License Plate): VIC987XYZ."
     start = text.index("VIC987XYZ")

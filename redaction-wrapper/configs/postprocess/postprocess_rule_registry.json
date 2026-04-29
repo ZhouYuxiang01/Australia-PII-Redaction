@@ -53,14 +53,24 @@
     "WORKERS_COMP_REF": "\\b(?:WC|WCC)[- ]?\\d{4}[- ]?[A-Z0-9]{3,10}\\b",
     "PENSION_CARD_REF": "\\b(?:SEN|PEN|PCC)[- ]?[A-Z0-9]{5,12}\\b",
     "USERNAME_TOKEN": "\\b[A-Za-z][A-Za-z0-9_\\.]{3,30}\\b",
-    "PRONOUN_TEXT": "(?i)\\b(?:he/him|she/her|they/them|he|she|they)\\b",
-    "PERSON_NAME_TEXT": "(?im)^\\s*(?:\\d+\\.\\s+|(?:student|name|full name|employee|patient)\\s*[:=]\\s*)(?P<value>[A-Z][A-Za-z'\\-]+(?:[ -][A-Z][A-Za-z'\\-]+){1,3})\\s*$",
+    "PRONOUN_TEXT": "(?i)\\b(?:he/him|she/her|they/them|he/they|she/they|he|she|they)\\b",
+    "PERSON_NAME_TEXT": "(?im)^\\s*(?:\\d+\\.\\s+|(?:student|name|full name|name on passport|employee|patient)\\s*[:=]\\s*)(?P<value>[A-Z][A-Za-z'\\-]+(?:[ -][A-Z][A-Za-z'\\-]+){1,3})\\s*$",
+    "NEXT_OF_KIN_TEXT": "(?im)\\bnext\\s+of\\s+kin\\s+is\\s+(?P<value>[A-Z][A-Za-z'\\-]+(?:[ -][A-Z][A-Za-z'\\-]+){1,3})\\b",
     "RELIGION_TEXT": "(?im)\\b(?:religion|religious beliefs?)\\b(?:\\s*/\\s*[^:\\n]+)?\\s*:\\s*(?P<value>[A-Za-z][A-Za-z -]{1,40}?)(?=\\s*$|[.;,\\n])",
     "SES_TEXT": "(?im)\\b(?:socio economic status|socioeconomic status|ses)\\s*:\\s*(?P<value>[A-Za-z][A-Za-z -]{2,80}?)(?=\\s*$|[.;,\\n])",
     "MEDICAL_CERTIFICATE_DATE": "(?i)\\b(?:from|to)\\s+(?P<value>(?:0?[1-9]|[12]\\d|3[01])[/.-](?:0?[1-9]|1[0-2])[/.-](?:19|20)\\d{2})\\b",
-    "MEDICAL_CERTIFICATE_MENTION": "(?i)\\bmedical certificate\\.(?P<value>medical certificate)\\b"
+    "MEDICAL_CERTIFICATE_MENTION": "(?i)\\bmedical certificate\\.(?P<value>medical certificate)\\b",
+    "ACCOUNT_NAME_TEXT": "(?im)\\baccount\\s+name\\s*[:#=\\-]?\\s*(?P<value>[A-Z][A-Za-z'\\-]+(?:[ -][A-Z][A-Za-z'\\-]+){0,4})\\s*(?=$|[\\n\\r])",
+    "BANK_NAME_TEXT": "(?im)\\bbank\\s*[:#=\\-]?\\s*(?P<value>[A-Z][A-Za-z '&\\-]+(?:Bank|Credit Union|Mutual))\\s*(?=$|[\\n\\r])",
+    "FREE_TEXT_ADDRESS": "(?im)\\b(?:postal\\s+address|home\\s+address|residential\\s+address|mailing\\s+address|new\\s+address|address)\\s*(?:[:#=\\-]|is)?\\s*(?P<value>(?:(?:Level|Unit|Room)\\s+\\d+[A-Za-z]?\\s*,\\s*)?(?:\\d+[A-Za-z]?/\\d+\\s*,\\s*)?\\d+[A-Za-z]?\\s+[A-Za-z][A-Za-z '\\-]+\\s+(?:Street|St|Road|Rd|Avenue|Ave|Lane|Ln|Drive|Dr|Court|Ct|Parade|Pde),?\\s+[A-Za-z][A-Za-z '\\-]+\\s+(?:NSW|VIC|QLD|WA|SA|TAS|ACT|NT)\\s+\\d{4})\\s*(?=$|[\\n\\r])",
+    "EMPLOYMENT_ROLE_TEXT": "(?im)\\brole\\s*[:#=\\-]?\\s*(?P<value>[A-Za-z][A-Za-z /\\-]{2,60})\\s*(?=$|[\\n\\r])",
+    "CONTRACT_TYPE_TEXT": "(?im)\\bcontract\\s+type\\s*[:#=\\-]?\\s*(?P<value>(?:continuing|permanent|temporary|fixed-term|fixed term|casual|ongoing)[^\\n\\r]*)",
+    "CITIZENSHIP_TEXT": "(?im)\\bcitizenship\\s+status\\s*[:#=\\-]?\\s*(?P<value>(?:Australian citizen|Permanent Resident|Temporary visa holder|New Zealand citizen|PR))",
+    "CARING_RESPONSIBILITY_TEXT": "(?im)\\bcaring\\s+responsibilities\\s*[:#=\\-]?\\s*(?P<value>(?:cares for [^\\n\\r]+|has shared caring duties|parent/carer responsibilities))",
+    "MEDICAL_FREE_TEXT": "(?im)\\b(?:reason|medical detail|medical reason)\\s*[:#=\\-]?\\s*(?P<value>(?!(?:illness in group)\\b)[A-Za-z][^\\n\\r]{2,80})"
   },
   "label_alias_normalization": {
+    "BANK_ACCOUNT_INFORMATION": "AU_BANK_ACCOUNT",
     "BSB": "AU_BANK_ACCOUNT",
     "BANK_ACCOUNT_NUMBER": "AU_BANK_ACCOUNT",
     "EMAIL_ADDRESS": "EMAIL",
@@ -660,7 +670,7 @@
         "officer"
       ],
       "patterns": [
-        "PERSON_NAME_TEXT"
+        "NEXT_OF_KIN_TEXT"
       ],
       "require_positive_trigger": true,
       "window_left_chars": 50,
@@ -1366,6 +1376,36 @@
       "suppress_if_negative_trigger_in_window": true,
       "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
     },
+    "EMPLOYMENT_INFORMATION": {
+      "csv_label_name": "Employment Information",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "role",
+        "position",
+        "employment information",
+        "career information"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "receipt",
+        "ticket",
+        "reference",
+        "placeholder",
+        "example"
+      ],
+      "patterns": [
+        "EMPLOYMENT_ROLE_TEXT"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 60,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required_semantic",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Context-anchored employment role text; no bare role values."
+    },
     "CONTRACT_TYPE": {
       "csv_label_name": "Contract Type - Fixed Term / Temporary / Permanent etc.",
       "enabled": true,
@@ -1428,6 +1468,35 @@
       "rule_mode": "context_required",
       "suppress_if_negative_trigger_in_window": true,
       "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "MEDICAL_INFORMATION": {
+      "csv_label_name": "Medical Information",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "reason",
+        "medical detail",
+        "medical reason",
+        "diagnosis",
+        "condition"
+      ],
+      "negative_triggers": [
+        "medical certificate only",
+        "training certificate",
+        "academic certificate",
+        "certificate of enrolment"
+      ],
+      "patterns": [
+        "MEDICAL_FREE_TEXT"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 65,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required_semantic",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Context-anchored medical reason/detail text; certificate-only text remains separate."
     },
     "MEDICAL_CERTIFICATE": {
       "csv_label_name": "Medical Certificate",
@@ -1537,7 +1606,9 @@
         "job title carer in generic text",
         "course about caring"
       ],
-      "patterns": [],
+      "patterns": [
+        "CARING_RESPONSIBILITY_TEXT"
+      ],
       "require_positive_trigger": true,
       "window_left_chars": 50,
       "window_right_chars": 30,
