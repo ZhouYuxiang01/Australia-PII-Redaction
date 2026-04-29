@@ -3,656 +3,556 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Redaction</title>
+  <title>Redaction REST Playground</title>
   <style>
-    /* ------------------------------------------------------------
-       Palette — restrained Swiss-spa neutrals + a single forest sage
-       ------------------------------------------------------------ */
     :root {
       color-scheme: light;
-      --bg:          #f7f7f8;
-      --surface:     #ffffff;
-      --surface-2:   #f9f9f9;
-      --ink:         #0d0d0d;
-      --ink-soft:    #353740;
-      --muted:       #6e6e80;
-      --muted-2:     #9b9ba7;
-      --line:        #e5e5e5;
-      --line-soft:   #ececf1;
-      --accent:      #10a37f;
-      --accent-hover:#0d8f6e;
-      --accent-tint: #e7f8f2;
-      --danger:      #b42318;
-      --shadow-1:    none;
-      --sans:        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      --mono:        "SF Mono", "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+      --bg: #f4efe6;
+      --bg-soft: #efe7d9;
+      --card: #fffdf8;
+      --ink: #1f2a37;
+      --muted: #6a7787;
+      --line: #d7cdbb;
+      --accent: #0f766e;
+      --accent-2: #b45309;
+      --danger: #b42318;
+      --ok: #15803d;
+      --tag-bg: #fff1c9;
+      --tag-line: #b7791f;
+      --shadow: 0 12px 30px rgba(58, 45, 24, 0.08);
+      --mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --sans: "Sora", "Avenir Next", "Segoe UI", sans-serif;
     }
 
     * { box-sizing: border-box; }
     [hidden] { display: none !important; }
-    html, body { height: 100%; }
+
     body {
       margin: 0;
-      background: var(--bg);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 0%, #fff4de 0%, transparent 40%),
+        radial-gradient(circle at 100% 16%, #f9e3cb 0%, transparent 38%),
+        linear-gradient(160deg, var(--bg) 0%, #f7f2ea 45%, #f2eee8 100%);
       color: var(--ink);
       font-family: var(--sans);
-      font-size: 14px;
-      line-height: 1.45;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ------------------------------------------------------------
-       Layout
-       ------------------------------------------------------------ */
     .shell {
       max-width: 1440px;
       margin: 0 auto;
-      padding: 8px 16px 16px;
-    }
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 40px;
-      padding: 0 4px 8px 4px;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 10px;
-    }
-    .brand {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-    }
-    .brand-mark {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--ink);
-    }
-    .brand-sub {
-      font-size: 12px;
-      color: var(--muted-2);
-      letter-spacing: 0.04em;
-    }
-    .meta-row {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-    }
-    .meta-row .pipe {
-      width: 1px;
-      height: 12px;
-      background: var(--line);
-    }
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .status .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--muted-2);
-      flex: 0 0 6px;
-    }
-    .status .dot.ok { background: var(--accent); }
-    .status .dot.err { background: var(--danger); }
-
-    main.grid {
+      padding: 18px;
       display: grid;
-      grid-template-columns: minmax(360px, 0.9fr) minmax(520px, 1.1fr);
       gap: 14px;
-      align-items: start;
     }
 
-    /* ------------------------------------------------------------
-       Card
-       ------------------------------------------------------------ */
-    .card {
-      background: var(--surface);
+    .hero {
+      display: grid;
+      gap: 8px;
       border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 16px;
-      box-shadow: var(--shadow-1);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 245, 228, 0.88));
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      animation: rise 380ms ease-out;
     }
 
-    .card-title {
-      font-size: 10.5px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin: 0;
-    }
-
-    .section {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .section-head {
+    .hero-top {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
+      align-items: center;
       gap: 12px;
-    }
-    .section-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .section-meta {
-      font-size: 11px;
-      color: var(--muted-2);
-      font-variant-numeric: tabular-nums;
-      font-feature-settings: "tnum";
-    }
-
-    /* ------------------------------------------------------------
-       Form controls
-       ------------------------------------------------------------ */
-    textarea {
-      width: 100%;
-      min-height: 170px;
-      max-height: 480px;
-      resize: vertical;
-      padding: 12px 14px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--surface);
-      color: var(--ink);
-      font-family: var(--sans);
-      font-size: 14px;
-      line-height: 1.55;
-      transition: border-color 120ms ease, box-shadow 120ms ease;
-    }
-    textarea::placeholder { color: var(--muted-2); }
-    textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-tint);
-    }
-
-    /* File picker — hidden input + custom label */
-    input[type="file"].hidden-file {
-      position: absolute;
-      width: 1px; height: 1px; opacity: 0;
-      pointer-events: none;
-    }
-    .file-trigger {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border: 1px dashed var(--line);
-      border-radius: 8px;
-      background: var(--surface-2);
-      cursor: pointer;
-      transition: border-color 120ms ease, background 120ms ease;
-    }
-    .file-trigger:hover {
-      border-color: var(--muted-2);
-      background: var(--surface);
-    }
-    .file-trigger:focus-within {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-tint);
-    }
-    .file-trigger svg { color: var(--muted); flex: 0 0 18px; }
-    .file-trigger .file-text {
-      font-size: 13px;
-      color: var(--muted);
-      flex: 1;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .file-trigger .file-name {
-      color: var(--ink-soft);
-      font-weight: 500;
-    }
-    .file-clear {
-      background: none;
-      border: none;
-      padding: 4px;
-      color: var(--muted-2);
-      cursor: pointer;
-      border-radius: 4px;
-    }
-    .file-clear:hover { color: var(--ink); background: var(--line-soft); }
-
-    /* Buttons */
-    .actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
       flex-wrap: wrap;
     }
-    button {
+
+    h1 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 30px);
+      letter-spacing: -0.04em;
+      font-weight: 760;
+    }
+
+    .sub {
+      color: var(--muted);
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .status {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff8eb;
+      color: var(--muted);
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: var(--surface);
-      color: var(--ink);
-      font-family: var(--sans);
       font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      cursor: pointer;
-      transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
+      font-weight: 640;
+      white-space: nowrap;
     }
-    button svg { flex: 0 0 14px; }
-    button:hover { border-color: var(--muted-2); }
-    button:active { transform: translateY(1px); }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 0 0 rgba(180, 83, 9, 0.25);
+      animation: pulse 1.8s infinite;
+    }
+
+    .dot.ok {
+      background: var(--ok);
+      box-shadow: 0 0 0 0 rgba(21, 128, 61, 0.26);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.96fr) minmax(420px, 1.04fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: rise 420ms ease-out;
+    }
+
+    .card-head {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 252, 247, 0.98), rgba(245, 236, 220, 0.8));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .card-head strong {
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .card-body {
+      padding: 14px 16px 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .endpoint-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid #ceb993;
+      background: #fff8e7;
+      color: #7b4f0b;
+    }
+
+    .field-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .label {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 640;
+    }
+
+    .counter {
+      font-size: 12px;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    textarea,
+    pre,
+    input[type="file"] {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fffefa;
+      color: var(--ink);
+      font-family: var(--mono);
+    }
+
+    textarea {
+      min-height: 230px;
+      resize: vertical;
+      padding: 12px;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    input[type="file"] {
+      padding: 10px;
+      font-size: 12px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      min-height: 38px;
+      padding: 0 14px;
+      font-family: var(--sans);
+      font-weight: 700;
+      cursor: pointer;
+      background: #fff;
+      color: var(--ink);
+      transition: transform 160ms ease, background-color 160ms ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
     button:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
+      opacity: 0.7;
+      cursor: wait;
       transform: none;
     }
-    button.primary {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #ffffff;
+
+    .primary {
+      background: linear-gradient(110deg, #0f766e, #0d9488);
+      color: #fff;
+      border-color: #0b766e;
     }
-    button.primary:hover {
-      background: var(--accent-hover);
-      border-color: var(--accent-hover);
-    }
-    button.primary.busy {
-      background: var(--ink-soft);
-      border-color: var(--ink-soft);
+
+    .primary.busy {
+      background: linear-gradient(110deg, #0d5b55, #0f766e);
     }
 
     .message {
-      min-height: 16px;
-      font-size: 13px;
+      min-height: 20px;
       color: var(--danger);
-      letter-spacing: 0.01em;
-    }
-    .message:empty { min-height: 0; }
-
-    /* ------------------------------------------------------------
-       Output panels
-       ------------------------------------------------------------ */
-    .canvas {
-      border: 1px solid var(--line-soft);
-      background: var(--surface-2);
-      border-radius: 8px;
-      padding: 12px 14px;
-      font-size: 14px;
-      line-height: 1.55;
-      color: var(--ink);
-      min-height: 56px;
-      white-space: pre-wrap;
-      word-break: break-word;
-      font-feature-settings: "tnum";
-    }
-    .canvas.placeholder {
-      color: var(--muted-2);
-      font-style: italic;
-    }
-    .canvas.mono {
-      font-family: var(--mono);
-      font-size: 12.5px;
-      line-height: 1.55;
+      font-size: 13px;
+      font-weight: 640;
     }
 
-    /* highlight mark — vellum bg with hairline underline + tiny tracked label */
-    mark.pii {
-      background: #f1f5f9;
-      color: var(--ink);
-      padding: 0.04em 0.32em;
-      border-radius: 4px;
-      box-decoration-break: clone;
-      -webkit-box-decoration-break: clone;
-      box-shadow: inset 0 -1px 0 #d0d7de;
-      position: relative;
-      font-weight: 500;
-    }
-    mark.pii small {
-      display: inline-block;
-      margin-left: 6px;
-      font-size: 9px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+    .placeholder {
       color: var(--muted);
-      font-weight: 600;
-      vertical-align: 0.18em;
+      background: var(--bg-soft);
+      border-radius: 9px;
+      padding: 10px;
     }
 
-    /* Span table */
-    .spans-table {
+    .stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fffdf8;
+      overflow: hidden;
+    }
+
+    .panel h2 {
+      margin: 0;
+      padding: 11px 12px;
+      font-size: 14px;
+      font-weight: 760;
+      border-bottom: 1px solid var(--line);
+      letter-spacing: 0.01em;
+      background: #fef7ea;
+    }
+
+    .panel .content {
+      padding: 12px;
+    }
+
+    pre {
+      margin: 0;
+      padding: 12px;
+      font-size: 12px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      max-height: 240px;
+      overflow: auto;
+    }
+
+    .highlighted {
+      min-height: 86px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    mark.pii {
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-line);
+      border-radius: 6px;
+      padding: 1px 5px;
+      margin: 0 1px;
+    }
+
+    mark.pii small {
+      margin-left: 4px;
+      color: #744f10;
+      font-weight: 780;
+      font-size: 10px;
+    }
+
+    .redacted,
+    .ocr-text {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.55;
+      min-height: 86px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 8px;
+    }
+
+    .meta-item {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px;
+      background: #fff9ef;
+      font-size: 12px;
+      display: grid;
+      gap: 3px;
+    }
+
+    .meta-item b {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    table {
       width: 100%;
       border-collapse: collapse;
       font-size: 12px;
-      font-feature-settings: "tnum";
     }
-    .spans-table thead th {
-      text-align: left;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding: 0 8px 7px 8px;
+
+    th,
+    td {
       border-bottom: 1px solid var(--line);
-      background: transparent;
-    }
-    .spans-table tbody td {
-      padding: 8px;
-      border-bottom: 1px solid var(--line-soft);
+      text-align: left;
+      padding: 8px 6px;
       vertical-align: top;
-      color: var(--ink-soft);
-    }
-    .spans-table tbody tr:last-child td { border-bottom: none; }
-    .spans-table .col-type {
-      font-family: var(--mono);
-      font-size: 11.5px;
-      color: var(--ink);
-      white-space: nowrap;
-    }
-    .spans-table .col-pos {
-      font-family: var(--mono);
-      font-size: 11.5px;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-    .spans-table .col-conf {
-      font-variant-numeric: tabular-nums;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-    .spans-table .col-conf .bar {
-      display: inline-block;
-      vertical-align: middle;
-      width: 36px;
-      height: 3px;
-      margin-right: 8px;
-      background: var(--line-soft);
-      border-radius: 2px;
-      overflow: hidden;
-      position: relative;
-    }
-    .spans-table .col-conf .bar i {
-      display: block;
-      height: 100%;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-    .spans-table .col-value {
-      color: var(--ink);
-      max-width: 320px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .spans-table .pill {
-      display: inline-block;
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      color: var(--muted);
-      background: var(--surface);
-    }
-    .spans-table .pill.auto    { color: var(--accent); border-color: var(--accent); background: var(--accent-tint); }
-    .spans-table .pill.review  { color: var(--ink-soft); border-color: var(--line); background: var(--surface-2); }
-    .spans-table .empty {
-      color: var(--muted-2);
-      text-align: center;
-      padding: 12px;
-      font-style: italic;
     }
 
-    /* Disclosure for raw response */
-    details.raw {
-      margin-top: 12px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      box-shadow: var(--shadow-1);
-      overflow: hidden;
-    }
-    details.raw > summary {
-      list-style: none;
-      cursor: pointer;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    th {
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
       font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      user-select: none;
     }
-    details.raw > summary::-webkit-details-marker { display: none; }
-    details.raw > summary .chev {
-      transition: transform 180ms ease;
-      color: var(--muted-2);
-    }
-    details.raw[open] > summary .chev { transform: rotate(180deg); }
-    details.raw .raw-body {
-      padding: 0 16px 16px 16px;
-      border-top: 1px solid var(--line-soft);
-    }
-    details.raw pre {
-      margin: 16px 0 0 0;
-      padding: 12px;
-      max-height: 420px;
-      overflow: auto;
-      background: var(--surface-2);
-      border: 1px solid var(--line-soft);
-      border-radius: 8px;
-      font-family: var(--mono);
+
+    .code-line {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff8e9;
+      padding: 10px;
       font-size: 12px;
-      line-height: 1.65;
-      color: var(--ink-soft);
+      font-family: var(--mono);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
     }
 
-    /* Loading shimmer for placeholder */
-    .placeholder { color: var(--muted-2); }
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-    /* Responsive */
-    @media (max-width: 920px) {
-      .shell { padding: 8px 10px 12px; }
-      .topbar { flex-wrap: wrap; gap: 6px; }
-      main.grid { grid-template-columns: 1fr; gap: 10px; }
-      .card { padding: 14px; }
-      details.raw > summary { padding: 12px 14px; }
-      details.raw .raw-body { padding: 0 14px 14px 14px; }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(180, 83, 9, 0.2); }
+      70% { box-shadow: 0 0 0 8px rgba(180, 83, 9, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(180, 83, 9, 0); }
+    }
+
+    @media (max-width: 1024px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Inline icon library — single <symbol> set, referenced via <use> -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <defs>
-      <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="5" y1="12" x2="18" y2="12"/>
-        <polyline points="12 6 18 12 12 18"/>
-      </symbol>
-      <symbol id="i-rotate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="3 12 3 6 9 6"/>
-        <path d="M3.5 12a8.5 8.5 0 1 0 2.5-6.5L3 8"/>
-      </symbol>
-      <symbol id="i-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-        <polyline points="17 8 12 3 7 8"/>
-        <line x1="12" y1="3" x2="12" y2="15"/>
-      </symbol>
-      <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
-        <polyline points="14 3 14 9 20 9"/>
-      </symbol>
-      <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="6" y1="6" x2="18" y2="18"/>
-        <line x1="6" y1="18" x2="18" y2="6"/>
-      </symbol>
-      <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"/>
-      </symbol>
-    </defs>
-  </svg>
-
   <div class="shell">
-    <header class="topbar">
-      <div class="brand">
-        <span class="brand-mark">Redact</span>
-        <span class="brand-sub">PII detection &amp; redaction</span>
+    <header class="hero">
+      <div class="hero-top">
+        <h1>PII Redaction REST Playground</h1>
+        <div class="status"><span id="status-dot" class="dot"></span><span id="status-text">Checking API</span></div>
       </div>
-      <div class="meta-row">
-        <span id="model-tag">—</span>
-        <span class="pipe"></span>
-        <span class="status">
-          <span id="status-dot" class="dot"></span>
-          <span id="status-text">Connecting</span>
-        </span>
-      </div>
+      <p class="sub">Presidio-style demo experience for your wrapper API: compose request, call endpoint, inspect JSON, and review entity spans.</p>
     </header>
 
-    <main class="grid">
-      <!-- INPUT ============================================================ -->
-      <section class="card" aria-label="Input">
-        <h2 class="card-title">Input</h2>
-
-        <div class="section">
-          <div class="section-head">
-            <span class="section-label">Text</span>
-            <span class="section-meta" id="char-count">0 / 3000</span>
+    <main class="layout">
+      <section class="card">
+        <div class="card-head">
+          <strong>Request Composer</strong>
+          <span class="small">POST /api/redact or POST /api/redact-file</span>
+        </div>
+        <div class="card-body">
+          <div class="endpoint-chips">
+            <span class="chip">POST /api/redact</span>
+            <span class="chip">POST /api/redact-file</span>
+            <span class="chip">GET /api/health</span>
           </div>
-          <textarea id="input-text" spellcheck="false" maxlength="3000"
-            placeholder="Paste a passage of text. Names, contact details, identifiers, financial fields will be detected."></textarea>
-        </div>
 
-        <div class="section">
-          <span class="section-label">File</span>
-          <label class="file-trigger" for="file-input">
-            <svg width="18" height="18" aria-hidden="true"><use href="#i-upload"/></svg>
-            <span class="file-text" id="file-text">Choose a PDF, image, or text file</span>
-            <button type="button" class="file-clear" id="file-clear" hidden aria-label="Clear file">
-              <svg width="14" height="14" aria-hidden="true"><use href="#i-x"/></svg>
-            </button>
-            <input id="file-input" class="hidden-file" type="file"
-              accept=".pdf,.png,.jpg,.jpeg,.tif,.tiff,.bmp,.webp,.txt,.csv,.json,.md,text/plain,application/pdf,image/*">
-          </label>
-        </div>
+          <div>
+            <div class="field-head">
+              <label class="label" for="input-text">Input Text</label>
+              <span class="counter" id="char-count">0 / 3000</span>
+            </div>
+            <textarea id="input-text" spellcheck="false" maxlength="3000" placeholder="Enter free text for /api/redact."></textarea>
+          </div>
 
-        <div class="actions">
-          <button class="primary" id="run-model" type="button">
-            <span id="run-label">Run</span>
-            <svg width="14" height="14" aria-hidden="true"><use href="#i-arrow-right"/></svg>
-          </button>
-          <button id="clear" type="button">
-            <svg width="14" height="14" aria-hidden="true"><use href="#i-rotate"/></svg>
-            <span>Clear</span>
-          </button>
-        </div>
+          <div>
+            <label class="label" for="file-input">Upload Image/PDF/Text (switches to /api/redact-file)</label>
+            <input id="file-input" type="file" accept=".pdf,.png,.jpg,.jpeg,.tif,.tiff,.bmp,.webp,.txt,.csv,.json,.md,text/plain,application/pdf,image/*">
+          </div>
 
-        <div class="message" id="message"></div>
+          <div class="actions">
+            <button class="primary" id="run-model">Run Model</button>
+            <button id="clear">Clear</button>
+            <button id="copy-curl">Copy cURL</button>
+          </div>
+
+          <div class="message" id="message"></div>
+
+          <div class="panel">
+            <h2>Request Preview</h2>
+            <div class="content">
+              <pre id="request-preview">{}</pre>
+            </div>
+          </div>
+
+          <div>
+            <label class="label" for="curl-preview">cURL Preview</label>
+            <div class="code-line" id="curl-preview">curl -X POST /api/redact -H "Content-Type: application/json" -d '{"text":"..."}'</div>
+          </div>
+        </div>
       </section>
 
-      <!-- OUTPUT =========================================================== -->
-      <section class="card" aria-label="Output">
-        <div class="section-head" style="align-items:center;">
-          <h2 class="card-title">Output</h2>
-          <span class="section-meta" id="latency">—</span>
-        </div>
-
-        <div class="section" id="ocr-band" hidden>
-          <span class="section-label">File details</span>
-          <div class="canvas mono" id="ocr-text"></div>
-        </div>
-
-        <div class="section">
-          <span class="section-label">Entities</span>
-          <div class="canvas" id="highlighted">Run a request to inspect detected entities.</div>
-        </div>
-
-        <div class="section">
-          <span class="section-label">Auto-redacted</span>
-          <div class="canvas mono" id="redacted">—</div>
-        </div>
-
-        <div class="section">
-          <div class="section-head">
-            <span class="section-label">Detected</span>
-            <span class="section-meta" id="span-count"></span>
+      <section class="stack">
+        <article class="card">
+          <div class="card-head">
+            <strong>Response Inspector</strong>
+            <span class="small" id="latency">Waiting for request</span>
           </div>
-          <table class="spans-table">
-            <thead>
-              <tr>
-                <th style="width: 28%">Type</th>
-                <th style="width: 14%">Pos</th>
-                <th style="width: 18%">Confidence</th>
-                <th style="width: 14%">Decision</th>
-                <th style="width: 26%">Replacement</th>
-              </tr>
-            </thead>
-            <tbody id="span-rows">
-              <tr><td colspan="5" class="empty">Run a request to populate detected entities.</td></tr>
-            </tbody>
-          </table>
-        </div>
+          <div class="card-body">
+            <div class="panel" id="ocr-band" hidden>
+              <h2>OCR Text</h2>
+              <div class="content">
+                <div class="ocr-text" id="ocr-text"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h2>Detected Spans (Highlighted)</h2>
+              <div class="content">
+                <div class="highlighted" id="highlighted"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h2>Redacted Text (Masked)</h2>
+              <div class="content">
+                <div class="redacted" id="redacted"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h2>Response Metadata</h2>
+              <div class="content">
+                <div class="meta-grid" id="meta-grid"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h2>Span Table</h2>
+              <div class="content">
+                <table>
+                  <thead><tr><th>Type</th><th>Offsets</th><th>Decision</th><th>Value</th></tr></thead>
+                  <tbody id="span-rows"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <strong>Raw JSON</strong>
+            <span class="small">Exact API response body</span>
+          </div>
+          <div class="card-body">
+            <pre id="response-json">{}</pre>
+          </div>
+        </article>
       </section>
     </main>
-
-    <details class="raw">
-      <summary>
-        <span>Raw response</span>
-        <svg width="14" height="14" class="chev" aria-hidden="true"><use href="#i-chevron-down"/></svg>
-      </summary>
-      <div class="raw-body">
-        <pre id="response-json">{}</pre>
-      </div>
-    </details>
   </div>
 
   <script>
     const MAX_TEXT_CHARS = 3000;
     const state = { lastPayload: null };
 
-    const input          = document.getElementById("input-text");
-    const charCount      = document.getElementById("char-count");
-    const fileInput      = document.getElementById("file-input");
-    const fileText       = document.getElementById("file-text");
-    const fileClear      = document.getElementById("file-clear");
-    const messageEl      = document.getElementById("message");
-    const ocrBand        = document.getElementById("ocr-band");
-    const ocrTextEl      = document.getElementById("ocr-text");
-    const highlightedEl  = document.getElementById("highlighted");
-    const redactedEl     = document.getElementById("redacted");
-    const spanRowsEl     = document.getElementById("span-rows");
-    const spanCountEl    = document.getElementById("span-count");
-    const runButton      = document.getElementById("run-model");
-    const runLabel       = document.getElementById("run-label");
-    const statusDot      = document.getElementById("status-dot");
-    const statusText     = document.getElementById("status-text");
-    const modelTag       = document.getElementById("model-tag");
+    const input = document.getElementById("input-text");
+    const charCount = document.getElementById("char-count");
+    const fileInput = document.getElementById("file-input");
+    const messageEl = document.getElementById("message");
+    const ocrBand = document.getElementById("ocr-band");
+    const ocrTextEl = document.getElementById("ocr-text");
+    const highlightedEl = document.getElementById("highlighted");
+    const redactedEl = document.getElementById("redacted");
+    const spanRowsEl = document.getElementById("span-rows");
+    const runButton = document.getElementById("run-model");
+    const statusDot = document.getElementById("status-dot");
+    const statusText = document.getElementById("status-text");
+    const requestPreviewEl = document.getElementById("request-preview");
     const responseJsonEl = document.getElementById("response-json");
-    const latencyEl      = document.getElementById("latency");
+    const metaGridEl = document.getElementById("meta-grid");
+    const latencyEl = document.getElementById("latency");
+    const curlPreviewEl = document.getElementById("curl-preview");
+    const runButtonLabel = runButton.textContent;
 
     function escapeHtml(value) {
       return String(value)
@@ -661,36 +561,57 @@
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;");
     }
-    const toPrettyJson = (v) => JSON.stringify(v, null, 2);
+
+    function toPrettyJson(value) {
+      return JSON.stringify(value, null, 2);
+    }
 
     function updateCharCount() {
       charCount.textContent = `${input.value.length} / ${MAX_TEXT_CHARS}`;
     }
 
-    function updateFileChip() {
-      const f = fileInput.files && fileInput.files[0];
-      if (f) {
-        fileText.innerHTML = `<span class="file-name">${escapeHtml(f.name)}</span>`;
-        fileClear.hidden = false;
+    function buildRequestPreview() {
+      const hasFile = Boolean(fileInput.files.length);
+      if (hasFile) {
+        const file = fileInput.files[0];
+        return {
+          endpoint: "/api/redact-file",
+          method: "POST",
+          content_type: "multipart/form-data",
+          file: {
+            name: file.name,
+            size_bytes: file.size,
+            type: file.type || "application/octet-stream",
+          },
+        };
+      }
+      return {
+        endpoint: "/api/redact",
+        method: "POST",
+        content_type: "application/json",
+        body: { text: input.value },
+      };
+    }
+
+    function updateRequestPreview() {
+      requestPreviewEl.textContent = toPrettyJson(buildRequestPreview());
+      const hasFile = Boolean(fileInput.files.length);
+      if (hasFile) {
+        const fileName = fileInput.files[0].name.replaceAll("\"", "");
+        curlPreviewEl.textContent = `curl -X POST /api/redact-file -F "file=@${fileName}"`;
       } else {
-        fileText.textContent = "Choose a PDF, image, or text file";
-        fileClear.hidden = true;
+        const compactText = (input.value || "").replaceAll("\n", " ").slice(0, 120);
+        curlPreviewEl.textContent = `curl -X POST /api/redact -H "Content-Type: application/json" -d '{"text":"${compactText}"}'`;
       }
     }
 
     function renderHighlighted(text, spans) {
-      if (!text) {
-        highlightedEl.textContent = "Source text is not returned by the API response.";
-        return;
-      }
       const ordered = [...spans]
-        .filter((s) => Number.isInteger(s.start) && Number.isInteger(s.end))
-        .filter((s) => s.decision === "AUTO_REDACT" || s.decision === "REVIEW")
+        .filter((span) => Number.isInteger(span.start) && Number.isInteger(span.end))
         .sort((a, b) => a.start - b.start || a.end - b.end);
       let cursor = 0;
       let html = "";
       for (const span of ordered) {
-        if (span.start < cursor) continue;
         html += escapeHtml(text.slice(cursor, span.start));
         html += `<mark class="pii">${escapeHtml(text.slice(span.start, span.end))}<small>${escapeHtml(span.type)}</small></mark>`;
         cursor = span.end;
@@ -702,55 +623,53 @@
     function maskSensitiveText(text, spans) {
       const chars = Array.from(text || "");
       const ordered = [...spans]
-        .filter((s) => Number.isInteger(s.start) && Number.isInteger(s.end))
-        .filter((s) => s.decision === "AUTO_REDACT")
+        .filter((span) => Number.isInteger(span.start) && Number.isInteger(span.end))
         .sort((a, b) => a.start - b.start || b.end - a.end);
       let cursor = 0;
       for (const span of ordered) {
         const start = Math.max(cursor, Math.max(0, span.start));
         const end = Math.max(start, Math.min(chars.length, span.end));
-        for (let i = start; i < end; i += 1) chars[i] = "•";
+        for (let index = start; index < end; index += 1) {
+          chars[index] = "*";
+        }
         cursor = Math.max(cursor, end);
       }
       return chars.join("");
     }
 
-    function decisionPill(decision) {
-      const cls = decision === "AUTO_REDACT" ? "auto" : "review";
-      return `<span class="pill ${cls}">${escapeHtml(decision || "REVIEW")}</span>`;
-    }
-
-    function confidenceCell(conf) {
-      if (typeof conf !== "number") return `<span class="col-conf">—</span>`;
-      const pct = Math.max(0, Math.min(1, conf));
-      const w = Math.round(pct * 100);
-      return `<span class="col-conf"><span class="bar"><i style="width:${w}%"></i></span>${conf.toFixed(3)}</span>`;
-    }
-
     function renderSpans(spans) {
       spanRowsEl.innerHTML = "";
-      if (!spans.length) {
-        spanRowsEl.innerHTML = '<tr><td colspan="5" class="empty">No entities detected.</td></tr>';
-        spanCountEl.textContent = "";
-        return;
-      }
-      const auto = spans.filter((s) => s.decision === "AUTO_REDACT").length;
-      const review = spans.filter((s) => s.decision === "REVIEW").length;
-      const parts = [];
-      if (auto)   parts.push(`${auto} redact`);
-      if (review) parts.push(`${review} review`);
-      spanCountEl.textContent = parts.join(" · ");
-
       for (const span of spans) {
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td class="col-type">${escapeHtml(span.type || "")}</td>
-          <td class="col-pos">${span.start}–${span.end}</td>
-          <td>${confidenceCell(span.confidence)}</td>
-          <td>${decisionPill(span.decision)}</td>
-          <td class="col-value">${escapeHtml(span.replacement || "")}</td>
+          <td><code>${escapeHtml(span.type || "")}</code></td>
+          <td>${span.start}-${span.end}</td>
+          <td>${escapeHtml(span.decision || "")}</td>
+          <td>${escapeHtml(span.value || "")}</td>
         `;
         spanRowsEl.appendChild(row);
+      }
+      if (!spans.length) {
+        spanRowsEl.innerHTML = '<tr><td colspan="4">No spans</td></tr>';
+      }
+    }
+
+    function renderMetadata(payload) {
+      const metadata = payload.metadata || {};
+      const entries = [
+        ["backend_name", metadata.backend_name || ""],
+        ["backend_route", metadata.backend_route || ""],
+        ["latency_ms", metadata.latency_ms || ""],
+        ["policy_id", metadata.policy_id || ""],
+        ["model_version", metadata.model_version || ""],
+        ["schema_version", metadata.schema_version || ""],
+      ];
+      metaGridEl.innerHTML = "";
+      for (const [name, value] of entries) {
+        const node = document.createElement("div");
+        node.className = "meta-item";
+        node.innerHTML = `<b>${escapeHtml(name)}</b><span>${escapeHtml(value || "-")}</span>`;
+        metaGridEl.appendChild(node);
       }
     }
 
@@ -758,73 +677,67 @@
       state.lastPayload = payload;
       const spans = payload.spans || [];
       renderHighlighted(sourceText, spans);
-      redactedEl.textContent = payload.redacted_text || (sourceText ? maskSensitiveText(sourceText, spans) : "—");
+      redactedEl.textContent = maskSensitiveText(sourceText, spans);
       highlightedEl.classList.remove("placeholder");
       redactedEl.classList.remove("placeholder");
       renderSpans(spans);
+      renderMetadata(payload);
       responseJsonEl.textContent = toPrettyJson(payload);
-      const ms = payload.metadata && payload.metadata.latency_ms;
-      latencyEl.textContent = ms != null ? `${ms} ms` : "completed";
+      const latency = payload.metadata && payload.metadata.latency_ms;
+      latencyEl.textContent = latency ? `${latency} ms` : "Completed";
     }
 
     function renderPayload(payload) {
       ocrBand.hidden = true;
       ocrTextEl.textContent = "";
       ocrTextEl.classList.remove("placeholder");
-      renderDetection(payload, input.value || "");
+      renderDetection(payload, payload.input_text || "");
     }
 
     function renderFilePayload(payload) {
-      const metadata = payload.metadata || {};
-      const ocr = metadata.ocr || {};
-      const file = metadata.file || {};
-      const details = [
-        file.name ? `File: ${file.name}` : "",
-        ocr.text_source ? `Text source: ${ocr.text_source}` : "",
-        Number.isInteger(ocr.pages) && ocr.pages > 0 ? `Pages: ${ocr.pages}` : "",
-        "Extracted text omitted"
-      ].filter(Boolean);
-      ocrBand.hidden = details.length === 0;
-      ocrTextEl.textContent = details.join(" · ");
+      const sourceText = payload.input_text || "";
+      ocrBand.hidden = false;
+      ocrTextEl.textContent = sourceText;
       ocrTextEl.classList.remove("placeholder");
-      renderDetection(payload, "");
+      renderDetection(payload, sourceText);
     }
 
     function setBusy(isBusy) {
-      document.querySelectorAll("button").forEach((b) => { b.disabled = isBusy; });
+      document.querySelectorAll("button").forEach((button) => { button.disabled = isBusy; });
       fileInput.disabled = isBusy;
-      runLabel.textContent = isBusy ? "Running" : "Run";
+      runButton.textContent = isBusy ? "thinking..." : runButtonLabel;
       runButton.classList.toggle("busy", isBusy);
       if (isBusy) {
         messageEl.textContent = "";
         if (fileInput.files.length) {
           ocrBand.hidden = false;
-          ocrTextEl.textContent = "Extracting…";
+          ocrTextEl.textContent = "thinking...";
           ocrTextEl.classList.add("placeholder");
         }
-        highlightedEl.textContent = "Working…";
-        redactedEl.textContent = "—";
+        highlightedEl.textContent = "thinking...";
+        redactedEl.textContent = "thinking...";
         highlightedEl.classList.add("placeholder");
         redactedEl.classList.add("placeholder");
-        spanRowsEl.innerHTML = '<tr><td colspan="5" class="empty">Working…</td></tr>';
-        spanCountEl.textContent = "";
-        latencyEl.textContent = "Running…";
+        spanRowsEl.innerHTML = '<tr><td colspan="4">thinking...</td></tr>';
+        latencyEl.textContent = "Running...";
       }
     }
 
     async function postRedact(body) {
       setBusy(true);
       try {
-        const r = await fetch("/api/redact", {
+        const response = await fetch("/api/redact", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
         });
-        const payload = await r.json();
-        if (!r.ok) throw new Error(payload.detail || "Request failed");
+        const payload = await response.json();
+        if (!response.ok) {
+          throw new Error(payload.detail || "Request failed");
+        }
         renderPayload(payload);
-      } catch (err) {
-        messageEl.textContent = err.message;
+      } catch (error) {
+        messageEl.textContent = error.message;
       } finally {
         setBusy(false);
       }
@@ -833,14 +746,19 @@
     async function postFileRedact(file) {
       setBusy(true);
       try {
-        const fd = new FormData();
-        fd.append("file", file);
-        const r = await fetch("/api/redact-file", { method: "POST", body: fd });
-        const payload = await r.json();
-        if (!r.ok) throw new Error(payload.detail || "Request failed");
+        const formData = new FormData();
+        formData.append("file", file);
+        const response = await fetch("/api/redact-file", {
+          method: "POST",
+          body: formData,
+        });
+        const payload = await response.json();
+        if (!response.ok) {
+          throw new Error(payload.detail || "Request failed");
+        }
         renderFilePayload(payload);
-      } catch (err) {
-        messageEl.textContent = err.message;
+      } catch (error) {
+        messageEl.textContent = error.message;
       } finally {
         setBusy(false);
       }
@@ -848,61 +766,68 @@
 
     async function loadHealth() {
       try {
-        const r = await fetch("/api/health");
-        const p = await r.json();
-        statusDot.classList.remove("err");
+        const response = await fetch("/api/health");
+        const payload = await response.json();
         statusDot.classList.add("ok");
-        statusText.textContent = "Ready";
-        const ver = (p.backend && p.backend.model_version) || p.model_version || "model";
-        modelTag.textContent = ver;
+        const backendName = payload.backend && payload.backend.name ? payload.backend.name : "backend";
+        statusText.textContent = `${payload.status} | ${backendName} | ${payload.model_version}`;
       } catch {
-        statusDot.classList.remove("ok");
-        statusDot.classList.add("err");
-        statusText.textContent = "Unavailable";
-        modelTag.textContent = "—";
+        statusText.textContent = "API unavailable";
+      }
+    }
+
+    async function copyCurlPreview() {
+      try {
+        await navigator.clipboard.writeText(curlPreviewEl.textContent);
+        messageEl.style.color = "var(--ok)";
+        messageEl.textContent = "cURL command copied.";
+      } catch {
+        messageEl.style.color = "var(--danger)";
+        messageEl.textContent = "Could not copy cURL command.";
       }
     }
 
     runButton.addEventListener("click", () => {
-      messageEl.textContent = "";
-      const f = fileInput.files[0];
-      if (f) postFileRedact(f);
-      else postRedact({ text: input.value });
+      messageEl.style.color = "var(--danger)";
+      const selectedFile = fileInput.files[0];
+      if (selectedFile) {
+        postFileRedact(selectedFile);
+      } else {
+        postRedact({ text: input.value });
+      }
     });
 
     document.getElementById("clear").addEventListener("click", () => {
       input.value = "";
       fileInput.value = "";
-      updateFileChip();
       messageEl.textContent = "";
-      highlightedEl.textContent = "Run a request to inspect detected entities.";
-      redactedEl.textContent = "—";
+      highlightedEl.textContent = "";
+      redactedEl.textContent = "";
       ocrTextEl.textContent = "";
       ocrBand.hidden = true;
-      spanRowsEl.innerHTML = '<tr><td colspan="5" class="empty">Run a request to populate detected entities.</td></tr>';
-      spanCountEl.textContent = "";
+      spanRowsEl.innerHTML = '<tr><td colspan="4">No spans</td></tr>';
+      metaGridEl.innerHTML = "";
       responseJsonEl.textContent = "{}";
-      latencyEl.textContent = "—";
-      highlightedEl.classList.add("placeholder");
-      redactedEl.classList.add("placeholder");
+      latencyEl.textContent = "Waiting for request";
       updateCharCount();
+      updateRequestPreview();
     });
 
-    fileClear.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      fileInput.value = "";
-      updateFileChip();
-    });
-
-    input.addEventListener("input", updateCharCount);
-    fileInput.addEventListener("change", updateFileChip);
-
-    loadHealth().then(() => {
+    document.getElementById("copy-curl").addEventListener("click", copyCurlPreview);
+    input.addEventListener("input", () => {
       updateCharCount();
-      updateFileChip();
+      updateRequestPreview();
+    });
+    fileInput.addEventListener("change", updateRequestPreview);
+
+    Promise.all([loadHealth()]).then(() => {
+      updateCharCount();
+      updateRequestPreview();
+      highlightedEl.textContent = "Run the model to inspect detected entities.";
+      redactedEl.textContent = "Run the model to view masked output.";
       highlightedEl.classList.add("placeholder");
       redactedEl.classList.add("placeholder");
+      spanRowsEl.innerHTML = '<tr><td colspan="4">Run the model to populate spans</td></tr>';
     });
   </script>
 </body>

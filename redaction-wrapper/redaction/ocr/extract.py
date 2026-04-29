@@ -94,6 +94,36 @@ def _score_text(text: str) -> float:
     return float(alnum * 2 + useful * 5 - weird * 6 - short * 4)
 
 
+def _clean_ocr_text(text: str) -> str:
+    """Conservative cleanup for OCR output.
+
+    Goal: reduce random glyph noise from scans while keeping short, meaningful
+    document fields such as IDs and abbreviations.
+    """
+    cleaned_lines: list[str] = []
+    for raw_line in text.splitlines():
+        line = re.sub(r"\s+", " ", raw_line).strip()
+        if not line:
+            cleaned_lines.append("")
+            continue
+
+        alnum = sum(ch.isalnum() for ch in line)
+        weird = len(re.findall(r"[^\w\s,./:@&()\-]", line))
+        line_len = len(line)
+
+        # Drop lines dominated by noisy symbols with almost no readable tokens.
+        if line_len >= 10 and alnum <= 3 and weird >= 3:
+            continue
+        if line_len >= 14 and (weird / max(line_len, 1)) > 0.35 and alnum <= 5:
+            continue
+
+        cleaned_lines.append(line)
+
+    compact = "\n".join(cleaned_lines)
+    # Avoid tall blocks of empty lines while preserving paragraph breaks.
+    return re.sub(r"\n{3,}", "\n\n", compact).strip()
+
+
 def _tesseract_cmd(path: Path, *, psm: int) -> list[str]:
     return [
         "tesseract", str(path), "stdout",
@@ -226,6 +256,11 @@ def extract_upload_text(
         )
 
     text = normalize_text(text)
+    if kind in {"image", "pdf"}:
+        cleaned = _clean_ocr_text(text)
+        if cleaned and cleaned != text:
+            text = cleaned
+            warnings.append("ocr_text_cleaned")
     if not text.strip():
         raise OcrError("No readable text found in uploaded file", status_code=422)
     if len(text) > max_file_text_chars:
