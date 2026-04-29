@@ -124,8 +124,9 @@ Field notes:
 
 ## POST /api/redact-file
 
-Upload a file. The wrapper extracts text (PDF text layer, OCR via Tesseract
-for images / scanned PDFs, or plain text), runs the chosen backend, and
+Upload a file. The wrapper extracts text (PDF text layer, local RapidOCR,
+PaddleOCR, or Tesseract OCR for images / scanned PDFs, or plain text), runs the
+chosen backend, and
 returns the same redaction payload plus OCR metadata.
 
 ```bash
@@ -154,8 +155,32 @@ Extra metadata in the response:
 }
 ```
 
-The extracted raw text is intentionally omitted; downstream consumers should use
-`redacted_text`, `spans`, and metadata only.
+The extracted raw text is also returned as `ocr_text` for the demo UI so users
+can inspect OCR quality before trusting the redaction output.
+
+Local RapidOCR can be enabled before launch:
+
+```bash
+export WRAPPER_OCR_PROVIDER=rapidocr
+export RAPIDOCR_MIN_CONFIDENCE=0.30
+./scripts/run_server.sh
+```
+
+`WRAPPER_OCR_PROVIDER=auto` uses local RapidOCR when it is installed and falls
+back to local Tesseract when RapidOCR is unavailable.
+
+Local PaddleOCR can also be selected explicitly:
+
+```bash
+export WRAPPER_OCR_PROVIDER=paddle
+export PADDLEOCR_LANG=en
+export PADDLEOCR_USE_GPU=false
+export PADDLEOCR_MIN_CONFIDENCE=0.30
+./scripts/run_server.sh
+```
+
+Set `WRAPPER_OCR_PROVIDER=paddle` or `WRAPPER_OCR_PROVIDER=rapidocr` to fail
+fast if that provider is not installed.
 
 Supported inputs:
 

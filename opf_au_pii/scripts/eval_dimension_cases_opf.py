@@ -4,9 +4,9 @@
 Input CSV columns:
   dimension,tester,text,expected_label,expected_text
 
-`expected_text` is optional. If omitted, a case passes when the expected label
-appears in any detected span. If provided, the detected label and span text must
-both match after whitespace/case normalization.
+By default, matching is label-only: a case passes when the expected label
+appears in any detected span. Use `--match-mode exact` when the detected span
+text must also match `expected_text`.
 """
 from __future__ import annotations
 
@@ -59,6 +59,11 @@ def _read_cases(path: Path) -> list[Case]:
 
         cases: list[Case] = []
         for idx, row in enumerate(reader, start=1):
+            if row.get(None):
+                raise ValueError(
+                    f"Row {idx} has extra CSV columns. If the text contains commas, "
+                    "wrap the text field in double quotes."
+                )
             text = _clean(row.get("text"))
             expected_label = _clean(row.get("expected_label")).upper()
             if not text and not expected_label:
@@ -88,21 +93,23 @@ def _span_to_dict(span: Any) -> dict[str, Any]:
     }
 
 
-def _matches(case: Case, span: dict[str, Any]) -> bool:
+def _matches(case: Case, span: dict[str, Any], *, match_mode: str) -> bool:
     if _clean(span.get("label")).upper() != case.expected_label:
         return False
+    if match_mode == "label":
+        return True
     if not case.expected_text:
         return True
     return _norm(_clean(span.get("text"))) == _norm(case.expected_text)
 
 
-def _evaluate_case(case: Case, redactor: OPF) -> dict[str, Any]:
+def _evaluate_case(case: Case, redactor: OPF, *, match_mode: str) -> dict[str, Any]:
     result = redactor.redact(case.text)
     if isinstance(result, str):
         raise TypeError("Expected structured OPF result, got text-only output")
 
     spans = [_span_to_dict(span) for span in result.detected_spans]
-    passed = any(_matches(case, span) for span in spans)
+    passed = any(_matches(case, span, match_mode=match_mode) for span in spans)
     return {
         "case_id": case.case_id,
         "dimension": case.dimension,
@@ -110,6 +117,7 @@ def _evaluate_case(case: Case, redactor: OPF) -> dict[str, Any]:
         "text": case.text,
         "expected_label": case.expected_label,
         "expected_text": case.expected_text,
+        "match_mode": match_mode,
         "passed": "YES" if passed else "NO",
         "detected_labels": ", ".join(sorted({_clean(span.get("label")) for span in spans})),
         "detected_spans_json": json.dumps(spans, ensure_ascii=False),
@@ -167,6 +175,15 @@ def main() -> int:
     parser.add_argument("--out-dir", default=REPO_ROOT / "outputs/dimension_eval_opf", type=Path)
     parser.add_argument("--device", default="cuda", choices=("cuda", "cpu"))
     parser.add_argument("--decode-mode", default="viterbi", choices=("viterbi", "argmax"))
+    parser.add_argument(
+        "--match-mode",
+        default="label",
+        choices=("label", "exact"),
+        help=(
+            "label: pass when expected_label is detected anywhere. "
+            "exact: also require detected span text to match expected_text."
+        ),
+    )
     args = parser.parse_args()
 
     cases = _read_cases(args.cases)
@@ -181,7 +198,7 @@ def main() -> int:
         output_text_only=False,
     )
 
-    rows = [_evaluate_case(case, redactor) for case in cases]
+    rows = [_evaluate_case(case, redactor, match_mode=args.match_mode) for case in cases]
     summary = _summarize(rows)
 
     detail_path = args.out_dir / "case_results.csv"
@@ -196,6 +213,7 @@ def main() -> int:
             "text",
             "expected_label",
             "expected_text",
+            "match_mode",
             "passed",
             "detected_labels",
             "detected_spans_json",

@@ -4,15 +4,17 @@ Pulled out of the original Qwen demo server so any backend can use it.
 
 Supported inputs:
   - text: txt / md / csv / tsv / json / log
-  - image: png / jpg / jpeg / tif / tiff / bmp / webp (Tesseract)
-  - pdf: pdftotext text layer first, fall back to per-page Tesseract OCR
+  - image: png / jpg / jpeg / tif / tiff / bmp / webp (RapidOCR / PaddleOCR / Tesseract)
+  - pdf: pdftotext text layer first, fall back to per-page OCR
 """
 from __future__ import annotations
 
 import csv
+import os
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 from io import StringIO
 from pathlib import Path
@@ -23,6 +25,7 @@ from ..core.normalize import normalize_text
 
 TEXT_SUFFIXES = {".txt", ".text", ".md", ".csv", ".tsv", ".json", ".log"}
 IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".tif", ".tiff", ".bmp", ".webp"}
+OCR_PROVIDERS = {"auto", "rapidocr", "paddle", "tesseract"}
 
 
 class OcrError(RuntimeError):
@@ -67,23 +70,97 @@ def decode_text_upload(data: bytes) -> str:
     return data.decode("utf-8", errors="replace")
 
 
-def _preprocess_image(path: Path) -> Path | None:
+def _ocr_provider() -> str:
+    provider = os.getenv("WRAPPER_OCR_PROVIDER", "auto").strip().lower()
+    if provider not in OCR_PROVIDERS:
+        raise OcrError(
+            f"Unsupported WRAPPER_OCR_PROVIDER={provider!r}. "
+            f"Expected one of: {', '.join(sorted(OCR_PROVIDERS))}",
+            status_code=500,
+        )
+    return provider
+
+
+def _save_temp_image(image: Any, *, suffix: str) -> Path:
+    with tempfile.NamedTemporaryFile(prefix="redact_ocr_pre_", suffix=suffix, delete=False) as tmp:
+        out_path = Path(tmp.name)
+    image.save(out_path, format="PNG", dpi=(300, 300))
+    return out_path
+
+
+def _preprocess_image(path: Path) -> list[Path]:
     try:
         from PIL import Image, ImageFilter, ImageOps
     except ImportError:
-        return None
+        return []
     with Image.open(path) as image:
+        image = ImageOps.exif_transpose(image)
         gray = ImageOps.grayscale(image)
         enhanced = ImageOps.autocontrast(gray)
         denoised = enhanced.filter(ImageFilter.MedianFilter(size=3))
-        upscaled = denoised.resize(
-            (denoised.width * 2, denoised.height * 2), Image.Resampling.LANCZOS
-        )
+        scale = 3 if max(denoised.size) < 2200 else 2
+        upscaled = denoised.resize((denoised.width * scale, denoised.height * scale), Image.Resampling.LANCZOS)
         sharpened = upscaled.filter(ImageFilter.SHARPEN)
-        with tempfile.NamedTemporaryFile(prefix="redact_ocr_pre_", suffix=".png", delete=False) as tmp:
-            out_path = Path(tmp.name)
-        sharpened.save(out_path, format="PNG", dpi=(300, 300))
-        return out_path
+
+        # ID cards and screenshots often have patterned backgrounds. A high
+        # contrast binary candidate helps Tesseract focus on dark glyphs.
+        thresholded = sharpened.point(lambda px: 255 if px > 178 else 0)
+
+        return [
+            _save_temp_image(sharpened, suffix=".png"),
+            _save_temp_image(thresholded, suffix=".png"),
+        ]
+
+
+def extract_text_from_image_via_rapidocr(path: Path) -> str:
+    try:
+        from rapidocr_onnxruntime import RapidOCR
+    except Exception as exc:
+        raise OcrError(
+            "RapidOCR is not installed. Install `rapidocr-onnxruntime`, "
+            "or set WRAPPER_OCR_PROVIDER=auto/tesseract.",
+            status_code=500,
+        ) from exc
+
+    ocr = RapidOCR()
+    result, _ = ocr(str(path))
+    if not result:
+        return ""
+    min_conf = float(os.getenv("RAPIDOCR_MIN_CONFIDENCE", "0.30"))
+    lines: list[str] = []
+    for item in result:
+        if not isinstance(item, (list, tuple)) or len(item) < 2:
+            continue
+        text = str(item[1] or "").strip()
+        try:
+            conf = float(item[2]) if len(item) > 2 else 0.0
+        except (TypeError, ValueError):
+            conf = 0.0
+        if text and conf >= min_conf:
+            lines.append(text)
+    return "\n".join(lines)
+
+
+def extract_text_from_image_via_paddle(path: Path) -> str:
+    env = os.environ.copy()
+    env.setdefault("PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK", "True")
+    result = subprocess.run(
+        [sys.executable, "-m", "redaction.ocr.paddle_runner", str(path)],
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=float(os.getenv("PADDLEOCR_TIMEOUT_SECONDS", "240")),
+        env=env,
+    )
+    if result.returncode != 0:
+        detail = (result.stderr or result.stdout or "PaddleOCR failed").strip()
+        raise OcrError(f"PaddleOCR failed in worker process: {detail[-800:]}", status_code=500)
+    try:
+        import json
+        payload = json.loads(result.stdout)
+    except Exception as exc:
+        raise OcrError(f"PaddleOCR returned invalid JSON: {result.stdout[:500]}", status_code=500) from exc
+    return str(payload.get("text") or "")
 
 
 def _score_text(text: str) -> float:
@@ -127,8 +204,9 @@ def _clean_ocr_text(text: str) -> str:
 def _tesseract_cmd(path: Path, *, psm: int) -> list[str]:
     return [
         "tesseract", str(path), "stdout",
-        "-l", "eng", "--psm", str(psm),
+        "-l", "eng", "--oem", "1", "--psm", str(psm),
         "-c", "preserve_interword_spaces=1",
+        "-c", "tessedit_do_invert=1",
     ]
 
 
@@ -165,20 +243,50 @@ def _run_tesseract(path: Path, *, psm: int) -> tuple[str, float]:
 
 def extract_text_from_image(path: Path) -> str:
     candidates: list[tuple[str, float]] = []
-    pre = _preprocess_image(path)
-    paths = [path] + ([pre] if pre is not None else [])
+    preprocessed = _preprocess_image(path)
+    paths = [path] + preprocessed
     try:
         for p in paths:
-            for psm in (6, 4):
+            for psm in (6, 4, 11, 12):
                 text, score = _run_tesseract(p, psm=psm)
                 if text:
                     candidates.append((text, score))
     finally:
-        if pre is not None:
+        for pre in preprocessed:
             pre.unlink(missing_ok=True)
     if not candidates:
         return ""
     return max(candidates, key=lambda x: x[1])[0]
+
+
+def extract_text_from_image_with_provider(path: Path, *, warnings: list[str]) -> tuple[str, str]:
+    provider = _ocr_provider()
+    if provider in {"auto", "rapidocr"}:
+        try:
+            text = extract_text_from_image_via_rapidocr(path)
+            if text.strip():
+                warnings.append("rapidocr_provider")
+                return text, "rapid_ocr"
+            warnings.append("rapidocr_returned_empty")
+        except OcrError as exc:
+            if provider == "rapidocr":
+                raise
+            warnings.append(f"rapidocr_failed_fallback: {str(exc)[:160]}")
+    if provider == "rapidocr":
+        return "", "rapid_ocr"
+    if provider == "paddle":
+        try:
+            text = extract_text_from_image_via_paddle(path)
+            if text.strip():
+                warnings.append("paddleocr_provider")
+                return text, "paddle_ocr"
+            warnings.append("paddleocr_returned_empty")
+        except OcrError as exc:
+            raise
+    if provider == "paddle":
+        return "", "paddle_ocr"
+    text = extract_text_from_image(path)
+    return text, "image_ocr"
 
 
 def extract_pdf_text_layer(path: Path) -> str:
@@ -190,7 +298,7 @@ def extract_pdf_text_layer(path: Path) -> str:
     return r.stdout
 
 
-def extract_pdf_via_ocr(path: Path, *, max_pages: int) -> tuple[str, int]:
+def extract_pdf_via_ocr(path: Path, *, max_pages: int, warnings: list[str] | None = None) -> tuple[str, int]:
     if not command_exists("pdftoppm"):
         raise OcrError("pdftoppm is not installed on the server", status_code=500)
     with tempfile.TemporaryDirectory(prefix="redact_pdf_ocr_") as tmpdir:
@@ -203,7 +311,11 @@ def extract_pdf_via_ocr(path: Path, *, max_pages: int) -> tuple[str, int]:
         if r.returncode != 0:
             raise OcrError((r.stderr or "PDF rendering failed").strip()[:500], status_code=422)
         pages = sorted(Path(tmpdir).glob("page-*.png"))
-        page_texts = [extract_text_from_image(p).strip() for p in pages]
+        page_texts = []
+        page_warnings = warnings if warnings is not None else []
+        for p in pages:
+            text, _ = extract_text_from_image_with_provider(p, warnings=page_warnings)
+            page_texts.append(text.strip())
         return "\n\n".join(t for t in page_texts if t), len(pages)
 
 
@@ -230,25 +342,29 @@ def extract_upload_text(
         text_source = "text_upload"
     elif kind in {"image", "pdf"}:
         suffix = Path(filename or "").suffix.lower() or (".pdf" if kind == "pdf" else ".png")
-        with tempfile.NamedTemporaryFile(prefix="redact_upload_", suffix=suffix, delete=False) as tmp:
-            tmp.write(data)
-            tmp_path = Path(tmp.name)
-        try:
-            if kind == "image":
-                text = extract_text_from_image(tmp_path)
-                text_source = "image_ocr"
-                pages = 1
-            else:
-                text = extract_pdf_text_layer(tmp_path)
-                if text.strip():
-                    text_source = "pdf_text_layer"
+        text = ""
+
+        if not text:
+            with tempfile.NamedTemporaryFile(prefix="redact_upload_", suffix=suffix, delete=False) as tmp:
+                tmp.write(data)
+                tmp_path = Path(tmp.name)
+            try:
+                if kind == "image":
+                    text, text_source = extract_text_from_image_with_provider(tmp_path, warnings=warnings)
+                    pages = 1
                 else:
-                    text, pages = extract_pdf_via_ocr(tmp_path, max_pages=max_pdf_ocr_pages)
-                    text_source = "pdf_ocr"
-                    if pages >= max_pdf_ocr_pages:
-                        warnings.append(f"pdf_ocr_limited_to_first_{max_pdf_ocr_pages}_pages")
-        finally:
-            tmp_path.unlink(missing_ok=True)
+                    text = extract_pdf_text_layer(tmp_path)
+                    if text.strip():
+                        text_source = "pdf_text_layer"
+                    else:
+                        text, pages = extract_pdf_via_ocr(
+                            tmp_path, max_pages=max_pdf_ocr_pages, warnings=warnings
+                        )
+                        text_source = "pdf_ocr"
+                        if pages >= max_pdf_ocr_pages:
+                            warnings.append(f"pdf_ocr_limited_to_first_{max_pdf_ocr_pages}_pages")
+            finally:
+                tmp_path.unlink(missing_ok=True)
     else:
         raise OcrError(
             "Unsupported file type. Upload a PDF, image, or plain text file.",

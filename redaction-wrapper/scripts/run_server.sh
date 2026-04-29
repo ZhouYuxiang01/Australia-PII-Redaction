@@ -11,6 +11,12 @@
 #   WRAPPER_PYTHON           default /home/admin/miniconda3/envs/opf/bin/python
 #                            (use the opf conda env when running OPF backend;
 #                            qwen backends may want a different env)
+#   WRAPPER_OCR_PROVIDER     auto | rapidocr | paddle | tesseract (default auto)
+#                            auto uses local RapidOCR, then Tesseract.
+#   RAPIDOCR_MIN_CONFIDENCE  default 0.30
+#   PADDLEOCR_LANG           default en
+#   PADDLEOCR_USE_GPU        default false
+#   PADDLEOCR_MIN_CONFIDENCE default 0.30
 
 set -uo pipefail
 
