@@ -97,6 +97,8 @@ def _build_payload(
             "input_length": len(text),
         },
     )
+    # Keep source text in payload so the UI can render highlighted spans reliably.
+    payload["input_text"] = text
     return payload
 
 
@@ -193,6 +195,8 @@ def create_app(
             text=text, backend=backend, policy=policy,
             started=started, backend_label="file_upload",
         )
+        # Preserve extracted text under ocr_text for demo parity with the 9B API page.
+        payload["ocr_text"] = text
         payload["metadata"]["file"] = {
             "name": file.filename or "upload",
             "content_type": file.content_type,

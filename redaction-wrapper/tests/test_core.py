@@ -12,6 +12,7 @@ from redaction.core import (
     parse_annotated_output, redact_text, repair_offsets_to_input,
     resolve_overlaps, safe_postprocess_spans,
 )
+from redaction.core.postprocess import load_postprocess_rule_registry
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -141,6 +142,7 @@ def test_safe_postprocess_rescues_labeled_student_and_passport_identifiers() -> 
     )
     assert [(s.type, s.value) for s in student_cleaned] == [
         ("DATE_OF_BIRTH", "14/09/2002"),
+        ("USI", "L32K9P7H2Q"),
         ("UAC_ID", "123456789"),
         ("EMAIL", "amelia.chen@student.example.edu.au"),
     ]
@@ -269,6 +271,93 @@ def test_safe_postprocess_rescues_messy_contextual_formats() -> None:
     assert ("CREDIT_CARD_EXPIRY", "08/29") in pairs
     assert ("VEHICLE_ID", "VIC-987-XYZ") in pairs
     assert ("PHONE", "221 904 778") not in pairs
+
+
+def test_postprocess_registry_files_load_without_new_taxonomy() -> None:
+    rules = load_postprocess_rule_registry(PROJECT_ROOT)
+    labels = {rule.label for rule in rules}
+    assert {
+        "DATE_OF_BIRTH",
+        "AU_BANK_ACCOUNT",
+        "STUDENT_ID",
+        "UAC_ID",
+        "VEHICLE_ID",
+        "CREDIT_CARD_EXPIRY",
+        "MEDICARE_EXPIRY",
+        "PERSON",
+        "WEBSITE_HISTORY",
+        "MEDICAL_CERTIFICATE",
+        "RELIGION_BELIEF",
+        "SOCIO_ECONOMIC_STATUS",
+    }.issubset(labels)
+    assert "HASHED_PAYMENT_CARD_NUMBER" not in labels
+
+
+def test_registry_driven_contextual_fallback_rules() -> None:
+    text = (
+        "bday 7.3.2004 I think\n"
+        "sid: 5102 88411\n"
+        "UAC no. 221 904 778\n"
+        "acct: 0088 1992 44\n"
+        "card used last time: 4111 9090 3333 1200 exp 08/29\n"
+        "Medicare number is Medicare: 2938-4756-12-1. Card expiry: 08/2029\n"
+        "Vehicle Registration (License Plate): VIC-987-XYZ.\n"
+        "Also gave car rego: NSW CXT-72Q.\n"
+    )
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [],
+        {"postprocess": {"add_contextual_identifier_spans": False, "add_registry_contextual_spans": True}},
+    )
+    pairs = [(s.type, s.value) for s in cleaned]
+    assert ("DATE_OF_BIRTH", "7.3.2004") in pairs
+    assert ("STUDENT_ID", "5102 88411") in pairs
+    assert ("UAC_ID", "221 904 778") in pairs
+    assert ("AU_BANK_ACCOUNT", "0088 1992 44") in pairs
+    assert ("PAYMENT_CARD_NUMBER", "4111 9090 3333 1200") in pairs
+    assert ("CREDIT_CARD_EXPIRY", "08/29") in pairs
+    assert ("MEDICARE_EXPIRY", "08/2029") in pairs
+    assert ("VEHICLE_ID", "VIC-987-XYZ") in pairs
+    assert ("VEHICLE_ID", "NSW CXT-72Q") in pairs
+
+
+def test_vehicle_context_conflicts_are_routed_to_review() -> None:
+    text = "Vehicle Registration (License Plate): VIC987XYZ."
+    start = text.index("VIC987XYZ")
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [Span(start=start, end=start + len("VIC987XYZ"), type="AU_DRIVERS_LICENCE", value="VIC987XYZ", confidence=0.98)],
+        {"postprocess": {}},
+    )
+    assert [(s.type, s.value, s.confidence) for s in cleaned] == [("VEHICLE_ID", "VIC987XYZ", 0.8)]
+    assert "vehicle_context_label_conflict" in cleaned[0].postprocess
+
+    policy = json.loads((PROJECT_ROOT / "configs" / "policies" / "opf-v3-default-v1.json").read_text())
+    decided = apply_policy(cleaned, policy)
+    assert [(s.type, s.decision) for s in decided] == [("VEHICLE_ID", "REVIEW")]
+
+    rescued, _ = safe_postprocess_spans(text, [], {"postprocess": {}})
+    decided = apply_policy(rescued, policy)
+    assert [(s.type, s.value, s.decision) for s in decided] == [("VEHICLE_ID", "VIC987XYZ", "REVIEW")]
+
+
+def test_registry_rules_suppress_hard_negative_and_bare_values() -> None:
+    text = (
+        "Invoice: 123456789\n"
+        "Ticket: INC-0412-345-678\n"
+        "Reference: UAC-123456789-TEST\n"
+        "Reference token VIC-987-XYZ is not a plate.\n"
+        "Meeting date 7.3.2004 is not DOB.\n"
+        "Plain number 0088 1992 44 is not enough context.\n"
+        "Code EXP 08/29 is not a card expiry without card context.\n"
+        "Bare number 0412 345 678 is not enough context.\n"
+    )
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [],
+        {"postprocess": {"add_contextual_identifier_spans": False, "add_registry_contextual_spans": True}},
+    )
+    assert cleaned == []
 
 
 def test_safe_postprocess_does_not_globally_match_messy_formats() -> None:

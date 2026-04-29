@@ -1,0 +1,1862 @@
+{
+  "version": "surface_forms_v0.1_2026-04-29",
+  "taxonomy_source": "Data Sensitivity (1).csv",
+  "project_context": "PII redaction wrapper postprocess; table is intended as a source-of-truth for context-triggered fallback rules and synthetic data generation.",
+  "constraints": {
+    "do_not_add_new_taxonomy_labels": true,
+    "keep_existing_supplemental_credit_card_cvv": true,
+    "ambiguous_numeric_patterns_must_require_context": true,
+    "negative_context_suppression_required": true,
+    "no_global_bank_account_or_driver_licence_or_uac_matching": true,
+    "prefer_AutoRedact_for_high_confidence_format_plus_context": true
+  },
+  "official_format_notes": {
+    "BSB": "Six digits, usually XXX-XXX.",
+    "TFN": "Usually 9 digits.",
+    "USI": "Alphanumeric education identifier; can be all letters but not all numbers.",
+    "UAC_ID": "Nine-digit application number."
+  },
+  "pattern_definitions": {
+    "EMAIL": "\\b[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,}\\b",
+    "AU_MOBILE_LOCAL": "(?<!\\d)04(?:\\s?\\d){8}(?!\\d)",
+    "AU_MOBILE_INTL": "(?<!\\d)(?:\\+61\\s?4)(?:\\s?\\d){8}(?!\\d)",
+    "AU_LANDLINE": "(?<!\\d)(?:\\(?0[2378]\\)?\\s?\\d{4}\\s?\\d{4})(?!\\d)",
+    "BSB": "(?<!\\d)\\d{3}[-\\s]?\\d{3}(?!\\d)",
+    "BANK_ACCOUNT_GROUPED_6_10": "(?<!\\d)\\d(?:[ -]?\\d){5,9}(?!\\d)",
+    "TFN_9_GROUPED": "(?<!\\d)\\d{3}[\\s-]?\\d{3}[\\s-]?\\d{3}(?!\\d)",
+    "USI_10_ALNUM_NOT_ALL_NUMERIC": "\\b(?!\\d{10}\\b)[A-Z0-9]{10}\\b",
+    "NINE_DIGIT_GROUPED": "(?<!\\d)\\d(?:[ -]?\\d){8}(?!\\d)",
+    "STUDENT_ID_8_10_GROUPED": "(?<!\\d)\\d(?:[ -]?\\d){7,9}(?!\\d)",
+    "DATE_DMY": "(?<!\\d)(?:0?[1-9]|[12]\\d|3[01])[/.-](?:0?[1-9]|1[0-2])[/.-](?:19|20)\\d{2}(?!\\d)",
+    "DATE_TEXT_MONTH": "(?i)\\b(?:0?[1-9]|[12]\\d|3[01])\\s+(?:jan|january|feb|february|mar|march|apr|april|may|jun|june|jul|july|aug|august|sep|sept|september|oct|october|nov|november|dec|december)\\s+(?:19|20)\\d{2}\\b",
+    "MONTH_YEAR": "(?<!\\d)(?:0?[1-9]|1[0-2])/(?:\\d{2}|20\\d{2}|19\\d{2})(?!\\d)",
+    "PAYMENT_CARD_13_19_GROUPED": "(?<!\\d)\\d{4}[ -]?\\d{4}[ -]?\\d{4}[ -]?\\d{1,7}(?!\\d)",
+    "MEDICARE_10_GROUPED": "(?<!\\d)\\d{4}\\s?\\d{5}\\s?\\d(?!\\d)",
+    "IHI_16_GROUPED": "(?<!\\d)\\d{4}\\s?\\d{4}\\s?\\d{4}\\s?\\d{4}(?!\\d)",
+    "PASSPORT_AU_STYLE": "\\b[A-Z]{1,2}[0-9]{7}\\b",
+    "DRIVERS_LICENCE_DIGITS": "(?<!\\d)(?:\\d[\\s-]?){6,10}(?!\\d)",
+    "VEHICLE_PLATE_AU": "\\b(?:(?:NSW|VIC|QLD|SA|WA|TAS|ACT|NT)[ -])?(?:[A-Z]{3}\\d{2}[A-Z]|[A-Z]{1,3}-\\d{1,4}[A-Z]?|[A-Z]{1,3}-\\d{1,4}(?:-[A-Z]{2,4})?)\\b",
+    "VEHICLE_PLATE_CONTEXTUAL_TOKEN": "\\b(?:(?:NSW|VIC|QLD|SA|WA|TAS|ACT|NT)[ -]?)?(?=[A-Z0-9]{5,9}\\b)(?=[A-Z0-9]*[A-Z])(?=[A-Z0-9]*\\d)[A-Z0-9]{5,9}\\b",
+    "VEHICLE_PLATE_STATE_HYPHEN": "\\b(?:NSW|VIC|QLD|SA|WA|TAS|ACT|NT)-\\d{2,4}-[A-Z]{2,4}\\b",
+    "IPV4": "\\b(?:(?:25[0-5]|2[0-4]\\d|1?\\d?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|1?\\d?\\d)\\b",
+    "GPS_PAIR": "(?<!\\d)-?\\d{1,2}\\.\\d{3,}\\s*,\\s*-?\\d{2,3}\\.\\d{3,}(?!\\d)",
+    "CENTRELINK_CRN": "\\b(?:CRN\\s*)?\\d{3}\\s?\\d{3}\\s?\\d{3}[A-Z]\\b",
+    "NATIONAL_ID_ALNUM_DASH": "\\b[A-Z]{2,4}(?:-[A-Z0-9]{1,6}){2,5}\\b",
+    "SOCIAL_HANDLE": "(?<![\\w.])@[A-Za-z0-9_\\.]{3,30}\\b",
+    "DOMAIN_OR_URL": "\\b(?:https?://)?[A-Za-z0-9.-]+\\.[A-Za-z]{2,}(?:/[\\w./?=&%-]*)?\\b",
+    "DEVICE_ID_ALNUM_DASH": "\\b[A-Z]{2,10}(?:-[A-Z0-9]{2,8}){2,6}\\b",
+    "EMPLOYEE_ID": "\\b[A-Z]?[- ]?\\d{5,10}\\b",
+    "PERSONNEL_ID": "\\b[A-Z][- ]?\\d{5,10}\\b",
+    "MONEY_AMOUNT": "(?<!\\w)\\$\\s?\\d{1,3}(?:,\\d{3})*(?:\\.\\d{2})?\\b|\\b\\d{2,3}k\\b",
+    "SCHOLARSHIP_REF": "\\bSCH[- ]?\\d{4}[- ][A-Z0-9]{3,10}\\b",
+    "SANCTION_REF": "\\bSAN[- ]?\\d{4}[- ]\\d{2,6}\\b",
+    "WORKERS_COMP_REF": "\\b(?:WC|WCC)[- ]?\\d{4}[- ]?[A-Z0-9]{3,10}\\b",
+    "PENSION_CARD_REF": "\\b(?:SEN|PEN|PCC)[- ]?[A-Z0-9]{5,12}\\b",
+    "USERNAME_TOKEN": "\\b[A-Za-z][A-Za-z0-9_\\.]{3,30}\\b",
+    "PRONOUN_TEXT": "(?i)\\b(?:he/him|she/her|they/them|he|she|they)\\b",
+    "PERSON_NAME_TEXT": "(?im)^\\s*(?:\\d+\\.\\s+|(?:student|name|full name|employee|patient)\\s*[:=]\\s*)(?P<value>[A-Z][A-Za-z'\\-]+(?:[ -][A-Z][A-Za-z'\\-]+){1,3})\\s*$",
+    "RELIGION_TEXT": "(?im)\\b(?:religion|religious beliefs?)\\b(?:\\s*/\\s*[^:\\n]+)?\\s*:\\s*(?P<value>[A-Za-z][A-Za-z -]{1,40}?)(?=\\s*$|[.;,\\n])",
+    "SES_TEXT": "(?im)\\b(?:socio economic status|socioeconomic status|ses)\\s*:\\s*(?P<value>[A-Za-z][A-Za-z -]{2,80}?)(?=\\s*$|[.;,\\n])",
+    "MEDICAL_CERTIFICATE_DATE": "(?i)\\b(?:from|to)\\s+(?P<value>(?:0?[1-9]|[12]\\d|3[01])[/.-](?:0?[1-9]|1[0-2])[/.-](?:19|20)\\d{2})\\b",
+    "MEDICAL_CERTIFICATE_MENTION": "(?i)\\bmedical certificate\\.(?P<value>medical certificate)\\b"
+  },
+  "label_alias_normalization": {
+    "BSB": "AU_BANK_ACCOUNT",
+    "BANK_ACCOUNT_NUMBER": "AU_BANK_ACCOUNT",
+    "EMAIL_ADDRESS": "EMAIL",
+    "AU_PHONE": "PHONE",
+    "MOBILE_PHONE": "PHONE",
+    "VEHICLE_REGO": "VEHICLE_ID",
+    "NUMBER_PLATE": "VEHICLE_ID",
+    "DRIVERS_LICENCE": "AU_DRIVERS_LICENCE",
+    "DRIVER_LICENCE_NUMBER": "AU_DRIVERS_LICENCE",
+    "PASSPORT_NUMBER": "AU_PASSPORT",
+    "TFN": "AU_TFN",
+    "SOCIAL_MEDIA_HANDLE": "SOCIAL_MEDIA_ID",
+    "SOCIAL_MEDIA_USERNAME": "SOCIAL_MEDIA_ID"
+  },
+  "conflict_resolution": [
+    "Exact context-triggered rule span beats lower-confidence model span at the same offset.",
+    "If two labels share the same numeric span, choose the label whose positive trigger is closest to the span.",
+    "Negative trigger within window suppresses AUTO_REDACT and either drops the span or demotes to REVIEW depending on policy.",
+    "Do not globally reinterpret 8-10 digit numbers: SID/UAC/account/licence all require label-specific context.",
+    "For expiry dates, prefer nearest entity context: card -> CREDIT_CARD_EXPIRY, Medicare -> MEDICARE_EXPIRY, passport -> PASSPORT_EXPIRY."
+  ],
+  "rules": {
+    "DATE_OF_BIRTH": {
+      "csv_label_name": "Date of Birth",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "dob",
+        "d.o.b",
+        "d o b",
+        "date of birth",
+        "birth date",
+        "birthday",
+        "bday",
+        "born",
+        "age",
+        "dob on file"
+      ],
+      "negative_triggers": [
+        "room",
+        "building",
+        "invoice date",
+        "receipt date",
+        "created",
+        "updated",
+        "lodged",
+        "due date",
+        "appointment",
+        "semester date"
+      ],
+      "patterns": [
+        "DATE_DMY",
+        "DATE_TEXT_MONTH"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 80,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "AU_BANK_ACCOUNT": {
+      "csv_label_name": "Bank Account Number",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "acct",
+        "account",
+        "account no",
+        "account number",
+        "acc no",
+        "bank account",
+        "refund account",
+        "account details",
+        "payee account"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "receipt",
+        "ticket",
+        "reference",
+        "ref",
+        "student id",
+        "sid",
+        "uac",
+        "phone",
+        "mobile",
+        "permit",
+        "claim",
+        "room",
+        "order id",
+        "system-generated"
+      ],
+      "patterns": [
+        "BANK_ACCOUNT_GROUPED_6_10"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 86,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "BANK_ACCOUNT_INFORMATION": {
+      "csv_label_name": "Bank Account Information",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "bank",
+        "bank name",
+        "account name",
+        "payee name",
+        "banking details",
+        "bank details",
+        "BSB",
+        "branch",
+        "account holder"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "ticket",
+        "receipt",
+        "reference",
+        "test token",
+        "placeholder"
+      ],
+      "patterns": [
+        "BANK_NAME_TEXT",
+        "ACCOUNT_NAME_TEXT",
+        "BSB"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 72,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "CREDIT_CARD_EXPIRY": {
+      "csv_label_name": "Credit Card Expiry Details",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "card expiry",
+        "card exp",
+        "cc exp",
+        "credit card expiry",
+        "debit card expiry",
+        "expires",
+        "exp"
+      ],
+      "negative_triggers": [
+        "medicare",
+        "passport",
+        "visa",
+        "contract",
+        "membership",
+        "student card",
+        "library card"
+      ],
+      "patterns": [
+        "MONTH_YEAR"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 82,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "PAYMENT_CARD_NUMBER": {
+      "csv_label_name": "Payment Card Number",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "card",
+        "card number",
+        "credit card",
+        "debit card",
+        "payment card",
+        "card used",
+        "visa",
+        "mastercard",
+        "amex"
+      ],
+      "negative_triggers": [
+        "test token",
+        "tok_",
+        "placeholder",
+        "invoice",
+        "receipt",
+        "reference",
+        "order id"
+      ],
+      "patterns": [
+        "PAYMENT_CARD_13_19_GROUPED"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 88,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required_or_luhn",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "AU_TFN": {
+      "csv_label_name": "TFN",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "tfn",
+        "tax file number",
+        "taxfilenumber",
+        "tax file no",
+        "tax no"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "receipt",
+        "ticket",
+        "reference",
+        "order",
+        "student id",
+        "uac"
+      ],
+      "patterns": [
+        "TFN_9_GROUPED"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 95,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required_or_checksum",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "USI": {
+      "csv_label_name": "USI - unique student identifier",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "usi",
+        "unique student identifier",
+        "student identifier"
+      ],
+      "negative_triggers": [
+        "reference",
+        "test",
+        "placeholder",
+        "ticket",
+        "invoice"
+      ],
+      "patterns": [
+        "USI_10_ALNUM_NOT_ALL_NUMERIC"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 94,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "UAC_ID": {
+      "csv_label_name": "UAC ID",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "uac",
+        "uac id",
+        "uac no",
+        "uac number",
+        "universities admissions centre",
+        "application number"
+      ],
+      "negative_triggers": [
+        "reference: uac-",
+        "uac-*-test",
+        "invoice",
+        "ticket",
+        "receipt",
+        "placeholder",
+        "system-generated"
+      ],
+      "patterns": [
+        "NINE_DIGIT_GROUPED"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 92,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "STUDENT_ID": {
+      "csv_label_name": "Student ID",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "sid",
+        "student id",
+        "student number",
+        "student no",
+        "student num",
+        "student identification",
+        "student record"
+      ],
+      "negative_triggers": [
+        "uac",
+        "invoice",
+        "ticket",
+        "receipt",
+        "account",
+        "acct",
+        "phone",
+        "mobile",
+        "reference",
+        "permit"
+      ],
+      "patterns": [
+        "STUDENT_ID_8_10_GROUPED"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 90,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "PHONE": {
+      "csv_label_name": "Mobile phone",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "mobile",
+        "cell",
+        "cellphone",
+        "smartphone",
+        "phone",
+        "call",
+        "contact",
+        "tel",
+        "m:"
+      ],
+      "negative_triggers": [
+        "ticket",
+        "inc-",
+        "invoice",
+        "receipt",
+        "reference",
+        "room",
+        "account",
+        "uac id",
+        "student id"
+      ],
+      "patterns": [
+        "AU_MOBILE_LOCAL",
+        "AU_MOBILE_INTL",
+        "AU_LANDLINE"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 70,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "global_with_negative_suppression",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "HOME_PHONE": {
+      "csv_label_name": "Home phone",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "home phone",
+        "landline",
+        "house phone",
+        "residential telephone",
+        "dad phone",
+        "mum phone",
+        "next of kin phone"
+      ],
+      "negative_triggers": [
+        "ticket",
+        "invoice",
+        "reference",
+        "room",
+        "extension",
+        "ext"
+      ],
+      "patterns": [
+        "AU_LANDLINE"
+      ],
+      "require_positive_trigger": false,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 70,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required_or_landline_format",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "WORK_PHONE": {
+      "csv_label_name": "Work phone",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "work phone",
+        "office phone",
+        "business phone",
+        "direct",
+        "professional phone",
+        "ext",
+        "extension"
+      ],
+      "negative_triggers": [
+        "ticket",
+        "invoice",
+        "reference"
+      ],
+      "patterns": [
+        "AU_LANDLINE"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 68,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "EMAIL": {
+      "csv_label_name": "Email address",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "email",
+        "e-mail",
+        "personal email",
+        "contact email",
+        "email address",
+        "profile email"
+      ],
+      "negative_triggers": [
+        "placeholder",
+        "sample email",
+        "example only",
+        "user@example",
+        "no-reply",
+        "noreply"
+      ],
+      "patterns": [
+        "EMAIL"
+      ],
+      "require_positive_trigger": false,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 76,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "global_with_placeholder_suppression",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "WORK_EMAIL": {
+      "csv_label_name": "Work email",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "work email",
+        "staff email",
+        "uni email",
+        "business email",
+        "professional email"
+      ],
+      "negative_triggers": [
+        "placeholder",
+        "sample email",
+        "user@example"
+      ],
+      "patterns": [
+        "EMAIL"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 78,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "ADDRESS": {
+      "csv_label_name": "Full Address",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "address",
+        "addr",
+        "home address",
+        "residential address",
+        "mailing address",
+        "new address",
+        "lives at",
+        "Sydney address",
+        "overseas address"
+      ],
+      "negative_triggers": [
+        "email address",
+        "ip address",
+        "address id",
+        "building only",
+        "room only"
+      ],
+      "patterns": [
+        "FREE_TEXT_ADDRESS"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 62,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "PERSON": {
+      "csv_label_name": "Full Name",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "name",
+        "full name",
+        "student",
+        "employee",
+        "patient",
+        "caller",
+        "account name",
+        "name on passport",
+        "preferred name"
+      ],
+      "negative_triggers": [
+        "bank name",
+        "course name",
+        "scholarship name",
+        "system name",
+        "field name"
+      ],
+      "patterns": [
+        "PERSON_NAME_TEXT"
+      ],
+      "require_positive_trigger": false,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 55,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "semantic_or_context_text",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "NEXT_OF_KIN": {
+      "csv_label_name": "Next of Kin",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "next of kin",
+        "nok",
+        "emergency contact",
+        "mum",
+        "mother",
+        "dad",
+        "father",
+        "guardian",
+        "spouse",
+        "partner",
+        "near relative"
+      ],
+      "negative_triggers": [
+        "ordinary mention",
+        "lecturer",
+        "admin",
+        "officer"
+      ],
+      "patterns": [
+        "PERSON_NAME_TEXT"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 81,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "IHI": {
+      "csv_label_name": "IHI – unique health identifier",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "ihi",
+        "individual healthcare identifier",
+        "health identifier"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "receipt",
+        "ticket",
+        "reference",
+        "order"
+      ],
+      "patterns": [
+        "IHI_16_GROUPED"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 93,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "MEDICARE_NUMBER": {
+      "csv_label_name": "Medicare Number",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "medicare",
+        "medicare no",
+        "medicare number",
+        "medicare id",
+        "medicare card"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "ticket",
+        "reference",
+        "account"
+      ],
+      "patterns": [
+        "MEDICARE_10_GROUPED"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 91,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "MEDICARE_EXPIRY": {
+      "csv_label_name": "Medicare Expiry",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "medicare expiry",
+        "medicare expiration",
+        "medicare card expiry",
+        "medicare end date",
+        "card expiry near medicare"
+      ],
+      "negative_triggers": [
+        "credit card",
+        "payment card",
+        "passport",
+        "contract"
+      ],
+      "patterns": [
+        "MONTH_YEAR",
+        "DATE_DMY"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 87,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "AU_PASSPORT": {
+      "csv_label_name": "Passport Number",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "passport",
+        "passport no",
+        "passport number",
+        "passport id",
+        "name on passport"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "ticket",
+        "reference",
+        "placeholder"
+      ],
+      "patterns": [
+        "PASSPORT_AU_STYLE"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 89,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "PASSPORT_EXPIRY": {
+      "csv_label_name": "Passport Expiry date",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "passport expiry",
+        "passport expires",
+        "passport expiration",
+        "passport validity",
+        "expires near passport"
+      ],
+      "negative_triggers": [
+        "card expiry",
+        "medicare expiry",
+        "contract expiry"
+      ],
+      "patterns": [
+        "DATE_DMY",
+        "DATE_TEXT_MONTH",
+        "MONTH_YEAR"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 86,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "PASSPORT_START_DATE": {
+      "csv_label_name": "Passport Start date",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "passport start date",
+        "passport issue date",
+        "passport issued",
+        "passport commencement date",
+        "issued near passport"
+      ],
+      "negative_triggers": [
+        "passport expiry",
+        "card issue",
+        "student card"
+      ],
+      "patterns": [
+        "DATE_DMY",
+        "DATE_TEXT_MONTH"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 84,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "AU_DRIVERS_LICENCE": {
+      "csv_label_name": "Driver's Licence Number",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "driver licence",
+        "drivers licence",
+        "driver license",
+        "driving licence",
+        "driving license",
+        "licence no",
+        "license number",
+        "driver id"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "receipt",
+        "ticket",
+        "reference",
+        "permit ref",
+        "claim ref",
+        "system-generated",
+        "uac"
+      ],
+      "patterns": [
+        "DRIVERS_LICENCE_DIGITS"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 85,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "VEHICLE_ID": {
+      "csv_label_name": "Number Plate",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "rego",
+        "vehicle rego",
+        "vehicle registration",
+        "number plate",
+        "license plate",
+        "licence plate",
+        "registration plate",
+        "car registration"
+      ],
+      "negative_triggers": [
+        "ticket",
+        "invoice",
+        "receipt",
+        "reference code",
+        "permit ref",
+        "system-generated",
+        "claim ref",
+        "course code"
+      ],
+      "patterns": [
+        "VEHICLE_PLATE_AU",
+        "VEHICLE_PLATE_CONTEXTUAL_TOKEN",
+        "VEHICLE_PLATE_STATE_HYPHEN"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 83,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "IP_ADDRESS": {
+      "csv_label_name": "IP Address",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "ip",
+        "ip address",
+        "last login ip",
+        "internet protocol"
+      ],
+      "negative_triggers": [
+        "version",
+        "section",
+        "room",
+        "date-like"
+      ],
+      "patterns": [
+        "IPV4"
+      ],
+      "require_positive_trigger": false,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 74,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "global_with_context_boost",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "DEVICE_ID": {
+      "csv_label_name": "Device ID",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "device id",
+        "deviceid",
+        "unique device identifier",
+        "device identification",
+        "device"
+      ],
+      "negative_triggers": [
+        "ticket",
+        "invoice",
+        "reference",
+        "order"
+      ],
+      "patterns": [
+        "DEVICE_ID_ALNUM_DASH"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 78,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "GEOLOCATION_INFORMATION": {
+      "csv_label_name": "Geolocation Information",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "gps",
+        "app gps",
+        "geolocation",
+        "location",
+        "coordinates",
+        "lat/long",
+        "latitude longitude"
+      ],
+      "negative_triggers": [
+        "version",
+        "score pair",
+        "lab values",
+        "unrelated coordinates without context"
+      ],
+      "patterns": [
+        "GPS_PAIR"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 82,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "LATITUDE": {
+      "csv_label_name": "Latitude of mailing/residential address",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "latitude",
+        "lat",
+        "mailing address latitude",
+        "residential latitude",
+        "gps"
+      ],
+      "negative_triggers": [
+        "score",
+        "version",
+        "percentage"
+      ],
+      "patterns": [
+        "DOMAIN_OR_URL"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 65,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "LONGITUDE": {
+      "csv_label_name": "Longitude of mailing/residential address",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "longitude",
+        "long",
+        "lng",
+        "address longitude",
+        "residential longitude",
+        "gps"
+      ],
+      "negative_triggers": [
+        "score",
+        "version",
+        "percentage"
+      ],
+      "patterns": [
+        "MEDICAL_CERTIFICATE_DATE",
+        "MEDICAL_CERTIFICATE_MENTION"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 65,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "CENTRELINK_REFERENCE_NUMBER": {
+      "csv_label_name": "Centrelink Reference Number",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "centrelink",
+        "centrelink reference",
+        "centrelink number",
+        "crn",
+        "centrelink ref"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "ticket",
+        "reference without centrelink"
+      ],
+      "patterns": [
+        "CENTRELINK_CRN"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 88,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "NATIONAL_IDENTITY_CARD": {
+      "csv_label_name": "National Identity Card Details",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "national id",
+        "national identity card",
+        "identity card",
+        "id card",
+        "national card"
+      ],
+      "negative_triggers": [
+        "ticket",
+        "invoice",
+        "reference",
+        "student id"
+      ],
+      "patterns": [
+        "NATIONAL_ID_ALNUM_DASH"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 86,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "SOCIAL_MEDIA_ID": {
+      "csv_label_name": "Social Media ID",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "insta",
+        "instagram",
+        "fb",
+        "facebook",
+        "x handle",
+        "twitter",
+        "tiktok",
+        "handle",
+        "social media handle",
+        "social username"
+      ],
+      "negative_triggers": [
+        "email",
+        "at sign in email",
+        "slack mention",
+        "github issue mention"
+      ],
+      "patterns": [
+        "SOCIAL_HANDLE"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 67,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "SOCIAL_MEDIA_ACCOUNT": {
+      "csv_label_name": "Social Media Account",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "social media account",
+        "social profile",
+        "facebook profile",
+        "instagram profile",
+        "linkedin profile"
+      ],
+      "negative_triggers": [
+        "email",
+        "generic website"
+      ],
+      "patterns": [
+        "SOCIAL_HANDLE"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 63,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "WEBSITE_HISTORY": {
+      "csv_label_name": "Website History",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "website history",
+        "browsing history",
+        "browser history",
+        "visited",
+        "website history flag",
+        "digital footprint"
+      ],
+      "negative_triggers": [
+        "company homepage",
+        "public link",
+        "documentation URL unless user-specific history"
+      ],
+      "patterns": [
+        "DOMAIN_OR_URL"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 64,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "USER_NAME": {
+      "csv_label_name": "User Name",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "username",
+        "user name",
+        "login name",
+        "user",
+        "handle",
+        "profile user"
+      ],
+      "negative_triggers": [
+        "system user",
+        "database user",
+        "example user",
+        "placeholder"
+      ],
+      "patterns": [
+        "USERNAME_TOKEN"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 60,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "EMPLOYEE_NUMBER": {
+      "csv_label_name": "Employee Number",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "employee number",
+        "employee id",
+        "staff id",
+        "worker number",
+        "staffnumber",
+        "employee no"
+      ],
+      "negative_triggers": [
+        "ticket",
+        "invoice",
+        "reference",
+        "student id"
+      ],
+      "patterns": [
+        "EMPLOYEE_ID"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 84,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "PERSONNEL_NUMBER": {
+      "csv_label_name": "Personnel Number / Staff Number",
+      "enabled": true,
+      "phase": "phase_1",
+      "positive_triggers": [
+        "personnel number",
+        "staff number",
+        "personnel no",
+        "staff no",
+        "payroll number"
+      ],
+      "negative_triggers": [
+        "ticket",
+        "invoice",
+        "reference"
+      ],
+      "patterns": [
+        "PERSONNEL_ID"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 83,
+      "default_decision": "AUTO_REDACT",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "SALARY": {
+      "csv_label_name": "Salary / Wage",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "salary",
+        "wage",
+        "pay",
+        "income",
+        "earnings",
+        "base pay",
+        "annual salary",
+        "pro rata",
+        "package"
+      ],
+      "negative_triggers": [
+        "salary expectation",
+        "expected salary",
+        "desired salary",
+        "budget",
+        "project cost",
+        "invoice amount"
+      ],
+      "patterns": [
+        "MONEY_AMOUNT"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 69,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "SALARY_WAGE_EXPECTATION": {
+      "csv_label_name": "Salary / Wage Expectation",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "salary expectation",
+        "wage expectation",
+        "expected salary",
+        "desired salary",
+        "asking salary",
+        "expected pay"
+      ],
+      "negative_triggers": [
+        "actual salary",
+        "current salary",
+        "start pay",
+        "payroll salary"
+      ],
+      "patterns": [
+        "MONEY_AMOUNT"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 70,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "CONTRACT_TYPE": {
+      "csv_label_name": "Contract Type - Fixed Term / Temporary / Permanent etc.",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "contract type",
+        "contract",
+        "fixed-term",
+        "fixed term",
+        "temporary",
+        "permanent",
+        "casual",
+        "ongoing",
+        "0.6 fte",
+        "fte"
+      ],
+      "negative_triggers": [
+        "contract number",
+        "contract id",
+        "document ref"
+      ],
+      "patterns": [
+        "CONTRACT_TYPE_TEXT"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 61,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "WORKERS_COMPENSATION_CLAIM": {
+      "csv_label_name": "Workers Compensation Claims",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "workers compensation",
+        "workers comp",
+        "employee compensation",
+        "comp claim",
+        "wc claim",
+        "claim number"
+      ],
+      "negative_triggers": [
+        "insurance quote",
+        "generic claim",
+        "ticket",
+        "reference without workers comp"
+      ],
+      "patterns": [
+        "WORKERS_COMP_REF"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 73,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "MEDICAL_CERTIFICATE": {
+      "csv_label_name": "Medical Certificate",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "medical certificate",
+        "med cert",
+        "doctor certificate",
+        "doctors certificate",
+        "certificate says unfit",
+        "unfit from",
+        "medical note"
+      ],
+      "negative_triggers": [
+        "training certificate",
+        "academic certificate",
+        "certificate of enrolment"
+      ],
+      "patterns": [
+        "MEDICAL_CERTIFICATE_DATE",
+        "MEDICAL_CERTIFICATE_MENTION"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 66,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required_semantic",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "RELIGION_BELIEF": {
+      "csv_label_name": "Religion / Religious Beliefs",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "religion",
+        "religious belief",
+        "faith",
+        "spirituality",
+        "religious beliefs",
+        "identifies as",
+        "religion field"
+      ],
+      "negative_triggers": [
+        "course religion topic",
+        "club name",
+        "public event"
+      ],
+      "patterns": [
+        "RELIGION_TEXT"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 58,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required_semantic",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "SOCIO_ECONOMIC_STATUS": {
+      "csv_label_name": "Socio Economic Status",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "ses",
+        "low ses",
+        "socio economic status",
+        "socioeconomic status",
+        "low-income background",
+        "equity flag",
+        "disadvantage flag"
+      ],
+      "negative_triggers": [
+        "statistics discussion",
+        "cohort aggregate",
+        "public report"
+      ],
+      "patterns": [
+        "SES_TEXT"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 58,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required_semantic",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "CARING_RESPONSIBILITIES": {
+      "csv_label_name": "Caring responsibilities",
+      "enabled": true,
+      "phase": "training",
+      "positive_triggers": [
+        "caring responsibilities",
+        "carer",
+        "parent",
+        "guardian duties",
+        "cares for",
+        "caring duties",
+        "caregiver"
+      ],
+      "negative_triggers": [
+        "job title carer in generic text",
+        "course about caring"
+      ],
+      "patterns": [],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 54,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "semantic",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "CITIZENSHIP_STATUS": {
+      "csv_label_name": "Citizenship Status",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "citizenship status",
+        "citizen",
+        "permanent resident",
+        "temporary visa holder",
+        "visa status",
+        "residency status",
+        "PR"
+      ],
+      "negative_triggers": [
+        "nationality",
+        "country of origin",
+        "passport nationality",
+        "course citizenship topic"
+      ],
+      "patterns": [
+        "CITIZENSHIP_TEXT"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 57,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required_semantic",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "NATIONALITY": {
+      "csv_label_name": "Nationality",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "nationality",
+        "country of origin",
+        "citizen of",
+        "nationality field"
+      ],
+      "negative_triggers": [
+        "citizenship status",
+        "language",
+        "cuisine",
+        "public demographic aggregate"
+      ],
+      "patterns": [
+        "NATIONALITY_TEXT"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 56,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required_semantic",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "SCHOLARSHIP": {
+      "csv_label_name": "Scholarship",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "scholarship",
+        "scholarship id",
+        "scholarship ref",
+        "scholarship name",
+        "award",
+        "bursary"
+      ],
+      "negative_triggers": [
+        "course code",
+        "invoice",
+        "ticket",
+        "general public scholarship listing"
+      ],
+      "patterns": [
+        "SCHOLARSHIP_REF"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 64,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "SANCTIONS": {
+      "csv_label_name": "Sanctions",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "sanction",
+        "academic sanction",
+        "financial sanction",
+        "misconduct",
+        "penalty",
+        "disciplinary action"
+      ],
+      "negative_triggers": [
+        "international sanctions news",
+        "policy document",
+        "sanction as verb unrelated to student"
+      ],
+      "patterns": [
+        "SANCTION_REF"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 62,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required_semantic",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "PERSONAL_DEBT": {
+      "csv_label_name": "Personal Debt",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "personal debt",
+        "student debt",
+        "debt",
+        "outstanding debt",
+        "owing",
+        "unpaid balance",
+        "arrears"
+      ],
+      "negative_triggers": [
+        "invoice total",
+        "project budget",
+        "public debt",
+        "finance lecture"
+      ],
+      "patterns": [
+        "MONEY_AMOUNT",
+        "DEBT_TEXT"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 61,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "SUBJECT_RESULTS": {
+      "csv_label_name": "Subject Results",
+      "enabled": true,
+      "phase": "training",
+      "positive_triggers": [
+        "subject result",
+        "result",
+        "grade",
+        "mark",
+        "comp",
+        "info",
+        "unit result",
+        "transcript"
+      ],
+      "negative_triggers": [
+        "test result generic non-academic",
+        "system result",
+        "code output"
+      ],
+      "patterns": [
+        "SUBJECT_RESULT_TEXT"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 53,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required_semantic",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "WAM_SCORE": {
+      "csv_label_name": "WAM score",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "wam",
+        "wam score",
+        "weighted average mark"
+      ],
+      "negative_triggers": [
+        "temperature",
+        "percentage unrelated",
+        "score in game"
+      ],
+      "patterns": [],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 60,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "SPECIAL_CONSIDERATION": {
+      "csv_label_name": "Special Consideration",
+      "enabled": true,
+      "phase": "training",
+      "positive_triggers": [
+        "special consideration",
+        "spec con",
+        "special consideration reason",
+        "extension request",
+        "special con"
+      ],
+      "negative_triggers": [
+        "general consideration",
+        "policy title only"
+      ],
+      "patterns": [
+        "SPECIAL_CONSIDERATION_TEXT"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 53,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "semantic",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "PENSION_CARD_NUMBER": {
+      "csv_label_name": "Pension Card / Senior Card Numbers",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "pension card",
+        "senior card",
+        "pension card number",
+        "senior card number",
+        "pensioner concession card"
+      ],
+      "negative_triggers": [
+        "invoice",
+        "ticket",
+        "reference without pension context"
+      ],
+      "patterns": [
+        "PENSION_CARD_REF"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 72,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "HASHED_PAYMENT_CARD_NUMBER": {
+      "csv_label_name": "Hashed Payment Card Number",
+      "enabled": true,
+      "phase": "phase_2",
+      "positive_triggers": [
+        "hashed card",
+        "encrypted card",
+        "secure card number",
+        "tokenized card",
+        "card hash"
+      ],
+      "negative_triggers": [
+        "test token",
+        "placeholder token",
+        "public hash example"
+      ],
+      "patterns": [],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 68,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "PRONOUN": {
+      "csv_label_name": "Pronoun",
+      "enabled": true,
+      "phase": "phase_3",
+      "positive_triggers": [
+        "pronoun",
+        "pronouns",
+        "preferred pronouns"
+      ],
+      "negative_triggers": [
+        "grammar lesson",
+        "generic pronoun discussion"
+      ],
+      "patterns": [
+        "PRONOUN_TEXT"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 46,
+      "default_decision": "REVIEW_OR_AUTO_BY_POLICY",
+      "rule_mode": "context_required",
+      "suppress_if_negative_trigger_in_window": true,
+      "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    }
+  }
+}

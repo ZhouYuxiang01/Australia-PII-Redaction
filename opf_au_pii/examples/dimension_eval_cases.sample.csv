@@ -1,0 +1,9 @@
+case_id,dimension,tester,text,expected_label,expected_text
+CITIZENSHIP_STATUS-001,Citizenship Status,李思嘉,He is an Australian citizen,CITIZENSHIP_STATUS,
+CITIZENSHIP_STATUS-002,Citizenship Status,李思嘉,Citizenship: Permanent Resident,CITIZENSHIP_STATUS,
+CITIZENSHIP_STATUS-003,Citizenship Status,李思嘉,She holds US citizenship,CITIZENSHIP_STATUS,
+CITIZENSHIP_STATUS-004,Citizenship Status,李思嘉,His visa status is student visa,CITIZENSHIP_STATUS,
+CITIZENSHIP_STATUS-005,Citizenship Status,李思嘉,He is not a citizen but a refugee,CITIZENSHIP_STATUS,
+CITIZENSHIP_STATUS-006,Citizenship Status,李思嘉,Citizenship status: PR,CITIZENSHIP_STATUS,
+NATIONALITY-001,Nationality,李思嘉,Nationality: Chinese,NATIONALITY,
+CITIZENSHIP_STATUS-007,Citizenship Status,李思嘉,He applied for citizenship last year,CITIZENSHIP_STATUS,
