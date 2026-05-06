@@ -1,0 +1,105 @@
+{
+  "stage": "3A.2",
+  "model_path": "/home/admin/model/Qwen3.5-4B-Base",
+  "model_loaded_successfully": true,
+  "label_count": 80,
+  "hidden_size": 2560,
+  "embedding_dim": {
+    "train": 2560,
+    "dev": 2560,
+    "test": 2560
+  },
+  "dtype": "float16",
+  "device": "cuda",
+  "bf16_backbone": true,
+  "batch_size": 8,
+  "max_length": 1536,
+  "chunk_size": 5000,
+  "split_reports": {
+    "train": {
+      "split": "train",
+      "input_path": "data/train/qwen_spancls_train.jsonl",
+      "cache_path": "data/cache/qwen4b_spancls_embeddings_train.pt",
+      "total_examples": 113318,
+      "resumed_completed_examples": 0,
+      "newly_processed_examples": 113318,
+      "processed_examples": 113318,
+      "cached_examples": 113318,
+      "mapping_failure_count": 0,
+      "skipped_examples": 0,
+      "labels_outside_training_space": {},
+      "embedding_dim": 2560,
+      "dtype": "float16",
+      "disk_size_bytes": {
+        "final": 2067901369,
+        "chunks": 2065012674,
+        "total": 4132914043
+      },
+      "throughput_examples_per_min": 582.99,
+      "chunk_count": 23
+    },
+    "dev": {
+      "split": "dev",
+      "input_path": "data/train/qwen_spancls_dev.jsonl",
+      "cache_path": "data/cache/qwen4b_spancls_embeddings_dev.pt",
+      "total_examples": 13838,
+      "resumed_completed_examples": 0,
+      "newly_processed_examples": 13838,
+      "processed_examples": 13838,
+      "cached_examples": 13838,
+      "mapping_failure_count": 0,
+      "skipped_examples": 0,
+      "labels_outside_training_space": {},
+      "embedding_dim": 2560,
+      "dtype": "float16",
+      "disk_size_bytes": {
+        "final": 252375335,
+        "chunks": 252139498,
+        "total": 504514833
+      },
+      "throughput_examples_per_min": 594.88,
+      "chunk_count": 3
+    },
+    "test": {
+      "split": "test",
+      "input_path": "data/train/qwen_spancls_test.jsonl",
+      "cache_path": "data/cache/qwen4b_spancls_embeddings_test.pt",
+      "total_examples": 13576,
+      "resumed_completed_examples": 0,
+      "newly_processed_examples": 13576,
+      "processed_examples": 13576,
+      "cached_examples": 13576,
+      "mapping_failure_count": 0,
+      "skipped_examples": 0,
+      "labels_outside_training_space": {},
+      "embedding_dim": 2560,
+      "dtype": "float16",
+      "disk_size_bytes": {
+        "final": 247607984,
+        "chunks": 247379306,
+        "total": 494987290
+      },
+      "throughput_examples_per_min": 579.165,
+      "chunk_count": 3
+    }
+  },
+  "total_examples_per_split": {
+    "train": 113318,
+    "dev": 13838,
+    "test": 13576
+  },
+  "processed_examples_per_split": {
+    "train": 113318,
+    "dev": 13838,
+    "test": 13576
+  },
+  "mapping_failure_count": 0,
+  "skipped_examples": 0,
+  "labels_outside_training_space": {},
+  "qwen_trainable_parameter_count": 0,
+  "no_qwen_parameters_trainable": true,
+  "lora_started": false,
+  "opf_started": false,
+  "classifier_full_training_started": false,
+  "wall_time_seconds": 14469.828
+}

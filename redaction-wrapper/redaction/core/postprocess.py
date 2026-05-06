@@ -67,6 +67,50 @@ COMPETING_CONTEXT_TRIGGERS: dict[str, tuple[str, ...]] = {
 
 VEHICLE_CONTEXT_TRIGGERS = ("rego", "vehicle registration", "number plate", "license plate", "licence plate", "car rego")
 
+OPERATIONAL_EMAIL_MARKERS = (
+    "donotreply", "do-not-reply", "no-reply", "noreply", "alerts-", "status.",
+    ".internal", "internal-crm", "automated ping", "diagnostics", "no action required",
+    "system mailbox", "service account", "shared mailbox", "distribution list",
+)
+
+OPERATIONAL_IP_MARKERS = (
+    "health probe", "jump host", "port ", "diagnostics", "patching", "monitoring",
+    "succeeded from", "nat gateway", "egress traffic", "load balancer",
+    "service endpoint", "reverse proxy", "pod ip", "node ip",
+)
+
+PERSONAL_IP_MARKERS = ("login ip", "user ip", "ip flagged", "account")
+
+OPERATIONAL_PHONE_MARKERS = (
+    "general enquiries", "general office", "office phone", "placement office",
+    "switchboard", "helpdesk", "queue", "customer line", "not a direct dial",
+    "reception", "front desk", "main line", "visitor enquiries", "contact centre",
+)
+
+PERSONAL_PHONE_MARKERS = ("emergency contact", "personal phone", "mobile:", "mobile phone", "direct phone", "direct dial")
+
+OPERATIONAL_NUMERIC_MARKERS = (
+    "maintenance request", "work order", "barcode", "reserve copy", "meter replacement",
+    "invoice", "ticket", "reference", "permit", "room", "sandbox", "test pan",
+    "asset tag", "asset id", "inventory", "warehouse bin", "shelf label",
+    "serial number", "sku", "lot number",
+)
+
+SENSITIVE_NUMERIC_MARKERS = (
+    "tfn", "tax file number", "latitude", "longitude", "coordinate", "coordinates",
+    "card used", "payment card", "card number", "account number", "uac id", "uac no",
+)
+
+VEHICLE_FALSE_POSITIVE_MARKERS = (
+    "example plate", "training slide", "sample plate", "fake plate", "test plate",
+    "not a plate", "demo rego", "demo plate", "screenshot", "screenshots only",
+)
+
+VEHICLE_POSITIVE_MARKERS = (
+    "vehicle rego", "vehicle registration", "number plate", "license plate",
+    "licence plate", "car rego", "rego:",
+)
+
 
 @dataclass(frozen=True)
 class RegistryRule:
@@ -492,21 +536,55 @@ def normalize_contextual_type(span: Span, text: str) -> Span:
     return span
 
 
+def _contains_any(ctx: str, markers: tuple[str, ...]) -> bool:
+    return any(marker in ctx for marker in markers)
+
+
+def _contains_alpha(value: str) -> bool:
+    return bool(re.search(r"[A-Za-z]", value or ""))
+
+
 def should_drop_false_positive(span: Span, text: str) -> bool:
-    ctx = _context_window(text, span.start, span.end)
+    line_ctx = _line_context(text, span.start, span.end)
     before = _context_before(text, span.start, chars=40)
     if span.type == "AU_DRIVERS_LICENCE":
-        return any(marker in ctx for marker in [
+        return any(marker in line_ctx for marker in [
             "invoice", "receipt", "claim number", "ticket", "reference", "job ref",
             "system-generated", "system generated", "not staff id", "permit ref",
         ])
     if span.type in {"UAC_ID", "AU_BANK_ACCOUNT", "PENSION_CARD_NUMBER"}:
-        return any(marker in ctx for marker in [
+        if span.type == "AU_BANK_ACCOUNT" and _contains_alpha(span.value):
+            return True
+        return any(marker in line_ctx for marker in [
             "invoice", "receipt", "ticket", "reference", "test token", "placeholder",
             "system-generated", "system generated", "permit ref", "not staff id",
         ])
     if span.type == "EMAIL":
-        return bool(re.search(r"placeholder\s+email\s*[:#=\-]?\s*$", before, re.IGNORECASE))
+        return (
+            bool(re.search(r"placeholder\s+email\s*[:#=\-]?\s*$", before, re.IGNORECASE))
+            or _contains_any(line_ctx, OPERATIONAL_EMAIL_MARKERS)
+        )
+    if span.type == "IP_ADDRESS":
+        if _contains_any(line_ctx, PERSONAL_IP_MARKERS):
+            return False
+        return _contains_any(line_ctx, OPERATIONAL_IP_MARKERS)
+    if span.type in {"PHONE", "MOBILE", "HOME_PHONE", "WORK_PHONE", "AU_PHONE"}:
+        personal_phone = _contains_any(line_ctx, PERSONAL_PHONE_MARKERS)
+        if "not a direct dial" in line_ctx:
+            personal_phone = False
+        if personal_phone:
+            return False
+        return _contains_any(line_ctx, OPERATIONAL_PHONE_MARKERS)
+    if span.type in {"AU_TFN", "LATITUDE", "LONGITUDE", "GEOLOCATION_INFORMATION"}:
+        if _contains_any(line_ctx, SENSITIVE_NUMERIC_MARKERS):
+            return False
+        return _contains_any(line_ctx, OPERATIONAL_NUMERIC_MARKERS)
+    if span.type == "VEHICLE_ID":
+        if _contains_any(line_ctx, VEHICLE_FALSE_POSITIVE_MARKERS):
+            return True
+        if _contains_any(line_ctx, VEHICLE_POSITIVE_MARKERS):
+            return False
+        return _contains_any(line_ctx, VEHICLE_FALSE_POSITIVE_MARKERS)
     if span.type == "PAYMENT_CARD_NUMBER":
         return bool(re.search(r"(?:test\s+token|token)\s*[:#=\-]?\s*(?:tok[_-]?)?$", before, re.IGNORECASE))
     return False
@@ -598,6 +676,8 @@ def add_contextual_rescue_spans(text: str, existing: list[Span]) -> list[Span]:
                 current = Span(**{**spans[idx].__dict__})
                 current.confidence = 1.0
                 current.source = "rule"
+                current.decision = None
+                current.decision_reason = None
                 current.postprocess = [*current.postprocess, "contextual_identifier_rescue"]
                 spans[idx] = current
                 continue
@@ -770,6 +850,8 @@ def add_registry_contextual_spans(text: str, existing: list[Span],
                     current = Span(**{**spans[idx].__dict__})
                     current.confidence = confidence
                     current.source = "rule"
+                    current.decision = None
+                    current.decision_reason = None
                     current.postprocess = [*current.postprocess, postprocess_note]
                     spans[idx] = current
                     continue
@@ -787,23 +869,54 @@ def add_registry_contextual_spans(text: str, existing: list[Span],
 
 
 def resolve_overlaps(spans: list[Span]) -> list[Span]:
-    """Keep longer spans first; on ties, keep earlier."""
+    """Keep longer spans first; on overlap, prefer higher confidence."""
     ordered = sorted(
         spans,
         key=lambda s: (0 if s.source == "rule" else 1, s.start, -(s.end - s.start), s.type),
     )
     kept: list[Span] = []
     for span in ordered:
-        if any(span.start < old.end and old.start < span.end for old in kept):
-            continue
-        kept.append(span)
+        conflict_idx = -1
+        for i, old in enumerate(kept):
+            if span.start < old.end and old.start < span.end:
+                conflict_idx = i
+                break
+        if conflict_idx >= 0:
+            old_conf = kept[conflict_idx].confidence or 0.0
+            new_conf = span.confidence or 0.0
+            if new_conf > old_conf:
+                kept[conflict_idx] = span
+        else:
+            kept.append(span)
     return sorted(kept, key=lambda s: (s.start, s.end, s.type))
+
+
+@lru_cache(maxsize=4)
+def _label_alias_map(repo_root: str | None = None) -> dict[str, str]:
+    """Cached label_alias_normalization map from the postprocess registry."""
+    root = Path(repo_root) if repo_root is not None else _repo_root_from_here()
+    registry_path = root / "configs" / "postprocess" / "postprocess_rule_registry.json"
+    if not registry_path.exists():
+        return {}
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    return dict(registry.get("label_alias_normalization", {}))
+
+
+def canonicalize_span_label(span: Span, alias_map: dict[str, str]) -> Span:
+    new_type = alias_map.get(span.type, span.type)
+    if new_type == span.type:
+        return span
+    out = Span(**{**span.__dict__})
+    out.type = new_type
+    out.postprocess = [*out.postprocess, "label_alias_normalization"]
+    return out
 
 
 def safe_postprocess_spans(text: str, spans: list[Span], policy: dict[str, Any]) -> tuple[list[Span], list[str]]:
     """Apply the policy-driven postprocess pipeline. Returns (cleaned_spans, warnings)."""
     config = policy.get("postprocess", {})
     warnings: list[str] = []
+    alias_map = _label_alias_map() if config.get("apply_label_aliases", True) else {}
     processed: list[Span] = []
     for span in spans:
         if not (0 <= span.start < span.end <= len(text)):
@@ -813,6 +926,8 @@ def safe_postprocess_spans(text: str, spans: list[Span], policy: dict[str, Any])
             span = Span(**{**span.__dict__})
             span.value = text[span.start:span.end]
             span.postprocess = [*span.postprocess, "value_reset_from_offsets"]
+        if alias_map:
+            span = canonicalize_span_label(span, alias_map)
         if config.get("drop_common_hard_negatives", True) and should_drop_false_positive(span, text):
             continue
         if config.get("normalize_contextual_labels", True):
@@ -831,5 +946,7 @@ def safe_postprocess_spans(text: str, spans: list[Span], policy: dict[str, Any])
         processed = add_contextual_rescue_spans(text, processed)
     if config.get("add_registry_contextual_spans", True):
         processed = add_registry_contextual_spans(text, processed)
+    if config.get("drop_common_hard_negatives", True):
+        processed = [span for span in processed if not should_drop_false_positive(span, text)]
     processed = resolve_overlaps(processed)
     return processed, warnings

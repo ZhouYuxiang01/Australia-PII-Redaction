@@ -1,0 +1,427 @@
+{
+  "split": "dev",
+  "token_metrics": {
+    "token_accuracy": 0.97805,
+    "o_token_accuracy": 0.989859,
+    "positive_token_accuracy": 0.934071
+  },
+  "span_metrics": {
+    "n_gold": 13237,
+    "n_pred": 13198,
+    "tp_overlap": 12079,
+    "tp_exact": 11155,
+    "exact": {
+      "precision": 0.8452,
+      "recall": 0.8427,
+      "f1": 0.844
+    },
+    "overlap": {
+      "precision": 0.9152,
+      "recall": 0.9125,
+      "f1": 0.9139
+    },
+    "per_label": {
+      "ABORIGINALITY": {
+        "precision": 1.0,
+        "recall": 0.7732,
+        "f1": 0.8721
+      },
+      "ADDRESS": {
+        "precision": 0.7279,
+        "recall": 0.9804,
+        "f1": 0.8355
+      },
+      "AUDIO_INFORMATION": {
+        "precision": 0.9167,
+        "recall": 0.8871,
+        "f1": 0.9016
+      },
+      "AU_TFN": {
+        "precision": 0.9615,
+        "recall": 0.9881,
+        "f1": 0.9747
+      },
+      "BANK_ACCOUNT_INFORMATION": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "BANK_ACCOUNT_NUMBER": {
+        "precision": 0.9616,
+        "recall": 0.9691,
+        "f1": 0.9653
+      },
+      "CAMERA_FOOTAGE_AUDIO": {
+        "precision": 1.0,
+        "recall": 0.9677,
+        "f1": 0.9836
+      },
+      "CARING_RESPONSIBILITIES": {
+        "precision": 1.0,
+        "recall": 0.9444,
+        "f1": 0.9714
+      },
+      "CENTRELINK_REFERENCE_NUMBER": {
+        "precision": 1.0,
+        "recall": 0.954,
+        "f1": 0.9765
+      },
+      "CITIZENSHIP_STATUS": {
+        "precision": 0.8866,
+        "recall": 1.0,
+        "f1": 0.9399
+      },
+      "CONTRACT_TYPE": {
+        "precision": 0.9839,
+        "recall": 0.9919,
+        "f1": 0.9879
+      },
+      "COOKIE_INFORMATION": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "COUNSELLING_RECORDS": {
+        "precision": 0.9906,
+        "recall": 1.0,
+        "f1": 0.9953
+      },
+      "CREDIT_CARD_EXPIRY": {
+        "precision": 0.6614,
+        "recall": 0.954,
+        "f1": 0.7812
+      },
+      "CRIMINAL_RECORDS": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "DATE_OF_BIRTH": {
+        "precision": 0.9877,
+        "recall": 0.6609,
+        "f1": 0.7919
+      },
+      "DEVICE_ID": {
+        "precision": 1.0,
+        "recall": 0.9324,
+        "f1": 0.965
+      },
+      "DISABILITY_OR_SPECIFIC_CONDITION": {
+        "precision": 1.0,
+        "recall": 0.9524,
+        "f1": 0.9756
+      },
+      "DRIVERS_LICENCE": {
+        "precision": 0.9651,
+        "recall": 0.9842,
+        "f1": 0.9746
+      },
+      "EMAIL_ADDRESS": {
+        "precision": 0.8526,
+        "recall": 0.77,
+        "f1": 0.8092
+      },
+      "EMPLOYEE_NUMBER": {
+        "precision": 0.8219,
+        "recall": 0.9756,
+        "f1": 0.8922
+      },
+      "EMPLOYMENT_INFORMATION": {
+        "precision": 1.0,
+        "recall": 0.9675,
+        "f1": 0.9835
+      },
+      "FACIAL_RECOGNITION": {
+        "precision": 0.9016,
+        "recall": 0.8088,
+        "f1": 0.8527
+      },
+      "FINGERPRINT": {
+        "precision": 0.9833,
+        "recall": 0.8676,
+        "f1": 0.9219
+      },
+      "FIRST_NAME": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "GENDER": {
+        "precision": 0.5556,
+        "recall": 0.6,
+        "f1": 0.5769
+      },
+      "GEOLOCATION_INFORMATION": {
+        "precision": 0.6818,
+        "recall": 0.5882,
+        "f1": 0.6316
+      },
+      "HASHED_PAYMENT_CARD_NUMBER": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "HOME_PHONE": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "IHI": {
+        "precision": 0.9874,
+        "recall": 0.9812,
+        "f1": 0.9843
+      },
+      "IP_ADDRESS": {
+        "precision": 0.9605,
+        "recall": 0.9865,
+        "f1": 0.9733
+      },
+      "LAST_NAME": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "LATITUDE": {
+        "precision": 0.6613,
+        "recall": 0.7885,
+        "f1": 0.7193
+      },
+      "LONGITUDE": {
+        "precision": 0.6081,
+        "recall": 0.8824,
+        "f1": 0.72
+      },
+      "MARITAL_STATUS": {
+        "precision": 0.9565,
+        "recall": 0.9778,
+        "f1": 0.967
+      },
+      "MEDICAL_CERTIFICATE": {
+        "precision": 0.9906,
+        "recall": 1.0,
+        "f1": 0.9953
+      },
+      "MEDICAL_INFORMATION": {
+        "precision": 0.963,
+        "recall": 0.9905,
+        "f1": 0.9765
+      },
+      "MEDICARE_EXPIRY": {
+        "precision": 0.9494,
+        "recall": 0.9375,
+        "f1": 0.9434
+      },
+      "MEDICARE_NUMBER": {
+        "precision": 0.8541,
+        "recall": 0.9875,
+        "f1": 0.9159
+      },
+      "MILITARY_VETERAN_STATUS": {
+        "precision": 0.9885,
+        "recall": 0.9556,
+        "f1": 0.9718
+      },
+      "MOBILE": {
+        "precision": 0.9884,
+        "recall": 0.9846,
+        "f1": 0.9865
+      },
+      "NATIONALITY": {
+        "precision": 0.9753,
+        "recall": 0.908,
+        "f1": 0.9405
+      },
+      "NATIONAL_IDENTITY_CARD": {
+        "precision": 0.9775,
+        "recall": 1.0,
+        "f1": 0.9886
+      },
+      "NEXT_OF_KIN": {
+        "precision": 1.0,
+        "recall": 0.9194,
+        "f1": 0.958
+      },
+      "NUMBER_PLATE": {
+        "precision": 0.411,
+        "recall": 0.7143,
+        "f1": 0.5217
+      },
+      "PASSPORT_EXPIRY": {
+        "precision": 0.9643,
+        "recall": 0.9,
+        "f1": 0.931
+      },
+      "PASSPORT_NUMBER": {
+        "precision": 0.994,
+        "recall": 0.9592,
+        "f1": 0.9763
+      },
+      "PASSPORT_START_DATE": {
+        "precision": 1.0,
+        "recall": 0.8889,
+        "f1": 0.9412
+      },
+      "PAYMENT_CARD_NUMBER": {
+        "precision": 0.7963,
+        "recall": 0.9227,
+        "f1": 0.8549
+      },
+      "PENSION_CARD_NUMBER": {
+        "precision": 1.0,
+        "recall": 0.9355,
+        "f1": 0.9667
+      },
+      "PERSON": {
+        "precision": 0.9804,
+        "recall": 0.9571,
+        "f1": 0.9686
+      },
+      "PERSONAL_DEBT": {
+        "precision": 0.956,
+        "recall": 0.9667,
+        "f1": 0.9613
+      },
+      "PERSONNEL_NUMBER": {
+        "precision": 0.9798,
+        "recall": 0.7886,
+        "f1": 0.8739
+      },
+      "PRONOUN": {
+        "precision": 0.9894,
+        "recall": 0.9588,
+        "f1": 0.9738
+      },
+      "RACIAL_ETHNIC_ORIGIN": {
+        "precision": 0.8087,
+        "recall": 1.0,
+        "f1": 0.8942
+      },
+      "RELIGION_BELIEF": {
+        "precision": 1.0,
+        "recall": 0.9897,
+        "f1": 0.9948
+      },
+      "SALARY": {
+        "precision": 0.9935,
+        "recall": 0.9871,
+        "f1": 0.9903
+      },
+      "SALARY_WAGE_EXPECTATION": {
+        "precision": 1.0,
+        "recall": 0.0333,
+        "f1": 0.0645
+      },
+      "SANCTIONS": {
+        "precision": 1.0,
+        "recall": 0.9079,
+        "f1": 0.9517
+      },
+      "SCHOLARSHIP": {
+        "precision": 0.9856,
+        "recall": 0.9013,
+        "f1": 0.9416
+      },
+      "SEXUAL_ORIENTATION": {
+        "precision": 0.9891,
+        "recall": 0.9381,
+        "f1": 0.963
+      },
+      "SIGNATURE": {
+        "precision": 1.0,
+        "recall": 0.9412,
+        "f1": 0.9697
+      },
+      "SOCIAL_MEDIA_ACCOUNT": {
+        "precision": 0.8391,
+        "recall": 0.9481,
+        "f1": 0.8902
+      },
+      "SOCIAL_MEDIA_HISTORY": {
+        "precision": 0.942,
+        "recall": 0.8784,
+        "f1": 0.9091
+      },
+      "SOCIAL_MEDIA_ID": {
+        "precision": 0.7595,
+        "recall": 0.8108,
+        "f1": 0.7843
+      },
+      "SOCIO_ECONOMIC_STATUS": {
+        "precision": 0.9604,
+        "recall": 1.0,
+        "f1": 0.9798
+      },
+      "SPECIAL_CONSIDERATION": {
+        "precision": 1.0,
+        "recall": 0.9905,
+        "f1": 0.9952
+      },
+      "STUDENT_ID": {
+        "precision": 0.9776,
+        "recall": 0.9531,
+        "f1": 0.9652
+      },
+      "SUBJECT_RESULTS": {
+        "precision": 0.9792,
+        "recall": 0.9276,
+        "f1": 0.9527
+      },
+      "UAC_ID": {
+        "precision": 0.8485,
+        "recall": 0.9655,
+        "f1": 0.9032
+      },
+      "USERNAME": {
+        "precision": 0.8356,
+        "recall": 0.8243,
+        "f1": 0.8299
+      },
+      "USI": {
+        "precision": 0.9647,
+        "recall": 0.9425,
+        "f1": 0.9535
+      },
+      "VEHICLE_REGO": {
+        "precision": 0.5333,
+        "recall": 0.3333,
+        "f1": 0.4103
+      },
+      "VOICE_RECOGNITION": {
+        "precision": 1.0,
+        "recall": 0.9853,
+        "f1": 0.9926
+      },
+      "WAM_SCORE": {
+        "precision": 1.0,
+        "recall": 0.9539,
+        "f1": 0.9764
+      },
+      "WEBSITE_HISTORY": {
+        "precision": 1.0,
+        "recall": 0.9595,
+        "f1": 0.9793
+      },
+      "WORKERS_COMPENSATION_CLAIM": {
+        "precision": 0.9365,
+        "recall": 0.9516,
+        "f1": 0.944
+      },
+      "WORK_EMAIL": {
+        "precision": 0.9151,
+        "recall": 0.7886,
+        "f1": 0.8472
+      },
+      "WORK_PHONE": {
+        "precision": 0.9453,
+        "recall": 0.9837,
+        "f1": 0.9641
+      }
+    }
+  },
+  "latency": {
+    "p50_ms": 115.98,
+    "p95_ms": 141.67,
+    "p99_ms": 171.03,
+    "examples_per_sec": 7.34
+  }
+}

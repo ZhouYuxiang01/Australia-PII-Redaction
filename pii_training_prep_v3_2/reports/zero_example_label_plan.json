@@ -1,0 +1,16 @@
+{
+  "zero_example_labels": [
+    "BANK_ACCOUNT_INFORMATION",
+    "FIRST_NAME",
+    "HOME_PHONE",
+    "LAST_NAME"
+  ],
+  "examples_per_label": 20,
+  "generated_counts": {
+    "BANK_ACCOUNT_INFORMATION": 20,
+    "FIRST_NAME": 20,
+    "HOME_PHONE": 20,
+    "LAST_NAME": 20
+  },
+  "generation_mode": "local_draft_examples_no_teacher_calls"
+}

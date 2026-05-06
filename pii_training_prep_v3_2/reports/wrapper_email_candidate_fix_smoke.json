@@ -1,0 +1,89 @@
+{
+  "tests": 3,
+  "results": [
+    {
+      "id": "A_email_only",
+      "text": "Email in profile: leah.nguyen22@student.example.test",
+      "spans": [
+        {
+          "type": "EMAIL_ADDRESS",
+          "start": 18,
+          "end": 52,
+          "value": "leah.nguyen22@student.example.test",
+          "source": "model",
+          "top3_sum": 0.3612545197829604,
+          "risk_score": 0.3193727401085198,
+          "decision": "review"
+        }
+      ],
+      "diag": {
+        "opf_detected": 1,
+        "regex_candidates": 0,
+        "total_candidates": 1
+      }
+    },
+    {
+      "id": "B_multi",
+      "text": "Device ID: IOS-7FA9-00BC-193K\nLast login IP: 203.0.113.45\nEmail in profile: leah.nguyen22@student.example.test\nMobile field: 0410 772 881",
+      "spans": [
+        {
+          "type": "DEVICE_ID",
+          "start": 45,
+          "end": 57,
+          "value": "203.0.113.45",
+          "source": "model",
+          "top3_sum": 0.33131846506148577,
+          "risk_score": 0.3343407674692571,
+          "decision": "review"
+        },
+        {
+          "type": "EMAIL_ADDRESS",
+          "start": 76,
+          "end": 110,
+          "value": "leah.nguyen22@student.example.test",
+          "source": "model",
+          "top3_sum": 0.34468377381563187,
+          "risk_score": 0.32765811309218407,
+          "decision": "review"
+        },
+        {
+          "type": "MOBILE",
+          "start": 125,
+          "end": 137,
+          "value": "0410 772 881",
+          "source": "model",
+          "top3_sum": 0.571352984814439,
+          "risk_score": 0.21432350759278052,
+          "decision": "redact"
+        }
+      ],
+      "diag": {
+        "opf_detected": 3,
+        "regex_candidates": 0,
+        "total_candidates": 3
+      }
+    },
+    {
+      "id": "C_plus",
+      "text": "Contact: a.b+c@example.com",
+      "spans": [
+        {
+          "type": "EMAIL_ADDRESS",
+          "start": 9,
+          "end": 26,
+          "value": "a.b+c@example.com",
+          "source": "regex_candidate:email_like",
+          "top3_sum": 0.8300786962499842,
+          "risk_score": 0.0849606518750079,
+          "decision": "review"
+        }
+      ],
+      "diag": {
+        "opf_detected": 0,
+        "regex_candidates": 1,
+        "total_candidates": 1
+      }
+    }
+  ],
+  "all_ok": true
+}

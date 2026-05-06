@@ -1,0 +1,39 @@
+{
+  "report": "wrapper_prob_risk_consistency_fix",
+  "timestamp": "2026-05-02T06:30:00+10:00",
+  "summary": "Fixed probability display and risk score consistency for the hybrid OPF+Qwen backend",
+  "changes": {
+    "probability_source": "display_prob now equals type_distribution_topk[0][1]",
+    "top_type_consistency": "top_type now equals type_distribution_topk[0][0] when top-k exists",
+    "evidence_fields": "Added pii_evidence_passed and evidence_reason to Span and API output",
+    "risk_zeroing": "risk_score set to 0.0 for all ignore decisions",
+    "frontend_risk": "Risk column shows '—' for ignore decisions instead of percentage bar",
+    "frontend_prob": "Prob column uses top1_prob preferentially"
+  },
+  "decision_order": {
+    "step_1": "non_pii_prob >= 0.50 → ignore (non_pii_high)",
+    "step_2": "top1_prob < 0.20 AND top3_sum < 0.40 → ignore (low_pii_evidence)",
+    "step_3": "negative_context AND top1_prob < 0.70 → ignore (negative_context)",
+    "step_4": "risk_score >= 0.25 → review (high_top3_uncertainty_risk)",
+    "step_5": "otherwise → redact (low_top3_uncertainty_risk)"
+  },
+  "thresholds": {
+    "NON_PII_SUPPRESS": 0.50,
+    "MIN_TOP1_PII": 0.20,
+    "MIN_TOP3_MASS": 0.40,
+    "REVIEW_THRESHOLD": 0.25,
+    "NEGATIVE_CONTEXT_TOP1_MAX": 0.70
+  },
+  "files_modified": [
+    "redaction/core/span.py",
+    "redaction/backends/hybrid_opf_qwen.py",
+    "static/redaction_demo.html"
+  ],
+  "acceptance": {
+    "prob_matches_topk": true,
+    "low_evidence_no_high_risk": true,
+    "strong_bank_still_redacts": true,
+    "no_training_started": true,
+    "no_checkpoint_modified": true
+  }
+}

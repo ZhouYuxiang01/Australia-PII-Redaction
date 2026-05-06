@@ -1,0 +1,1637 @@
+{
+  "warning_examples": {
+    "bare_span_overconfident": [],
+    "bare_date_dob_overconfident": [],
+    "weak_context_overconfident": [],
+    "reverse_negative_non_pii_failure": [],
+    "strong_positive_not_confident": [
+      {
+        "id": "STAGE2-FULL-BASE-0019-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0019-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0019-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0027-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0027-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0027-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0039-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0039-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0039-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0059-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0059-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0059-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0067-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0067-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0067-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0079-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0079-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0079-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0099-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0099-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0099-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0107-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0107-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0107-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0119-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0119-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0119-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0139-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0139-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0139-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0147-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0147-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0147-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0159-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0159-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0159-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0179-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0179-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0179-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0187-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0187-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0187-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0199-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0199-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0199-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0219-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0219-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0219-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0227-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0227-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0227-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0239-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0239-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0239-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0259-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0259-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0259-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0267-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0267-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0267-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0279-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0279-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0279-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0299-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0299-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0299-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0307-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0307-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0307-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0319-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0319-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0319-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0339-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0339-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0339-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0347-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0347-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0347-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0359-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0359-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0359-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0379-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0379-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0379-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "Confirmed field. The field label is FIRST_NAME. Value: Mia.",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0387-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0387-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0387-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0399-SC1",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0399-SC2",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      },
+      {
+        "id": "STAGE2-FULL-BASE-0399-SC3",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Confirmed field. The field label is SOCIAL_MEDIA_ACCOUNT. Value: alex_chen91.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.491803,
+        "non_pii_probability": 0.016393,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.491803,
+          "SOCIAL_MEDIA_ID": 0.245902,
+          "USERNAME": 0.245902,
+          "NON_PII": 0.016393
+        }
+      }
+    ]
+  },
+  "warning_counts": {
+    "bare_span_overconfident_count": 0,
+    "bare_date_dob_overconfident_count": 0,
+    "weak_context_overconfident_count": 0,
+    "reverse_negative_non_pii_failure_count": 0,
+    "strong_positive_not_confident_count": 90
+  }
+}

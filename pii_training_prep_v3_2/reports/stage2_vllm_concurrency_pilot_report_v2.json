@@ -1,0 +1,82 @@
+{
+  "stage": "2.2",
+  "backend": "vllm_openai_async",
+  "base_url": "http://localhost:8000/v1",
+  "model": "qwen3.5-27b",
+  "prompts_attempted": 200,
+  "pilot_prompt_count": 200,
+  "concurrency_levels": [
+    16
+  ],
+  "per_concurrency": {
+    "16": {
+      "concurrency": 16,
+      "prompts_attempted": 200,
+      "total_wall_time_seconds": 145.567,
+      "average_seconds_per_prompt": 0.728,
+      "requests_per_minute": 82.436,
+      "raw_ok_count": 200,
+      "valid_json_outputs": 200,
+      "malformed_json_count": 0,
+      "missing_verdict_count": 0,
+      "unexpected_label_count": 0,
+      "validation_error_count": 0,
+      "labels_outside_training_space": {},
+      "timeout_count": 0,
+      "retry_count": 0,
+      "conversion_error_count": 0,
+      "overconfident_distribution_count": 0
+    }
+  },
+  "best_concurrency": 16,
+  "best_metrics": {
+    "concurrency": 16,
+    "prompts_attempted": 200,
+    "total_wall_time_seconds": 145.567,
+    "average_seconds_per_prompt": 0.728,
+    "requests_per_minute": 82.436,
+    "raw_ok_count": 200,
+    "valid_json_outputs": 200,
+    "malformed_json_count": 0,
+    "missing_verdict_count": 0,
+    "unexpected_label_count": 0,
+    "validation_error_count": 0,
+    "labels_outside_training_space": {},
+    "timeout_count": 0,
+    "retry_count": 0,
+    "conversion_error_count": 0,
+    "overconfident_distribution_count": 0
+  },
+  "prompt_coverage": {
+    "pilot_categories": {
+      "bare_span": 10,
+      "weak_context": 10,
+      "strong_positive_context": 10,
+      "reverse_negative_context": 10,
+      "zero_example_label": 80,
+      "candidate_level_ambiguous_negative": 80
+    },
+    "context_types": {
+      "bare_span": 10,
+      "weak_context": 10,
+      "strong_positive_context": 90,
+      "reverse_negative_context": 90
+    },
+    "zero_example_labels": {
+      "BANK_ACCOUNT_INFORMATION": 20,
+      "FIRST_NAME": 20,
+      "HOME_PHONE": 20,
+      "LAST_NAME": 20
+    },
+    "candidate_level_ambiguous_negative_count": 80
+  },
+  "teacher_calls_executed": 200,
+  "full_6000_teacher_calls_executed": false,
+  "merged_into_training_dataset": false,
+  "output_suffix": "_v2",
+  "output_selection": {
+    "raw_jsonl": "data/generated/stage2_vllm_pilot_200_raw_v2.jsonl",
+    "converted_jsonl": "data/generated/stage2_vllm_pilot_200_converted_v2.jsonl",
+    "selected_from_concurrency": 16
+  }
+}

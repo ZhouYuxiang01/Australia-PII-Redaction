@@ -1,0 +1,10 @@
+{
+  "step": "L2_overfit_smoke",
+  "samples": 300,
+  "steps": 50,
+  "initial_loss": 1.5253459215164185,
+  "final_loss": 1.011235237121582,
+  "loss_drop": 0.5141106843948364,
+  "smoke_result": "PASSED",
+  "device": "cuda"
+}

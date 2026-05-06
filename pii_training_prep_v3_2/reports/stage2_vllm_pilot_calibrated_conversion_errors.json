@@ -1,0 +1,19 @@
+{
+  "conversion_errors": [],
+  "validation_errors": [],
+  "malformed_json_count": 0,
+  "missing_verdict_count": 0,
+  "unexpected_label_count": 0,
+  "overconfident_distribution_count": 1,
+  "overconfident_distributions": [
+    {
+      "id": "STAGE2-VLLM-PILOT-034",
+      "context_type": "weak_context",
+      "top_type": "PAYMENT_CARD_NUMBER",
+      "top_probability": 0.909091,
+      "warnings": [
+        "possibly_overconfident_distribution"
+      ]
+    }
+  ]
+}

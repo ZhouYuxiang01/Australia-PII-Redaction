@@ -3,8 +3,8 @@
   "name": "qwen-9b-lora",
   "model_version": "qwen3.5-9b-base-lora-tagged-28-fastretry",
   "mode": "lora",
-  "base_model_path": "/home/admin/model/Qwen3.5-9B-Base",
-  "adapter_path": "/home/admin/ZYX/Qwen3.5_9b_base_Distill/outputs/qwen3_5_9b_base_lora_tagged_28_fastretry",
+  "base_model_path": "${REDACTION_QWEN_BACKBONE:-/home/admin/model/Qwen3.5-9B-Base}",
+  "adapter_path": "${REDACTION_QWEN9B_LORA_ADAPTER:-/home/admin/ZYX/Qwen3.5_9b_base_Distill/outputs/qwen3_5_9b_base_lora_tagged_28_fastretry}",
   "max_new_tokens": 512,
   "max_concurrent_generate": 4,
   "supported_types": [

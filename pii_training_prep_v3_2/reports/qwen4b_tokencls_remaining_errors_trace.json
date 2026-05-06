@@ -1,0 +1,1479 @@
+{
+  "1_person": {
+    "text": "Spoke to \"Jonno Park\"?? full name Jonathan Min Park.",
+    "tokens": [
+      {
+        "idx": 0,
+        "offset": [
+          0,
+          2
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9998,
+        "char_text": "Sp",
+        "O_prob": 0.9998
+      },
+      {
+        "idx": 1,
+        "offset": [
+          2,
+          5
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "oke",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 2,
+        "offset": [
+          5,
+          8
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " to",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 3,
+        "offset": [
+          8,
+          10
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9913,
+        "char_text": " \"",
+        "O_prob": 0.9913
+      },
+      {
+        "idx": 4,
+        "offset": [
+          10,
+          13
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9942,
+        "char_text": "Jon",
+        "O_prob": 0.9942
+      },
+      {
+        "idx": 5,
+        "offset": [
+          13,
+          15
+        ],
+        "argmax_id": 94,
+        "argmax_label": "I-PERSON",
+        "argmax_prob": 0.9772,
+        "char_text": "no",
+        "O_prob": 0.0228
+      },
+      {
+        "idx": 6,
+        "offset": [
+          15,
+          20
+        ],
+        "argmax_id": 95,
+        "argmax_label": "E-PERSON",
+        "argmax_prob": 0.987,
+        "char_text": " Park",
+        "O_prob": 0.013
+      },
+      {
+        "idx": 7,
+        "offset": [
+          20,
+          21
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9984,
+        "char_text": "\"",
+        "O_prob": 0.9984
+      },
+      {
+        "idx": 8,
+        "offset": [
+          21,
+          23
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "??",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 9,
+        "offset": [
+          23,
+          28
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.8128,
+        "char_text": " full",
+        "O_prob": 0.8128
+      },
+      {
+        "idx": 10,
+        "offset": [
+          28,
+          33
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " name",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 11,
+        "offset": [
+          33,
+          42
+        ],
+        "argmax_id": 94,
+        "argmax_label": "I-PERSON",
+        "argmax_prob": 0.9953,
+        "char_text": " Jonathan",
+        "O_prob": 0.004
+      },
+      {
+        "idx": 12,
+        "offset": [
+          42,
+          46
+        ],
+        "argmax_id": 95,
+        "argmax_label": "E-PERSON",
+        "argmax_prob": 0.9985,
+        "char_text": " Min",
+        "O_prob": 0.0002
+      },
+      {
+        "idx": 13,
+        "offset": [
+          46,
+          51
+        ],
+        "argmax_id": 95,
+        "argmax_label": "E-PERSON",
+        "argmax_prob": 1.0,
+        "char_text": " Park",
+        "O_prob": 0.0
+      },
+      {
+        "idx": 14,
+        "offset": [
+          51,
+          52
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": ".",
+        "O_prob": 1.0
+      }
+    ],
+    "entity_probs": {
+      "PERSON": 0.331073,
+      "FIRST_NAME": 0.0,
+      "LAST_NAME": 0.0
+    },
+    "non_o_predictions": [
+      {
+        "idx": 5,
+        "label": "I-PERSON",
+        "prob": 0.9772,
+        "text": "no"
+      },
+      {
+        "idx": 6,
+        "label": "E-PERSON",
+        "prob": 0.987,
+        "text": " Park"
+      },
+      {
+        "idx": 11,
+        "label": "I-PERSON",
+        "prob": 0.9953,
+        "text": " Jonathan"
+      },
+      {
+        "idx": 12,
+        "label": "E-PERSON",
+        "prob": 0.9985,
+        "text": " Min"
+      },
+      {
+        "idx": 13,
+        "label": "E-PERSON",
+        "prob": 1.0,
+        "text": " Park"
+      }
+    ],
+    "raw_decoded": [],
+    "after_split": [],
+    "after_tighten": [],
+    "after_email_rescue": [],
+    "after_expand": [],
+    "api_spans": [],
+    "redacted": "Spoke to \"Jonno Park\"?? full name Jonathan Min Park."
+  },
+  "2_mia": {
+    "text": "Caller: Mia-Louise Tran / M Tran for enquiry.",
+    "tokens": [
+      {
+        "idx": 0,
+        "offset": [
+          0,
+          6
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "Caller",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 1,
+        "offset": [
+          6,
+          7
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": ":",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 2,
+        "offset": [
+          7,
+          11
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " Mia",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 3,
+        "offset": [
+          11,
+          13
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9969,
+        "char_text": "-L",
+        "O_prob": 0.9969
+      },
+      {
+        "idx": 4,
+        "offset": [
+          13,
+          15
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "ou",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 5,
+        "offset": [
+          15,
+          18
+        ],
+        "argmax_id": 95,
+        "argmax_label": "E-PERSON",
+        "argmax_prob": 0.7754,
+        "char_text": "ise",
+        "O_prob": 0.2246
+      },
+      {
+        "idx": 6,
+        "offset": [
+          18,
+          23
+        ],
+        "argmax_id": 95,
+        "argmax_label": "E-PERSON",
+        "argmax_prob": 1.0,
+        "char_text": " Tran",
+        "O_prob": 0.0
+      },
+      {
+        "idx": 7,
+        "offset": [
+          23,
+          25
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " /",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 8,
+        "offset": [
+          25,
+          27
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " M",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 9,
+        "offset": [
+          27,
+          32
+        ],
+        "argmax_id": 95,
+        "argmax_label": "E-PERSON",
+        "argmax_prob": 0.9969,
+        "char_text": " Tran",
+        "O_prob": 0.0031
+      },
+      {
+        "idx": 10,
+        "offset": [
+          32,
+          36
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " for",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 11,
+        "offset": [
+          36,
+          44
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " enquiry",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 12,
+        "offset": [
+          44,
+          45
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": ".",
+        "O_prob": 1.0
+      }
+    ],
+    "entity_probs": {
+      "PERSON": 0.213497,
+      "FIRST_NAME": 0.0,
+      "LAST_NAME": 0.0,
+      "NEXT_OF_KIN": 0.0
+    },
+    "non_o_predictions": [
+      {
+        "idx": 5,
+        "label": "E-PERSON",
+        "prob": 0.7754,
+        "text": "ise"
+      },
+      {
+        "idx": 6,
+        "label": "E-PERSON",
+        "prob": 1.0,
+        "text": " Tran"
+      },
+      {
+        "idx": 9,
+        "label": "E-PERSON",
+        "prob": 0.9969,
+        "text": " Tran"
+      }
+    ],
+    "raw_decoded": [],
+    "after_split": [],
+    "after_tighten": [],
+    "after_email_rescue": [],
+    "after_expand": [],
+    "api_spans": [],
+    "redacted": "Caller: Mia-Louise Tran / M Tran for enquiry."
+  },
+  "3_usi": {
+    "text": "Student USI = Q7XH-22PL-9A for records.",
+    "tokens": [
+      {
+        "idx": 0,
+        "offset": [
+          0,
+          7
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "Student",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 1,
+        "offset": [
+          7,
+          10
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " US",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 2,
+        "offset": [
+          10,
+          11
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "I",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 3,
+        "offset": [
+          11,
+          13
+        ],
+        "argmax_id": 238,
+        "argmax_label": "I-STUDENT_ID",
+        "argmax_prob": 0.5149,
+        "char_text": " =",
+        "O_prob": 0.1769
+      },
+      {
+        "idx": 4,
+        "offset": [
+          13,
+          15
+        ],
+        "argmax_id": 237,
+        "argmax_label": "B-STUDENT_ID",
+        "argmax_prob": 0.9923,
+        "char_text": " Q",
+        "O_prob": 0.0
+      },
+      {
+        "idx": 5,
+        "offset": [
+          15,
+          16
+        ],
+        "argmax_id": 237,
+        "argmax_label": "B-STUDENT_ID",
+        "argmax_prob": 0.974,
+        "char_text": "7",
+        "O_prob": 0.0093
+      },
+      {
+        "idx": 6,
+        "offset": [
+          16,
+          18
+        ],
+        "argmax_id": 254,
+        "argmax_label": "I-USI",
+        "argmax_prob": 0.9765,
+        "char_text": "XH",
+        "O_prob": 0.0235
+      },
+      {
+        "idx": 7,
+        "offset": [
+          18,
+          19
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9983,
+        "char_text": "-",
+        "O_prob": 0.9983
+      },
+      {
+        "idx": 8,
+        "offset": [
+          19,
+          20
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9942,
+        "char_text": "2",
+        "O_prob": 0.9942
+      },
+      {
+        "idx": 9,
+        "offset": [
+          20,
+          21
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.5589,
+        "char_text": "2",
+        "O_prob": 0.5589
+      },
+      {
+        "idx": 10,
+        "offset": [
+          21,
+          23
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9991,
+        "char_text": "PL",
+        "O_prob": 0.9991
+      },
+      {
+        "idx": 11,
+        "offset": [
+          23,
+          24
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9999,
+        "char_text": "-",
+        "O_prob": 0.9999
+      },
+      {
+        "idx": 12,
+        "offset": [
+          24,
+          25
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9902,
+        "char_text": "9",
+        "O_prob": 0.9902
+      },
+      {
+        "idx": 13,
+        "offset": [
+          25,
+          26
+        ],
+        "argmax_id": 255,
+        "argmax_label": "E-USI",
+        "argmax_prob": 1.0,
+        "char_text": "A",
+        "O_prob": 0.0
+      },
+      {
+        "idx": 14,
+        "offset": [
+          26,
+          30
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " for",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 15,
+        "offset": [
+          30,
+          38
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " records",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 16,
+        "offset": [
+          38,
+          39
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": ".",
+        "O_prob": 1.0
+      }
+    ],
+    "entity_probs": {
+      "USI": 0.117233,
+      "STUDENT_ID": 0.17194,
+      "UAC_ID": 0.0,
+      "VEHICLE_REGO": 0.0
+    },
+    "non_o_predictions": [
+      {
+        "idx": 3,
+        "label": "I-STUDENT_ID",
+        "prob": 0.5149,
+        "text": " ="
+      },
+      {
+        "idx": 4,
+        "label": "B-STUDENT_ID",
+        "prob": 0.9923,
+        "text": " Q"
+      },
+      {
+        "idx": 5,
+        "label": "B-STUDENT_ID",
+        "prob": 0.974,
+        "text": "7"
+      },
+      {
+        "idx": 6,
+        "label": "I-USI",
+        "prob": 0.9765,
+        "text": "XH"
+      },
+      {
+        "idx": 13,
+        "label": "E-USI",
+        "prob": 1.0,
+        "text": "A"
+      }
+    ],
+    "raw_decoded": [
+      {
+        "start": 13,
+        "end": 26,
+        "type": "STUDENT_ID",
+        "conf": 0.342451,
+        "ntokens": 10,
+        "ti": [
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      }
+    ],
+    "after_split": [
+      {
+        "start": 13,
+        "end": 26,
+        "type": "STUDENT_ID",
+        "val": " Q7XH-22PL-9A"
+      }
+    ],
+    "after_tighten": [
+      {
+        "start": 13,
+        "end": 26,
+        "type": "STUDENT_ID",
+        "val": " Q7XH-22PL-9A"
+      }
+    ],
+    "after_email_rescue": [
+      {
+        "start": 13,
+        "end": 26,
+        "type": "STUDENT_ID",
+        "val": " Q7XH-22PL-9A",
+        "is_rescue": false
+      }
+    ],
+    "after_expand": [
+      {
+        "start": 13,
+        "end": 26,
+        "type": "STUDENT_ID",
+        "val": " Q7XH-22PL-9A"
+      }
+    ],
+    "api_spans": [
+      {
+        "type": "STUDENT_ID",
+        "start": 13,
+        "end": 26,
+        "decision": "AUTO_REDACT",
+        "confidence": 0.342451,
+        "top1": 0.24081,
+        "topk": [
+          [
+            "STUDENT_ID",
+            0.24081
+          ],
+          [
+            "USI",
+            0.199296
+          ],
+          [
+            "DRIVERS_LICENCE",
+            0.002492
+          ]
+        ],
+        "val": " Q7XH-22PL-9A"
+      }
+    ],
+    "redacted": "Student USI =[STUDENT_ID] for records."
+  },
+  "4_uac": {
+    "text": "UAC no. 221 904 778 for admission.",
+    "tokens": [
+      {
+        "idx": 0,
+        "offset": [
+          0,
+          1
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "U",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 1,
+        "offset": [
+          1,
+          3
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "AC",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 2,
+        "offset": [
+          3,
+          6
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " no",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 3,
+        "offset": [
+          6,
+          7
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": ".",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 4,
+        "offset": [
+          7,
+          8
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " ",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 5,
+        "offset": [
+          8,
+          9
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "2",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 6,
+        "offset": [
+          9,
+          10
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "2",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 7,
+        "offset": [
+          10,
+          11
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "1",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 8,
+        "offset": [
+          11,
+          12
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " ",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 9,
+        "offset": [
+          12,
+          13
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "9",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 10,
+        "offset": [
+          13,
+          14
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "0",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 11,
+        "offset": [
+          14,
+          15
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9993,
+        "char_text": "4",
+        "O_prob": 0.9993
+      },
+      {
+        "idx": 12,
+        "offset": [
+          15,
+          16
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " ",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 13,
+        "offset": [
+          16,
+          17
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "7",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 14,
+        "offset": [
+          17,
+          18
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "7",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 15,
+        "offset": [
+          18,
+          19
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9956,
+        "char_text": "8",
+        "O_prob": 0.9956
+      },
+      {
+        "idx": 16,
+        "offset": [
+          19,
+          23
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " for",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 17,
+        "offset": [
+          23,
+          33
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " admission",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 18,
+        "offset": [
+          33,
+          34
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": ".",
+        "O_prob": 1.0
+      }
+    ],
+    "entity_probs": {
+      "UAC_ID": 0.0,
+      "STUDENT_ID": 0.0,
+      "USI": 0.0
+    },
+    "non_o_predictions": [],
+    "raw_decoded": [],
+    "after_split": [],
+    "after_tighten": [],
+    "after_email_rescue": [],
+    "after_expand": [],
+    "api_spans": [],
+    "redacted": "UAC no. 221 904 778 for admission."
+  },
+  "5_email": {
+    "text": "Personal email looked like mia.tran04@student.example.edu.au",
+    "tokens": [
+      {
+        "idx": 0,
+        "offset": [
+          0,
+          8
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9998,
+        "char_text": "Personal",
+        "O_prob": 0.9998
+      },
+      {
+        "idx": 1,
+        "offset": [
+          8,
+          14
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " email",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 2,
+        "offset": [
+          14,
+          21
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " looked",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 3,
+        "offset": [
+          21,
+          26
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " like",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 4,
+        "offset": [
+          26,
+          30
+        ],
+        "argmax_id": 65,
+        "argmax_label": "B-EMAIL_ADDRESS",
+        "argmax_prob": 0.8454,
+        "char_text": " mia",
+        "O_prob": 0.0344
+      },
+      {
+        "idx": 5,
+        "offset": [
+          30,
+          33
+        ],
+        "argmax_id": 250,
+        "argmax_label": "I-USERNAME",
+        "argmax_prob": 0.9999,
+        "char_text": ".tr",
+        "O_prob": 0.0001
+      },
+      {
+        "idx": 6,
+        "offset": [
+          33,
+          35
+        ],
+        "argmax_id": 250,
+        "argmax_label": "I-USERNAME",
+        "argmax_prob": 1.0,
+        "char_text": "an",
+        "O_prob": 0.0
+      },
+      {
+        "idx": 7,
+        "offset": [
+          35,
+          36
+        ],
+        "argmax_id": 250,
+        "argmax_label": "I-USERNAME",
+        "argmax_prob": 1.0,
+        "char_text": "0",
+        "O_prob": 0.0
+      },
+      {
+        "idx": 8,
+        "offset": [
+          36,
+          37
+        ],
+        "argmax_id": 250,
+        "argmax_label": "I-USERNAME",
+        "argmax_prob": 0.8774,
+        "char_text": "4",
+        "O_prob": 0.0035
+      },
+      {
+        "idx": 9,
+        "offset": [
+          37,
+          45
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9818,
+        "char_text": "@student",
+        "O_prob": 0.9818
+      },
+      {
+        "idx": 10,
+        "offset": [
+          45,
+          53
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.9995,
+        "char_text": ".example",
+        "O_prob": 0.9995
+      },
+      {
+        "idx": 11,
+        "offset": [
+          53,
+          57
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": ".edu",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 12,
+        "offset": [
+          57,
+          60
+        ],
+        "argmax_id": 67,
+        "argmax_label": "E-EMAIL_ADDRESS",
+        "argmax_prob": 0.9824,
+        "char_text": ".au",
+        "O_prob": 0.0001
+      }
+    ],
+    "entity_probs": {
+      "EMAIL_ADDRESS": 0.140757,
+      "EMAIL": 0.0,
+      "WORK_EMAIL": 0.002764,
+      "USERNAME": 0.31652
+    },
+    "non_o_predictions": [
+      {
+        "idx": 4,
+        "label": "B-EMAIL_ADDRESS",
+        "prob": 0.8454,
+        "text": " mia"
+      },
+      {
+        "idx": 5,
+        "label": "I-USERNAME",
+        "prob": 0.9999,
+        "text": ".tr"
+      },
+      {
+        "idx": 6,
+        "label": "I-USERNAME",
+        "prob": 1.0,
+        "text": "an"
+      },
+      {
+        "idx": 7,
+        "label": "I-USERNAME",
+        "prob": 1.0,
+        "text": "0"
+      },
+      {
+        "idx": 8,
+        "label": "I-USERNAME",
+        "prob": 0.8774,
+        "text": "4"
+      },
+      {
+        "idx": 12,
+        "label": "E-EMAIL_ADDRESS",
+        "prob": 0.9824,
+        "text": ".au"
+      }
+    ],
+    "raw_decoded": [
+      {
+        "start": 26,
+        "end": 57,
+        "type": "EMAIL_ADDRESS",
+        "conf": 0.592641,
+        "ntokens": 8,
+        "ti": [
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      }
+    ],
+    "after_split": [
+      {
+        "start": 26,
+        "end": 57,
+        "type": "EMAIL_ADDRESS",
+        "val": " mia.tran04@student.example.edu"
+      }
+    ],
+    "after_tighten": [
+      {
+        "start": 26,
+        "end": 57,
+        "type": "EMAIL_ADDRESS",
+        "val": " mia.tran04@student.example.edu"
+      }
+    ],
+    "after_email_rescue": [
+      {
+        "start": 26,
+        "end": 57,
+        "type": "EMAIL_ADDRESS",
+        "val": " mia.tran04@student.example.edu",
+        "is_rescue": false
+      },
+      {
+        "start": 27,
+        "end": 60,
+        "type": "EMAIL",
+        "val": "mia.tran04@student.example.edu.au",
+        "is_rescue": true
+      }
+    ],
+    "after_expand": [
+      {
+        "start": 27,
+        "end": 60,
+        "type": "EMAIL_ADDRESS",
+        "val": "mia.tran04@student.example.edu.au"
+      },
+      {
+        "start": 27,
+        "end": 60,
+        "type": "EMAIL",
+        "val": "mia.tran04@student.example.edu.au"
+      }
+    ],
+    "api_spans": [
+      {
+        "type": "EMAIL",
+        "start": 27,
+        "end": 60,
+        "decision": "AUTO_REDACT",
+        "confidence": 1.0,
+        "top1": 1.0,
+        "topk": [
+          [
+            "EMAIL",
+            1.0
+          ]
+        ],
+        "val": "mia.tran04@student.example.edu.au"
+      }
+    ],
+    "redacted": "Personal email looked like [EMAIL]"
+  },
+  "6_rego": {
+    "text": "Also gave car rego: NSW CXT-72Q",
+    "tokens": [
+      {
+        "idx": 0,
+        "offset": [
+          0,
+          4
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "Also",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 1,
+        "offset": [
+          4,
+          9
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " gave",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 2,
+        "offset": [
+          9,
+          13
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " car",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 3,
+        "offset": [
+          13,
+          17
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": " reg",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 4,
+        "offset": [
+          17,
+          18
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": "o",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 5,
+        "offset": [
+          18,
+          19
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 1.0,
+        "char_text": ":",
+        "O_prob": 1.0
+      },
+      {
+        "idx": 6,
+        "offset": [
+          19,
+          23
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.6379,
+        "char_text": " NSW",
+        "O_prob": 0.6379
+      },
+      {
+        "idx": 7,
+        "offset": [
+          23,
+          25
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.6034,
+        "char_text": " C",
+        "O_prob": 0.6034
+      },
+      {
+        "idx": 8,
+        "offset": [
+          25,
+          27
+        ],
+        "argmax_id": 62,
+        "argmax_label": "I-DRIVERS_LICENCE",
+        "argmax_prob": 0.9967,
+        "char_text": "XT",
+        "O_prob": 0.0027
+      },
+      {
+        "idx": 9,
+        "offset": [
+          27,
+          28
+        ],
+        "argmax_id": 0,
+        "argmax_label": "O",
+        "argmax_prob": 0.7711,
+        "char_text": "-",
+        "O_prob": 0.7711
+      },
+      {
+        "idx": 10,
+        "offset": [
+          28,
+          29
+        ],
+        "argmax_id": 62,
+        "argmax_label": "I-DRIVERS_LICENCE",
+        "argmax_prob": 0.9683,
+        "char_text": "7",
+        "O_prob": 0.0002
+      },
+      {
+        "idx": 11,
+        "offset": [
+          29,
+          30
+        ],
+        "argmax_id": 62,
+        "argmax_label": "I-DRIVERS_LICENCE",
+        "argmax_prob": 1.0,
+        "char_text": "2",
+        "O_prob": 0.0
+      },
+      {
+        "idx": 12,
+        "offset": [
+          30,
+          31
+        ],
+        "argmax_id": 62,
+        "argmax_label": "I-DRIVERS_LICENCE",
+        "argmax_prob": 0.6833,
+        "char_text": "Q",
+        "O_prob": 0.3162
+      }
+    ],
+    "entity_probs": {
+      "VEHICLE_REGO": 5.2e-05,
+      "VEHICLE_ID": 0.0,
+      "NUMBER_PLATE": 0.014702,
+      "AU_DRIVERS_LICENCE": 0.0,
+      "AU_PASSPORT": 0.0
+    },
+    "non_o_predictions": [
+      {
+        "idx": 8,
+        "label": "I-DRIVERS_LICENCE",
+        "prob": 0.9967,
+        "text": "XT"
+      },
+      {
+        "idx": 10,
+        "label": "I-DRIVERS_LICENCE",
+        "prob": 0.9683,
+        "text": "7"
+      },
+      {
+        "idx": 11,
+        "label": "I-DRIVERS_LICENCE",
+        "prob": 1.0,
+        "text": "2"
+      },
+      {
+        "idx": 12,
+        "label": "I-DRIVERS_LICENCE",
+        "prob": 0.6833,
+        "text": "Q"
+      }
+    ],
+    "raw_decoded": [],
+    "after_split": [],
+    "after_tighten": [],
+    "after_email_rescue": [],
+    "after_expand": [],
+    "api_spans": [],
+    "redacted": "Also gave car rego: NSW CXT-72Q"
+  }
+}

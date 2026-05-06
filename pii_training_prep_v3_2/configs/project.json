@@ -1,0 +1,10 @@
+{
+  "project_version": "v3.2",
+  "student_model_path": "/home/admin/model/Qwen3.5-9B-Base",
+  "raw_dataset_path": "data/raw/au_pii_19000_final.json",
+  "taxonomy_csv_path": "docs/Data Sensitivity.csv",
+  "label_smoothing": 0.05,
+  "high_confidence_threshold": 0.85,
+  "mainline": "text_only",
+  "vision": "exploratory_extension_only"
+}

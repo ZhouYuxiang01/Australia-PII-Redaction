@@ -2,7 +2,7 @@
   "type": "opf",
   "name": "opf-v3",
   "model_version": "opf-73class-v3-full",
-  "checkpoint_path": "/home/admin/ZYX/opf_au_pii/runs/final/opf_73class_v3_full/checkpoint",
+  "checkpoint_path": "${REDACTION_OPF73_CKPT:-/home/admin/ZYX/opf_au_pii/runs/final/opf_73class_v3_full/checkpoint}",
   "device": "cuda",
   "decode_mode": "viterbi",
   "trim_whitespace": true,

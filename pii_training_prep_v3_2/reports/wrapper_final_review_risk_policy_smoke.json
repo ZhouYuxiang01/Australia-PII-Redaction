@@ -1,0 +1,172 @@
+{
+  "tests": 6,
+  "results": [
+    {
+      "id": "bank",
+      "text": "Bank details: BSB 062-001, account 123456789",
+      "spans": [
+        {
+          "type": "BANK_ACCOUNT_NUMBER",
+          "start": 18,
+          "end": 25,
+          "value": "062-001",
+          "source": "model",
+          "top_probability": 0.9447847008705139,
+          "privacy_score": 0.9451026885468675,
+          "risk_score": 0.05218412765619681,
+          "uncertainty": 0.055215299129486084,
+          "decision": "redact",
+          "decision_reason": "high_confidence_redact"
+        },
+        {
+          "type": "BANK_ACCOUNT_NUMBER",
+          "start": 35,
+          "end": 44,
+          "value": "123456789",
+          "source": "model",
+          "top_probability": 0.9928499460220337,
+          "privacy_score": 0.9928710731528938,
+          "risk_score": 0.007099081766204526,
+          "uncertainty": 0.007150053977966309,
+          "decision": "redact",
+          "decision_reason": "high_confidence_redact"
+        }
+      ]
+    },
+    {
+      "id": "driver",
+      "text": "driver licence NSW: 2098 771 334",
+      "spans": [
+        {
+          "type": "MOBILE",
+          "start": 15,
+          "end": 32,
+          "value": "NSW: 2098 771 334",
+          "source": "model",
+          "top_probability": 0.8588525652885437,
+          "privacy_score": 0.0719182588820817,
+          "risk_score": 0.010151077750120238,
+          "uncertainty": 0.1411474347114563,
+          "decision": "review",
+          "decision_reason": "low_privacy_score_review"
+        }
+      ]
+    },
+    {
+      "id": "bare_5102",
+      "text": "5102 88411",
+      "spans": [
+        {
+          "type": "DRIVERS_LICENCE",
+          "start": 0,
+          "end": 10,
+          "value": "5102 88411",
+          "source": "fallback_full_input",
+          "top_probability": 0.2211175411939621,
+          "privacy_score": 0.5352240792373095,
+          "risk_score": 0.4168766468485533,
+          "uncertainty": 0.7788824588060379,
+          "decision": "review",
+          "decision_reason": "fallback_full_input"
+        }
+      ]
+    },
+    {
+      "id": "student_id",
+      "text": "student ID: 5102 88411",
+      "spans": [
+        {
+          "type": "STUDENT_ID",
+          "start": 12,
+          "end": 22,
+          "value": "5102 88411",
+          "source": "model",
+          "top_probability": 0.7512719631195068,
+          "privacy_score": 0.3938410981972762,
+          "risk_score": 0.09795932319746604,
+          "uncertainty": 0.24872803688049316,
+          "decision": "redact",
+          "decision_reason": "low_review_risk_redact"
+        }
+      ]
+    },
+    {
+      "id": "dob",
+      "text": "DOB 04/05/1998",
+      "spans": [
+        {
+          "type": "DATE_OF_BIRTH",
+          "start": 4,
+          "end": 14,
+          "value": "04/05/1998",
+          "source": "model",
+          "top_probability": 0.9415205121040344,
+          "privacy_score": 0.47263974526675034,
+          "risk_score": 0.02763973026247918,
+          "uncertainty": 0.058479487895965576,
+          "decision": "redact",
+          "decision_reason": "low_review_risk_redact"
+        }
+      ]
+    },
+    {
+      "id": "multi",
+      "text": "Priya Raman, passport M8842190, DOB 01.04.1999, IHI 8003 6012 4516 7791",
+      "spans": [
+        {
+          "type": "PERSON",
+          "start": 0,
+          "end": 11,
+          "value": "Priya Raman",
+          "source": "model",
+          "top_probability": 0.6614233255386353,
+          "privacy_score": 0.3318491575402529,
+          "risk_score": 0.11235638418278435,
+          "uncertainty": 0.33857667446136475,
+          "decision": "redact",
+          "decision_reason": "low_review_risk_redact"
+        },
+        {
+          "type": "PASSPORT_NUMBER",
+          "start": 22,
+          "end": 30,
+          "value": "M8842190",
+          "source": "model",
+          "top_probability": 0.5353220105171204,
+          "privacy_score": 0.5389399331403885,
+          "risk_score": 0.25043352458371326,
+          "uncertainty": 0.46467798948287964,
+          "decision": "review",
+          "decision_reason": "high_review_risk"
+        },
+        {
+          "type": "DATE_OF_BIRTH",
+          "start": 36,
+          "end": 46,
+          "value": "01.04.1999",
+          "source": "model",
+          "top_probability": 0.9378771781921387,
+          "privacy_score": 0.4700428876681043,
+          "risk_score": 0.029200390552658224,
+          "uncertainty": 0.06212282180786133,
+          "decision": "redact",
+          "decision_reason": "low_review_risk_redact"
+        },
+        {
+          "type": "IHI",
+          "start": 52,
+          "end": 71,
+          "value": "8003 6012 4516 7791",
+          "source": "model",
+          "top_probability": 0.7802842855453491,
+          "privacy_score": 0.1288650108693781,
+          "risk_score": 0.02831366793137176,
+          "uncertainty": 0.21971571445465088,
+          "decision": "review",
+          "decision_reason": "low_privacy_score_review"
+        }
+      ]
+    }
+  ],
+  "checks_ok": true
+}

@@ -24,7 +24,7 @@
     "BSB": "(?<!\\d)\\d{3}[-\\s]?\\d{3}(?!\\d)",
     "BANK_ACCOUNT_GROUPED_6_10": "(?<!\\d)\\d(?:[ -]?\\d){5,9}(?!\\d)",
     "TFN_9_GROUPED": "(?<!\\d)\\d{3}[\\s-]?\\d{3}[\\s-]?\\d{3}(?!\\d)",
-    "USI_10_ALNUM_NOT_ALL_NUMERIC": "\\b(?!\\d{10}\\b)[A-Z0-9]{10}\\b",
+    "USI_10_ALNUM_NOT_ALL_NUMERIC": "(?<![A-Z0-9])(?!\\d{10}(?![A-Z0-9-]))[A-Z0-9](?:[A-Z0-9-]){8,11}[A-Z0-9](?![A-Z0-9])",
     "NINE_DIGIT_GROUPED": "(?<!\\d)\\d(?:[ -]?\\d){8}(?!\\d)",
     "STUDENT_ID_8_10_GROUPED": "(?<!\\d)\\d(?:[ -]?\\d){7,9}(?!\\d)",
     "DATE_DMY": "(?<!\\d)(?:0?[1-9]|[12]\\d|3[01])[/.-](?:0?[1-9]|1[0-2])[/.-](?:19|20)\\d{2}(?!\\d)",
@@ -94,12 +94,16 @@
     "EMAIL_ADDRESS": "EMAIL",
     "AU_PHONE": "PHONE",
     "MOBILE_PHONE": "PHONE",
+    "MOBILE": "PHONE",
+    "HOME_PHONE": "PHONE",
     "VEHICLE_REGO": "VEHICLE_ID",
     "NUMBER_PLATE": "VEHICLE_ID",
     "DRIVERS_LICENCE": "AU_DRIVERS_LICENCE",
     "DRIVER_LICENCE_NUMBER": "AU_DRIVERS_LICENCE",
     "PASSPORT_NUMBER": "AU_PASSPORT",
     "TFN": "AU_TFN",
+    "FIRST_NAME": "PERSON",
+    "LAST_NAME": "PERSON",
     "SOCIAL_MEDIA_HANDLE": "SOCIAL_MEDIA_ID",
     "SOCIAL_MEDIA_USERNAME": "SOCIAL_MEDIA_ID"
   },
@@ -171,7 +175,6 @@
         "invoice",
         "receipt",
         "ticket",
-        "reference",
         "student id",
         "sid",
         "uac",
@@ -181,7 +184,15 @@
         "claim",
         "room",
         "order id",
-        "system-generated"
+        "system-generated",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "BANK_ACCOUNT_GROUPED_6_10"
@@ -210,9 +221,16 @@
         "invoice",
         "ticket",
         "receipt",
-        "reference",
         "test token",
-        "placeholder"
+        "placeholder",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "BSB"
@@ -281,8 +299,15 @@
         "placeholder",
         "invoice",
         "receipt",
-        "reference",
-        "order id"
+        "order id",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "PAYMENT_CARD_13_19_GROUPED"
@@ -311,10 +336,17 @@
         "invoice",
         "receipt",
         "ticket",
-        "reference",
         "order",
         "student id",
-        "uac"
+        "uac",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "TFN_9_GROUPED"
@@ -338,11 +370,18 @@
         "student identifier"
       ],
       "negative_triggers": [
-        "reference",
         "test",
         "placeholder",
         "ticket",
-        "invoice"
+        "invoice",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "USI_10_ALNUM_NOT_ALL_NUMERIC"
@@ -411,8 +450,15 @@
         "acct",
         "phone",
         "mobile",
-        "reference",
-        "permit"
+        "permit",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "STUDENT_ID_8_10_GROUPED"
@@ -446,11 +492,18 @@
         "inc-",
         "invoice",
         "receipt",
-        "reference",
         "room",
         "account",
         "uac id",
-        "student id"
+        "student id",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "AU_MOBILE_LOCAL",
@@ -482,10 +535,17 @@
       "negative_triggers": [
         "ticket",
         "invoice",
-        "reference",
         "room",
         "extension",
-        "ext"
+        "ext",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "AU_LANDLINE"
@@ -515,7 +575,14 @@
       "negative_triggers": [
         "ticket",
         "invoice",
-        "reference"
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "AU_LANDLINE"
@@ -706,8 +773,15 @@
         "invoice",
         "receipt",
         "ticket",
-        "reference",
-        "order"
+        "order",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "IHI_16_GROUPED"
@@ -735,8 +809,15 @@
       "negative_triggers": [
         "invoice",
         "ticket",
-        "reference",
-        "account"
+        "account",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "MEDICARE_10_GROUPED"
@@ -794,8 +875,15 @@
       "negative_triggers": [
         "invoice",
         "ticket",
-        "reference",
-        "placeholder"
+        "placeholder",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "PASSPORT_AU_STYLE"
@@ -886,11 +974,18 @@
         "invoice",
         "receipt",
         "ticket",
-        "reference",
         "permit ref",
         "claim ref",
         "system-generated",
-        "uac"
+        "uac",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "DRIVERS_LICENCE_DIGITS"
@@ -984,8 +1079,15 @@
       "negative_triggers": [
         "ticket",
         "invoice",
-        "reference",
-        "order"
+        "order",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "DEVICE_ID_ALNUM_DASH"
@@ -1129,8 +1231,15 @@
       "negative_triggers": [
         "ticket",
         "invoice",
-        "reference",
-        "student id"
+        "student id",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "NATIONAL_ID_ALNUM_DASH"
@@ -1279,8 +1388,15 @@
       "negative_triggers": [
         "ticket",
         "invoice",
-        "reference",
-        "student id"
+        "student id",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "EMPLOYEE_ID"
@@ -1308,7 +1424,14 @@
       "negative_triggers": [
         "ticket",
         "invoice",
-        "reference"
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "PERSONNEL_ID"
@@ -1401,9 +1524,16 @@
         "invoice",
         "receipt",
         "ticket",
-        "reference",
         "placeholder",
-        "example"
+        "example",
+        "ticket reference",
+        "booking reference",
+        "job reference",
+        "reference code",
+        "reference number",
+        "reference id",
+        "order reference",
+        "reference: "
       ],
       "patterns": [
         "EMPLOYMENT_ROLE_TEXT"

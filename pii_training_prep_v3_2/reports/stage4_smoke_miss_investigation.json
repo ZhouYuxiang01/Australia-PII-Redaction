@@ -1,0 +1,69 @@
+{
+  "task": "E_investigation",
+  "investigations": [
+    {
+      "id": "ambiguous_date",
+      "text": "The deadline for submission is 15/06/2025 please confirm.",
+      "expected_label": "DATE_OF_BIRTH",
+      "label_in_canonical_79": true,
+      "label_in_training_80": true,
+      "label_in_opf_space": true,
+      "opf_detected_spans": 0,
+      "opf_spans": [],
+      "expected_detected": false,
+      "training_span_count_estimate": 50,
+      "root_cause": "opf_model_failure_on_pattern"
+    },
+    {
+      "id": "bsb_account",
+      "text": "Please transfer funds to BSB 062-000 account 12345678 for payment.",
+      "expected_label": "BANK_ACCOUNT_NUMBER",
+      "label_in_canonical_79": true,
+      "label_in_training_80": true,
+      "label_in_opf_space": true,
+      "opf_detected_spans": 0,
+      "opf_spans": [],
+      "expected_detected": false,
+      "training_span_count_estimate": 50,
+      "root_cause": "opf_model_failure_on_pattern"
+    },
+    {
+      "id": "medicare",
+      "text": "Medicare number is 2123 45678 1 and expiry is 01/2026.",
+      "expected_label": "MEDICARE_NUMBER",
+      "label_in_canonical_79": true,
+      "label_in_training_80": true,
+      "label_in_opf_space": true,
+      "opf_detected_spans": 0,
+      "opf_spans": [],
+      "expected_detected": false,
+      "training_span_count_estimate": 50,
+      "root_cause": "opf_model_failure_on_pattern"
+    },
+    {
+      "id": "gender_male",
+      "text": "The applicant identifies as male and prefers he/him pronouns.",
+      "expected_label": "GENDER",
+      "label_in_canonical_79": true,
+      "label_in_training_80": true,
+      "label_in_opf_space": true,
+      "opf_detected_spans": 1,
+      "opf_spans": [
+        {
+          "label": "PRONOUN",
+          "value": "he/him"
+        }
+      ],
+      "expected_detected": false,
+      "training_span_count_estimate": 50,
+      "root_cause": "opf_model_failure_on_pattern"
+    }
+  ],
+  "summary": {
+    "detected": 0,
+    "total": 4
+  },
+  "canonical_labels_79_count": 79,
+  "opf_label_space_count": 80,
+  "training_label_space_80_count": 80
+}

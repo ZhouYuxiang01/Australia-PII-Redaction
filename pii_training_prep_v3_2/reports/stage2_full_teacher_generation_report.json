@@ -1,0 +1,52 @@
+{
+  "backend": "vllm_openai",
+  "prompts_attempted": 6000,
+  "raw_ok_count": 6000,
+  "valid_json_outputs": 6000,
+  "converted_count": 6000,
+  "conversion_error_count": 0,
+  "validation_error_count": 0,
+  "labels_outside_training_space": {},
+  "warnings": {},
+  "teacher_calls_executed": 6000,
+  "full_6000_teacher_calls_executed": true,
+  "merged_into_training_dataset": false,
+  "total_wall_time_seconds": 4745.632,
+  "average_seconds_per_prompt": 11.853,
+  "base_example_count": 2000,
+  "self_consistency": 3,
+  "teacher_prompt_count": 6000,
+  "document_level_negative_count": 4,
+  "prompt_coverage": {
+    "context_types": {
+      "bare_span": 300,
+      "weak_context": 300,
+      "strong_positive_context": 1500,
+      "reverse_negative_context": 3900
+    },
+    "generation_buckets": {
+      "ambiguity_context": 1200,
+      "zero_example_label": 1200,
+      "candidate_level_ambiguous_negative": 3600
+    },
+    "zero_example_labels": {
+      "BANK_ACCOUNT_INFORMATION": 300,
+      "FIRST_NAME": 300,
+      "HOME_PHONE": 300,
+      "LAST_NAME": 300
+    },
+    "base_prompt_count": 2000
+  },
+  "wall_time_seconds": 4745.632,
+  "completed_before_run": 0,
+  "attempted_this_run": 6000,
+  "skipped_completed": 0,
+  "student_training_started": false,
+  "resumable": true,
+  "raw_output_written_incrementally": true,
+  "progress_saved_every_prompts": 100,
+  "new_rows_this_run": 6000,
+  "expected_teacher_calls": 6000,
+  "teacher_calls_completed_total": 6000,
+  "full_teacher_calls_completed": true
+}

@@ -1,0 +1,147 @@
+{
+  "backend": "hybrid_opf_qwen_v2",
+  "policy_thresholds": {
+    "redact": 0.7,
+    "review": 0.25
+  },
+  "test_count": 5,
+  "results": [
+    {
+      "id": "student_id",
+      "text": "student ID: 5102 88411",
+      "ms": 212.6,
+      "span_count": 1,
+      "spans": [
+        {
+          "start": 12,
+          "end": 22,
+          "value": "5102 88411",
+          "type": "STUDENT_ID",
+          "source": "model",
+          "opf_top_type": "STUDENT_ID",
+          "top_type": "STUDENT_ID",
+          "top_probability": 0.7512719631195068,
+          "risk_score": 0.393841,
+          "decision": "review",
+          "decision_reason": "risk_based",
+          "redact_threshold": 0.7,
+          "review_threshold": 0.25,
+          "topk_len": 5
+        }
+      ]
+    },
+    {
+      "id": "bank_details",
+      "text": "Bank details: BSB 062-001, account 123456789",
+      "ms": 158.1,
+      "span_count": 2,
+      "spans": [
+        {
+          "start": 18,
+          "end": 25,
+          "value": "062-001",
+          "type": "BANK_ACCOUNT_NUMBER",
+          "source": "model",
+          "opf_top_type": "BANK_ACCOUNT_NUMBER",
+          "top_type": "BANK_ACCOUNT_NUMBER",
+          "top_probability": 0.9447847008705139,
+          "risk_score": 0.945103,
+          "decision": "redact",
+          "decision_reason": "risk_based",
+          "redact_threshold": 0.7,
+          "review_threshold": 0.25,
+          "topk_len": 5
+        },
+        {
+          "start": 35,
+          "end": 44,
+          "value": "123456789",
+          "type": "BANK_ACCOUNT_NUMBER",
+          "source": "model",
+          "opf_top_type": "BANK_ACCOUNT_NUMBER",
+          "top_type": "BANK_ACCOUNT_NUMBER",
+          "top_probability": 0.9928499460220337,
+          "risk_score": 0.992871,
+          "decision": "redact",
+          "decision_reason": "risk_based",
+          "redact_threshold": 0.7,
+          "review_threshold": 0.25,
+          "topk_len": 5
+        }
+      ]
+    },
+    {
+      "id": "order_neg",
+      "text": "Order #123456",
+      "ms": 136.9,
+      "span_count": 1,
+      "spans": [
+        {
+          "start": 0,
+          "end": 13,
+          "value": "Order #123456",
+          "type": "PAYMENT_CARD_NUMBER",
+          "source": "fallback_full_input",
+          "opf_top_type": "",
+          "top_type": "PAYMENT_CARD_NUMBER",
+          "top_probability": 0.9582530856132507,
+          "risk_score": 0.035266,
+          "decision": "analysis",
+          "decision_reason": "fallback_full_input",
+          "redact_threshold": 0.7,
+          "review_threshold": 0.25,
+          "topk_len": 5
+        }
+      ]
+    },
+    {
+      "id": "bare_5102",
+      "text": "5102 88411",
+      "ms": 133.8,
+      "span_count": 1,
+      "spans": [
+        {
+          "start": 0,
+          "end": 10,
+          "value": "5102 88411",
+          "type": "DRIVERS_LICENCE",
+          "source": "fallback_full_input",
+          "opf_top_type": "",
+          "top_type": "DRIVERS_LICENCE",
+          "top_probability": 0.2211175411939621,
+          "risk_score": 0.535224,
+          "decision": "analysis",
+          "decision_reason": "fallback_full_input",
+          "redact_threshold": 0.7,
+          "review_threshold": 0.25,
+          "topk_len": 5
+        }
+      ]
+    },
+    {
+      "id": "dob",
+      "text": "DOB 04/05/1998",
+      "ms": 135.6,
+      "span_count": 1,
+      "spans": [
+        {
+          "start": 4,
+          "end": 14,
+          "value": "04/05/1998",
+          "type": "DATE_OF_BIRTH",
+          "source": "model",
+          "opf_top_type": "DATE_OF_BIRTH",
+          "top_type": "DATE_OF_BIRTH",
+          "top_probability": 0.9415205121040344,
+          "risk_score": 0.47264,
+          "decision": "review",
+          "decision_reason": "risk_based",
+          "redact_threshold": 0.7,
+          "review_threshold": 0.25,
+          "topk_len": 5
+        }
+      ]
+    }
+  ],
+  "consistency_ok": true
+}

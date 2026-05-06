@@ -1,0 +1,210 @@
+{
+  "task": "B_qwen_head_only_eval",
+  "experiment": "last_linear",
+  "temperature": 1.035854,
+  "test": {
+    "top1_accuracy": 0.985342,
+    "top3_accuracy": 0.998895,
+    "nll": 0.085353,
+    "brier_score": 0.015731,
+    "ece": 0.054483,
+    "non_pii_accuracy": 0.571429,
+    "example_count": 13576
+  },
+  "dev": {
+    "top1_accuracy": 0.960688,
+    "nll": 0.108442,
+    "ece": 0.067503
+  },
+  "per_label_accuracy": {
+    "ABORIGINALITY": 0.978947,
+    "ADDRESS": 1.0,
+    "AUDIO_INFORMATION": 1.0,
+    "AU_TFN": 0.995902,
+    "BANK_ACCOUNT_INFORMATION": 1.0,
+    "BANK_ACCOUNT_NUMBER": 1.0,
+    "CAMERA_FOOTAGE_AUDIO": 1.0,
+    "CARING_RESPONSIBILITIES": 1.0,
+    "CENTRELINK_REFERENCE_NUMBER": 1.0,
+    "CITIZENSHIP_STATUS": 1.0,
+    "CONTRACT_TYPE": 1.0,
+    "COOKIE_INFORMATION": 1.0,
+    "COUNSELLING_RECORDS": 1.0,
+    "CREDIT_CARD_EXPIRY": 1.0,
+    "CRIMINAL_RECORDS": 1.0,
+    "DATE_OF_BIRTH": 0.997148,
+    "DEVICE_ID": 1.0,
+    "DISABILITY_OR_SPECIFIC_CONDITION": 1.0,
+    "DRIVERS_LICENCE": 1.0,
+    "EMAIL_ADDRESS": 0.998028,
+    "EMPLOYEE_NUMBER": 1.0,
+    "EMPLOYMENT_INFORMATION": 1.0,
+    "FACIAL_RECOGNITION": 1.0,
+    "FINGERPRINT": 0.986486,
+    "FIRST_NAME": 0.866667,
+    "GENDER": 1.0,
+    "GEOLOCATION_INFORMATION": 0.846154,
+    "HASHED_PAYMENT_CARD_NUMBER": 0.979592,
+    "HOME_PHONE": 0.925926,
+    "IHI": 0.994048,
+    "IP_ADDRESS": 1.0,
+    "LAST_NAME": 1.0,
+    "LATITUDE": 1.0,
+    "LONGITUDE": 0.554348,
+    "MARITAL_STATUS": 1.0,
+    "MEDICAL_CERTIFICATE": 1.0,
+    "MEDICAL_INFORMATION": 1.0,
+    "MEDICARE_EXPIRY": 1.0,
+    "MEDICARE_NUMBER": 1.0,
+    "MILITARY_VETERAN_STATUS": 1.0,
+    "MOBILE": 1.0,
+    "NATIONALITY": 1.0,
+    "NATIONAL_IDENTITY_CARD": 1.0,
+    "NEXT_OF_KIN": 1.0,
+    "NON_PII": 0.571429,
+    "NUMBER_PLATE": 0.411765,
+    "PASSPORT_EXPIRY": 1.0,
+    "PASSPORT_NUMBER": 0.996951,
+    "PASSPORT_START_DATE": 1.0,
+    "PAYMENT_CARD_NUMBER": 0.995516,
+    "PENSION_CARD_NUMBER": 1.0,
+    "PERSON": 1.0,
+    "PERSONAL_DEBT": 1.0,
+    "PERSONNEL_NUMBER": 1.0,
+    "PRONOUN": 0.989474,
+    "RACIAL_ETHNIC_ORIGIN": 0.989474,
+    "RELIGION_BELIEF": 1.0,
+    "SALARY": 1.0,
+    "SALARY_WAGE_EXPECTATION": 1.0,
+    "SANCTIONS": 1.0,
+    "SCHOLARSHIP": 1.0,
+    "SEXUAL_ORIENTATION": 1.0,
+    "SIGNATURE": 1.0,
+    "SOCIAL_MEDIA_ACCOUNT": 1.0,
+    "SOCIAL_MEDIA_HISTORY": 1.0,
+    "SOCIAL_MEDIA_ID": 0.98913,
+    "SOCIO_ECONOMIC_STATUS": 1.0,
+    "SPECIAL_CONSIDERATION": 1.0,
+    "STUDENT_ID": 1.0,
+    "SUBJECT_RESULTS": 1.0,
+    "UAC_ID": 0.976744,
+    "USERNAME": 1.0,
+    "USI": 1.0,
+    "VEHICLE_REGO": 0.556962,
+    "VOICE_RECOGNITION": 1.0,
+    "WAM_SCORE": 1.0,
+    "WEBSITE_HISTORY": 1.0,
+    "WORKERS_COMPENSATION_CLAIM": 1.0,
+    "WORK_EMAIL": 0.992126,
+    "WORK_PHONE": 0.984252
+  },
+  "low_accuracy_labels_below_080": {
+    "LONGITUDE": 0.554348,
+    "NON_PII": 0.571429,
+    "NUMBER_PLATE": 0.411765,
+    "VEHICLE_REGO": 0.556962
+  },
+  "confusion_top20": [
+    {
+      "gold": "NUMBER_PLATE",
+      "predicted": "VEHICLE_REGO",
+      "count": 50
+    },
+    {
+      "gold": "LONGITUDE",
+      "predicted": "GEOLOCATION_INFORMATION",
+      "count": 41
+    },
+    {
+      "gold": "VEHICLE_REGO",
+      "predicted": "NUMBER_PLATE",
+      "count": 35
+    },
+    {
+      "gold": "NON_PII",
+      "predicted": "ADDRESS",
+      "count": 27
+    },
+    {
+      "gold": "GEOLOCATION_INFORMATION",
+      "predicted": "LONGITUDE",
+      "count": 14
+    },
+    {
+      "gold": "HOME_PHONE",
+      "predicted": "MOBILE",
+      "count": 4
+    },
+    {
+      "gold": "FIRST_NAME",
+      "predicted": "PERSON",
+      "count": 3
+    },
+    {
+      "gold": "FIRST_NAME",
+      "predicted": "LAST_NAME",
+      "count": 3
+    },
+    {
+      "gold": "DATE_OF_BIRTH",
+      "predicted": "MEDICARE_EXPIRY",
+      "count": 3
+    },
+    {
+      "gold": "UAC_ID",
+      "predicted": "NON_PII",
+      "count": 2
+    },
+    {
+      "gold": "WORK_PHONE",
+      "predicted": "MOBILE",
+      "count": 2
+    },
+    {
+      "gold": "GEOLOCATION_INFORMATION",
+      "predicted": "LATITUDE",
+      "count": 2
+    },
+    {
+      "gold": "HASHED_PAYMENT_CARD_NUMBER",
+      "predicted": "PAYMENT_CARD_NUMBER",
+      "count": 1
+    },
+    {
+      "gold": "AU_TFN",
+      "predicted": "NON_PII",
+      "count": 1
+    },
+    {
+      "gold": "PASSPORT_NUMBER",
+      "predicted": "NON_PII",
+      "count": 1
+    },
+    {
+      "gold": "EMAIL_ADDRESS",
+      "predicted": "NON_PII",
+      "count": 1
+    },
+    {
+      "gold": "ABORIGINALITY",
+      "predicted": "RACIAL_ETHNIC_ORIGIN",
+      "count": 1
+    },
+    {
+      "gold": "RACIAL_ETHNIC_ORIGIN",
+      "predicted": "NON_PII",
+      "count": 1
+    },
+    {
+      "gold": "FINGERPRINT",
+      "predicted": "VOICE_RECOGNITION",
+      "count": 1
+    },
+    {
+      "gold": "PRONOUN",
+      "predicted": "NON_PII",
+      "count": 1
+    }
+  ],
+  "high_entropy_examples": []
+}

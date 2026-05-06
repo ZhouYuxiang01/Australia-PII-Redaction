@@ -1,0 +1,109 @@
+{
+  "warning_examples": {
+    "bare_span_overconfident": [
+      {
+        "id": "STAGE2-VLLM-PILOT-033",
+        "reason": "bare span top_probability > 0.70",
+        "context_type": "bare_span",
+        "ambiguity_group": "card_or_health_id",
+        "span_value": "4111111111111111",
+        "context": "4111111111111111",
+        "top_type": "PAYMENT_CARD_NUMBER",
+        "top_probability": 0.833332,
+        "non_pii_probability": 0.055556,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PAYMENT_CARD_NUMBER": 0.833332,
+          "MEDICARE_NUMBER": 0.055556,
+          "IHI": 0.055556,
+          "NON_PII": 0.055556
+        }
+      }
+    ],
+    "bare_date_dob_overconfident": [],
+    "weak_context_overconfident": [
+      {
+        "id": "STAGE2-VLLM-PILOT-034",
+        "reason": "weak context top_probability > 0.80",
+        "context_type": "weak_context",
+        "ambiguity_group": "card_or_health_id",
+        "span_value": "4111111111111111",
+        "context": "Number: 4111111111111111",
+        "top_type": "PAYMENT_CARD_NUMBER",
+        "top_probability": 0.909091,
+        "non_pii_probability": 0.030303,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PAYMENT_CARD_NUMBER": 0.909091,
+          "MEDICARE_NUMBER": 0.030303,
+          "IHI": 0.030303,
+          "NON_PII": 0.030303
+        }
+      }
+    ],
+    "reverse_negative_non_pii_failure": [],
+    "strong_positive_not_confident": [
+      {
+        "id": "STAGE2-VLLM-PILOT-019",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "name",
+        "span_value": "Mia",
+        "context": "First name: Mia",
+        "top_type": "PERSON",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "PERSON": 0.483871,
+          "FIRST_NAME": 0.483871,
+          "LAST_NAME": 0.016129,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-VLLM-PILOT-027",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "coordinates",
+        "span_value": "-33.8688",
+        "context": "Latitude -33.8688 was captured for the residential address.",
+        "top_type": "LATITUDE",
+        "top_probability": 0.483871,
+        "non_pii_probability": 0.016129,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "LATITUDE": 0.483871,
+          "LONGITUDE": 0.016129,
+          "GEOLOCATION_INFORMATION": 0.483871,
+          "NON_PII": 0.016129
+        }
+      },
+      {
+        "id": "STAGE2-VLLM-PILOT-039",
+        "reason": "strong positive context top_probability < 0.50",
+        "context_type": "strong_positive",
+        "ambiguity_group": "social_account",
+        "span_value": "alex_chen91",
+        "context": "Social media account alex_chen91 was listed on the disclosure form.",
+        "top_type": "SOCIAL_MEDIA_ACCOUNT",
+        "top_probability": 0.329671,
+        "non_pii_probability": 0.010989,
+        "date_of_birth_probability": 0.0,
+        "type_distribution": {
+          "SOCIAL_MEDIA_ACCOUNT": 0.329671,
+          "SOCIAL_MEDIA_ID": 0.32967,
+          "USERNAME": 0.32967,
+          "NON_PII": 0.010989
+        }
+      }
+    ]
+  },
+  "warning_counts": {
+    "bare_span_overconfident_count": 1,
+    "bare_date_dob_overconfident_count": 0,
+    "weak_context_overconfident_count": 1,
+    "reverse_negative_non_pii_failure_count": 0,
+    "strong_positive_not_confident_count": 3
+  }
+}

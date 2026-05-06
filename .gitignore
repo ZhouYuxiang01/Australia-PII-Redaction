@@ -42,6 +42,8 @@ Thumbs.db
 **/data/processed/
 **/data/external_eval/
 **/data/eval_external_1000/
+pii_training_prep_v3_2/data/
+pii_training_prep_v3_2/nohup.out
 
 # Temporary / local files
 *.tmp

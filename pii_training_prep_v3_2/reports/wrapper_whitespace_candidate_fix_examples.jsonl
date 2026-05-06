@@ -1,0 +1,5 @@
+{"id":"A_clean","text":"'47009923'","spans":[{"type":"DRIVERS_LICENCE","start":0,"end":8,"value":"47009923","source":"model","top3_sum":0.42012588679790497,"risk_score":0.2899370566010475,"decision":"review"}]}
+{"id":"B_padded","text":"'\\n\\n  47009923\\n'","spans":[{"type":"DRIVERS_LICENCE","start":4,"end":12,"value":"47009923","source":"fallback_full_input","top3_sum":0.559053648263216,"risk_score":0.220473175868392,"decision":"review"}]}
+{"id":"C_whitespace","text":"'   \\n\\t  '","spans":[]}
+{"id":"D_student","text":"'student ID: 5102 88411'","spans":[{"type":"STUDENT_ID","start":12,"end":22,"value":"5102 88411","source":"model","top3_sum":0.764524812810123,"risk_score":0.11773759359493852,"decision":"redact"}]}
+{"id":"E_dob","text":"'DOB 04/05/1998'","spans":[{"type":"DATE_OF_BIRTH","start":4,"end":14,"value":"04/05/1998","source":"model","top3_sum":0.9432430795277469,"risk_score":0.028378460236126557,"decision":"redact"}]}

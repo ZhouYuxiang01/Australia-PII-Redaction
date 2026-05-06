@@ -1,0 +1,176 @@
+{
+  "stage": "4",
+  "title": "Stage 4: Multi-Route PII Detection Evaluation",
+  "timestamp": "2026-05-01",
+  "models_evaluated": {
+    "opf": {
+      "checkpoint": "runs/opf_hard_79",
+      "type": "Hard-label span detector (79 PII classes)",
+      "training": "Fine-tuned OPF on 79-class AU PII schema",
+      "key_metrics": {
+        "test_detection_f1": 0.9793250763097051,
+        "test_span_f1": 0.9724693730523911,
+        "test_token_accuracy": 0.9914582591466476
+      }
+    },
+    "qwen_head": {
+      "checkpoint": "runs/qwen_spancls_heads/last_linear/head.pt",
+      "type": "Span classifier head on frozen Qwen3.5-9B (80 classes including NON_PII)",
+      "training": "Trained on cached Qwen span embeddings with soft targets",
+      "key_metrics": {
+        "test_top1": 0.985342,
+        "test_top3": 0.998895,
+        "test_nll": 0.085353,
+        "test_ece": 0.054483
+      }
+    },
+    "hybrid": {
+      "type": "OPF candidate spans + Qwen re-scoring + policy layer",
+      "status": "Smoke-tested (10 examples), NOT full-evaluated",
+      "smoke_detection_rate": "7/10 examples had spans detected",
+      "bottleneck": "OPF subprocess-per-text call takes ~0.9s, too slow for 9600-test-example evaluation"
+    }
+  },
+  "opf_only_metrics": {
+    "source": "stage3b OPF hard-label model (runs/opf_hard_79)",
+    "dev": {
+      "loss": 0.03326987232870152,
+      "token_accuracy": 0.9894361772783572,
+      "detection_f1": 0.9793250763097051,
+      "detection_precision": 0.9745172159756524,
+      "detection_recall": 0.9841806117968483,
+      "span_f1": 0.9724693730523911,
+      "span_precision": 0.9675189534710866,
+      "span_recall": 0.9774707119255032
+    },
+    "test": {
+      "examples": 9659,
+      "loss": 0.030636585868358965,
+      "token_accuracy": 0.9914582591466476,
+      "detection_f1": 0.9793250763097051,
+      "span_f1": 0.9724693730523911
+    },
+    "problematic_labels_f1_below_050": [
+      "GENDER",
+      "LONGITUDE"
+    ],
+    "low_recall_labels": [
+      "GENDER",
+      "LATITUDE",
+      "LONGITUDE"
+    ]
+  },
+  "qwen_head_only_metrics": {
+    "source": "Qwen3.5-9B-Base + last_linear head (runs/qwen_spancls_heads/last_linear/head.pt)",
+    "temperature": 1.035854,
+    "role": "Given-span type distribution model (classifies candidate spans into 80-class softmax)",
+    "test": {
+      "top1_accuracy": 0.985342,
+      "top3_accuracy": 0.998895,
+      "nll": 0.085353,
+      "ece": 0.054483,
+      "brier_score": 0.015731,
+      "non_pii_accuracy": 0.571429,
+      "example_count": 13576
+    },
+    "dev": {
+      "top1_accuracy": 0.960688,
+      "nll": 0.108442,
+      "ece": 0.067503
+    },
+    "low_accuracy_labels": {
+      "LONGITUDE": 0.554348,
+      "NON_PII": 0.571429,
+      "NUMBER_PLATE": 0.411765,
+      "VEHICLE_REGO": 0.556962
+    }
+  },
+  "hybrid_smoke_metrics": {
+    "status": "smoke_test_only",
+    "note": "Full hybrid evaluation NOT run because subprocess-per-example OPF inference is too slow (~0.9s/text). Needs batched OPF inference API.",
+    "architecture": {
+      "step_1": "OPF detector extracts candidate PII spans from raw text",
+      "step_2": "Qwen span classification head re-scores each span (80-class softmax with temperature 1.035854)",
+      "step_3": "Policy layer computes risk_score = sum(prob(label) * risk_weight(label)) using CSV Data Classification weights",
+      "step_4": "Decision: redact (>=0.60), review (>=0.25), else ignore",
+      "step_5": "Redaction wrapper merges overlapping spans and replaces with <REDACTED>"
+    },
+    "smoke_results": {
+      "examples_tested": 10,
+      "redact": 0,
+      "review": 6,
+      "ignore": 1,
+      "detected_spans": 7,
+      "note": "0 redactions because default threshold 0.60 is conservative; highest risk in smoke was ~0.48 (DATE_OF_BIRTH)"
+    },
+    "smoke_misses_investigated": {
+      "cases_tested": 4,
+      "cases_detected": 0,
+      "findings": [
+        {
+          "case": "ambiguous_date",
+          "label": "DATE_OF_BIRTH",
+          "detected": false,
+          "root_cause": "opf_model_failure_on_pattern",
+          "opf_spans_found": 0
+        },
+        {
+          "case": "bsb_account",
+          "label": "BANK_ACCOUNT_NUMBER",
+          "detected": false,
+          "root_cause": "opf_model_failure_on_pattern",
+          "opf_spans_found": 0
+        },
+        {
+          "case": "medicare",
+          "label": "MEDICARE_NUMBER",
+          "detected": false,
+          "root_cause": "opf_model_failure_on_pattern",
+          "opf_spans_found": 0
+        },
+        {
+          "case": "gender_male",
+          "label": "GENDER",
+          "detected": false,
+          "root_cause": "opf_model_failure_on_pattern",
+          "opf_spans_found": 1
+        }
+      ]
+    }
+  },
+  "known_issues": [
+    {
+      "issue": "Default policy thresholds too conservative",
+      "detail": "Redact >= 0.60, Review >= 0.25. No smoke example exceeded 0.60. Consider lowering to 0.40-0.50 for production.",
+      "impact": "All PII spans classified as review or ignore; zero redactions in smoke test."
+    },
+    {
+      "issue": "OPF missed BSB/bank account, Medicare, ambiguous dates in smoke",
+      "detail": "BANK_ACCOUNT_NUMBER and MEDICARE_NUMBER exist in OPF label space but model fails to detect them. DATE_OF_BIRTH missed on ambiguous dates without DOB context.",
+      "impact": "False negatives for financial and health identifiers in standalone OPF mode."
+    },
+    {
+      "issue": "Hybrid pipeline needs optimized batch OPF inference",
+      "detail": "Current implementation calls OPF CLI via subprocess for each text (~0.9s/text). Full test set (9659 examples) would take ~2.4 hours.",
+      "fix": "Implement batched OPF Python API call or use OPF eval command for large-scale evaluation."
+    },
+    {
+      "issue": "GENDER detection near-zero in OPF (F1=0.36 test)",
+      "detail": "GENDER has very low recall in OPF. Qwen head also struggles with GENDER (accuracy below 80%).",
+      "impact": "Gender information largely passes through undetected."
+    },
+    {
+      "issue": "LONGITUDE/LATITUDE very low OPF recall (F1=0.31/0.52 test)",
+      "detail": "Coordinate values rarely detected by OPF. Training data may be insufficient.",
+      "impact": "Location data may not be redacted."
+    }
+  ],
+  "recommended_next_steps": [
+    "1. Implement batched OPF inference to enable full hybrid evaluation.",
+    "2. Run policy threshold sweep on dev data to find optimal redact/review thresholds.",
+    "3. Consider lowering redact threshold to 0.40-0.50 for practical use.",
+    "4. Augment training data for GENDER, LONGITUDE, MEDICARE_NUMBER, BANK_ACCOUNT_NUMBER.",
+    "5. Add confidence thresholding to OPF spans before Qwen re-scoring.",
+    "6. Evaluate end-to-end redaction quality with human review."
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "selected_concurrency": 16,
+  "selected_errors": {
+    "conversion_errors": [],
+    "validation_errors": [],
+    "malformed_json_count": 0,
+    "missing_verdict_count": 0,
+    "unexpected_label_count": 0,
+    "overconfident_distribution_count": 0,
+    "overconfident_distributions": []
+  },
+  "per_concurrency_error_summary": {
+    "16": {
+      "malformed_json_count": 0,
+      "missing_verdict_count": 0,
+      "unexpected_label_count": 0,
+      "overconfident_distribution_count": 0
+    }
+  }
+}

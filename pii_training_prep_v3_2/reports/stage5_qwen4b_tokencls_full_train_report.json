@@ -1,0 +1,28 @@
+{
+  "model_path": "/home/admin/model/Qwen3.5-4B-Base",
+  "hidden_size": 2560,
+  "num_labels": 317,
+  "freeze_backbone": true,
+  "batch_size": 4,
+  "gradient_accumulation": 4,
+  "epochs": 3,
+  "learning_rate": 0.001,
+  "weight_decay": 0.01,
+  "train_rows": 81298,
+  "dev_rows": 10034,
+  "best_dev_accuracy": 0.978039,
+  "final_dev_metrics": {
+    "loss": 0.24563889599120975,
+    "token_accuracy": 0.97892,
+    "o_token_accuracy": 0.985097,
+    "positive_token_accuracy": 0.95592,
+    "total_tokens": 554800,
+    "positive_tokens": 117445
+  },
+  "trainable_params": {
+    "backbone_trainable": 0,
+    "head_trainable": 811837,
+    "total_trainable": 811837
+  },
+  "wall_time_seconds": 21487.2
+}

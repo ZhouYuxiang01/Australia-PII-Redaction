@@ -1,0 +1,47 @@
+{
+  "checked_at": "2026-05-01",
+  "tmux_session_exists": false,
+  "training_process_running": false,
+  "gpu_process_detected": false,
+  "full_training_completed": true,
+  "full_training_failed": false,
+  "output_dir_exists": true,
+  "checkpoint_files": [
+    "USAGE.txt",
+    "config.json",
+    "model.safetensors",
+    "finetune_summary.json"
+  ],
+  "train_log_tail_last_5": [
+    "epoch 1/1: train_loss=0.110467 val_loss=0.033432 val_token_accuracy=0.9898",
+    "finetune complete",
+    "output_checkpoint: runs/opf_hard_79",
+    "best_epoch: 1 validation_loss: 0.033432",
+    "finished_at=2026-05-01T08:59:29+10:00"
+  ],
+  "dev_eval_done": true,
+  "dev_eval": {
+    "loss": 0.03326987232870152,
+    "token_accuracy": 0.9894361772783572,
+    "detection_f1": 0.9723500333021698,
+    "span_f1": 0.9606381615090991
+  },
+  "test_eval_done": true,
+  "test_eval": {
+    "loss": 0.030636585868358965,
+    "token_accuracy": 0.9914582591466476,
+    "detection_f1": 0.9793250763097051,
+    "span_f1": 0.9724693730523911
+  },
+  "report_paths": [
+    "reports/stage3b_opf_hard_status.json",
+    "reports/stage3b_opf_hard_dev_eval.json",
+    "reports/stage3b_opf_hard_dev_predictions.jsonl",
+    "reports/stage3b_opf_hard_test_eval.json",
+    "reports/stage3b_opf_hard_test_predictions.jsonl",
+    "reports/stage3b_opf_hard_eval_summary.json",
+    "reports/stage3b_opf_hard_errors.json",
+    "reports/stage3b_opf_hard_status_after_wakeup.json"
+  ],
+  "next_recommended_step": "OPF hard-label baseline training completed with strong results. Ready for downstream pipeline integration."
+}

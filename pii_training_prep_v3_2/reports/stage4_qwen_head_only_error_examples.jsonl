@@ -1,0 +1,4 @@
+{"label":"NUMBER_PLATE","accuracy":0.411765,"note":"accuracy below 0.80"}
+{"label":"LONGITUDE","accuracy":0.554348,"note":"accuracy below 0.80"}
+{"label":"VEHICLE_REGO","accuracy":0.556962,"note":"accuracy below 0.80"}
+{"label":"NON_PII","accuracy":0.571429,"note":"accuracy below 0.80"}

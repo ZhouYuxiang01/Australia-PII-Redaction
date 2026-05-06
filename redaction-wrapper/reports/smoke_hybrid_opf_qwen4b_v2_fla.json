@@ -1,0 +1,442 @@
+{
+  "task": "wrapper_hybrid_full_offline_eval",
+  "backend_config": "reports/backend-hybrid-opf-qwen4b-v2.json",
+  "policy_config": "configs/policies/hybrid-80class-v2-4b.json",
+  "policy_id": "hybrid-80class-v2-4b",
+  "schema_version": "redaction-output-v1",
+  "test_set": "/home/admin/ZYX/pii_training_prep_v3_2/data/train/opf_test_opf_format.jsonl",
+  "total_records": 50,
+  "evaluated": 50,
+  "skipped_long": 0,
+  "errors": 0,
+  "elapsed_seconds": 4.79,
+  "throughput_examples_per_sec": 10.438,
+  "metrics": {
+    "exact": {
+      "precision": 0.71,
+      "recall": 0.8659,
+      "f1": 0.7802,
+      "tp": 71,
+      "fp": 29,
+      "fn": 11
+    },
+    "overlap": {
+      "precision": 0.78,
+      "recall": 0.9398,
+      "f1": 0.8525,
+      "f2": 0.9028,
+      "tp": 78,
+      "fp": 22,
+      "fn": 5
+    },
+    "type_accuracy_on_overlap": 0.9487,
+    "type_correct": 74,
+    "type_total": 78
+  },
+  "per_label": {
+    "ADDRESS": {
+      "support": 8,
+      "precision": 0.8889,
+      "recall": 1.0,
+      "f1": 0.9412,
+      "tp": 8,
+      "fp": 1,
+      "fn": 0
+    },
+    "AU_BANK_ACCOUNT": {
+      "support": 4,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 4,
+      "fp": 0,
+      "fn": 0
+    },
+    "AU_DRIVERS_LICENCE": {
+      "support": 2,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 2,
+      "fp": 0,
+      "fn": 0
+    },
+    "AU_PASSPORT": {
+      "support": 3,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+    },
+    "AU_TFN": {
+      "support": 2,
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6667,
+      "tp": 2,
+      "fp": 2,
+      "fn": 0
+    },
+    "CARING_RESPONSIBILITIES": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "CONTRACT_TYPE": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "COOKIE_INFORMATION": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "COUNSELLING_RECORDS": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "CREDIT_CARD_EXPIRY": {
+      "support": 4,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 4,
+      "fp": 0,
+      "fn": 0
+    },
+    "DATE_OF_BIRTH": {
+      "support": 5,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 5,
+      "fp": 0,
+      "fn": 0
+    },
+    "DEVICE_ID": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "DISABILITY_OR_SPECIFIC_CONDITION": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "EMAIL": {
+      "support": 2,
+      "precision": 0.25,
+      "recall": 1.0,
+      "f1": 0.4,
+      "tp": 2,
+      "fp": 6,
+      "fn": 0
+    },
+    "EMPLOYEE_NUMBER": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "EMPLOYMENT_INFORMATION": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "GEOLOCATION_INFORMATION": {
+      "support": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 1
+    },
+    "IP_ADDRESS": {
+      "support": 1,
+      "precision": 0.2,
+      "recall": 1.0,
+      "f1": 0.3333,
+      "tp": 1,
+      "fp": 4,
+      "fn": 0
+    },
+    "LATITUDE": {
+      "support": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 1,
+      "fn": 1
+    },
+    "LONGITUDE": {
+      "support": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 3,
+      "fn": 1
+    },
+    "MARITAL_STATUS": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "MEDICAL_CERTIFICATE": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "MEDICAL_INFORMATION": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "MILITARY_VETERAN_STATUS": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "PASSPORT_EXPIRY": {
+      "support": 1,
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6667,
+      "tp": 1,
+      "fp": 1,
+      "fn": 0
+    },
+    "PASSPORT_START_DATE": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "PAYMENT_CARD_NUMBER": {
+      "support": 8,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 8,
+      "fp": 0,
+      "fn": 0
+    },
+    "PERSON": {
+      "support": 11,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 11,
+      "fp": 0,
+      "fn": 0
+    },
+    "PERSONAL_DEBT": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "PERSONNEL_NUMBER": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "PHONE": {
+      "support": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 3,
+      "fn": 0
+    },
+    "SALARY": {
+      "support": 3,
+      "precision": 1.0,
+      "recall": 0.6667,
+      "f1": 0.8,
+      "tp": 2,
+      "fp": 0,
+      "fn": 1
+    },
+    "SALARY_WAGE_EXPECTATION": {
+      "support": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 1
+    },
+    "SOCIAL_MEDIA_ACCOUNT": {
+      "support": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 1
+    },
+    "SOCIAL_MEDIA_HISTORY": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "SOCIAL_MEDIA_ID": {
+      "support": 1,
+      "precision": 0.3333,
+      "recall": 1.0,
+      "f1": 0.5,
+      "tp": 1,
+      "fp": 2,
+      "fn": 0
+    },
+    "SPECIAL_CONSIDERATION": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "USERNAME": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "VEHICLE_ID": {
+      "support": 2,
+      "precision": 0.25,
+      "recall": 0.5,
+      "f1": 0.3333,
+      "tp": 1,
+      "fp": 3,
+      "fn": 1
+    },
+    "WEBSITE_HISTORY": {
+      "support": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 1,
+      "fp": 0,
+      "fn": 0
+    },
+    "WORK_EMAIL": {
+      "support": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 1
+    },
+    "WORK_PHONE": {
+      "support": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 1
+    }
+  },
+  "decision_distribution": {
+    "redact": 69,
+    "AUTO_REDACT": 31,
+    "review": 9,
+    "ignore": 18,
+    "REVIEW": 3
+  },
+  "redaction_cost": {
+    "total_gold_chars": 1501,
+    "total_pred_redacted_chars": 1790,
+    "over_redaction_chars": 396,
+    "under_redaction_chars": 79,
+    "over_redaction_rate_vs_pred": 0.2212,
+    "under_redaction_rate_vs_gold": 0.0526,
+    "high_risk_under_redaction_chars": 30,
+    "high_risk_under_redaction_rate": 0.1422
+  },
+  "latency_seconds": {
+    "count": 50,
+    "mean": 0.0958,
+    "p50": 0.0723,
+    "p95": 0.199,
+    "p99": 0.2975,
+    "max": 0.3506
+  },
+  "error_examples": []
+}

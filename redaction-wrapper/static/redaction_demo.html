@@ -338,13 +338,48 @@
       vertical-align: 0.18em;
     }
 
+    /* ------------------------------------------------------------
+       Full-width Detected section
+       ------------------------------------------------------------ */
+    .detected-full {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 16px 16px;
+    }
+    .detected-full .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .detected-full .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .detected-full .section-meta {
+      font-size: 11px;
+      color: var(--muted-2);
+    }
+
     /* Span table */
     .spans-table {
       width: 100%;
+      min-width: 980px;
       border-collapse: collapse;
+      table-layout: fixed;
       font-size: 12px;
       font-feature-settings: "tnum";
     }
+    .spans-table col.w-type { width: 170px; }
+    .spans-table col.w-pos { width: 86px; }
+    .spans-table col.w-value { width: 220px; }
+    .spans-table col.w-prob { width: 92px; }
+    .spans-table col.w-risk { width: 92px; }
+    .spans-table col.w-decision { width: 128px; }
+    .spans-table col.w-topk { width: auto; }
     .spans-table thead th {
       text-align: left;
       font-size: 10px;
@@ -352,17 +387,46 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
-      padding: 0 8px 7px 8px;
+      padding: 0 10px 8px;
       border-bottom: 1px solid var(--line);
       background: transparent;
     }
     .spans-table tbody td {
-      padding: 8px;
+      padding: 10px;
       border-bottom: 1px solid var(--line-soft);
-      vertical-align: top;
+      vertical-align: middle;
       color: var(--ink-soft);
+      height: 42px;
     }
     .spans-table tbody tr:last-child td { border-bottom: none; }
+    .spans-table thead th.num-head,
+    .spans-table tbody td.col-num {
+      font-feature-settings: "tnum";
+      text-align: right;
+      padding-right: 12px;
+    }
+    .spans-table thead th.decision-head,
+    .spans-table tbody td.col-decision {
+      text-align: center;
+    }
+    .topk-chips { display: flex; flex-wrap: wrap; gap: 4px; max-width: none; align-items: center; }
+    .topk-chip {
+      display: inline-block; font-size: 9.5px; padding: 1px 5px;
+      border-radius: 7px; background: var(--surface-2); color: var(--ink-soft);
+      white-space: nowrap; border: 1px solid var(--line); line-height: 1.4;
+    }
+    .topk-chip:first-child { background: var(--accent-tint); color: var(--accent); border-color: var(--accent); font-weight: 600; }
+    .risk-bar { display: inline-block; width: 36px; height: 6px; border-radius: 3px; background: var(--line); vertical-align: middle; margin-right: 4px; }
+    .risk-bar i { display: block; height: 100%; border-radius: 3px; background: var(--accent); }
+    .risk-bar.zero i { background: #d1d5db; }
+    .risk-bar.high i { background: var(--danger); }
+    .risk-bar.grey i { background: #d1d5db; }
+    .risk-bar.med i { background: #d97706; }
+    .pill.type-pill { background: #eef2ff; color: #4338ca; font-size: 10px; padding: 1px 6px; border-radius: 8px; white-space: nowrap; }
+    .pill.analysis { background: #f0fdf4; color: #166534; }
+    .pill.ignore { background: #f9fafb; color: #6b7280; }
+    td.col-topk { padding-top: 4px; padding-bottom: 4px; }
+
     .spans-table .col-type {
       font-family: var(--mono);
       font-size: 11.5px;
@@ -398,8 +462,9 @@
       border-radius: 2px;
     }
     .spans-table .col-value {
+      font-family: var(--mono);
+      font-size: 11.5px;
       color: var(--ink);
-      max-width: 320px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -596,28 +661,40 @@
           <div class="canvas mono" id="redacted">—</div>
         </div>
 
-        <div class="section">
-          <div class="section-head">
-            <span class="section-label">Detected</span>
-            <span class="section-meta" id="span-count"></span>
-          </div>
-          <table class="spans-table">
-            <thead>
-              <tr>
-                <th style="width: 28%">Type</th>
-                <th style="width: 14%">Pos</th>
-                <th style="width: 18%">Confidence</th>
-                <th style="width: 14%">Decision</th>
-                <th style="width: 26%">Replacement</th>
-              </tr>
-            </thead>
-            <tbody id="span-rows">
-              <tr><td colspan="5" class="empty">Run a request to populate detected entities.</td></tr>
-            </tbody>
-          </table>
-        </div>
       </section>
     </main>
+
+    <section class="detected-full" aria-label="Detected">
+      <div class="section-head">
+        <span class="section-label">Detected</span>
+        <span class="section-meta" id="span-count"></span>
+      </div>
+      <table class="spans-table">
+        <colgroup>
+          <col class="w-type">
+          <col class="w-pos">
+          <col class="w-value">
+          <col class="w-prob">
+          <col class="w-risk">
+          <col class="w-decision">
+          <col class="w-topk">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Pos</th>
+            <th>Value</th>
+            <th class="num-head">Prob</th>
+            <th class="num-head">Risk</th>
+            <th class="decision-head">Decision</th>
+            <th>Top-k Distribution</th>
+          </tr>
+        </thead>
+        <tbody id="span-rows">
+          <tr><td colspan="7" class="empty">Run a request to populate detected entities.</td></tr>
+        </tbody>
+      </table>
+    </section>
 
     <details class="raw">
       <summary>
@@ -697,7 +774,7 @@
       }
       const ordered = [...spans]
         .filter((s) => Number.isInteger(s.start) && Number.isInteger(s.end))
-        .filter((s) => s.decision === "AUTO_REDACT" || s.decision === "REVIEW")
+        .filter((s) => s.decision === "AUTO_REDACT" || s.decision === "redact" || s.decision === "REVIEW" || s.decision === "review")
         .sort((a, b) => a.start - b.start || a.end - b.end);
       let cursor = 0;
       let html = "";
@@ -715,7 +792,7 @@
       const chars = Array.from(text || "");
       const ordered = [...spans]
         .filter((s) => Number.isInteger(s.start) && Number.isInteger(s.end))
-        .filter((s) => s.decision === "AUTO_REDACT")
+        .filter((s) => s.decision === "AUTO_REDACT" || s.decision === "redact")
         .sort((a, b) => a.start - b.start || b.end - a.end);
       let cursor = 0;
       for (const span of ordered) {
@@ -728,8 +805,10 @@
     }
 
     function decisionPill(decision) {
-      const cls = decision === "AUTO_REDACT" ? "auto" : "review";
-      return `<span class="pill ${cls}">${escapeHtml(decision || "REVIEW")}</span>`;
+      var d = String(decision || "").toLowerCase();
+      if (d === "redact" || d === "auto_redact") return '<span class="pill auto">REDACT</span>';
+      if (d === "review") return '<span class="pill review">REVIEW</span>';
+      return '<span class="pill ignore">IGNORE</span>';
     }
 
     function confidenceCell(conf) {
@@ -739,41 +818,108 @@
       return `<span class="col-conf"><span class="bar"><i style="width:${w}%"></i></span>${conf.toFixed(3)}</span>`;
     }
 
-    function renderSpans(spans) {
+    function hasModelScores(span) {
+      return !!(span && (
+        typeof span.top1_prob === "number"
+        || typeof span.top_probability === "number"
+        || (Array.isArray(span.type_distribution_topk) && span.type_distribution_topk.length > 0)
+      ));
+    }
+
+    function isPolicyOnlySpan(span) {
+      return !!(span && span.source === "rule" && span.decision_reason === "type_actions" && !hasModelScores(span));
+    }
+
+    function spanValue(span, sourceText) {
+      if (!span || !Number.isInteger(span.start) || !Number.isInteger(span.end)) return "";
+      return String(sourceText || "").slice(span.start, span.end);
+    }
+
+    function probabilityText(span) {
+      if (isPolicyOnlySpan(span)) return "100%";
+      if (typeof span.top1_prob === "number") return (span.top1_prob * 100).toFixed(1) + "%";
+      if (typeof span.top_probability === "number") return (span.top_probability * 100).toFixed(1) + "%";
+      if (typeof span.confidence === "number") return (span.confidence * 100).toFixed(1) + "%";
+      return "—";
+    }
+
+    function renderTopkChips(span) {
+      var topk = span && span.type_distribution_topk;
+      if (isPolicyOnlySpan(span)) {
+        return '<div class="topk-chips"><span class="topk-chip">' + escapeHtml(span.type || "") + ' 100.0%</span></div>';
+      }
+      if (!Array.isArray(topk) || !topk.length) return '<span class="muted">—</span>';
+      var html = '<div class="topk-chips">';
+      for (var i = 0; i < Math.min(topk.length, 5); i++) {
+        var label = String(topk[i][0] || "");
+        var pct = (Number(topk[i][1]) * 100).toFixed(1);
+        html += '<span class="topk-chip">' + escapeHtml(label) + ' ' + pct + '%</span>';
+      }
+      html += '</div>';
+      return html;
+    }
+
+    function riskBar(score, decision) {
+      if (decision === "ignore") return '<span class="muted">—</span>';
+      if (typeof score !== "number" || isNaN(score)) return '<span class="muted">—</span>';
+      var pct = Math.min(100, Math.round(score * 100));
+      var cls = "risk-bar";
+      if (pct === 0) cls += " zero";
+      if (score >= 0.25) cls += " high";
+      return '<span class="' + cls + '"><i style="width:' + pct + '%"></i></span>' + pct + '%';
+    }
+
+    function renderSpans(spans, sourceText) {
+      spans = spans.filter(function(s) {
+        return Number.isInteger(s.start) && Number.isInteger(s.end) && s.end > s.start;
+      });
       spanRowsEl.innerHTML = "";
       if (!spans.length) {
-        spanRowsEl.innerHTML = '<tr><td colspan="5" class="empty">No entities detected.</td></tr>';
+        spanRowsEl.innerHTML = '<tr><td colspan="7" class="empty">No entities detected.</td></tr>';
         spanCountEl.textContent = "";
         return;
       }
-      const auto = spans.filter((s) => s.decision === "AUTO_REDACT").length;
-      const review = spans.filter((s) => s.decision === "REVIEW").length;
-      const parts = [];
-      if (auto)   parts.push(`${auto} redact`);
-      if (review) parts.push(`${review} review`);
+      var r = 0, v = 0, ig = 0;
+      for (var i = 0; i < spans.length; i++) {
+        var d = spans[i].decision;
+        if (d === "AUTO_REDACT" || d === "redact") r++;
+        else if (d === "review" || d === "REVIEW") v++;
+        else ig++;
+      }
+      var parts = [];
+      if (r) parts.push(r + " redact");
+      if (v) parts.push(v + " review");
+      if (ig) parts.push(ig + " ignore");
+      if (!parts.length) parts.push(spans.length + " spans");
       spanCountEl.textContent = parts.join(" · ");
 
-      for (const span of spans) {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td class="col-type">${escapeHtml(span.type || "")}</td>
-          <td class="col-pos">${span.start}–${span.end}</td>
-          <td>${confidenceCell(span.confidence)}</td>
-          <td>${decisionPill(span.decision)}</td>
-          <td class="col-value">${escapeHtml(span.replacement || "")}</td>
-        `;
+      for (var j = 0; j < spans.length; j++) {
+        var span = spans[j];
+        var row = document.createElement("tr");
+        var prob = probabilityText(span);
+        var riskScore = isPolicyOnlySpan(span) ? 0 : span.risk_score;
+        row.innerHTML = '<td class="col-type">' + escapeHtml(span.type || "") + '</td>'
+          + '<td class="col-pos">' + (span.start || 0) + '-' + (span.end || 0) + '</td>'
+          + '<td class="col-value">' + escapeHtml(spanValue(span, sourceText)) + '</td>'
+          + '<td class="col-num">' + prob + '</td>'
+          + '<td class="col-num">' + riskBar(riskScore, span.decision) + '</td>'
+          + '<td class="col-decision">' + decisionPill(span.decision) + '</td>'
+          + '<td class="col-topk">' + renderTopkChips(span) + '</td>';
         spanRowsEl.appendChild(row);
       }
     }
 
     function renderDetection(payload, sourceText) {
       state.lastPayload = payload;
-      const spans = payload.spans || [];
+      var spans = payload.spans || [];
+      if (!spans.length && payload.span_analysis) {
+        spans = payload.span_analysis || [];
+      }
       renderHighlighted(sourceText, spans);
       redactedEl.textContent = payload.redacted_text || (sourceText ? maskSensitiveText(sourceText, spans) : "—");
       highlightedEl.classList.remove("placeholder");
       redactedEl.classList.remove("placeholder");
-      renderSpans(spans);
+      renderSpans(spans, sourceText);
       responseJsonEl.textContent = toPrettyJson(payload);
       const ms = payload.metadata && payload.metadata.latency_ms;
       latencyEl.textContent = ms != null ? `${ms} ms` : "completed";
@@ -820,7 +966,7 @@
         redactedEl.textContent = "—";
         highlightedEl.classList.add("placeholder");
         redactedEl.classList.add("placeholder");
-        spanRowsEl.innerHTML = '<tr><td colspan="5" class="empty">Working…</td></tr>';
+        spanRowsEl.innerHTML = '<tr><td colspan="7" class="empty">Working…</td></tr>';
         spanCountEl.textContent = "";
         latencyEl.textContent = "Running…";
       }
@@ -893,7 +1039,7 @@
       redactedEl.textContent = "—";
       ocrTextEl.textContent = "";
       ocrBand.hidden = true;
-      spanRowsEl.innerHTML = '<tr><td colspan="5" class="empty">Run a request to populate detected entities.</td></tr>';
+      spanRowsEl.innerHTML = '<tr><td colspan="7" class="empty">Run a request to populate detected entities.</td></tr>';
       spanCountEl.textContent = "";
       responseJsonEl.textContent = "{}";
       latencyEl.textContent = "—";

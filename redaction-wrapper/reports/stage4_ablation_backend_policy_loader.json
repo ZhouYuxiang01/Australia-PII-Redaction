@@ -1,0 +1,120 @@
+{
+  "ablation_date": "2026-05-05",
+  "test_set": "opf_test_opf_format.jsonl (9659 records)",
+  "description": "Controlled ablation comparing backend model (9B vs 4B), policy (v1 vs v2), and loader mode (automodel_legacy vs causal_lm)",
+  
+  "experiments": {
+    "exp1_9b_v1_legacy": {
+      "backend": "configs/backends/hybrid-opf-qwen.json",
+      "policy": "configs/policies/hybrid-80class-v1.json",
+      "loader_mode": "automodel_legacy",
+      "overlap": {"precision": 0.8149, "recall": 0.9756, "f1": 0.8880, "f2": 0.9386},
+      "exact": {"precision": 0.7315, "recall": 0.8807, "f1": 0.7992, "tp": 11834, "fp": 4343, "fn": 1603},
+      "type_accuracy": 0.9674,
+      "decisions": {"redact": 16177, "ignore": 5039, "review": 2176},
+      "latency_p50": 0.1547, "latency_p95": 0.3062,
+      "over_redaction_rate": 0.1538, "under_redaction_rate": 0.0428, "high_risk_under_rate": 0.07,
+      "report": "reports/stage4_eval_hybrid_legacy_9b.json"
+    },
+    "exp2_9b_v2_legacy": {
+      "backend": "configs/backends/hybrid-opf-qwen.json",
+      "policy": "configs/policies/hybrid-80class-v2-4b.json",
+      "loader_mode": "automodel_legacy",
+      "overlap": {"precision": 0.7865, "recall": 0.9512, "f1": 0.8610, "f2": 0.9129},
+      "exact": {"precision": 0.6689, "recall": 0.8136, "f1": 0.7342, "tp": 10932, "fp": 5411, "fn": 2505},
+      "type_accuracy": 0.9581,
+      "decisions": {"redact": 10728, "AUTO_REDACT": 5615, "ignore": 5008, "review": 1641, "REVIEW": 224},
+      "latency_p50": 0.1541, "latency_p95": 0.3056,
+      "over_redaction_rate": 0.1993, "under_redaction_rate": 0.0611, "high_risk_under_rate": 0.0809,
+      "report": "reports/ablation_2_9b_legacy_v2.json"
+    },
+    "exp3_4b_v1": {
+      "backend": "configs/backends/hybrid-opf-qwen4b.json",
+      "policy": "configs/policies/hybrid-80class-v1.json",
+      "loader_mode": "causal_lm",
+      "overlap": {"precision": 0.7884, "recall": 0.9741, "f1": 0.8715, "f2": 0.9303},
+      "exact": {"precision": 0.7033, "recall": 0.8738, "f1": 0.7793, "tp": 11741, "fp": 4954, "fn": 1696},
+      "type_accuracy": 0.9646,
+      "decisions": {"redact": 16695, "ignore": 3788, "review": 2945},
+      "latency_p50": 0.1325, "latency_p95": 0.2573,
+      "over_redaction_rate": 0.1770, "under_redaction_rate": 0.0608, "high_risk_under_rate": 0.0706,
+      "report": "reports/ablation_3_4b_v1.json"
+    },
+    "exp4_4b_v2": {
+      "backend": "configs/backends/hybrid-opf-qwen4b.json",
+      "policy": "configs/policies/hybrid-80class-v2-4b.json",
+      "loader_mode": "causal_lm",
+      "overlap": {"precision": 0.7656, "recall": 0.9487, "f1": 0.8474, "f2": 0.9054},
+      "exact": {"precision": 0.6490, "recall": 0.8087, "f1": 0.7201, "tp": 10867, "fp": 5877, "fn": 2570},
+      "type_accuracy": 0.9572,
+      "decisions": {"redact": 11129, "AUTO_REDACT": 5615, "review": 2468, "ignore": 3522, "REVIEW": 224},
+      "latency_p50": 0.1326, "latency_p95": 0.2598,
+      "over_redaction_rate": 0.2149, "under_redaction_rate": 0.0875, "high_risk_under_rate": 0.0925,
+      "report": "reports/stage4_eval_hybrid_qwen4b_v2_after_negative_fix.json"
+    },
+    "exp5_9b_v1_causal_lm": {
+      "backend": "/tmp/ablation_9b_causal_lm.json (temp config)",
+      "policy": "configs/policies/hybrid-80class-v1.json",
+      "loader_mode": "causal_lm",
+      "overlap": {"precision": 0.8149, "recall": 0.9756, "f1": 0.8880, "f2": 0.9386},
+      "exact": {"precision": 0.7315, "recall": 0.8807, "f1": 0.7992, "tp": 11834, "fp": 4343, "fn": 1603},
+      "type_accuracy": 0.9674,
+      "decisions": {"redact": 16177, "ignore": 5039, "review": 2176},
+      "latency_p50": 0.1550, "latency_p95": 0.3066,
+      "over_redaction_rate": 0.1538, "under_redaction_rate": 0.0428, "high_risk_under_rate": 0.07,
+      "report": "reports/ablation_5_9b_causal_lm.json",
+      "note": "ALL METRICS IDENTICAL TO EXP1. The 9B head is fully compatible with correct causal_lm loader."
+    }
+  },
+
+  "policy_impact_analysis": {
+    "v2_vs_v1_9b": {
+      "overlap_f1_delta": -0.027,
+      "exact_f1_delta": -0.065,
+      "precision_cost": "v2 creates ~1000 more false positives on 9B",
+      "rescue_benefit": "v2 adds deterministic/rescue/registry spans that increase recall but hurt precision"
+    },
+    "v2_vs_v1_4b": {
+      "overlap_f1_delta": -0.0241,
+      "exact_f1_delta": -0.0592,
+      "precision_cost": "v2 creates ~2300 more false positives on 4B",
+      "rescue_benefit": "Same pattern as 9B — precision loss from aggressive postprocess"
+    }
+  },
+
+  "model_quality_analysis": {
+    "9b_vs_4b_with_v1": {
+      "overlap_f1_gap": 0.0165,
+      "exact_f1_gap": 0.0199,
+      "conclusion": "9B head is genuinely better than 4B head by ~1.7-2.0 F1 points with same policy"
+    },
+    "loader_mode_impact": {
+      "automodel_legacy_vs_causal_lm_on_9b": "IDENTICAL — zero difference across all metrics",
+      "conclusion": "The 9B head was NOT trained on broken embeddings. AutoModel was loading correct weights."
+    }
+  },
+
+  "regression_test_results": {
+    "total": 9,
+    "pass": 6,
+    "fail": 3,
+    "details": {
+      "case1_credit_card_disambiguator": "FAIL — IGNORE instead of REDACT. Server path may differ from offline eval.",
+      "case2_fake_token": "OK — correctly REVIEW'd, visible",
+      "case3_placeholder_email": "PASS — IGNORE",
+      "case4_dot_test_email": "PASS — REDACT",
+      "case5_test_in_real_domain": "PASS — REDACT",
+      "case6_example_plate": "FAIL — REDACT instead of IGNORE (hard-negative gap)",
+      "case7_nsw_rego": "PASS — REDACT",
+      "case8_office_phone": "FAIL — REDACT instead of IGNORE (hard-negative gap)",
+      "case9_emergency_phone": "PASS — REDACT"
+    }
+  },
+
+  "oplayer_fast_baseline": {
+    "overlap": {"precision": 0.8581, "recall": 0.9081, "f1": 0.8824},
+    "exact": {"precision": 0.7249, "recall": 0.7715, "f1": 0.7475},
+    "latency_p50": 0.0259,
+    "note": "Fastest by far (25ms p50). Strong overlap F1 but misses more PII (recall 0.908 vs 0.975 for 9B+v1). No 80-class probability distribution."
+  }
+}

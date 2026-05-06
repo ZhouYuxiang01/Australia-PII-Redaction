@@ -1,0 +1,1301 @@
+{
+  "backend": "hybrid-legacy-9b",
+  "latency_p50_ms": 165.0,
+  "latency_p95_ms": 238.2,
+  "total_examples": 11,
+  "results": [
+    {
+      "ex_id": "v1-sid",
+      "span_count": 1,
+      "redact": 0,
+      "review": 1,
+      "ignore": 0,
+      "types": [
+        "STUDENT_ID"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "Student number is SID# 47009923.",
+      "spans": [
+        {
+          "type": "STUDENT_ID",
+          "decision": "review",
+          "value": "",
+          "prob": 0.339,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "STUDENT_ID",
+          "opf_top": "",
+          "topk": [
+            [
+              "STUDENT_ID",
+              0.339
+            ],
+            [
+              "SUBJECT_RESULTS",
+              0.0487
+            ],
+            [
+              "EMPLOYEE_NUMBER",
+              0.0124
+            ]
+          ]
+        }
+      ],
+      "latency_ms": 149.4
+    },
+    {
+      "ex_id": "v2-dob-email-mob",
+      "span_count": 3,
+      "redact": 3,
+      "review": 0,
+      "ignore": 0,
+      "types": [
+        "DATE_OF_BIRTH",
+        "EMAIL_ADDRESS",
+        "MOBILE"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "DOB [DATE_OF_BIRTH], email [EMAIL], mobile [PHONE].",
+      "spans": [
+        {
+          "type": "DATE_OF_BIRTH",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.942,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "DATE_OF_BIRTH",
+          "opf_top": "DATE_OF_BIRTH",
+          "topk": [
+            [
+              "DATE_OF_BIRTH",
+              0.942
+            ],
+            [
+              "PASSPORT_EXPIRY",
+              0.001
+            ],
+            [
+              "MEDICARE_EXPIRY",
+              0.0006
+            ]
+          ]
+        },
+        {
+          "type": "EMAIL_ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.7537,
+          "det_ev": true,
+          "det_src": "rescue:email_full",
+          "qwen_top": "EMAIL_ADDRESS",
+          "opf_top": "EMAIL_ADDRESS",
+          "topk": [
+            [
+              "EMAIL_ADDRESS",
+              0.7537
+            ],
+            [
+              "WORK_EMAIL",
+              0.0505
+            ],
+            [
+              "DATE_OF_BIRTH",
+              0.0031
+            ]
+          ]
+        },
+        {
+          "type": "MOBILE",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.2156,
+          "det_ev": true,
+          "det_src": "rescue:au_mobile",
+          "qwen_top": "MOBILE",
+          "opf_top": "MOBILE",
+          "topk": [
+            [
+              "MOBILE",
+              0.2156
+            ],
+            [
+              "DATE_OF_BIRTH",
+              0.0186
+            ],
+            [
+              "STUDENT_ID",
+              0.0074
+            ]
+          ]
+        }
+      ],
+      "latency_ms": 165.0
+    },
+    {
+      "ex_id": "v3-bsb-acct",
+      "span_count": 2,
+      "redact": 2,
+      "review": 0,
+      "ignore": 0,
+      "types": [
+        "BANK_ACCOUNT_NUMBER"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "BSB [AU_BANK_ACCOUNT], account [AU_BANK_ACCOUNT].",
+      "spans": [
+        {
+          "type": "BANK_ACCOUNT_NUMBER",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.2861,
+          "det_ev": true,
+          "det_src": "rescue:bsb_format",
+          "qwen_top": "SUBJECT_RESULTS",
+          "opf_top": "",
+          "topk": [
+            [
+              "SUBJECT_RESULTS",
+              0.2861
+            ],
+            [
+              "STUDENT_ID",
+              0.0383
+            ],
+            [
+              "NUMBER_PLATE",
+              0.0192
+            ]
+          ]
+        },
+        {
+          "type": "BANK_ACCOUNT_NUMBER",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.9693,
+          "det_ev": true,
+          "det_src": "rescue:account_number",
+          "qwen_top": "BANK_ACCOUNT_NUMBER",
+          "opf_top": "",
+          "topk": [
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.9693
+            ],
+            [
+              "AU_TFN",
+              0.0026
+            ],
+            [
+              "STUDENT_ID",
+              0.0023
+            ]
+          ]
+        }
+      ],
+      "latency_ms": 162.4
+    },
+    {
+      "ex_id": "v4-ticket-hn",
+      "span_count": 1,
+      "redact": 0,
+      "review": 0,
+      "ignore": 1,
+      "types": [
+        "AU_TFN"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "ticket id INC-0412-345-678, not a phone number.",
+      "spans": [
+        {
+          "type": "AU_TFN",
+          "decision": "ignore",
+          "value": "",
+          "prob": 0.0453,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "AU_TFN",
+          "opf_top": "",
+          "topk": [
+            [
+              "AU_TFN",
+              0.0453
+            ],
+            [
+              "EMPLOYEE_NUMBER",
+              0.0155
+            ],
+            [
+              "STUDENT_ID",
+              0.0105
+            ]
+          ]
+        }
+      ],
+      "latency_ms": 159.0
+    },
+    {
+      "ex_id": "v5-room-hn",
+      "span_count": 1,
+      "redact": 0,
+      "review": 0,
+      "ignore": 1,
+      "types": [
+        "PASSPORT_START_DATE"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "room: 14/09/2002 Building A.",
+      "spans": [
+        {
+          "type": "PASSPORT_START_DATE",
+          "decision": "ignore",
+          "value": "",
+          "prob": 0.5747,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "PASSPORT_START_DATE",
+          "opf_top": "DATE_OF_BIRTH",
+          "topk": [
+            [
+              "PASSPORT_START_DATE",
+              0.5747
+            ],
+            [
+              "PASSPORT_EXPIRY",
+              0.1462
+            ],
+            [
+              "MEDICARE_EXPIRY",
+              0.0552
+            ]
+          ]
+        }
+      ],
+      "latency_ms": 149.1
+    },
+    {
+      "ex_id": "v6-fake-card-hn",
+      "span_count": 1,
+      "redact": 0,
+      "review": 0,
+      "ignore": 1,
+      "types": [
+        "PAYMENT_CARD_NUMBER"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "fake card test token: tok_4111111111111111.",
+      "spans": [
+        {
+          "type": "PAYMENT_CARD_NUMBER",
+          "decision": "ignore",
+          "value": "",
+          "prob": 0.2347,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "PAYMENT_CARD_NUMBER",
+          "opf_top": "HASHED_PAYMENT_CARD_NUMBER",
+          "topk": [
+            [
+              "PAYMENT_CARD_NUMBER",
+              0.2347
+            ],
+            [
+              "CREDIT_CARD_EXPIRY",
+              0.0009
+            ],
+            [
+              "HASHED_PAYMENT_CARD_NUMBER",
+              0.0005
+            ]
+          ]
+        }
+      ],
+      "latency_ms": 145.3
+    },
+    {
+      "ex_id": "v7-mixed-note",
+      "span_count": 8,
+      "redact": 7,
+      "review": 1,
+      "ignore": 0,
+      "types": [
+        "ADDRESS",
+        "DATE_OF_BIRTH",
+        "EMAIL_ADDRESS",
+        "MOBILE",
+        "PERSON",
+        "STUDENT_ID",
+        "VEHICLE_REGO"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "[PERSON], DOB [DATE_OF_BIRTH], SID 47009923, [EMAIL], personal [EMAIL], mobile [PHONE], vehicle rego [VEHICLE_ID], address [ADDRESS].",
+      "spans": [
+        {
+          "type": "PERSON",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.9146,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "PERSON",
+          "opf_top": "PERSON",
+          "topk": [
+            [
+              "PERSON",
+              0.9146
+            ],
+            [
+              "LAST_NAME",
+              0.0007
+            ],
+            [
+              "WORK_EMAIL",
+              0.0002
+            ]
+          ]
+        },
+        {
+          "type": "DATE_OF_BIRTH",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.9158,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "DATE_OF_BIRTH",
+          "opf_top": "DATE_OF_BIRTH",
+          "topk": [
+            [
+              "DATE_OF_BIRTH",
+              0.9158
+            ],
+            [
+              "PASSPORT_EXPIRY",
+              0.0008
+            ],
+            [
+              "PERSON",
+              0.0005
+            ]
+          ]
+        },
+        {
+          "type": "STUDENT_ID",
+          "decision": "review",
+          "value": "",
+          "prob": 0.39,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "STUDENT_ID",
+          "opf_top": "",
+          "topk": [
+            [
+              "STUDENT_ID",
+              0.39
+            ],
+            [
+              "EMPLOYEE_NUMBER",
+              0.0229
+            ],
+            [
+              "DATE_OF_BIRTH",
+              0.0021
+            ]
+          ]
+        },
+        {
+          "type": "EMAIL_ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.3021,
+          "det_ev": true,
+          "det_src": "rescue:email_full",
+          "qwen_top": "EMAIL_ADDRESS",
+          "opf_top": "",
+          "topk": [
+            [
+              "EMAIL_ADDRESS",
+              0.3021
+            ],
+            [
+              "WORK_EMAIL",
+              0.0863
+            ],
+            [
+              "STUDENT_ID",
+              0.0134
+            ]
+          ]
+        },
+        {
+          "type": "EMAIL_ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.8225,
+          "det_ev": true,
+          "det_src": "rescue:email_full",
+          "qwen_top": "EMAIL_ADDRESS",
+          "opf_top": "EMAIL_ADDRESS",
+          "topk": [
+            [
+              "EMAIL_ADDRESS",
+              0.8225
+            ],
+            [
+              "WORK_EMAIL",
+              0.0075
+            ],
+            [
+              "ADDRESS",
+              0.0003
+            ]
+          ]
+        },
+        {
+          "type": "MOBILE",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.2684,
+          "det_ev": true,
+          "det_src": "rescue:au_mobile",
+          "qwen_top": "MOBILE",
+          "opf_top": "MOBILE",
+          "topk": [
+            [
+              "MOBILE",
+              0.2684
+            ],
+            [
+              "ADDRESS",
+              0.0057
+            ],
+            [
+              "STUDENT_ID",
+              0.0039
+            ]
+          ]
+        },
+        {
+          "type": "VEHICLE_REGO",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.7136,
+          "det_ev": true,
+          "det_src": "rescue:vehicle_rego",
+          "qwen_top": "VEHICLE_REGO",
+          "opf_top": "DRIVERS_LICENCE",
+          "topk": [
+            [
+              "VEHICLE_REGO",
+              0.7136
+            ],
+            [
+              "NUMBER_PLATE",
+              0.2432
+            ],
+            [
+              "USERNAME",
+              0.0039
+            ]
+          ]
+        },
+        {
+          "type": "ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.8617,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "ADDRESS",
+          "opf_top": "ADDRESS",
+          "topk": [
+            [
+              "ADDRESS",
+              0.8617
+            ],
+            [
+              "EMAIL_ADDRESS",
+              0.0011
+            ],
+            [
+              "DATE_OF_BIRTH",
+              0.0005
+            ]
+          ]
+        }
+      ],
+      "latency_ms": 198.0
+    },
+    {
+      "ex_id": "v8-student-note",
+      "span_count": 8,
+      "redact": 8,
+      "review": 0,
+      "ignore": 0,
+      "types": [
+        "ADDRESS",
+        "DATE_OF_BIRTH",
+        "EMAIL_ADDRESS",
+        "MOBILE",
+        "PERSON",
+        "STUDENT_ID"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "New student: [PERSON], bday [DATE_OF_BIRTH], SID [STUDENT_ID], USI [STUDENT_ID], UAC [STUDENT_ID], [EMAIL], mobile [PHONE], [ADDRESS].",
+      "spans": [
+        {
+          "type": "PERSON",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.6999,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "PERSON",
+          "opf_top": "PERSON",
+          "topk": [
+            [
+              "PERSON",
+              0.6999
+            ],
+            [
+              "FIRST_NAME",
+              0.0001
+            ],
+            [
+              "WORK_EMAIL",
+              0.0001
+            ]
+          ]
+        },
+        {
+          "type": "DATE_OF_BIRTH",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.9326,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "DATE_OF_BIRTH",
+          "opf_top": "DATE_OF_BIRTH",
+          "topk": [
+            [
+              "DATE_OF_BIRTH",
+              0.9326
+            ],
+            [
+              "STUDENT_ID",
+              0.001
+            ],
+            [
+              "PASSPORT_EXPIRY",
+              0.0007
+            ]
+          ]
+        },
+        {
+          "type": "STUDENT_ID",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.5742,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "STUDENT_ID",
+          "opf_top": "STUDENT_ID",
+          "topk": [
+            [
+              "STUDENT_ID",
+              0.5742
+            ],
+            [
+              "EMPLOYEE_NUMBER",
+              0.0264
+            ],
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.0047
+            ]
+          ]
+        },
+        {
+          "type": "STUDENT_ID",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.6532,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "STUDENT_ID",
+          "opf_top": "DRIVERS_LICENCE",
+          "topk": [
+            [
+              "STUDENT_ID",
+              0.6532
+            ],
+            [
+              "EMPLOYEE_NUMBER",
+              0.0148
+            ],
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.0111
+            ]
+          ]
+        },
+        {
+          "type": "STUDENT_ID",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.6629,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "STUDENT_ID",
+          "opf_top": "DRIVERS_LICENCE",
+          "topk": [
+            [
+              "STUDENT_ID",
+              0.6629
+            ],
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.0297
+            ],
+            [
+              "AU_TFN",
+              0.0282
+            ]
+          ]
+        },
+        {
+          "type": "EMAIL_ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.5802,
+          "det_ev": true,
+          "det_src": "rescue:email_full",
+          "qwen_top": "WORK_EMAIL",
+          "opf_top": "EMAIL_ADDRESS",
+          "topk": [
+            [
+              "WORK_EMAIL",
+              0.5802
+            ],
+            [
+              "EMAIL_ADDRESS",
+              0.1432
+            ],
+            [
+              "STUDENT_ID",
+              0.0046
+            ]
+          ]
+        },
+        {
+          "type": "MOBILE",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.1668,
+          "det_ev": true,
+          "det_src": "rescue:au_mobile",
+          "qwen_top": "MOBILE",
+          "opf_top": "MOBILE",
+          "topk": [
+            [
+              "MOBILE",
+              0.1668
+            ],
+            [
+              "STUDENT_ID",
+              0.0837
+            ],
+            [
+              "DATE_OF_BIRTH",
+              0.0353
+            ]
+          ]
+        },
+        {
+          "type": "ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.8875,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "ADDRESS",
+          "opf_top": "ADDRESS",
+          "topk": [
+            [
+              "ADDRESS",
+              0.8875
+            ],
+            [
+              "EMAIL_ADDRESS",
+              0.0004
+            ],
+            [
+              "DATE_OF_BIRTH",
+              0.0002
+            ]
+          ]
+        }
+      ],
+      "latency_ms": 209.5
+    },
+    {
+      "ex_id": "v9-bank-refund",
+      "span_count": 5,
+      "redact": 3,
+      "review": 1,
+      "ignore": 1,
+      "types": [
+        "BANK_ACCOUNT_NUMBER",
+        "EMPLOYEE_NUMBER",
+        "PERSON",
+        "PERSONAL_DEBT"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "Refund note: [PERSON], BSB [AU_BANK_ACCOUNT], account [AU_BANK_ACCOUNT], amount $450. Ref: INV-88421.",
+      "spans": [
+        {
+          "type": "PERSON",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.8959,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "PERSON",
+          "opf_top": "PERSON",
+          "topk": [
+            [
+              "PERSON",
+              0.8959
+            ],
+            [
+              "EMAIL_ADDRESS",
+              0.0001
+            ],
+            [
+              "SCHOLARSHIP",
+              0.0
+            ]
+          ]
+        },
+        {
+          "type": "BANK_ACCOUNT_NUMBER",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.153,
+          "det_ev": true,
+          "det_src": "rescue:bsb_format",
+          "qwen_top": "DRIVERS_LICENCE",
+          "opf_top": "BANK_ACCOUNT_NUMBER",
+          "topk": [
+            [
+              "DRIVERS_LICENCE",
+              0.153
+            ],
+            [
+              "STUDENT_ID",
+              0.06
+            ],
+            [
+              "MEDICARE_NUMBER",
+              0.0309
+            ]
+          ]
+        },
+        {
+          "type": "BANK_ACCOUNT_NUMBER",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.93,
+          "det_ev": true,
+          "det_src": "rescue:account_number",
+          "qwen_top": "BANK_ACCOUNT_NUMBER",
+          "opf_top": "BANK_ACCOUNT_NUMBER",
+          "topk": [
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.93
+            ],
+            [
+              "STUDENT_ID",
+              0.0069
+            ],
+            [
+              "AU_TFN",
+              0.0044
+            ]
+          ]
+        },
+        {
+          "type": "PERSONAL_DEBT",
+          "decision": "review",
+          "value": "",
+          "prob": 0.4997,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "PERSONAL_DEBT",
+          "opf_top": "SALARY_WAGE_EXPECTATION",
+          "topk": [
+            [
+              "PERSONAL_DEBT",
+              0.4997
+            ],
+            [
+              "SALARY",
+              0.061
+            ],
+            [
+              "PAYMENT_CARD_NUMBER",
+              0.0385
+            ]
+          ]
+        },
+        {
+          "type": "EMPLOYEE_NUMBER",
+          "decision": "ignore",
+          "value": "",
+          "prob": 0.1959,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "EMPLOYEE_NUMBER",
+          "opf_top": "",
+          "topk": [
+            [
+              "EMPLOYEE_NUMBER",
+              0.1959
+            ],
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.033
+            ],
+            [
+              "PAYMENT_CARD_NUMBER",
+              0.0158
+            ]
+          ]
+        }
+      ],
+      "latency_ms": 168.3
+    },
+    {
+      "ex_id": "v10-id-check",
+      "span_count": 6,
+      "redact": 3,
+      "review": 2,
+      "ignore": 1,
+      "types": [
+        "ADDRESS",
+        "CENTRELINK_REFERENCE_NUMBER",
+        "DATE_OF_BIRTH",
+        "DRIVERS_LICENCE",
+        "IHI",
+        "PASSPORT_NUMBER"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "ID check: Driver licence 12345678, Passport N1234567, IHI 8003601234567890, Centrelink CRN [CENTRELINK_REFERENCE_NUMBER], DOB [DATE_OF_BIRTH], address [ADDRESS].",
+      "spans": [
+        {
+          "type": "DRIVERS_LICENCE",
+          "decision": "ignore",
+          "value": "",
+          "prob": 0.0951,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "DRIVERS_LICENCE",
+          "opf_top": "DRIVERS_LICENCE",
+          "topk": [
+            [
+              "DRIVERS_LICENCE",
+              0.0951
+            ],
+            [
+              "PASSPORT_NUMBER",
+              0.0084
+            ],
+            [
+              "NATIONAL_IDENTITY_CARD",
+              0.0024
+            ]
+          ]
+        },
+        {
+          "type": "PASSPORT_NUMBER",
+          "decision": "review",
+          "value": "",
+          "prob": 0.6639,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "PASSPORT_NUMBER",
+          "opf_top": "DRIVERS_LICENCE",
+          "topk": [
+            [
+              "PASSPORT_NUMBER",
+              0.6639
+            ],
+            [
+              "DRIVERS_LICENCE",
+              0.0229
+            ],
+            [
+              "NATIONAL_IDENTITY_CARD",
+              0.0027
+            ]
+          ]
+        },
+        {
+          "type": "IHI",
+          "decision": "review",
+          "value": "",
+          "prob": 0.2766,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "IHI",
+          "opf_top": "DRIVERS_LICENCE",
+          "topk": [
+            [
+              "IHI",
+              0.2766
+            ],
+            [
+              "NATIONAL_IDENTITY_CARD",
+              0.0104
+            ],
+            [
+              "AU_TFN",
+              0.0047
+            ]
+          ]
+        },
+        {
+          "type": "CENTRELINK_REFERENCE_NUMBER",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.8585,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "CENTRELINK_REFERENCE_NUMBER",
+          "opf_top": "CENTRELINK_REFERENCE_NUMBER",
+          "topk": [
+            [
+              "CENTRELINK_REFERENCE_NUMBER",
+              0.8585
+            ],
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.0002
+            ],
+            [
+              "VEHICLE_REGO",
+              0.0001
+            ]
+          ]
+        },
+        {
+          "type": "DATE_OF_BIRTH",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.8593,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "DATE_OF_BIRTH",
+          "opf_top": "DATE_OF_BIRTH",
+          "topk": [
+            [
+              "DATE_OF_BIRTH",
+              0.8593
+            ],
+            [
+              "PASSPORT_EXPIRY",
+              0.0012
+            ],
+            [
+              "ADDRESS",
+              0.0005
+            ]
+          ]
+        },
+        {
+          "type": "ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.6854,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "ADDRESS",
+          "opf_top": "ADDRESS",
+          "topk": [
+            [
+              "ADDRESS",
+              0.6854
+            ],
+            [
+              "DATE_OF_BIRTH",
+              0.0076
+            ],
+            [
+              "EMAIL_ADDRESS",
+              0.0005
+            ]
+          ]
+        }
+      ],
+      "latency_ms": 206.8
+    },
+    {
+      "ex_id": "v11-ocr-messy",
+      "span_count": 9,
+      "redact": 8,
+      "review": 1,
+      "ignore": 0,
+      "types": [
+        "ADDRESS",
+        "BANK_ACCOUNT_NUMBER",
+        "EMAIL_ADDRESS",
+        "MOBILE",
+        "PERSON",
+        "STUDENT_ID"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "Extracted: \nStudent: [PERSON]\nSID: [STUDENT_ID]\nEmail: [EMAIL]\n\nPhone: (02) 9999-8888\nMobile: [PHONE]\n\nAddress: [ADDRESS]\nSt [ADDRESS]\n\nBSB: [AU_BANK_ACCOUNT]\nAccount: [AU_BANK_ACCOUNT]\n\nref: not-a-pi",
+      "spans": [
+        {
+          "type": "PERSON",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.9148,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "PERSON",
+          "opf_top": "PERSON",
+          "topk": [
+            [
+              "PERSON",
+              0.9148
+            ],
+            [
+              "WORK_EMAIL",
+              0.0001
+            ],
+            [
+              "FIRST_NAME",
+              0.0
+            ]
+          ]
+        },
+        {
+          "type": "STUDENT_ID",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.5268,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "STUDENT_ID",
+          "opf_top": "BANK_ACCOUNT_NUMBER",
+          "topk": [
+            [
+              "STUDENT_ID",
+              0.5268
+            ],
+            [
+              "SUBJECT_RESULTS",
+              0.0451
+            ],
+            [
+              "EMPLOYEE_NUMBER",
+              0.0294
+            ]
+          ]
+        },
+        {
+          "type": "EMAIL_ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.6976,
+          "det_ev": true,
+          "det_src": "rescue:email_full",
+          "qwen_top": "WORK_EMAIL",
+          "opf_top": "WORK_EMAIL",
+          "topk": [
+            [
+              "WORK_EMAIL",
+              0.6976
+            ],
+            [
+              "EMAIL_ADDRESS",
+              0.1551
+            ],
+            [
+              "SUBJECT_RESULTS",
+              0.0066
+            ]
+          ]
+        },
+        {
+          "type": "MOBILE",
+          "decision": "review",
+          "value": "",
+          "prob": 0.2372,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "MOBILE",
+          "opf_top": "MOBILE",
+          "topk": [
+            [
+              "MOBILE",
+              0.2372
+            ],
+            [
+              "WORK_PHONE",
+              0.0674
+            ],
+            [
+              "ADDRESS",
+              0.0021
+            ]
+          ]
+        },
+        {
+          "type": "MOBILE",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.762,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "MOBILE",
+          "opf_top": "",
+          "topk": [
+            [
+              "MOBILE",
+              0.762
+            ],
+            [
+              "STUDENT_ID",
+              0.0113
+            ],
+            [
+              "AU_TFN",
+              0.0081
+            ]
+          ]
+        },
+        {
+          "type": "ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.4192,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "ADDRESS",
+          "opf_top": "ADDRESS",
+          "topk": [
+            [
+              "ADDRESS",
+              0.4192
+            ],
+            [
+              "PERSON",
+              0.1988
+            ],
+            [
+              "EMPLOYMENT_INFORMATION",
+              0.0233
+            ]
+          ]
+        },
+        {
+          "type": "ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.8802,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "ADDRESS",
+          "opf_top": "ADDRESS",
+          "topk": [
+            [
+              "ADDRESS",
+              0.8802
+            ],
+            [
+              "EMAIL_ADDRESS",
+              0.0002
+            ],
+            [
+              "MOBILE",
+              0.0002
+            ]
+          ]
+        },
+        {
+          "type": "BANK_ACCOUNT_NUMBER",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.075,
+          "det_ev": true,
+          "det_src": "rescue:bsb_format",
+          "qwen_top": "STUDENT_ID",
+          "opf_top": "WAM_SCORE",
+          "topk": [
+            [
+              "STUDENT_ID",
+              0.075
+            ],
+            [
+              "EMPLOYEE_NUMBER",
+              0.0248
+            ],
+            [
+              "SUBJECT_RESULTS",
+              0.0106
+            ]
+          ]
+        },
+        {
+          "type": "BANK_ACCOUNT_NUMBER",
+          "decision": "redact",
+          "value": "",
+          "prob": 0.9881,
+          "det_ev": false,
+          "det_src": "qwen",
+          "qwen_top": "BANK_ACCOUNT_NUMBER",
+          "opf_top": "STUDENT_ID",
+          "topk": [
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.9881
+            ],
+            [
+              "STUDENT_ID",
+              0.0022
+            ],
+            [
+              "EMPLOYEE_NUMBER",
+              0.0001
+            ]
+          ]
+        }
+      ],
+      "latency_ms": 238.2
+    }
+  ]
+}

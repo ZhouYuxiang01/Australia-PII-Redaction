@@ -1,0 +1,1092 @@
+{
+  "record_count": 200,
+  "malformed_converted_record_count": 0,
+  "malformed_converted_records": [],
+  "by_context_type": {
+    "bare_span": {
+      "count": 10,
+      "top_probability": {
+        "mean": 0.505311,
+        "median": 0.509792,
+        "max": 0.909091
+      },
+      "entropy": {
+        "mean": 1.473217,
+        "median": 1.5969
+      },
+      "non_pii_probability_mean": 0.062494,
+      "top_type_counts": {
+        "ADDRESS": 1,
+        "BANK_ACCOUNT_NUMBER": 1,
+        "DATE_OF_BIRTH": 1,
+        "EMAIL_ADDRESS": 1,
+        "HOME_PHONE": 1,
+        "LATITUDE": 1,
+        "NUMBER_PLATE": 1,
+        "PAYMENT_CARD_NUMBER": 1,
+        "PERSON": 1,
+        "USERNAME": 1
+      },
+      "label_distribution": {
+        "ADDRESS": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.652174,
+          "probability_mean": 0.652174
+        },
+        "AU_TFN": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.2,
+          "probability_mean": 0.2
+        },
+        "BANK_ACCOUNT_NUMBER": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.2,
+          "probability_mean": 0.2
+        },
+        "CREDIT_CARD_EXPIRY": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.021277,
+          "probability_mean": 0.021277
+        },
+        "DATE_OF_BIRTH": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.638297,
+          "probability_mean": 0.638297
+        },
+        "EMAIL_ADDRESS": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.731708,
+          "probability_mean": 0.731708
+        },
+        "EMPLOYEE_NUMBER": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.2,
+          "probability_mean": 0.2
+        },
+        "FIRST_NAME": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.483871,
+          "probability_mean": 0.483871
+        },
+        "GEOLOCATION_INFORMATION": {
+          "candidate_count": 2,
+          "top_type_count": 0,
+          "probability_sum": 0.655757,
+          "probability_mean": 0.327879
+        },
+        "HOME_PHONE": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.322581,
+          "probability_mean": 0.322581
+        },
+        "IHI": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.030303,
+          "probability_mean": 0.030303
+        },
+        "LAST_NAME": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.016129,
+          "probability_mean": 0.016129
+        },
+        "LATITUDE": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.329671,
+          "probability_mean": 0.329671
+        },
+        "LONGITUDE": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.32967,
+          "probability_mean": 0.32967
+        },
+        "MEDICARE_EXPIRY": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.106383,
+          "probability_mean": 0.106383
+        },
+        "MEDICARE_NUMBER": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.030303,
+          "probability_mean": 0.030303
+        },
+        "MOBILE": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.32258,
+          "probability_mean": 0.32258
+        },
+        "NON_PII": {
+          "candidate_count": 10,
+          "top_type_count": 0,
+          "probability_sum": 0.624942,
+          "probability_mean": 0.062494
+        },
+        "NUMBER_PLATE": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.25,
+          "probability_mean": 0.25
+        },
+        "PASSPORT_EXPIRY": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.106383,
+          "probability_mean": 0.106383
+        },
+        "PASSPORT_START_DATE": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.106383,
+          "probability_mean": 0.106383
+        },
+        "PAYMENT_CARD_NUMBER": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.909091,
+          "probability_mean": 0.909091
+        },
+        "PERSON": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.483871,
+          "probability_mean": 0.483871
+        },
+        "SOCIAL_MEDIA_ACCOUNT": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.178572,
+          "probability_mean": 0.178572
+        },
+        "SOCIAL_MEDIA_ID": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.267857,
+          "probability_mean": 0.267857
+        },
+        "STUDENT_ID": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.2,
+          "probability_mean": 0.2
+        },
+        "USERNAME": {
+          "candidate_count": 2,
+          "top_type_count": 1,
+          "probability_sum": 0.785714,
+          "probability_mean": 0.392857
+        },
+        "VEHICLE_REGO": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.25,
+          "probability_mean": 0.25
+        },
+        "WORK_EMAIL": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.243902,
+          "probability_mean": 0.243902
+        },
+        "WORK_PHONE": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.322581,
+          "probability_mean": 0.322581
+        }
+      }
+    },
+    "weak_context": {
+      "count": 10,
+      "top_probability": {
+        "mean": 0.48447,
+        "median": 0.483871,
+        "max": 0.909091
+      },
+      "entropy": {
+        "mean": 1.504288,
+        "median": 1.404281
+      },
+      "non_pii_probability_mean": 0.102077,
+      "top_type_counts": {
+        "ADDRESS": 1,
+        "BANK_ACCOUNT_NUMBER": 1,
+        "EMAIL_ADDRESS": 1,
+        "HOME_PHONE": 1,
+        "LATITUDE": 1,
+        "NON_PII": 1,
+        "PASSPORT_EXPIRY": 1,
+        "PAYMENT_CARD_NUMBER": 1,
+        "PERSON": 1,
+        "SOCIAL_MEDIA_ID": 1
+      },
+      "label_distribution": {
+        "ADDRESS": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.652174,
+          "probability_mean": 0.652174
+        },
+        "AU_TFN": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.2,
+          "probability_mean": 0.2
+        },
+        "BANK_ACCOUNT_NUMBER": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.2,
+          "probability_mean": 0.2
+        },
+        "CREDIT_CARD_EXPIRY": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.166667,
+          "probability_mean": 0.166667
+        },
+        "DATE_OF_BIRTH": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.166665,
+          "probability_mean": 0.166665
+        },
+        "EMAIL_ADDRESS": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.731708,
+          "probability_mean": 0.731708
+        },
+        "EMPLOYEE_NUMBER": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.2,
+          "probability_mean": 0.2
+        },
+        "FIRST_NAME": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.483871,
+          "probability_mean": 0.483871
+        },
+        "GEOLOCATION_INFORMATION": {
+          "candidate_count": 2,
+          "top_type_count": 0,
+          "probability_sum": 0.809958,
+          "probability_mean": 0.404979
+        },
+        "HOME_PHONE": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.322581,
+          "probability_mean": 0.322581
+        },
+        "IHI": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.030303,
+          "probability_mean": 0.030303
+        },
+        "LAST_NAME": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.016129,
+          "probability_mean": 0.016129
+        },
+        "LATITUDE": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.483871,
+          "probability_mean": 0.483871
+        },
+        "LONGITUDE": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.016129,
+          "probability_mean": 0.016129
+        },
+        "MEDICARE_EXPIRY": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.166667,
+          "probability_mean": 0.166667
+        },
+        "MEDICARE_NUMBER": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.030303,
+          "probability_mean": 0.030303
+        },
+        "MOBILE": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.32258,
+          "probability_mean": 0.32258
+        },
+        "NON_PII": {
+          "candidate_count": 10,
+          "top_type_count": 1,
+          "probability_sum": 1.020773,
+          "probability_mean": 0.102077
+        },
+        "NUMBER_PLATE": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.166666,
+          "probability_mean": 0.166666
+        },
+        "PASSPORT_EXPIRY": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.166667,
+          "probability_mean": 0.166667
+        },
+        "PASSPORT_START_DATE": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.166667,
+          "probability_mean": 0.166667
+        },
+        "PAYMENT_CARD_NUMBER": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.909091,
+          "probability_mean": 0.909091
+        },
+        "PERSON": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.483871,
+          "probability_mean": 0.483871
+        },
+        "SOCIAL_MEDIA_ACCOUNT": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.197368,
+          "probability_mean": 0.197368
+        },
+        "SOCIAL_MEDIA_ID": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.394737,
+          "probability_mean": 0.394737
+        },
+        "STUDENT_ID": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.2,
+          "probability_mean": 0.2
+        },
+        "USERNAME": {
+          "candidate_count": 2,
+          "top_type_count": 0,
+          "probability_sum": 0.561404,
+          "probability_mean": 0.280702
+        },
+        "VEHICLE_REGO": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.166667,
+          "probability_mean": 0.166667
+        },
+        "WORK_EMAIL": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.243902,
+          "probability_mean": 0.243902
+        },
+        "WORK_PHONE": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.322581,
+          "probability_mean": 0.322581
+        }
+      }
+    },
+    "strong_positive": {
+      "count": 90,
+      "top_probability": {
+        "mean": 0.933326,
+        "median": 0.967742,
+        "max": 0.967742
+      },
+      "entropy": {
+        "mean": 0.302688,
+        "median": 0.205592
+      },
+      "non_pii_probability_mean": 0.033611,
+      "top_type_counts": {
+        "ADDRESS": 1,
+        "BANK_ACCOUNT_INFORMATION": 20,
+        "DATE_OF_BIRTH": 1,
+        "EMAIL_ADDRESS": 1,
+        "FIRST_NAME": 20,
+        "HOME_PHONE": 21,
+        "LAST_NAME": 20,
+        "LATITUDE": 1,
+        "PAYMENT_CARD_NUMBER": 1,
+        "PERSON": 1,
+        "SOCIAL_MEDIA_ACCOUNT": 1,
+        "STUDENT_ID": 1,
+        "VEHICLE_REGO": 1
+      },
+      "label_distribution": {
+        "ADDRESS": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.652174,
+          "probability_mean": 0.652174
+        },
+        "AU_TFN": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.029412,
+          "probability_mean": 0.029412
+        },
+        "BANK_ACCOUNT_INFORMATION": {
+          "candidate_count": 20,
+          "top_type_count": 20,
+          "probability_sum": 19.137098,
+          "probability_mean": 0.956855
+        },
+        "BANK_ACCOUNT_NUMBER": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.029411,
+          "probability_mean": 0.029411
+        },
+        "CREDIT_CARD_EXPIRY": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.028571,
+          "probability_mean": 0.028571
+        },
+        "DATE_OF_BIRTH": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.857145,
+          "probability_mean": 0.857145
+        },
+        "EMAIL_ADDRESS": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.652174,
+          "probability_mean": 0.652174
+        },
+        "EMPLOYEE_NUMBER": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.029412,
+          "probability_mean": 0.029412
+        },
+        "FIRST_NAME": {
+          "candidate_count": 21,
+          "top_type_count": 20,
+          "probability_sum": 19.838711,
+          "probability_mean": 0.944701
+        },
+        "GEOLOCATION_INFORMATION": {
+          "candidate_count": 2,
+          "top_type_count": 0,
+          "probability_sum": 0.809958,
+          "probability_mean": 0.404979
+        },
+        "HOME_PHONE": {
+          "candidate_count": 21,
+          "top_type_count": 21,
+          "probability_sum": 20.263931,
+          "probability_mean": 0.964949
+        },
+        "IHI": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.030303,
+          "probability_mean": 0.030303
+        },
+        "LAST_NAME": {
+          "candidate_count": 21,
+          "top_type_count": 20,
+          "probability_sum": 19.370969,
+          "probability_mean": 0.922427
+        },
+        "LATITUDE": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.483871,
+          "probability_mean": 0.483871
+        },
+        "LONGITUDE": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.016129,
+          "probability_mean": 0.016129
+        },
+        "MEDICARE_EXPIRY": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.028571,
+          "probability_mean": 0.028571
+        },
+        "MEDICARE_NUMBER": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.030303,
+          "probability_mean": 0.030303
+        },
+        "MOBILE": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.030303,
+          "probability_mean": 0.030303
+        },
+        "NON_PII": {
+          "candidate_count": 90,
+          "top_type_count": 0,
+          "probability_sum": 3.024973,
+          "probability_mean": 0.033611
+        },
+        "NUMBER_PLATE": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.319148,
+          "probability_mean": 0.319148
+        },
+        "PASSPORT_EXPIRY": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.028571,
+          "probability_mean": 0.028571
+        },
+        "PASSPORT_START_DATE": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.028571,
+          "probability_mean": 0.028571
+        },
+        "PAYMENT_CARD_NUMBER": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.909091,
+          "probability_mean": 0.909091
+        },
+        "PERSON": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.483871,
+          "probability_mean": 0.483871
+        },
+        "SOCIAL_MEDIA_ACCOUNT": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.329671,
+          "probability_mean": 0.329671
+        },
+        "SOCIAL_MEDIA_ID": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.32967,
+          "probability_mean": 0.32967
+        },
+        "STUDENT_ID": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.882353,
+          "probability_mean": 0.882353
+        },
+        "USERNAME": {
+          "candidate_count": 2,
+          "top_type_count": 0,
+          "probability_sum": 0.350947,
+          "probability_mean": 0.175474
+        },
+        "VEHICLE_REGO": {
+          "candidate_count": 1,
+          "top_type_count": 1,
+          "probability_sum": 0.638298,
+          "probability_mean": 0.638298
+        },
+        "WORK_EMAIL": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.326087,
+          "probability_mean": 0.326087
+        },
+        "WORK_PHONE": {
+          "candidate_count": 1,
+          "top_type_count": 0,
+          "probability_sum": 0.030303,
+          "probability_mean": 0.030303
+        }
+      }
+    },
+    "reverse_negative": {
+      "count": 90,
+      "top_probability": {
+        "mean": 0.684281,
+        "median": 0.731707,
+        "max": 0.9375
+      },
+      "entropy": {
+        "mean": 1.171935,
+        "median": 1.200821
+      },
+      "non_pii_probability_mean": 0.478896,
+      "top_type_counts": {
+        "EMAIL_ADDRESS": 9,
+        "LATITUDE": 9,
+        "NON_PII": 54,
+        "PAYMENT_CARD_NUMBER": 9,
+        "USERNAME": 9
+      },
+      "label_distribution": {
+        "ADDRESS": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 0.28125,
+          "probability_mean": 0.03125
+        },
+        "AU_TFN": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 0.264708,
+          "probability_mean": 0.029412
+        },
+        "BANK_ACCOUNT_NUMBER": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 0.264699,
+          "probability_mean": 0.029411
+        },
+        "CREDIT_CARD_EXPIRY": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 1.028846,
+          "probability_mean": 0.114316
+        },
+        "DATE_OF_BIRTH": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 1.33654,
+          "probability_mean": 0.148504
+        },
+        "EMAIL_ADDRESS": {
+          "candidate_count": 9,
+          "top_type_count": 9,
+          "probability_sum": 4.153851,
+          "probability_mean": 0.461539
+        },
+        "EMPLOYEE_NUMBER": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 0.264708,
+          "probability_mean": 0.029412
+        },
+        "FIRST_NAME": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 1.097559,
+          "probability_mean": 0.121951
+        },
+        "GEOLOCATION_INFORMATION": {
+          "candidate_count": 18,
+          "top_type_count": 0,
+          "probability_sum": 4.636089,
+          "probability_mean": 0.257561
+        },
+        "HOME_PHONE": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 1.500003,
+          "probability_mean": 0.166667
+        },
+        "IHI": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 0.272727,
+          "probability_mean": 0.030303
+        },
+        "LAST_NAME": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 0.21951,
+          "probability_mean": 0.02439
+        },
+        "LATITUDE": {
+          "candidate_count": 9,
+          "top_type_count": 9,
+          "probability_sum": 4.354839,
+          "probability_mean": 0.483871
+        },
+        "LONGITUDE": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 0.145161,
+          "probability_mean": 0.016129
+        },
+        "MEDICARE_EXPIRY": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 1.028846,
+          "probability_mean": 0.114316
+        },
+        "MEDICARE_NUMBER": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 0.272727,
+          "probability_mean": 0.030303
+        },
+        "MOBILE": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 1.499994,
+          "probability_mean": 0.166666
+        },
+        "NON_PII": {
+          "candidate_count": 90,
+          "top_type_count": 54,
+          "probability_sum": 43.100655,
+          "probability_mean": 0.478896
+        },
+        "NUMBER_PLATE": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 0.243243,
+          "probability_mean": 0.027027
+        },
+        "PASSPORT_EXPIRY": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 1.028846,
+          "probability_mean": 0.114316
+        },
+        "PASSPORT_START_DATE": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 1.028846,
+          "probability_mean": 0.114316
+        },
+        "PAYMENT_CARD_NUMBER": {
+          "candidate_count": 9,
+          "top_type_count": 9,
+          "probability_sum": 8.181819,
+          "probability_mean": 0.909091
+        },
+        "PERSON": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 1.097568,
+          "probability_mean": 0.121952
+        },
+        "SOCIAL_MEDIA_ACCOUNT": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 1.097568,
+          "probability_mean": 0.121952
+        },
+        "SOCIAL_MEDIA_ID": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 1.097559,
+          "probability_mean": 0.121951
+        },
+        "STUDENT_ID": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 0.264708,
+          "probability_mean": 0.029412
+        },
+        "USERNAME": {
+          "candidate_count": 18,
+          "top_type_count": 9,
+          "probability_sum": 7.801578,
+          "probability_mean": 0.433421
+        },
+        "VEHICLE_REGO": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 0.243243,
+          "probability_mean": 0.027027
+        },
+        "WORK_EMAIL": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 0.692307,
+          "probability_mean": 0.076923
+        },
+        "WORK_PHONE": {
+          "candidate_count": 9,
+          "top_type_count": 0,
+          "probability_sum": 1.500003,
+          "probability_mean": 0.166667
+        }
+      }
+    }
+  },
+  "top_type_counts": {
+    "ADDRESS": 3,
+    "BANK_ACCOUNT_INFORMATION": 20,
+    "BANK_ACCOUNT_NUMBER": 2,
+    "DATE_OF_BIRTH": 2,
+    "EMAIL_ADDRESS": 12,
+    "FIRST_NAME": 20,
+    "HOME_PHONE": 23,
+    "LAST_NAME": 20,
+    "LATITUDE": 12,
+    "NON_PII": 55,
+    "NUMBER_PLATE": 1,
+    "PASSPORT_EXPIRY": 1,
+    "PAYMENT_CARD_NUMBER": 12,
+    "PERSON": 3,
+    "SOCIAL_MEDIA_ACCOUNT": 1,
+    "SOCIAL_MEDIA_ID": 1,
+    "STUDENT_ID": 1,
+    "USERNAME": 10,
+    "VEHICLE_REGO": 1
+  },
+  "label_distribution": {
+    "ADDRESS": {
+      "candidate_count": 12,
+      "top_type_count": 3,
+      "probability_sum": 2.237772,
+      "probability_mean": 0.186481
+    },
+    "AU_TFN": {
+      "candidate_count": 12,
+      "top_type_count": 0,
+      "probability_sum": 0.69412,
+      "probability_mean": 0.057843
+    },
+    "BANK_ACCOUNT_INFORMATION": {
+      "candidate_count": 20,
+      "top_type_count": 20,
+      "probability_sum": 19.137098,
+      "probability_mean": 0.956855
+    },
+    "BANK_ACCOUNT_NUMBER": {
+      "candidate_count": 12,
+      "top_type_count": 2,
+      "probability_sum": 0.69411,
+      "probability_mean": 0.057842
+    },
+    "CREDIT_CARD_EXPIRY": {
+      "candidate_count": 12,
+      "top_type_count": 0,
+      "probability_sum": 1.245361,
+      "probability_mean": 0.10378
+    },
+    "DATE_OF_BIRTH": {
+      "candidate_count": 12,
+      "top_type_count": 2,
+      "probability_sum": 2.998647,
+      "probability_mean": 0.249887
+    },
+    "EMAIL_ADDRESS": {
+      "candidate_count": 12,
+      "top_type_count": 12,
+      "probability_sum": 6.269441,
+      "probability_mean": 0.522453
+    },
+    "EMPLOYEE_NUMBER": {
+      "candidate_count": 12,
+      "top_type_count": 0,
+      "probability_sum": 0.69412,
+      "probability_mean": 0.057843
+    },
+    "FIRST_NAME": {
+      "candidate_count": 32,
+      "top_type_count": 20,
+      "probability_sum": 21.904012,
+      "probability_mean": 0.6845
+    },
+    "GEOLOCATION_INFORMATION": {
+      "candidate_count": 24,
+      "top_type_count": 0,
+      "probability_sum": 6.911762,
+      "probability_mean": 0.28799
+    },
+    "HOME_PHONE": {
+      "candidate_count": 32,
+      "top_type_count": 23,
+      "probability_sum": 22.409096,
+      "probability_mean": 0.700284
+    },
+    "IHI": {
+      "candidate_count": 12,
+      "top_type_count": 0,
+      "probability_sum": 0.363636,
+      "probability_mean": 0.030303
+    },
+    "LAST_NAME": {
+      "candidate_count": 32,
+      "top_type_count": 20,
+      "probability_sum": 19.622737,
+      "probability_mean": 0.613211
+    },
+    "LATITUDE": {
+      "candidate_count": 12,
+      "top_type_count": 12,
+      "probability_sum": 5.652252,
+      "probability_mean": 0.471021
+    },
+    "LONGITUDE": {
+      "candidate_count": 12,
+      "top_type_count": 0,
+      "probability_sum": 0.507089,
+      "probability_mean": 0.042257
+    },
+    "MEDICARE_EXPIRY": {
+      "candidate_count": 12,
+      "top_type_count": 0,
+      "probability_sum": 1.330467,
+      "probability_mean": 0.110872
+    },
+    "MEDICARE_NUMBER": {
+      "candidate_count": 12,
+      "top_type_count": 0,
+      "probability_sum": 0.363636,
+      "probability_mean": 0.030303
+    },
+    "MOBILE": {
+      "candidate_count": 12,
+      "top_type_count": 0,
+      "probability_sum": 2.175457,
+      "probability_mean": 0.181288
+    },
+    "NON_PII": {
+      "candidate_count": 200,
+      "top_type_count": 55,
+      "probability_sum": 47.771343,
+      "probability_mean": 0.238857
+    },
+    "NUMBER_PLATE": {
+      "candidate_count": 12,
+      "top_type_count": 1,
+      "probability_sum": 0.979057,
+      "probability_mean": 0.081588
+    },
+    "PASSPORT_EXPIRY": {
+      "candidate_count": 12,
+      "top_type_count": 1,
+      "probability_sum": 1.330467,
+      "probability_mean": 0.110872
+    },
+    "PASSPORT_START_DATE": {
+      "candidate_count": 12,
+      "top_type_count": 0,
+      "probability_sum": 1.330467,
+      "probability_mean": 0.110872
+    },
+    "PAYMENT_CARD_NUMBER": {
+      "candidate_count": 12,
+      "top_type_count": 12,
+      "probability_sum": 10.909092,
+      "probability_mean": 0.909091
+    },
+    "PERSON": {
+      "candidate_count": 12,
+      "top_type_count": 3,
+      "probability_sum": 2.549181,
+      "probability_mean": 0.212432
+    },
+    "SOCIAL_MEDIA_ACCOUNT": {
+      "candidate_count": 12,
+      "top_type_count": 1,
+      "probability_sum": 1.803179,
+      "probability_mean": 0.150265
+    },
+    "SOCIAL_MEDIA_ID": {
+      "candidate_count": 12,
+      "top_type_count": 1,
+      "probability_sum": 2.089823,
+      "probability_mean": 0.174152
+    },
+    "STUDENT_ID": {
+      "candidate_count": 12,
+      "top_type_count": 1,
+      "probability_sum": 1.547061,
+      "probability_mean": 0.128922
+    },
+    "USERNAME": {
+      "candidate_count": 24,
+      "top_type_count": 10,
+      "probability_sum": 9.499643,
+      "probability_mean": 0.395818
+    },
+    "VEHICLE_REGO": {
+      "candidate_count": 12,
+      "top_type_count": 1,
+      "probability_sum": 1.298208,
+      "probability_mean": 0.108184
+    },
+    "WORK_EMAIL": {
+      "candidate_count": 12,
+      "top_type_count": 0,
+      "probability_sum": 1.506198,
+      "probability_mean": 0.125517
+    },
+    "WORK_PHONE": {
+      "candidate_count": 12,
+      "top_type_count": 0,
+      "probability_sum": 2.175468,
+      "probability_mean": 0.181289
+    }
+  },
+  "zero_example_label_coverage": {
+    "BANK_ACCOUNT_INFORMATION": {
+      "count": 20,
+      "top_type_count": 20,
+      "mean_probability": 0.956855
+    },
+    "FIRST_NAME": {
+      "count": 20,
+      "top_type_count": 20,
+      "mean_probability": 0.967742
+    },
+    "HOME_PHONE": {
+      "count": 20,
+      "top_type_count": 20,
+      "mean_probability": 0.967742
+    },
+    "LAST_NAME": {
+      "count": 20,
+      "top_type_count": 20,
+      "mean_probability": 0.967742
+    }
+  },
+  "warning_counts": {
+    "bare_span_overconfident_count": 2,
+    "bare_date_dob_overconfident_count": 1,
+    "weak_context_overconfident_count": 1,
+    "reverse_negative_non_pii_failure_count": 36,
+    "strong_positive_not_confident_count": 3
+  },
+  "acceptance_criteria": {
+    "no_malformed_converted_records": true,
+    "bare_date_dob_overconfident_count_is_zero": false,
+    "reverse_negative_non_pii_failure_count": 36,
+    "strong_positive_not_confident_count": 3
+  },
+  "inputs": {
+    "converted_path": "data/generated/stage2_vllm_pilot_200_converted.jsonl",
+    "raw_path": "data/generated/stage2_vllm_pilot_200_raw.jsonl",
+    "pilot_report_path": "reports/stage2_vllm_concurrency_pilot_report.json",
+    "raw_record_count": 200,
+    "pilot_best_concurrency": 16
+  },
+  "teacher_calls_executed_by_quality_analysis": 0,
+  "merged_into_training_dataset": false
+}

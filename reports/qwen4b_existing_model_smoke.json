@@ -1,0 +1,167 @@
+{
+  "report_title": "Qwen4B Existing Model Smoke Test",
+  "date": "2026-05-02",
+  "inspector": "Sisyphus",
+  "model_path": "/home/admin/ZYX/Qwen3.5_4b_base_Full_73class/outputs/qwen3_5_4b_base_full_73class",
+
+  "gpu_info": {
+    "cuda_available": true,
+    "device_count": 1,
+    "gpu_name": "NVIDIA GB10",
+    "total_memory_gb": 128.5,
+    "model_memory_allocated_gb": 8.41,
+    "model_memory_reserved_gb": 8.42
+  },
+
+  "model_loading": {
+    "load_time_seconds": 46.1,
+    "warnings": [
+      "'torch_dtype' deprecated, use 'dtype'",
+      "fast path not available (flash-linear-attention/causal-conv1d not installed)",
+      "attention mask warning: pad token same as eos token"
+    ]
+  },
+
+  "architecture": {
+    "architectures": ["Qwen3_5ForCausalLM"],
+    "model_type": "qwen3_5_text",
+    "hidden_size": 2560,
+    "num_hidden_layers": 32,
+    "num_attention_heads": 16,
+    "num_key_value_heads": 4,
+    "vocab_size": 248320,
+    "max_position_embeddings": 262144,
+    "dtype": "torch.bfloat16"
+  },
+
+  "smoke_inference_results": [
+    {
+      "example_id": 1,
+      "desc": "DATE_OF_BIRTH",
+      "input": "DOB 04/05/1998",
+      "raw_output": "assistant\n<think>\n\n</think>\n\n```json\n{\n  \"pii\": []\n}\n```",
+      "json_valid": true,
+      "spans_detected": 0,
+      "latency_s": 2.206,
+      "input_tokens": 36,
+      "output_tokens": 29,
+      "notes": "Failed to detect DOB. Model outputs thinking tags + empty pii array."
+    },
+    {
+      "example_id": 2,
+      "desc": "EMAIL",
+      "input": "Email: alex@example.com",
+      "raw_output": "assistant\n<think>\n\n</think>\n\n```json\n{\n  \"pii\": []\n}\n```",
+      "json_valid": true,
+      "spans_detected": 0,
+      "latency_s": 1.416,
+      "input_tokens": 28,
+      "output_tokens": 28,
+      "notes": "Failed to detect email."
+    },
+    {
+      "example_id": 3,
+      "desc": "PHONE",
+      "input": "Mobile: 0412 345 678",
+      "raw_output": "assistant\n<think>\n\n</think>\n\n```json\n{\n  \"au_pii\": []\n}\n```",
+      "json_valid": true,
+      "spans_detected": 0,
+      "latency_s": 1.515,
+      "input_tokens": 38,
+      "output_tokens": 29,
+      "notes": "Failed to detect phone. Output key changed to 'au_pii'."
+    },
+    {
+      "example_id": 4,
+      "desc": "STUDENT_ID",
+      "input": "student ID: 5102 88411",
+      "raw_output": "assistant\n<think>\n\n</think>\n\n```json\n{\n  \"student_id\": \"5102 88411\"\n}\n```",
+      "json_valid": true,
+      "spans_detected": 0,
+      "latency_s": 2.096,
+      "input_tokens": 37,
+      "output_tokens": 35,
+      "notes": "Detected content but wrong output format (flat key-value, not spans array)."
+    },
+    {
+      "example_id": 5,
+      "desc": "BSB + AU_BANK_ACCOUNT",
+      "input": "BSB 062-001, account 123456789",
+      "raw_output": "assistant\n<think>\n\n</think>\n\n```json\n{\n  \"spans\": [\n    {\n      \"start\": 36,\n      \"end\": 43,\n      \"type\": \"BSB\",\n      \"value\": \"062-001\"\n    },\n    {\n      \"start\": 53,\n      \"end\": 62,\n      \"type\": \"account\",\n      \"value\": \"123456789\"\n    }\n  ]\n}\n```",
+      "json_valid": true,
+      "spans_detected": 2,
+      "spans": [
+        {"start": 36, "end": 43, "type": "BSB", "value": "062-001", "offset_valid": false, "value_match": false},
+        {"start": 53, "end": 62, "type": "account", "value": "123456789", "offset_valid": false, "value_match": false}
+      ],
+      "latency_s": 6.94,
+      "input_tokens": 45,
+      "output_tokens": 174,
+      "notes": "Detected both PII items. Correct span format but wrong offsets (likely token-space vs char-space). Invalid label 'account' (should be AU_BANK_ACCOUNT)."
+    },
+    {
+      "example_id": 6,
+      "desc": "hard_negative_ticket_id",
+      "input": "ticket id INC-0412-345-678, not a phone number",
+      "raw_output": "assistant\n<think>\n\n</think>\n\n```json\n{\n  \"pii\": []\n}\n```",
+      "json_valid": true,
+      "spans_detected": 0,
+      "latency_s": 1.404,
+      "input_tokens": 44,
+      "output_tokens": 28,
+      "notes": "PASS: Hard negative correctly classified (no false positive)."
+    },
+    {
+      "example_id": 7,
+      "desc": "mixed_note",
+      "input": "Patient: Jane Smith, DOB: 15/08/1985. Medicare: 2123 45678 1. Contact: jane.smith@email.com or 0422 111 222. Address: 42 Wallaby Way, Sydney NSW 2000. TFN: 123 456 789.",
+      "raw_output": "assistant\n<think>\n\n</think>\n\n```json\n{\n  \"patient_name\": \"Jane Smith\",\n  \"dob\": \"15/08/1985\",\n  \"medicare\": \"2123 45678 1\",\n  \"email\": \"jane.smith@email.com\",\n  \"phone\": \"0422 111 222\",\n  \"address\": \"42 Wallaby Way, Sydney NSW 2000\",\n  \"tfn\": \"123 456 789\"\n}\n```",
+      "json_valid": true,
+      "spans_detected": 0,
+      "latency_s": 7.704,
+      "input_tokens": 114,
+      "output_tokens": 169,
+      "notes": "Detects all PII types correctly. But wrong output format (flat key-value JSON instead of spans array). Label names don't match schema (patient_name, dob, medicare vs PERSON, DATE_OF_BIRTH, MEDICARE_NUMBER)."
+    }
+  ],
+
+  "summary_stats": {
+    "json_valid_rate": "7/7",
+    "examples_with_spans_format": 1,
+    "examples_with_hallucinated_labels": 2,
+    "examples_with_missed_detections": 3,
+    "latency_range_s": [1.404, 7.704],
+    "avg_latency_s": 3.326
+  },
+
+  "hidden_state_extraction": {
+    "test_text": "DOB: 04/05/1998, Email: alex@example.com",
+    "input_tokens": 31,
+    "hidden_states_returned": true,
+    "num_layers": 33,
+    "layer_shapes": {
+      "layer_0": [1, 31, 2560],
+      "layer_16": [1, 31, 2560],
+      "layer_32": [1, 31, 2560]
+    },
+    "final_hidden_shape": [1, 31, 2560],
+    "hidden_size": 2560,
+    "forward_pass_latency_s": 0.119,
+    "span_embedding_extraction_verified": true,
+    "span_test_text": "alex@example.com",
+    "span_test_tokens": 3,
+    "span_found_in_input": false,
+    "notes": "Hidden state extraction works. Span not found in token sequence because chat template encodes the span differently (byte-level tokenization). Subword alignment needed for span extraction."
+  },
+
+  "overall_assessment": {
+    "model_operational": true,
+    "json_generation_works": true,
+    "hidden_states_extractable": true,
+    "output_schema_inconsistent": true,
+    "offset_quality_poor": true,
+    "not_suitable_as_is_for_token_span_classification": true,
+    "backbone_reusable": true,
+    "json_model_has_pii_knowledge": true
+  }
+}

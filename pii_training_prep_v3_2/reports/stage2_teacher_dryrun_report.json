@@ -1,0 +1,18 @@
+{
+  "backend": "transformers_local",
+  "prompts_attempted": 20,
+  "raw_ok_count": 20,
+  "valid_json_outputs": 20,
+  "converted_count": 20,
+  "conversion_error_count": 0,
+  "validation_error_count": 0,
+  "labels_outside_training_space": {},
+  "warnings": {
+    "possibly_overconfident_distribution": 1
+  },
+  "teacher_calls_executed": 20,
+  "full_6000_teacher_calls_executed": false,
+  "merged_into_training_dataset": false,
+  "total_wall_time_seconds": 98.7,
+  "average_seconds_per_prompt": 4.935
+}

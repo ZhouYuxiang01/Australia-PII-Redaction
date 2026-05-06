@@ -1,0 +1,19 @@
+{
+  "conversion_errors": [],
+  "validation_errors": [],
+  "malformed_json_count": 0,
+  "missing_verdict_count": 0,
+  "unexpected_label_count": 0,
+  "overconfident_distribution_count": 1,
+  "overconfident_distributions": [
+    {
+      "id": "STAGE2-PROMPT-009",
+      "context_type": "bare_span",
+      "top_type": "DATE_OF_BIRTH",
+      "top_probability": 0.857145,
+      "warnings": [
+        "possibly_overconfident_distribution"
+      ]
+    }
+  ]
+}

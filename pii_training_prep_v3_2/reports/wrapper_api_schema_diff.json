@@ -1,0 +1,232 @@
+{
+  "wrapper_root": "/home/admin/ZYX/redaction-wrapper",
+  "pii_project_root": "/home/admin/ZYX/pii_training_prep_v3_2",
+  "current_backend": {
+    "type": "qwen_lora (default in run_server.sh is opf-v3)",
+    "qwen_9b_lora": {
+      "model": "qwen3.5-9b-base-lora-tagged-28-fastretry",
+      "mode": "Tagged-output generation (<pii type=X>value</pii>)",
+      "config": "configs/backends/qwen-9b-lora.json"
+    },
+    "opf_v3": {
+      "model": "/home/admin/ZYX/opf_au_pii/runs/final/opf_73class_v3_full/checkpoint",
+      "mode": "Token-level PII detection with confidence scoring",
+      "config": "configs/backends/opf-v3.json"
+    }
+  },
+  "new_backend_required": {
+    "name": "opf_hard_79_qwen_head",
+    "description": "OPF hard-label span detector (79-class) + Qwen head re-scoring (80-class) + policy layer",
+    "opf_checkpoint": "/home/admin/ZYX/pii_training_prep_v3_2/runs/opf_hard_79",
+    "qwen_head_checkpoint": "/home/admin/ZYX/pii_training_prep_v3_2/runs/qwen_spancls_heads/last_linear/head.pt",
+    "qwen_backbone": "/home/admin/model/Qwen3.5-9B-Base",
+    "opf_label_space": "/home/admin/ZYX/pii_training_prep_v3_2/pii_schema/opf_label_space_79.json",
+    "qwen_label_space": "/home/admin/ZYX/pii_training_prep_v3_2/pii_schema/training_label_space_80.json",
+    "temperature": 1.035854
+  },
+  "old_model_call_site": {
+    "file": "redaction/backends/qwen_lora.py",
+    "method": "QwenLoraBackend.detect_spans()",
+    "line": "raw = self._generate(text)",
+    "replaces_with": "Integrated pipeline: OPF detect -> Qwen classify -> Policy decide",
+    "existing_opf_call_site": {
+      "file": "redaction/backends/opf.py",
+      "method": "OpfBackend.detect_spans()",
+      "line": "result = self._opf.redact(text)",
+      "note": "Existing OPF backend uses opf.OPF Python API (not subprocess). Can be adapted."
+    }
+  },
+  "current_api_schema": {
+    "request": {
+      "POST /api/redact": {
+        "body": {
+          "text": "string",
+          "example_id": "string (optional)"
+        },
+        "response": {
+          "input_text": "string (added server-side)",
+          "redacted_text": "string",
+          "spans": [
+            {
+              "start": "int",
+              "end": "int",
+              "type": "string (PII label, e.g. PERSON)",
+              "confidence": "float | null",
+              "decision": "AUTO_REDACT | REVIEW | PASS",
+              "replacement": "string",
+              "source": "model | rule",
+              "postprocess": [
+                "string"
+              ],
+              "raw_score": "float (optional)"
+            }
+          ],
+          "metadata": {
+            "model_version": "string",
+            "taxonomy_version": "string",
+            "schema_version": "string",
+            "policy_id": "string",
+            "redaction_mode": "string",
+            "backend_name": "string",
+            "latency_ms": "float",
+            "input_length": "int"
+          },
+          "warnings": [
+            "string"
+          ]
+        }
+      }
+    },
+    "frontend_fields_used": [
+      "spans[].start",
+      "spans[].end",
+      "spans[].type",
+      "spans[].confidence",
+      "spans[].decision",
+      "spans[].replacement",
+      "redacted_text",
+      "metadata.latency_ms",
+      "metadata.backend_name",
+      "warnings"
+    ],
+    "frontend_fields_ignored": [
+      "spans[].source",
+      "spans[].postprocess",
+      "spans[].raw_score",
+      "metadata.model_version",
+      "metadata.taxonomy_version"
+    ]
+  },
+  "new_api_schema": {
+    "request": {
+      "same": "POST /api/redact, same body format"
+    },
+    "response": {
+      "input_text": "string",
+      "redacted_text": "string",
+      "spans": [
+        {
+          "start": "int",
+          "end": "int",
+          "value": "string (extracted text)",
+          "opf_top_type": "string (OPF label, 79-class)",
+          "top_type": "string (Qwen label, 80-class incl NON_PII)",
+          "top_probability": "float",
+          "risk_score": "float",
+          "decision": "redact | review | ignore",
+          "type_distribution_topk": [
+            [
+              "LABEL",
+              0.0
+            ]
+          ],
+          "confidence": "float | null (from OPF)",
+          "replacement": "string",
+          "source": "model | rule",
+          "postprocess": [
+            "string"
+          ]
+        }
+      ],
+      "metadata": {
+        "model_version": "string",
+        "pipeline": "opf+qwen_head+policy",
+        "qwen_temperature": 1.035854,
+        "qwen_labels": 80,
+        "opf_labels": 79,
+        "policy_thresholds": {
+          "redact": 0.6,
+          "review": 0.25
+        },
+        "backend_name": "string",
+        "latency_ms": "float"
+      },
+      "warnings": [
+        "string"
+      ]
+    }
+  },
+  "frontend_changes": {
+    "add": [
+      "spans[].value",
+      "spans[].opf_top_type",
+      "spans[].top_type",
+      "spans[].top_probability",
+      "spans[].risk_score",
+      "spans[].type_distribution_topk"
+    ],
+    "rename": [
+      "span.type -> span.top_type (or display both)",
+      "decision values: AUTO_REDACT->redact, REVIEW->review, PASS->ignore"
+    ],
+    "remove": [],
+    "keep": [
+      "spans[].start",
+      "spans[].end",
+      "spans[].confidence",
+      "spans[].replacement",
+      "redacted_text"
+    ]
+  },
+  "postprocessing_conflicts": {
+    "strip_known_prefixes": "KEEP — still useful for cleaning span values",
+    "collapse_generic_work_contacts": "KEEP — harmless, cleans up types",
+    "add_url_encoded_emails": "KEEP — adds spans model may miss",
+    "add_contextual_identifier_spans": "MAY CONFLICT — could add spans that OPF already found. Set source='rule' distinct from 'model'.",
+    "add_registry_contextual_spans": "MAY CONFLICT — same as above. Ensure non-overlapping with model spans.",
+    "normalize_contextual_type": "KEEP — taxonomy aliases still needed",
+    "drop_false_positives": "NEEDS REVIEW — old hard-negative rules may not apply to new model"
+  },
+  "label_mapping_required": {
+    "description": "OPF 79-class space must be mapped to canonical taxonomy used by policy/frontend.",
+    "existing_opf_mapping": "OpfBackend assumes OPF labels align with taxonomy — this holds for the new 79-class model too.",
+    "qwen_80_class_includes_NON_PII": "NON_PII spans should be dropped before returning to frontend (or kept as type=NON_PII with decision=ignore).",
+    "tricky_mappings": {
+      "OPF PERSON -> Qwen PERSON": "1:1",
+      "OPF EMAIL_ADDRESS -> Qwen EMAIL_ADDRESS": "1:1",
+      "OPF DRIVERS_LICENCE -> Qwen DRIVERS_LICENCE": "check exact naming"
+    }
+  },
+  "implementation_plan": [
+    {
+      "step": 1,
+      "task": "Create new backend file: redaction/backends/hybrid_opf_qwen.py",
+      "details": "Implement RedactionBackend subclass that wraps the integrated pipeline (OPF + Qwen head + policy). Loads both models lazily."
+    },
+    {
+      "step": 2,
+      "task": "Register new backend in redaction/backends/registry.py",
+      "details": "Add 'hybrid_opf_qwen' type to BACKEND_TYPES dict with builder function."
+    },
+    {
+      "step": 3,
+      "task": "Create backend config: configs/backends/hybrid-opf-qwen.json",
+      "details": "Config file pointing to OPF checkpoint, Qwen head checkpoint, backbone path, temperature, thresholds."
+    },
+    {
+      "step": 4,
+      "task": "Create policy config: configs/policies/hybrid-80class-v1.json",
+      "details": "Policy with full 80-class type_actions, new risk-based decision model."
+    },
+    {
+      "step": 5,
+      "task": "Update API server response schema (minimal changes)",
+      "details": "Add input_text, opf_top_type, top_type, top_probability, risk_score, type_distribution_topk to Span serialization. Keep backward compatibility for old fields."
+    },
+    {
+      "step": 6,
+      "task": "Update frontend static/redaction_demo.html",
+      "details": "Display new fields (type_distribution, risk_score). Update decision pill labels (redact/review/ignore). Add Qwen vs OPF label comparison column."
+    },
+    {
+      "step": 7,
+      "task": "Update run_server.sh defaults",
+      "details": "Change DEFAULT_BACKEND to hybrid-opf-qwen.json, DEFAULT_POLICY to hybrid-80class-v1.json."
+    },
+    {
+      "step": 8,
+      "task": "Test with smoke examples",
+      "details": "Run server and test all demo examples. Verify frontend displays all new fields correctly."
+    }
+  ]
+}

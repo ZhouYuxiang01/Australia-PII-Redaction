@@ -1,0 +1,60 @@
+{
+  "experiments": [
+    {
+      "experiment": "mean_linear",
+      "temperature": 1.08197,
+      "dev_before": {
+        "nll": 0.109596,
+        "ece": 0.056358,
+        "loss": 0.2487
+      },
+      "dev_after": {
+        "nll": 0.118923,
+        "ece": 0.073173,
+        "loss": 0.24708
+      }
+    },
+    {
+      "experiment": "first_linear",
+      "temperature": 1.04804,
+      "dev_before": {
+        "nll": 0.132603,
+        "ece": 0.063069,
+        "loss": 0.278666
+      },
+      "dev_after": {
+        "nll": 0.139211,
+        "ece": 0.069592,
+        "loss": 0.278127
+      }
+    },
+    {
+      "experiment": "last_linear",
+      "temperature": 1.046177,
+      "dev_before": {
+        "nll": 0.092242,
+        "ece": 0.055128,
+        "loss": 0.25656
+      },
+      "dev_after": {
+        "nll": 0.099363,
+        "ece": 0.06158,
+        "loss": 0.255963
+      }
+    },
+    {
+      "experiment": "concat_mlp",
+      "temperature": 1.045785,
+      "dev_before": {
+        "nll": 0.111249,
+        "ece": 0.06632,
+        "loss": 0.239669
+      },
+      "dev_after": {
+        "nll": 0.116608,
+        "ece": 0.070852,
+        "loss": 0.23918
+      }
+    }
+  ]
+}

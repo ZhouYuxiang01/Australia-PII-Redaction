@@ -1,0 +1,68 @@
+{
+  "splits": {
+    "train": {
+      "record_count": 81298,
+      "validation_error_count": 0,
+      "validation_errors": [],
+      "offset_mismatch_count": 0,
+      "labels_outside_training_space": {},
+      "source_record_distribution": {
+        "candidate_level_negative": 3426,
+        "chat": 568,
+        "clinical": 1652,
+        "document_level_negative": 60946,
+        "email": 2274,
+        "form": 5712,
+        "letter": 1849,
+        "narrative": 551,
+        "payslip": 1052,
+        "qwen_5way_ranking": 1695,
+        "record": 1204,
+        "system_log": 369
+      }
+    },
+    "dev": {
+      "record_count": 10034,
+      "validation_error_count": 0,
+      "validation_errors": [],
+      "offset_mismatch_count": 0,
+      "labels_outside_training_space": {},
+      "source_record_distribution": {
+        "candidate_level_negative": 420,
+        "chat": 77,
+        "clinical": 210,
+        "document_level_negative": 7551,
+        "email": 281,
+        "form": 697,
+        "letter": 240,
+        "narrative": 71,
+        "payslip": 137,
+        "qwen_5way_ranking": 180,
+        "record": 130,
+        "system_log": 40
+      }
+    },
+    "test": {
+      "record_count": 9659,
+      "validation_error_count": 0,
+      "validation_errors": [],
+      "offset_mismatch_count": 0,
+      "labels_outside_training_space": {},
+      "source_record_distribution": {
+        "candidate_level_negative": 54,
+        "chat": 61,
+        "clinical": 243,
+        "document_level_negative": 7494,
+        "email": 283,
+        "form": 681,
+        "letter": 232,
+        "narrative": 79,
+        "payslip": 119,
+        "qwen_5way_ranking": 225,
+        "record": 147,
+        "system_log": 41
+      }
+    }
+  },
+  "student_training_started": false
+}

@@ -1,0 +1,61 @@
+{
+  "stage": "3A.3",
+  "label_count": 80,
+  "experiments": {
+    "mean_linear": {
+      "status": "completed",
+      "best_epoch": 10,
+      "best_dev_nll": 0.125683,
+      "dev_nll_after_temperature": 0.134157,
+      "test_top1_after_temperature": 0.988877,
+      "test_nll_after_temperature": 0.083902,
+      "checkpoint": "runs/qwen_spancls_heads/mean_linear/head.pt"
+    },
+    "first_linear": {
+      "status": "completed",
+      "best_epoch": 16,
+      "best_dev_nll": 0.138459,
+      "dev_nll_after_temperature": 0.156408,
+      "test_top1_after_temperature": 0.976724,
+      "test_nll_after_temperature": 0.129361,
+      "checkpoint": "runs/qwen_spancls_heads/first_linear/head.pt"
+    },
+    "last_linear": {
+      "status": "completed",
+      "best_epoch": 6,
+      "best_dev_nll": 0.103566,
+      "dev_nll_after_temperature": 0.108442,
+      "test_top1_after_temperature": 0.985342,
+      "test_nll_after_temperature": 0.085353,
+      "checkpoint": "runs/qwen_spancls_heads/last_linear/head.pt"
+    },
+    "concat_mlp": {
+      "status": "completed",
+      "best_epoch": 4,
+      "best_dev_nll": 0.104175,
+      "dev_nll_after_temperature": 0.108538,
+      "test_top1_after_temperature": 0.99013,
+      "test_nll_after_temperature": 0.073071,
+      "checkpoint": "runs/qwen_spancls_heads/concat_mlp/head.pt"
+    }
+  },
+  "device": "cuda",
+  "batch_size": 1024,
+  "max_epochs": 30,
+  "patience": 5,
+  "learning_rate": 0.001,
+  "labels_outside_training_space": {
+    "train": {},
+    "dev": {},
+    "test": {}
+  },
+  "qwen_model_loaded": false,
+  "lora_started": false,
+  "opf_started": false,
+  "classifier_full_training_started": false,
+  "best_experiment_by_dev_nll": {
+    "experiment": "last_linear",
+    "best_dev_nll": 0.103566
+  },
+  "wall_time_seconds": 91.249
+}

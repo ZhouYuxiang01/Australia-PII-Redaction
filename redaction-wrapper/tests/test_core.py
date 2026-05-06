@@ -8,9 +8,13 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from redaction.core import (
-    Span, apply_policy, build_response, normalize_text,
+    Span, apply_policy, build_response, expand_env_placeholders, normalize_text,
     parse_annotated_output, redact_text, repair_offsets_to_input,
     resolve_overlaps, safe_postprocess_spans,
+)
+from redaction.backends.hybrid_opf_qwen import (
+    _apply_qwen_verifier_verdict,
+    _select_qwen_verifier_candidates,
 )
 from redaction.core.postprocess import load_postprocess_rule_registry
 
@@ -498,6 +502,31 @@ def test_account_name_and_bank_name_are_not_account_numbers() -> None:
     assert all(value != "Aisha Kareem" for label, value in pairs if label == "AU_BANK_ACCOUNT")
     assert all(value != "National Australia Bank" for label, value in pairs if label == "AU_BANK_ACCOUNT")
 
+    freeform = (
+        "BSB maybe 733-041\n"
+        "acct: 0088 1992 44\n"
+        "bank name written as \"Southern Mutual??\"\n"
+    )
+    bank_name = "Southern Mutual??"
+    cleaned, _ = safe_postprocess_spans(
+        freeform,
+        [
+            Span(
+                start=freeform.index(bank_name),
+                end=freeform.index(bank_name) + len(bank_name),
+                type="BANK_ACCOUNT_NUMBER",
+                value=bank_name,
+                confidence=0.91,
+                source="model",
+            )
+        ],
+        {"postprocess": {}},
+    )
+    pairs = [(s.type, s.value) for s in cleaned]
+    assert ("AU_BANK_ACCOUNT", "733-041") in pairs
+    assert ("AU_BANK_ACCOUNT", "0088 1992 44") in pairs
+    assert all(value != bank_name for label, value in pairs if label == "AU_BANK_ACCOUNT")
+
 
 def test_opf_policy_declares_all_postprocess_flags() -> None:
     policy = json.loads((PROJECT_ROOT / "configs" / "policies" / "opf-v3-default-v1.json").read_text())
@@ -526,6 +555,205 @@ def test_context_normalization_relabels_account_and_personnel_conflicts() -> Non
         ("AU_BANK_ACCOUNT", "70929767"),
         ("PERSONNEL_NUMBER", "P74749731"),
     ]
+
+
+def test_qwen_lm_verifier_selects_only_semantic_hard_negative_candidates() -> None:
+    text = (
+        "bank name written as \"Southern Mutual??\"\n"
+        "acct: 733-041\n"
+        "NAT gateway 10.88.12.7\n"
+        "Login IP flagged for account: 203.45.67.89\n"
+        "payee name: Aisha Kareem\n"
+    )
+    spans = [
+        Span(start=text.index("Southern"), end=text.index("Southern") + len("Southern Mutual??"), type="BANK_ACCOUNT_NUMBER", value="Southern Mutual??", confidence=0.91),
+        Span(start=text.index("733"), end=text.index("733") + len("733-041"), type="BANK_ACCOUNT_NUMBER", value="733-041", confidence=0.91),
+        Span(start=text.index("10.88"), end=text.index("10.88") + len("10.88.12.7"), type="IP_ADDRESS", value="10.88.12.7", confidence=0.84),
+        Span(start=text.index("203.45"), end=text.index("203.45") + len("203.45.67.89"), type="IP_ADDRESS", value="203.45.67.89", confidence=0.84),
+        Span(start=text.index("Aisha Kareem"), end=text.index("Aisha Kareem") + len("Aisha Kareem"), type="PERSON", value="Aisha Kareem", confidence=0.88),
+    ]
+
+    selected = _select_qwen_verifier_candidates(
+        spans,
+        enabled=True,
+        verify_types={"BANK_ACCOUNT_NUMBER", "IP_ADDRESS"},
+        max_spans=5,
+        text=text,
+    )
+
+    assert [s.value for s in selected] == ["Southern Mutual??", "10.88.12.7"]
+
+
+def test_qwen_lm_verifier_risk_gate_skips_low_risk_high_confidence_candidates() -> None:
+    text = "student mobile 0412 345 678\n"
+    phone = Span(
+        start=text.index("0412"),
+        end=text.index("0412") + len("0412 345 678"),
+        type="PHONE",
+        value="0412 345 678",
+        confidence=0.94,
+        decision="redact",
+        risk_score=0.04,
+        top1_prob=0.94,
+        top_type="MOBILE",
+        opf_top_type="MOBILE",
+        qwen_top_type="MOBILE",
+    )
+
+    selected = _select_qwen_verifier_candidates(
+        [phone],
+        enabled=True,
+        verify_types={"PHONE"},
+        max_spans=5,
+        text=text,
+        require_trigger=True,
+        min_risk_score=0.25,
+        low_top1_threshold=0.70,
+    )
+
+    assert selected == []
+
+
+def test_qwen_lm_verifier_risk_gate_keeps_review_uncertainty_conflict_and_shape_mismatch() -> None:
+    text = (
+        "bank name written as \"Southern Mutual??\"\n"
+        "possible host 10.88.12.7\n"
+        "service endpoint 203.45.67.89\n"
+        "contact number 0412 345 678\n"
+    )
+    spans = [
+        Span(
+            start=text.index("Southern"),
+            end=text.index("Southern") + len("Southern Mutual??"),
+            type="BANK_ACCOUNT_NUMBER",
+            value="Southern Mutual??",
+            confidence=0.91,
+            decision="redact",
+            risk_score=0.02,
+            top1_prob=0.91,
+            top_type="BANK_ACCOUNT_NUMBER",
+            opf_top_type="BANK_ACCOUNT_NUMBER",
+            qwen_top_type="BANK_ACCOUNT_NUMBER",
+        ),
+        Span(
+            start=text.index("10.88"),
+            end=text.index("10.88") + len("10.88.12.7"),
+            type="IP_ADDRESS",
+            value="10.88.12.7",
+            confidence=0.84,
+            decision="review",
+            risk_score=0.08,
+            top1_prob=0.84,
+            top_type="IP_ADDRESS",
+            opf_top_type="IP_ADDRESS",
+            qwen_top_type="IP_ADDRESS",
+        ),
+        Span(
+            start=text.index("203.45"),
+            end=text.index("203.45") + len("203.45.67.89"),
+            type="IP_ADDRESS",
+            value="203.45.67.89",
+            confidence=0.82,
+            decision="redact",
+            risk_score=0.06,
+            top1_prob=0.82,
+            top_type="IP_ADDRESS",
+            opf_top_type="EMAIL_ADDRESS",
+            qwen_top_type="IP_ADDRESS",
+        ),
+        Span(
+            start=text.index("0412"),
+            end=text.index("0412") + len("0412 345 678"),
+            type="PHONE",
+            value="0412 345 678",
+            confidence=0.66,
+            decision="redact",
+            risk_score=0.03,
+            top1_prob=0.66,
+            top_type="MOBILE",
+            opf_top_type="MOBILE",
+            qwen_top_type="MOBILE",
+        ),
+    ]
+
+    selected = _select_qwen_verifier_candidates(
+        spans,
+        enabled=True,
+        verify_types={"BANK_ACCOUNT_NUMBER", "IP_ADDRESS", "PHONE"},
+        max_spans=5,
+        text=text,
+        require_trigger=True,
+        min_risk_score=0.25,
+        low_top1_threshold=0.70,
+    )
+
+    assert [s.value for s in selected] == [
+        "Southern Mutual??",
+        "10.88.12.7",
+        "203.45.67.89",
+        "0412 345 678",
+    ]
+
+
+def test_qwen_lm_verifier_non_pii_verdict_marks_span_for_drop() -> None:
+    span = Span(
+        start=0,
+        end=17,
+        type="BANK_ACCOUNT_NUMBER",
+        value="Southern Mutual??",
+        confidence=0.91,
+        decision="redact",
+    )
+
+    out = _apply_qwen_verifier_verdict(
+        span,
+        {"verdict": "non_pii", "confidence": 0.82},
+        non_pii_threshold=0.70,
+        wrong_type_threshold=0.80,
+    )
+
+    assert out.type == "NON_PII"
+    assert out.decision == "ignore"
+    assert out.decision_reason == "qwen_lm_verifier_non_pii"
+    assert "qwen_lm_verifier:non_pii:0.820" in out.postprocess
+
+
+def test_qwen_lm_verifier_wrong_type_suggests_type_without_auto_relabel() -> None:
+    span = Span(
+        start=0,
+        end=12,
+        type="BANK_ACCOUNT_NUMBER",
+        value="0412 345 678",
+        confidence=0.88,
+        decision="redact",
+        top_type="BANK_ACCOUNT_NUMBER",
+        replacement="[BANK_ACCOUNT_NUMBER]",
+    )
+
+    out = _apply_qwen_verifier_verdict(
+        span,
+        {
+            "verdict": "wrong_type",
+            "confidence": 0.86,
+            "suggested_type": "PHONE",
+            "scores": {"valid_pii": 0.03, "non_pii": 0.04, "wrong_type": 0.86, "uncertain": 0.07},
+            "raw_logits": {"valid_pii": 1.0, "non_pii": 0.5, "wrong_type": 4.0, "uncertain": 1.5},
+            "calibrated_logits": {"valid_pii": -0.2, "non_pii": 0.1, "wrong_type": 2.2, "uncertain": 0.0},
+        },
+        non_pii_threshold=0.70,
+        wrong_type_threshold=0.80,
+    )
+
+    assert out.type == "BANK_ACCOUNT_NUMBER"
+    assert out.replacement == "[BANK_ACCOUNT_NUMBER]"
+    assert out.decision == "review"
+    assert out.decision_reason == "qwen_lm_verifier_wrong_type"
+    assert out.qwen_verifier_suggested_type == "PHONE"
+
+    schema = out.to_schema()
+    assert schema["qwen_verifier_suggested_type"] == "PHONE"
+    assert schema["qwen_verifier_raw_logits"]["wrong_type"] == 4.0
+    assert schema["qwen_verifier_calibrated_logits"]["wrong_type"] == 2.2
 
 
 def test_registry_text_fields_still_require_context() -> None:
@@ -713,6 +941,155 @@ def test_safe_postprocess_drops_common_hard_negative_false_positives() -> None:
     assert [(s.type, s.value) for s in cleaned] == [("EMAIL", "ella.wilson@student.example.test")]
 
 
+def test_safe_postprocess_drops_operational_email_ip_and_phone_false_positives() -> None:
+    email_text = "Automated ping from donotreply+ND2BR8HU@mail.internal-crm.net — no action required, diagnostics only."
+    email_start = email_text.index("donotreply")
+    email_cleaned, _ = safe_postprocess_spans(
+        email_text,
+        [Span(
+            start=email_start,
+            end=email_start + len("donotreply+ND2BR8HU@mail.internal-crm.net"),
+            type="EMAIL",
+            value="donotreply+ND2BR8HU@mail.internal-crm.net",
+            source="rule",
+        )],
+        {"postprocess": {}},
+    )
+    assert email_cleaned == []
+
+    ip_text = "Health probe succeeded from 172.26.163.134 on port 8443."
+    ip_start = ip_text.index("172.26.163.134")
+    ip_cleaned, _ = safe_postprocess_spans(
+        ip_text,
+        [Span(
+            start=ip_start,
+            end=ip_start + len("172.26.163.134"),
+            type="IP_ADDRESS",
+            value="172.26.163.134",
+            source="rule",
+        )],
+        {"postprocess": {}},
+    )
+    assert ip_cleaned == []
+
+    phone_text = "The customer line is 1800 968 207 — it's the general enquiries queue, not a direct dial."
+    phone_start = phone_text.index("1800 968 207")
+    phone_cleaned, _ = safe_postprocess_spans(
+        phone_text,
+        [Span(
+            start=phone_start,
+            end=phone_start + len("1800 968 207"),
+            type="PHONE",
+            value="1800 968 207",
+        )],
+        {"postprocess": {}},
+    )
+    assert phone_cleaned == []
+
+
+def test_safe_postprocess_keeps_personal_email_login_ip_and_emergency_phone() -> None:
+    text = (
+        "Student email: aisha.khan@student.example.edu.au\n"
+        "Login IP flagged for the account: 203.45.67.89\n"
+        "Emergency contact phone: 0412 345 678\n"
+    )
+    spans = [
+        Span(
+            start=text.index("aisha.khan"),
+            end=text.index("aisha.khan") + len("aisha.khan@student.example.edu.au"),
+            type="EMAIL",
+            value="aisha.khan@student.example.edu.au",
+        ),
+        Span(
+            start=text.index("203.45.67.89"),
+            end=text.index("203.45.67.89") + len("203.45.67.89"),
+            type="IP_ADDRESS",
+            value="203.45.67.89",
+        ),
+        Span(
+            start=text.index("0412"),
+            end=text.index("0412") + len("0412 345 678"),
+            type="PHONE",
+            value="0412 345 678",
+        ),
+    ]
+    cleaned, _ = safe_postprocess_spans(text, spans, {"postprocess": {}})
+    assert [(s.type, s.value) for s in cleaned] == [
+        ("EMAIL", "aisha.khan@student.example.edu.au"),
+        ("IP_ADDRESS", "203.45.67.89"),
+        ("PHONE", "0412 345 678"),
+    ]
+
+
+def test_safe_postprocess_drops_operational_numeric_and_example_plate_false_positives() -> None:
+    text = (
+        "A maintenance request was raised under 620478494 against the mezzanine lights.\n"
+        "The scanned barcode 093462005 corresponds to the reserve copy.\n"
+        "Example plate XYZ123 appears on the training slide only.\n"
+    )
+    spans = [
+        Span(
+            start=text.index("620478494"),
+            end=text.index("620478494") + len("620478494"),
+            type="AU_TFN",
+            value="620478494",
+        ),
+        Span(
+            start=text.index("093462005"),
+            end=text.index("093462005") + len("093462005"),
+            type="LONGITUDE",
+            value="093462005",
+        ),
+        Span(
+            start=text.index("XYZ123"),
+            end=text.index("XYZ123") + len("XYZ123"),
+            type="VEHICLE_ID",
+            value="XYZ123",
+        ),
+    ]
+    cleaned, _ = safe_postprocess_spans(text, spans, {"postprocess": {}})
+    assert cleaned == []
+
+
+def test_safe_postprocess_keeps_real_tfn_coordinates_and_vehicle_rego() -> None:
+    text = (
+        "TFN: 832 109 111\n"
+        "Coordinates coming through as -17.24473, 144.665352\n"
+        "Vehicle REGO: AGL70L\n"
+    )
+    spans = [
+        Span(
+            start=text.index("832"),
+            end=text.index("832") + len("832 109 111"),
+            type="AU_TFN",
+            value="832 109 111",
+        ),
+        Span(
+            start=text.index("-17.24473"),
+            end=text.index("-17.24473") + len("-17.24473"),
+            type="LATITUDE",
+            value="-17.24473",
+        ),
+        Span(
+            start=text.index("144.665352"),
+            end=text.index("144.665352") + len("144.665352"),
+            type="LONGITUDE",
+            value="144.665352",
+        ),
+        Span(
+            start=text.index("AGL70L"),
+            end=text.index("AGL70L") + len("AGL70L"),
+            type="VEHICLE_ID",
+            value="AGL70L",
+        ),
+    ]
+    cleaned, _ = safe_postprocess_spans(text, spans, {"postprocess": {}})
+    pairs = [(s.type, s.value) for s in cleaned]
+    assert ("AU_TFN", "832 109 111") in pairs
+    assert ("GEOLOCATION_INFORMATION", "-17.24473, 144.665352") in pairs
+    assert ("VEHICLE_ID", "AGL70L") in pairs
+
+
 def test_safe_postprocess_drops_uac_and_numeric_hard_negative_false_positives() -> None:
     text = (
         "Invoice: 123456789\n"
@@ -728,6 +1105,161 @@ def test_safe_postprocess_drops_uac_and_numeric_hard_negative_false_positives() 
     ]
     cleaned, _ = safe_postprocess_spans(text, spans, {"postprocess": {}})
     assert [(s.type, s.value) for s in cleaned] == [("UAC_ID", "251066238")]
+
+
+def test_safe_postprocess_drops_shared_service_contacts_and_infra_ips() -> None:
+    text = (
+        "System mailbox: svc-redaction-bot@ops.example.edu.au handled batch alerts.\n"
+        "NAT gateway 10.88.12.7 served egress traffic for the cluster.\n"
+        "Reception main line: (02) 5550 0100 for visitor enquiries.\n"
+    )
+    spans = [
+        Span(
+            start=text.index("svc-redaction-bot"),
+            end=text.index("svc-redaction-bot") + len("svc-redaction-bot@ops.example.edu.au"),
+            type="EMAIL",
+            value="svc-redaction-bot@ops.example.edu.au",
+        ),
+        Span(
+            start=text.index("10.88.12.7"),
+            end=text.index("10.88.12.7") + len("10.88.12.7"),
+            type="IP_ADDRESS",
+            value="10.88.12.7",
+        ),
+        Span(
+            start=text.index("(02)"),
+            end=text.index("(02)") + len("(02) 5550 0100"),
+            type="PHONE",
+            value="(02) 5550 0100",
+        ),
+    ]
+    cleaned, _ = safe_postprocess_spans(text, spans, {"postprocess": {}})
+    assert cleaned == []
+
+
+def test_safe_postprocess_drops_asset_numeric_and_demo_vehicle_tokens() -> None:
+    text = (
+        "Asset tag 832109111 belongs to the projector inventory.\n"
+        "Warehouse bin 151.201770 is printed on the shelf label.\n"
+        "Demo rego AGL70L appears in screenshots only.\n"
+    )
+    spans = [
+        Span(
+            start=text.index("832109111"),
+            end=text.index("832109111") + len("832109111"),
+            type="AU_TFN",
+            value="832109111",
+        ),
+        Span(
+            start=text.index("151.201770"),
+            end=text.index("151.201770") + len("151.201770"),
+            type="LONGITUDE",
+            value="151.201770",
+        ),
+        Span(
+            start=text.index("AGL70L"),
+            end=text.index("AGL70L") + len("AGL70L"),
+            type="VEHICLE_ID",
+            value="AGL70L",
+        ),
+    ]
+    cleaned, _ = safe_postprocess_spans(text, spans, {"postprocess": {}})
+    assert cleaned == []
+
+
+def test_safe_postprocess_long_input_uses_local_context_for_hard_negatives() -> None:
+    noise = "\n".join(
+        f"Audit event {i}: diagnostics completed for queue shard {i % 7}."
+        for i in range(160)
+    )
+    text = "\n".join([
+        noise,
+        "System mailbox: svc-redaction-bot@ops.example.edu.au handled batch alerts.",
+        "NAT gateway 10.88.12.7 served egress traffic for the cluster.",
+        "Student email: priya.nair@student.example.edu.au",
+        "Login IP flagged for student account: 203.45.67.89",
+        "TFN: 832 109 111",
+        "Vehicle REGO: AGL70L",
+    ])
+    spans = [
+        Span(
+            start=text.index("svc-redaction-bot"),
+            end=text.index("svc-redaction-bot") + len("svc-redaction-bot@ops.example.edu.au"),
+            type="EMAIL",
+            value="svc-redaction-bot@ops.example.edu.au",
+        ),
+        Span(
+            start=text.index("10.88.12.7"),
+            end=text.index("10.88.12.7") + len("10.88.12.7"),
+            type="IP_ADDRESS",
+            value="10.88.12.7",
+        ),
+        Span(
+            start=text.index("priya.nair"),
+            end=text.index("priya.nair") + len("priya.nair@student.example.edu.au"),
+            type="EMAIL",
+            value="priya.nair@student.example.edu.au",
+        ),
+        Span(
+            start=text.index("203.45.67.89"),
+            end=text.index("203.45.67.89") + len("203.45.67.89"),
+            type="IP_ADDRESS",
+            value="203.45.67.89",
+        ),
+        Span(
+            start=text.index("832"),
+            end=text.index("832") + len("832 109 111"),
+            type="AU_TFN",
+            value="832 109 111",
+        ),
+        Span(
+            start=text.index("AGL70L"),
+            end=text.index("AGL70L") + len("AGL70L"),
+            type="VEHICLE_ID",
+            value="AGL70L",
+        ),
+    ]
+    cleaned, _ = safe_postprocess_spans(text, spans, {"postprocess": {}})
+    assert [(s.type, s.value) for s in cleaned] == [
+        ("EMAIL", "priya.nair@student.example.edu.au"),
+        ("IP_ADDRESS", "203.45.67.89"),
+        ("AU_TFN", "832 109 111"),
+        ("VEHICLE_ID", "AGL70L"),
+    ]
+
+
+def test_safe_postprocess_keeps_explicit_sensitive_values_in_operational_workflows() -> None:
+    text = (
+        "Maintenance request includes TFN: 832 109 111 for payroll correction.\n"
+        "Incident ticket captured login IP for the account: 203.45.67.89\n"
+        "Helpdesk note says emergency contact phone: 0412 345 678\n"
+    )
+    spans = [
+        Span(
+            start=text.index("832"),
+            end=text.index("832") + len("832 109 111"),
+            type="AU_TFN",
+            value="832 109 111",
+        ),
+        Span(
+            start=text.index("203.45.67.89"),
+            end=text.index("203.45.67.89") + len("203.45.67.89"),
+            type="IP_ADDRESS",
+            value="203.45.67.89",
+        ),
+        Span(
+            start=text.index("0412"),
+            end=text.index("0412") + len("0412 345 678"),
+            type="PHONE",
+            value="0412 345 678",
+        ),
+    ]
+    cleaned, _ = safe_postprocess_spans(text, spans, {"postprocess": {}})
+    assert [(s.type, s.value) for s in cleaned] == [
+        ("AU_TFN", "832 109 111"),
+        ("IP_ADDRESS", "203.45.67.89"),
+        ("PHONE", "0412 345 678"),
+    ]
 
 
 def test_build_response_metadata() -> None:
@@ -848,6 +1380,43 @@ def test_opf_clear_australian_ids_reach_auto_redact() -> None:
     ]
     out = apply_policy(spans, policy)
     assert [s.decision for s in out] == ["AUTO_REDACT", "AUTO_REDACT", "AUTO_REDACT", "AUTO_REDACT"]
+
+
+def test_expand_env_placeholders_uses_env_value() -> None:
+    cfg = {"path": "${MY_VAR}/sub", "nested": [{"x": "${MY_VAR:-fallback}"}]}
+    out = expand_env_placeholders(cfg, {"MY_VAR": "/opt/data"})
+    assert out["path"] == "/opt/data/sub"
+    assert out["nested"][0]["x"] == "/opt/data"
+
+
+def test_expand_env_placeholders_falls_back_to_default() -> None:
+    out = expand_env_placeholders("${MISSING_VAR:-/etc/default}", {})
+    assert out == "/etc/default"
+
+
+def test_expand_env_placeholders_leaves_undefined_no_default() -> None:
+    out = expand_env_placeholders("${UNSET_NO_DEFAULT}", {})
+    assert out == "${UNSET_NO_DEFAULT}"
+
+
+def test_backend_configs_load_via_env_substitution() -> None:
+    """All shipped backend configs must round-trip through env substitution."""
+    import os
+    from redaction.backends.registry import load_backend_config
+    env_keys = ["REDACTION_OPF73_CKPT", "REDACTION_QWEN_BACKBONE",
+                "REDACTION_QWEN9B_LORA_ADAPTER", "REDACTION_QWEN4B_FULL",
+                "REDACTION_PII_PROJECT_ROOT"]
+    saved = {k: os.environ.pop(k, None) for k in env_keys}
+    try:
+        for path in sorted((PROJECT_ROOT / "configs" / "backends").glob("*.json")):
+            cfg = load_backend_config(path)
+            for k, v in cfg.items():
+                if isinstance(v, str):
+                    assert "${" not in v, f"{path.name}:{k} still has placeholder: {v}"
+    finally:
+        for k, v in saved.items():
+            if v is not None:
+                os.environ[k] = v
 
 
 if __name__ == "__main__":

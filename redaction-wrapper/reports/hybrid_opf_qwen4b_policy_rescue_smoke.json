@@ -1,0 +1,318 @@
+{
+  "results": [
+    {
+      "test_id": "student-id",
+      "status": "PASS",
+      "issues": [],
+      "latency_ms": 75718.6,
+      "span_count": 1,
+      "redact_count": 1,
+      "review_count": 0,
+      "ignore_count": 0,
+      "spans": [
+        {
+          "type": "STUDENT_ID",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.47715336084365845,
+          "detector_source": "qwen",
+          "deterministic_evidence": false,
+          "qwen_top_type": "STUDENT_ID"
+        }
+      ]
+    },
+    {
+      "test_id": "dob-email-mobile",
+      "status": "PASS",
+      "issues": [],
+      "latency_ms": 139.9,
+      "span_count": 3,
+      "redact_count": 3,
+      "review_count": 0,
+      "ignore_count": 0,
+      "spans": [
+        {
+          "type": "DATE_OF_BIRTH",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.9935311675071716,
+          "detector_source": "qwen",
+          "deterministic_evidence": false,
+          "qwen_top_type": "DATE_OF_BIRTH"
+        },
+        {
+          "type": "EMAIL_ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.8892517685890198,
+          "detector_source": "rescue:email_full",
+          "deterministic_evidence": true,
+          "qwen_top_type": "EMAIL_ADDRESS"
+        },
+        {
+          "type": "MOBILE",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.6379570960998535,
+          "detector_source": "rescue:au_mobile",
+          "deterministic_evidence": true,
+          "qwen_top_type": "MOBILE"
+        }
+      ]
+    },
+    {
+      "test_id": "bsb-account",
+      "status": "PASS",
+      "issues": [],
+      "latency_ms": 133.9,
+      "span_count": 2,
+      "redact_count": 2,
+      "review_count": 0,
+      "ignore_count": 0,
+      "spans": [
+        {
+          "type": "BANK_ACCOUNT_NUMBER",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.7438634037971497,
+          "detector_source": "rescue:bsb_format",
+          "deterministic_evidence": true,
+          "qwen_top_type": "SUBJECT_RESULTS"
+        },
+        {
+          "type": "BANK_ACCOUNT_NUMBER",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.8272566795349121,
+          "detector_source": "rescue:account_number",
+          "deterministic_evidence": true,
+          "qwen_top_type": "BANK_ACCOUNT_NUMBER"
+        }
+      ]
+    },
+    {
+      "test_id": "ticket-hard-neg",
+      "status": "PASS",
+      "issues": [],
+      "latency_ms": 131.9,
+      "span_count": 1,
+      "redact_count": 0,
+      "review_count": 0,
+      "ignore_count": 1,
+      "spans": [
+        {
+          "type": "HASHED_PAYMENT_CARD_NUMBER",
+          "decision": "ignore",
+          "value": "",
+          "top1_prob": 0.057077016681432724,
+          "detector_source": "qwen",
+          "deterministic_evidence": false,
+          "qwen_top_type": "HASHED_PAYMENT_CARD_NUMBER"
+        }
+      ]
+    },
+    {
+      "test_id": "room-date",
+      "status": "PASS",
+      "issues": [],
+      "latency_ms": 130.3,
+      "span_count": 1,
+      "redact_count": 0,
+      "review_count": 0,
+      "ignore_count": 1,
+      "spans": [
+        {
+          "type": "MEDICARE_EXPIRY",
+          "decision": "ignore",
+          "value": "",
+          "top1_prob": 0.27061545848846436,
+          "detector_source": "qwen",
+          "deterministic_evidence": false,
+          "qwen_top_type": "MEDICARE_EXPIRY"
+        }
+      ]
+    },
+    {
+      "test_id": "fake-card",
+      "status": "PASS",
+      "issues": [],
+      "latency_ms": 127.5,
+      "span_count": 1,
+      "redact_count": 0,
+      "review_count": 0,
+      "ignore_count": 1,
+      "spans": [
+        {
+          "type": "PAYMENT_CARD_NUMBER",
+          "decision": "ignore",
+          "value": "",
+          "top1_prob": 0.14747703075408936,
+          "detector_source": "qwen",
+          "deterministic_evidence": false,
+          "qwen_top_type": "PAYMENT_CARD_NUMBER"
+        }
+      ]
+    },
+    {
+      "test_id": "mixed-note",
+      "status": "PASS",
+      "issues": [],
+      "latency_ms": 185.7,
+      "span_count": 7,
+      "redact_count": 5,
+      "review_count": 2,
+      "ignore_count": 0,
+      "spans": [
+        {
+          "type": "PERSON",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.9506237506866455,
+          "detector_source": "qwen",
+          "deterministic_evidence": false,
+          "qwen_top_type": "PERSON"
+        },
+        {
+          "type": "DATE_OF_BIRTH",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.9672771096229553,
+          "detector_source": "qwen",
+          "deterministic_evidence": false,
+          "qwen_top_type": "DATE_OF_BIRTH"
+        },
+        {
+          "type": "STUDENT_ID",
+          "decision": "review",
+          "value": "",
+          "top1_prob": 0.26374879479408264,
+          "detector_source": "qwen",
+          "deterministic_evidence": false,
+          "qwen_top_type": "STUDENT_ID"
+        },
+        {
+          "type": "EMAIL_ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.2649933993816376,
+          "detector_source": "rescue:email_full",
+          "deterministic_evidence": true,
+          "qwen_top_type": "EMAIL_ADDRESS"
+        },
+        {
+          "type": "MOBILE",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.538876473903656,
+          "detector_source": "rescue:au_mobile",
+          "deterministic_evidence": true,
+          "qwen_top_type": "MOBILE"
+        },
+        {
+          "type": "VEHICLE_REGO",
+          "decision": "review",
+          "value": "",
+          "top1_prob": 0.18335017561912537,
+          "detector_source": "rescue:vehicle_rego",
+          "deterministic_evidence": true,
+          "qwen_top_type": "VEHICLE_REGO"
+        },
+        {
+          "type": "ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.9683098793029785,
+          "detector_source": "qwen",
+          "deterministic_evidence": false,
+          "qwen_top_type": "ADDRESS"
+        }
+      ]
+    },
+    {
+      "test_id": "messy-note",
+      "status": "PASS",
+      "issues": [],
+      "latency_ms": 183.6,
+      "span_count": 8,
+      "redact_count": 8,
+      "review_count": 0,
+      "ignore_count": 0,
+      "spans": [
+        {
+          "type": "PERSON",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.9515262842178345,
+          "detector_source": "qwen",
+          "deterministic_evidence": false,
+          "qwen_top_type": "PERSON"
+        },
+        {
+          "type": "STUDENT_ID",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.8010942339897156,
+          "detector_source": "qwen",
+          "deterministic_evidence": false,
+          "qwen_top_type": "STUDENT_ID"
+        },
+        {
+          "type": "STUDENT_ID",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.5366706252098083,
+          "detector_source": "qwen",
+          "deterministic_evidence": false,
+          "qwen_top_type": "STUDENT_ID"
+        },
+        {
+          "type": "EMAIL_ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.1476348638534546,
+          "detector_source": "rescue:email_full",
+          "deterministic_evidence": true,
+          "qwen_top_type": "EMAIL_ADDRESS"
+        },
+        {
+          "type": "MOBILE",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.051406677812337875,
+          "detector_source": "rescue:au_mobile",
+          "deterministic_evidence": true,
+          "qwen_top_type": "MOBILE"
+        },
+        {
+          "type": "ADDRESS",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.8750272393226624,
+          "detector_source": "qwen",
+          "deterministic_evidence": false,
+          "qwen_top_type": "ADDRESS"
+        },
+        {
+          "type": "BANK_ACCOUNT_NUMBER",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.9017610549926758,
+          "detector_source": "rescue:bsb_format",
+          "deterministic_evidence": true,
+          "qwen_top_type": "BANK_ACCOUNT_NUMBER"
+        },
+        {
+          "type": "BANK_ACCOUNT_NUMBER",
+          "decision": "redact",
+          "value": "",
+          "top1_prob": 0.8699390292167664,
+          "detector_source": "qwen",
+          "deterministic_evidence": false,
+          "qwen_top_type": "BANK_ACCOUNT_NUMBER"
+        }
+      ]
+    }
+  ],
+  "pass_count": 8,
+  "fail_count": 0
+}

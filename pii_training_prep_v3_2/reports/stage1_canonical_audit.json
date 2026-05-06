@@ -1,0 +1,9 @@
+{
+  "input_records": 94991,
+  "output_records": 94991,
+  "span_count": 134732,
+  "offset_mismatch_count": 0,
+  "labels_outside_training_space": {},
+  "validation_errors": [],
+  "validation_error_count": 0
+}

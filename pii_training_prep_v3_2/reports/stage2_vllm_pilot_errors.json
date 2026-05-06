@@ -1,0 +1,57 @@
+{
+  "selected_concurrency": 16,
+  "selected_errors": {
+    "conversion_errors": [],
+    "validation_errors": [],
+    "malformed_json_count": 0,
+    "missing_verdict_count": 0,
+    "unexpected_label_count": 0,
+    "overconfident_distribution_count": 2,
+    "overconfident_distributions": [
+      {
+        "id": "STAGE2-VLLM-PILOT-033",
+        "context_type": "bare_span",
+        "top_type": "PAYMENT_CARD_NUMBER",
+        "top_probability": 0.909091,
+        "warnings": [
+          "possibly_overconfident_distribution"
+        ]
+      },
+      {
+        "id": "STAGE2-VLLM-PILOT-034",
+        "context_type": "weak_context",
+        "top_type": "PAYMENT_CARD_NUMBER",
+        "top_probability": 0.909091,
+        "warnings": [
+          "possibly_overconfident_distribution"
+        ]
+      }
+    ]
+  },
+  "per_concurrency_error_summary": {
+    "1": {
+      "malformed_json_count": 0,
+      "missing_verdict_count": 0,
+      "unexpected_label_count": 0,
+      "overconfident_distribution_count": 2
+    },
+    "4": {
+      "malformed_json_count": 0,
+      "missing_verdict_count": 0,
+      "unexpected_label_count": 0,
+      "overconfident_distribution_count": 2
+    },
+    "8": {
+      "malformed_json_count": 0,
+      "missing_verdict_count": 0,
+      "unexpected_label_count": 0,
+      "overconfident_distribution_count": 2
+    },
+    "16": {
+      "malformed_json_count": 0,
+      "missing_verdict_count": 0,
+      "unexpected_label_count": 0,
+      "overconfident_distribution_count": 2
+    }
+  }
+}

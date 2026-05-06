@@ -1,0 +1,605 @@
+{
+  "backend": "opf-only",
+  "latency_p50_ms": 38.6,
+  "latency_p95_ms": 72.8,
+  "total_examples": 11,
+  "results": [
+    {
+      "ex_id": "v1-sid",
+      "span_count": 1,
+      "redact": 1,
+      "review": 0,
+      "ignore": 0,
+      "types": [
+        "STUDENT_ID"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "Student number is SID# [STUDENT_ID].",
+      "spans": [
+        {
+          "type": "STUDENT_ID",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        }
+      ],
+      "latency_ms": 28.2
+    },
+    {
+      "ex_id": "v2-dob-email-mob",
+      "span_count": 3,
+      "redact": 3,
+      "review": 0,
+      "ignore": 0,
+      "types": [
+        "DATE_OF_BIRTH",
+        "EMAIL",
+        "PHONE"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "DOB [DATE_OF_BIRTH], email [EMAIL], mobile [PHONE].",
+      "spans": [
+        {
+          "type": "DATE_OF_BIRTH",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "EMAIL",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "PHONE",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        }
+      ],
+      "latency_ms": 38.7
+    },
+    {
+      "ex_id": "v3-bsb-acct",
+      "span_count": 2,
+      "redact": 2,
+      "review": 0,
+      "ignore": 0,
+      "types": [
+        "AU_BANK_ACCOUNT"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "BSB [AU_BANK_ACCOUNT], account [AU_BANK_ACCOUNT].",
+      "spans": [
+        {
+          "type": "AU_BANK_ACCOUNT",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "AU_BANK_ACCOUNT",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        }
+      ],
+      "latency_ms": 23.9
+    },
+    {
+      "ex_id": "v4-ticket-hn",
+      "span_count": 0,
+      "redact": 0,
+      "review": 0,
+      "ignore": 0,
+      "types": [],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "ticket id INC-0412-345-678, not a phone number.",
+      "spans": [],
+      "latency_ms": 23.2
+    },
+    {
+      "ex_id": "v5-room-hn",
+      "span_count": 0,
+      "redact": 0,
+      "review": 0,
+      "ignore": 0,
+      "types": [],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "room: 14/09/2002 Building A.",
+      "spans": [],
+      "latency_ms": 19.3
+    },
+    {
+      "ex_id": "v6-fake-card-hn",
+      "span_count": 0,
+      "redact": 0,
+      "review": 0,
+      "ignore": 0,
+      "types": [],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "fake card test token: tok_4111111111111111.",
+      "spans": [],
+      "latency_ms": 24.4
+    },
+    {
+      "ex_id": "v7-mixed-note",
+      "span_count": 8,
+      "redact": 6,
+      "review": 2,
+      "ignore": 0,
+      "types": [
+        "ADDRESS",
+        "DATE_OF_BIRTH",
+        "EMAIL",
+        "PERSON",
+        "PHONE",
+        "STUDENT_ID",
+        "VEHICLE_ID"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "Jonathan Min Park, DOB [DATE_OF_BIRTH], SID [STUDENT_ID], [EMAIL], personal [EMAIL], mobile [PHONE], vehicle rego [VEHICLE_ID], address [ADDRESS].",
+      "spans": [
+        {
+          "type": "PERSON",
+          "decision": "REVIEW",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "DATE_OF_BIRTH",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "STUDENT_ID",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "EMAIL",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "EMAIL",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "PHONE",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "VEHICLE_ID",
+          "decision": "REVIEW",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "ADDRESS",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        }
+      ],
+      "latency_ms": 53.7
+    },
+    {
+      "ex_id": "v8-student-note",
+      "span_count": 6,
+      "redact": 6,
+      "review": 0,
+      "ignore": 0,
+      "types": [
+        "DATE_OF_BIRTH",
+        "EMAIL",
+        "PERSON",
+        "PHONE",
+        "STUDENT_ID",
+        "UAC_ID"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "New student: [PERSON], bday [DATE_OF_BIRTH], SID [STUDENT_ID], USI 87654321, UAC [UAC_ID], [EMAIL], mobile [PHONE], 88 George St Sydney NSW 2000.",
+      "spans": [
+        {
+          "type": "PERSON",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "DATE_OF_BIRTH",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "STUDENT_ID",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "UAC_ID",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "EMAIL",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "PHONE",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        }
+      ],
+      "latency_ms": 66.9
+    },
+    {
+      "ex_id": "v9-bank-refund",
+      "span_count": 2,
+      "redact": 2,
+      "review": 0,
+      "ignore": 0,
+      "types": [
+        "AU_BANK_ACCOUNT"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "Refund note: Jonathan Min Park, BSB [AU_BANK_ACCOUNT], account [AU_BANK_ACCOUNT], amount $450. Ref: INV-88421.",
+      "spans": [
+        {
+          "type": "AU_BANK_ACCOUNT",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "AU_BANK_ACCOUNT",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        }
+      ],
+      "latency_ms": 38.6
+    },
+    {
+      "ex_id": "v10-id-check",
+      "span_count": 6,
+      "redact": 6,
+      "review": 0,
+      "ignore": 0,
+      "types": [
+        "ADDRESS",
+        "AU_DRIVERS_LICENCE",
+        "AU_PASSPORT",
+        "CENTRELINK_REFERENCE_NUMBER",
+        "DATE_OF_BIRTH",
+        "IHI"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "ID check: Driver licence [AU_DRIVERS_LICENCE], Passport [AU_PASSPORT], IHI [IHI], Centrelink [CENTRELINK_REFERENCE_NUMBER], DOB [DATE_OF_BIRTH], address [ADDRESS].",
+      "spans": [
+        {
+          "type": "AU_DRIVERS_LICENCE",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "AU_PASSPORT",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "IHI",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "CENTRELINK_REFERENCE_NUMBER",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "DATE_OF_BIRTH",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "ADDRESS",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        }
+      ],
+      "latency_ms": 53.1
+    },
+    {
+      "ex_id": "v11-ocr-messy",
+      "span_count": 8,
+      "redact": 7,
+      "review": 1,
+      "ignore": 0,
+      "types": [
+        "ADDRESS",
+        "AU_BANK_ACCOUNT",
+        "EMAIL",
+        "PERSON",
+        "PHONE",
+        "STUDENT_ID"
+      ],
+      "hard_neg_issues": [],
+      "pii_leak": false,
+      "value_absent": true,
+      "redacted_excerpt": "Extracted: \nStudent: [PERSON]\nSID: [STUDENT_ID]\nEmail: [EMAIL]\n\nPhone: [PHONE]\nMobile: [PHONE]\n333\n\nAddress: [ADDRESS]\n\nBSB: [AU_BANK_ACCOUNT]\nAccount: [AU_BANK_ACCOUNT]\n\nref: not-a-pii-123",
+      "spans": [
+        {
+          "type": "PERSON",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "STUDENT_ID",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "EMAIL",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "PHONE",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "PHONE",
+          "decision": "REVIEW",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "ADDRESS",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "AU_BANK_ACCOUNT",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        },
+        {
+          "type": "AU_BANK_ACCOUNT",
+          "decision": "AUTO_REDACT",
+          "value": "",
+          "prob": 0.0,
+          "det_ev": false,
+          "det_src": "",
+          "qwen_top": "",
+          "opf_top": "",
+          "topk": []
+        }
+      ],
+      "latency_ms": 72.8
+    }
+  ]
+}

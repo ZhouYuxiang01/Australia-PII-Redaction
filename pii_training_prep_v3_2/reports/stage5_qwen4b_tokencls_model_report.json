@@ -1,0 +1,18 @@
+{
+  "hidden_size": 2560,
+  "num_labels": 317,
+  "logits_shape": [
+    4,
+    313,
+    317
+  ],
+  "trainable_params": {
+    "backbone_trainable": 0,
+    "head_trainable": 811837,
+    "total_trainable": 811837
+  },
+  "backbone_frozen": true,
+  "smoke_initial_loss": 7.550052,
+  "smoke_final_loss": 0.267711,
+  "smoke_token_accuracy": 0.9034
+}

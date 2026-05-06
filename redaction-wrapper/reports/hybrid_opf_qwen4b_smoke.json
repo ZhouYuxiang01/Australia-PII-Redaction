@@ -1,0 +1,674 @@
+[
+  {
+    "test_id": "student-id",
+    "text": "Student number is SID# 47009923.",
+    "redacted_text": "Student number is SID# [STUDENT_ID].",
+    "latency_ms": 131.1,
+    "span_count": 1,
+    "redact_count": 1,
+    "review_count": 0,
+    "ignore_count": 0,
+    "spans": [
+      {
+        "start": 23,
+        "end": 31,
+        "value": null,
+        "top_type": "STUDENT_ID",
+        "decision": "redact",
+        "risk_score": 0.23291518073529005,
+        "top1_prob": 0.47715336084365845,
+        "opf_top_type": null,
+        "top3_distribution": [
+          [
+            "STUDENT_ID",
+            0.47715336084365845
+          ],
+          [
+            "SUBJECT_RESULTS",
+            0.03322948142886162
+          ],
+          [
+            "EMPLOYEE_NUMBER",
+            0.023786796256899834
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "test_id": "dob-email-mobile",
+    "text": "DOB 04/05/1998, email alex@example.com, mobile 0412 345 678.",
+    "redacted_text": "DOB [DATE_OF_BIRTH], email [EMAIL], mobile [PHONE].",
+    "latency_ms": 147.3,
+    "span_count": 3,
+    "redact_count": 3,
+    "review_count": 0,
+    "ignore_count": 0,
+    "spans": [
+      {
+        "start": 4,
+        "end": 14,
+        "value": null,
+        "top_type": "DATE_OF_BIRTH",
+        "decision": "redact",
+        "risk_score": 0.0031569360398862045,
+        "top1_prob": 0.9935311675071716,
+        "opf_top_type": "DATE_OF_BIRTH",
+        "top3_distribution": [
+          [
+            "DATE_OF_BIRTH",
+            0.9935311675071716
+          ],
+          [
+            "MEDICARE_EXPIRY",
+            8.685026114108041e-05
+          ],
+          [
+            "GENDER",
+            6.811015191487968e-05
+          ]
+        ]
+      },
+      {
+        "start": 22,
+        "end": 38,
+        "value": null,
+        "top_type": "EMAIL_ADDRESS",
+        "decision": "redact",
+        "risk_score": 0.03303416748531163,
+        "top1_prob": 0.8892517685890198,
+        "opf_top_type": "EMAIL_ADDRESS",
+        "top3_distribution": [
+          [
+            "EMAIL_ADDRESS",
+            0.8892517685890198
+          ],
+          [
+            "WORK_EMAIL",
+            0.03804389014840126
+          ],
+          [
+            "DATE_OF_BIRTH",
+            0.0066360062919557095
+          ]
+        ]
+      },
+      {
+        "start": 47,
+        "end": 59,
+        "value": null,
+        "top_type": "MOBILE",
+        "decision": "redact",
+        "risk_score": 0.13614177517592907,
+        "top1_prob": 0.6379570960998535,
+        "opf_top_type": "MOBILE",
+        "top3_distribution": [
+          [
+            "MOBILE",
+            0.6379570960998535
+          ],
+          [
+            "EMAIL_ADDRESS",
+            0.06293000280857086
+          ],
+          [
+            "DATE_OF_BIRTH",
+            0.026829350739717484
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "test_id": "bsb-account",
+    "text": "BSB 062-001, account 123456789.",
+    "redacted_text": "BSB [SUBJECT_RESULTS], account [AU_BANK_ACCOUNT].",
+    "latency_ms": 131.7,
+    "span_count": 2,
+    "redact_count": 2,
+    "review_count": 0,
+    "ignore_count": 0,
+    "spans": [
+      {
+        "start": 4,
+        "end": 11,
+        "value": null,
+        "top_type": "SUBJECT_RESULTS",
+        "decision": "redact",
+        "risk_score": 0.23702003341168165,
+        "top1_prob": 0.7438634037971497,
+        "opf_top_type": null,
+        "top3_distribution": [
+          [
+            "SUBJECT_RESULTS",
+            0.7438634037971497
+          ],
+          [
+            "EMPLOYEE_NUMBER",
+            0.009878399781882763
+          ],
+          [
+            "DRIVERS_LICENCE",
+            0.009238163009285927
+          ]
+        ]
+      },
+      {
+        "start": 21,
+        "end": 30,
+        "value": null,
+        "top_type": "BANK_ACCOUNT_NUMBER",
+        "decision": "redact",
+        "risk_score": 0.1581360027194023,
+        "top1_prob": 0.8272566795349121,
+        "opf_top_type": null,
+        "top3_distribution": [
+          [
+            "BANK_ACCOUNT_NUMBER",
+            0.8272566795349121
+          ],
+          [
+            "STUDENT_ID",
+            0.007394189015030861
+          ],
+          [
+            "PAYMENT_CARD_NUMBER",
+            0.0072131287306547165
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "test_id": "ticket-hard-neg",
+    "text": "ticket id INC-0412-345-678, not a phone number.",
+    "redacted_text": "ticket id INC-0412-345-678, not a phone number.",
+    "latency_ms": 128.4,
+    "span_count": 1,
+    "redact_count": 0,
+    "review_count": 0,
+    "ignore_count": 1,
+    "spans": [
+      {
+        "start": 14,
+        "end": 26,
+        "value": null,
+        "top_type": "HASHED_PAYMENT_CARD_NUMBER",
+        "decision": "ignore",
+        "risk_score": 0.0,
+        "top1_prob": 0.057077016681432724,
+        "opf_top_type": null,
+        "top3_distribution": [
+          [
+            "HASHED_PAYMENT_CARD_NUMBER",
+            0.057077016681432724
+          ],
+          [
+            "STUDENT_ID",
+            0.02181498520076275
+          ],
+          [
+            "AU_TFN",
+            0.015442512929439545
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "test_id": "room-date",
+    "text": "room: 14/09/2002 Building A.",
+    "redacted_text": "room: 14/09/2002 Building A.",
+    "latency_ms": 129.7,
+    "span_count": 1,
+    "redact_count": 0,
+    "review_count": 0,
+    "ignore_count": 1,
+    "spans": [
+      {
+        "start": 6,
+        "end": 16,
+        "value": null,
+        "top_type": "MEDICARE_EXPIRY",
+        "decision": "ignore",
+        "risk_score": 0.0,
+        "top1_prob": 0.27061545848846436,
+        "opf_top_type": "DATE_OF_BIRTH",
+        "top3_distribution": [
+          [
+            "MEDICARE_EXPIRY",
+            0.27061545848846436
+          ],
+          [
+            "PASSPORT_EXPIRY",
+            0.16812251508235931
+          ],
+          [
+            "PASSPORT_START_DATE",
+            0.1624365895986557
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "test_id": "fake-card",
+    "text": "fake card test token: tok_4111111111111111.",
+    "redacted_text": "fake card test token: tok_4111111111111111.",
+    "latency_ms": 137.0,
+    "span_count": 1,
+    "redact_count": 0,
+    "review_count": 0,
+    "ignore_count": 1,
+    "spans": [
+      {
+        "start": 22,
+        "end": 42,
+        "value": null,
+        "top_type": "PAYMENT_CARD_NUMBER",
+        "decision": "ignore",
+        "risk_score": 0.0,
+        "top1_prob": 0.14747703075408936,
+        "opf_top_type": "HASHED_PAYMENT_CARD_NUMBER",
+        "top3_distribution": [
+          [
+            "PAYMENT_CARD_NUMBER",
+            0.14747703075408936
+          ],
+          [
+            "HASHED_PAYMENT_CARD_NUMBER",
+            0.016918912529945374
+          ],
+          [
+            "CREDIT_CARD_EXPIRY",
+            0.003135973121970892
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "test_id": "mixed-note",
+    "text": "Jonathan Min Park, DOB 14/09/2002, SID 47009923, jonathan.park@example.edu.au, mobile 0412 345 678, vehicle rego ABC123, address 42 Wallaby Way Sydney NSW 2000.",
+    "redacted_text": "[PERSON], DOB [DATE_OF_BIRTH], SID 47009923, jonathan.park@example.edu.au, mobile [PHONE], vehicle rego ABC123, address [ADDRESS].",
+    "latency_ms": 177.3,
+    "span_count": 7,
+    "redact_count": 4,
+    "review_count": 2,
+    "ignore_count": 1,
+    "spans": [
+      {
+        "start": 0,
+        "end": 17,
+        "value": null,
+        "top_type": "PERSON",
+        "decision": "redact",
+        "risk_score": 0.00669560804089997,
+        "top1_prob": 0.9506237506866455,
+        "opf_top_type": "PERSON",
+        "top3_distribution": [
+          [
+            "PERSON",
+            0.9506237506866455
+          ],
+          [
+            "LAST_NAME",
+            0.03584763780236244
+          ],
+          [
+            "SOCIAL_MEDIA_ACCOUNT",
+            0.0001373954291921109
+          ]
+        ]
+      },
+      {
+        "start": 23,
+        "end": 33,
+        "value": null,
+        "top_type": "DATE_OF_BIRTH",
+        "decision": "redact",
+        "risk_score": 0.016248796568106627,
+        "top1_prob": 0.9672771096229553,
+        "opf_top_type": "DATE_OF_BIRTH",
+        "top3_distribution": [
+          [
+            "DATE_OF_BIRTH",
+            0.9672771096229553
+          ],
+          [
+            "PERSON",
+            0.00014062540140002966
+          ],
+          [
+            "CREDIT_CARD_EXPIRY",
+            8.467183943139389e-05
+          ]
+        ]
+      },
+      {
+        "start": 39,
+        "end": 47,
+        "value": null,
+        "top_type": "STUDENT_ID",
+        "decision": "review",
+        "risk_score": 0.34690607618540525,
+        "top1_prob": 0.26374879479408264,
+        "opf_top_type": "MOBILE",
+        "top3_distribution": [
+          [
+            "STUDENT_ID",
+            0.26374879479408264
+          ],
+          [
+            "DRIVERS_LICENCE",
+            0.0253065824508667
+          ],
+          [
+            "DATE_OF_BIRTH",
+            0.01713247038424015
+          ]
+        ]
+      },
+      {
+        "start": 49,
+        "end": 77,
+        "value": null,
+        "top_type": "EMAIL_ADDRESS",
+        "decision": "review",
+        "risk_score": 0.3390904702246189,
+        "top1_prob": 0.2649933993816376,
+        "opf_top_type": null,
+        "top3_distribution": [
+          [
+            "EMAIL_ADDRESS",
+            0.2649933993816376
+          ],
+          [
+            "WORK_EMAIL",
+            0.03568902239203453
+          ],
+          [
+            "DATE_OF_BIRTH",
+            0.021136637777090073
+          ]
+        ]
+      },
+      {
+        "start": 86,
+        "end": 98,
+        "value": null,
+        "top_type": "MOBILE",
+        "decision": "redact",
+        "risk_score": 0.21454175235703588,
+        "top1_prob": 0.538876473903656,
+        "opf_top_type": "MOBILE",
+        "top3_distribution": [
+          [
+            "MOBILE",
+            0.538876473903656
+          ],
+          [
+            "ADDRESS",
+            0.018731262534856796
+          ],
+          [
+            "EMAIL_ADDRESS",
+            0.013308758847415447
+          ]
+        ]
+      },
+      {
+        "start": 113,
+        "end": 119,
+        "value": null,
+        "top_type": "VEHICLE_REGO",
+        "decision": "ignore",
+        "risk_score": 0.0,
+        "top1_prob": 0.18335017561912537,
+        "opf_top_type": "DRIVERS_LICENCE",
+        "top3_distribution": [
+          [
+            "VEHICLE_REGO",
+            0.18335017561912537
+          ],
+          [
+            "NUMBER_PLATE",
+            0.1639554649591446
+          ],
+          [
+            "DRIVERS_LICENCE",
+            0.03017197549343109
+          ]
+        ]
+      },
+      {
+        "start": 129,
+        "end": 159,
+        "value": null,
+        "top_type": "ADDRESS",
+        "decision": "redact",
+        "risk_score": 0.015748406867714948,
+        "top1_prob": 0.9683098793029785,
+        "opf_top_type": "ADDRESS",
+        "top3_distribution": [
+          [
+            "ADDRESS",
+            0.9683098793029785
+          ],
+          [
+            "EMAIL_ADDRESS",
+            0.0001376088330289349
+          ],
+          [
+            "DATE_OF_BIRTH",
+            5.569812856265344e-05
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "test_id": "messy-note",
+    "text": "ID check: Mia-Louise Tran, USI 12345678, UAC 987654321, mia.tran@uni.edu.au, 0411 222 333, 12 Harbour St Sydney NSW 2000. Bank refund BSB 062-001 acc 123456789 for Jonathan Min Park.",
+    "redacted_text": "ID check: [PERSON], USI [STUDENT_ID], UAC [STUDENT_ID], mia.tran@uni.edu.au, 0411 222 333, [ADDRESS]. Bank refund BSB [AU_BANK_ACCOUNT] acc [AU_BANK_ACCOUNT] for Jonathan Min Park.",
+    "latency_ms": 171.0,
+    "span_count": 8,
+    "redact_count": 6,
+    "review_count": 0,
+    "ignore_count": 2,
+    "spans": [
+      {
+        "start": 10,
+        "end": 25,
+        "value": null,
+        "top_type": "PERSON",
+        "decision": "redact",
+        "risk_score": 0.024163375308489776,
+        "top1_prob": 0.9515262842178345,
+        "opf_top_type": "PERSON",
+        "top3_distribution": [
+          [
+            "PERSON",
+            0.9515262842178345
+          ],
+          [
+            "LAST_NAME",
+            0.00010909404954873025
+          ],
+          [
+            "DATE_OF_BIRTH",
+            3.787111563724466e-05
+          ]
+        ]
+      },
+      {
+        "start": 31,
+        "end": 39,
+        "value": null,
+        "top_type": "STUDENT_ID",
+        "decision": "redact",
+        "risk_score": 0.09344723168760538,
+        "top1_prob": 0.8010942339897156,
+        "opf_top_type": "STUDENT_ID",
+        "top3_distribution": [
+          [
+            "STUDENT_ID",
+            0.8010942339897156
+          ],
+          [
+            "BANK_ACCOUNT_NUMBER",
+            0.006350992247462273
+          ],
+          [
+            "PASSPORT_NUMBER",
+            0.005660310387611389
+          ]
+        ]
+      },
+      {
+        "start": 45,
+        "end": 54,
+        "value": null,
+        "top_type": "STUDENT_ID",
+        "decision": "redact",
+        "risk_score": 0.22726704634260386,
+        "top1_prob": 0.5366706252098083,
+        "opf_top_type": "BANK_ACCOUNT_NUMBER",
+        "top3_distribution": [
+          [
+            "STUDENT_ID",
+            0.5366706252098083
+          ],
+          [
+            "BANK_ACCOUNT_NUMBER",
+            0.004903084598481655
+          ],
+          [
+            "UAC_ID",
+            0.0038921975065022707
+          ]
+        ]
+      },
+      {
+        "start": 56,
+        "end": 75,
+        "value": null,
+        "top_type": "EMAIL_ADDRESS",
+        "decision": "ignore",
+        "risk_score": 0.0,
+        "top1_prob": 0.1476348638534546,
+        "opf_top_type": "EMAIL_ADDRESS",
+        "top3_distribution": [
+          [
+            "EMAIL_ADDRESS",
+            0.1476348638534546
+          ],
+          [
+            "WORK_EMAIL",
+            0.14079579710960388
+          ],
+          [
+            "PERSON",
+            0.01629347912967205
+          ]
+        ]
+      },
+      {
+        "start": 77,
+        "end": 89,
+        "value": null,
+        "top_type": "MOBILE",
+        "decision": "ignore",
+        "risk_score": 0.0,
+        "top1_prob": 0.051406677812337875,
+        "opf_top_type": "MOBILE",
+        "top3_distribution": [
+          [
+            "MOBILE",
+            0.051406677812337875
+          ],
+          [
+            "PERSON",
+            0.018810605630278587
+          ],
+          [
+            "EMAIL_ADDRESS",
+            0.014088479802012444
+          ]
+        ]
+      },
+      {
+        "start": 91,
+        "end": 120,
+        "value": null,
+        "top_type": "ADDRESS",
+        "decision": "redact",
+        "risk_score": 0.06128312140936032,
+        "top1_prob": 0.8750272393226624,
+        "opf_top_type": "ADDRESS",
+        "top3_distribution": [
+          [
+            "ADDRESS",
+            0.8750272393226624
+          ],
+          [
+            "EMAIL_ADDRESS",
+            0.0015144050121307373
+          ],
+          [
+            "PERSON",
+            0.0008921128464862704
+          ]
+        ]
+      },
+      {
+        "start": 138,
+        "end": 145,
+        "value": null,
+        "top_type": "BANK_ACCOUNT_NUMBER",
+        "decision": "redact",
+        "risk_score": 0.09784968027088325,
+        "top1_prob": 0.9017610549926758,
+        "opf_top_type": "BANK_ACCOUNT_NUMBER",
+        "top3_distribution": [
+          [
+            "BANK_ACCOUNT_NUMBER",
+            0.9017610549926758
+          ],
+          [
+            "AU_TFN",
+            0.00019586279813665897
+          ],
+          [
+            "PAYMENT_CARD_NUMBER",
+            0.00019340193830430508
+          ]
+        ]
+      },
+      {
+        "start": 150,
+        "end": 159,
+        "value": null,
+        "top_type": "BANK_ACCOUNT_NUMBER",
+        "decision": "redact",
+        "risk_score": 0.12080126034561545,
+        "top1_prob": 0.8699390292167664,
+        "opf_top_type": "BANK_ACCOUNT_NUMBER",
+        "top3_distribution": [
+          [
+            "BANK_ACCOUNT_NUMBER",
+            0.8699390292167664
+          ],
+          [
+            "AU_TFN",
+            0.008547077886760235
+          ],
+          [
+            "STUDENT_ID",
+            0.0007126325508579612
+          ]
+        ]
+      }
+    ]
+  }
+]

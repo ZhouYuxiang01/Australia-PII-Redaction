@@ -1,0 +1,9 @@
+{
+  "conversion_errors": [],
+  "validation_errors": [],
+  "malformed_json_count": 0,
+  "missing_verdict_count": 0,
+  "unexpected_label_count": 0,
+  "overconfident_distribution_count": 0,
+  "overconfident_distributions": []
+}

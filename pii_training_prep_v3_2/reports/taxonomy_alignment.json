@@ -1,0 +1,22 @@
+{
+  "csv_row_count": 80,
+  "raw_type_count": 77,
+  "training_label_count_including_non_pii": 83,
+  "raw_labels_after_mapping_not_in_original_csv": [
+    "AU_PHONE",
+    "BSB",
+    "CREDIT_CARD_CVV"
+  ],
+  "csv_labels_not_present_in_raw_after_mapping": [
+    "BANK_ACCOUNT_INFORMATION",
+    "FIRST_NAME",
+    "HOME_PHONE",
+    "LAST_NAME",
+    "MOBILE"
+  ],
+  "raw_to_target_overrides": {
+    "AU_BANK_ACCOUNT": "BANK_ACCOUNT_NUMBER",
+    "AU_DRIVERS_LICENCE": "DRIVERS_LICENCE",
+    "AU_PASSPORT": "PASSPORT_NUMBER"
+  }
+}

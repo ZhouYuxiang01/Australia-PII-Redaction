@@ -1,0 +1,336 @@
+{
+  "backend": "hybrid-qwen4b-rescue-v2",
+  "sample_size": 200,
+  "latency_p50_ms": 215.7,
+  "latency_p95_ms": 339.6,
+  "span_exact": {
+    "precision": 0.7596,
+    "recall": 0.8352,
+    "f1": 0.7956
+  },
+  "span_overlap": {
+    "precision": 0.899,
+    "recall": 0.9885,
+    "f1": 0.9416
+  },
+  "decisions": {
+    "redact": 277,
+    "review": 8,
+    "ignore": 2
+  },
+  "pii_leak_count": 8,
+  "exact_matches": 218,
+  "total_gold_spans": 261,
+  "total_pred_spans": 287,
+  "per_label_recall": {
+    "ABORIGINALITY": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "ADDRESS": {
+      "recall": 1.0,
+      "tp": 25,
+      "fn": 0
+    },
+    "AU_TFN": {
+      "recall": 1.0,
+      "tp": 5,
+      "fn": 0
+    },
+    "BANK_ACCOUNT_NUMBER": {
+      "recall": 1.0,
+      "tp": 4,
+      "fn": 0
+    },
+    "CARING_RESPONSIBILITIES": {
+      "recall": 1.0,
+      "tp": 4,
+      "fn": 0
+    },
+    "CENTRELINK_REFERENCE_NUMBER": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "CONTRACT_TYPE": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "COOKIE_INFORMATION": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "CREDIT_CARD_EXPIRY": {
+      "recall": 1.0,
+      "tp": 3,
+      "fn": 0
+    },
+    "CRIMINAL_RECORDS": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "DATE_OF_BIRTH": {
+      "recall": 1.0,
+      "tp": 23,
+      "fn": 0
+    },
+    "DEVICE_ID": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "DISABILITY_OR_SPECIFIC_CONDITION": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "DRIVERS_LICENCE": {
+      "recall": 0.8,
+      "tp": 4,
+      "fn": 1
+    },
+    "EMAIL_ADDRESS": {
+      "recall": 1.0,
+      "tp": 10,
+      "fn": 0
+    },
+    "EMPLOYEE_NUMBER": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "EMPLOYMENT_INFORMATION": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "FACIAL_RECOGNITION": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "FINGERPRINT": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "GENDER": {
+      "recall": 0.0,
+      "tp": 0,
+      "fn": 1
+    },
+    "HASHED_PAYMENT_CARD_NUMBER": {
+      "recall": 1.0,
+      "tp": 2,
+      "fn": 0
+    },
+    "HOME_PHONE": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "IHI": {
+      "recall": 1.0,
+      "tp": 2,
+      "fn": 0
+    },
+    "IP_ADDRESS": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "LAST_NAME": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "LATITUDE": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "MARITAL_STATUS": {
+      "recall": 1.0,
+      "tp": 4,
+      "fn": 0
+    },
+    "MEDICAL_CERTIFICATE": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "MEDICAL_INFORMATION": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "MEDICARE_EXPIRY": {
+      "recall": 1.0,
+      "tp": 4,
+      "fn": 0
+    },
+    "MEDICARE_NUMBER": {
+      "recall": 1.0,
+      "tp": 3,
+      "fn": 0
+    },
+    "MILITARY_VETERAN_STATUS": {
+      "recall": 1.0,
+      "tp": 2,
+      "fn": 0
+    },
+    "MOBILE": {
+      "recall": 1.0,
+      "tp": 9,
+      "fn": 0
+    },
+    "NATIONALITY": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "NATIONAL_IDENTITY_CARD": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "NUMBER_PLATE": {
+      "recall": 1.0,
+      "tp": 3,
+      "fn": 0
+    },
+    "PASSPORT_EXPIRY": {
+      "recall": 1.0,
+      "tp": 3,
+      "fn": 0
+    },
+    "PASSPORT_NUMBER": {
+      "recall": 1.0,
+      "tp": 11,
+      "fn": 0
+    },
+    "PASSPORT_START_DATE": {
+      "recall": 1.0,
+      "tp": 3,
+      "fn": 0
+    },
+    "PAYMENT_CARD_NUMBER": {
+      "recall": 1.0,
+      "tp": 5,
+      "fn": 0
+    },
+    "PERSON": {
+      "recall": 1.0,
+      "tp": 38,
+      "fn": 0
+    },
+    "PERSONAL_DEBT": {
+      "recall": 1.0,
+      "tp": 2,
+      "fn": 0
+    },
+    "PRONOUN": {
+      "recall": 0.0,
+      "tp": 0,
+      "fn": 1
+    },
+    "RACIAL_ETHNIC_ORIGIN": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "RELIGION_BELIEF": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "SALARY": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "SANCTIONS": {
+      "recall": 1.0,
+      "tp": 3,
+      "fn": 0
+    },
+    "SCHOLARSHIP": {
+      "recall": 1.0,
+      "tp": 3,
+      "fn": 0
+    },
+    "SEXUAL_ORIENTATION": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "SIGNATURE": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "SOCIAL_MEDIA_HISTORY": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "SOCIAL_MEDIA_ID": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "SOCIO_ECONOMIC_STATUS": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "STUDENT_ID": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "SUBJECT_RESULTS": {
+      "recall": 1.0,
+      "tp": 3,
+      "fn": 0
+    },
+    "UAC_ID": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "USERNAME": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "USI": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "VEHICLE_REGO": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "WAM_SCORE": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    },
+    "WEBSITE_HISTORY": {
+      "recall": 1.0,
+      "tp": 1,
+      "fn": 0
+    }
+  },
+  "low_recall_labels": {
+    "GENDER": 0.0,
+    "PRONOUN": 0.0
+  }
+}

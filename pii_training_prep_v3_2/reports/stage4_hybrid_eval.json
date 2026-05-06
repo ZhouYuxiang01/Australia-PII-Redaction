@@ -1,0 +1,13 @@
+{
+  "task": "C_hybrid_eval",
+  "sample_size": 200,
+  "filtered_max_chars": 500,
+  "opf_candidate_recall": 1.0,
+  "opf_found": 95,
+  "opf_total": 95,
+  "final_decision_distribution": {
+    "review": 62,
+    "redact": 34
+  },
+  "false_negative_examples": []
+}

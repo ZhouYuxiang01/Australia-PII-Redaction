@@ -52,36 +52,63 @@ def _decision_from_confidence(span_type: str, conf: float | None,
 
 
 def apply_policy(spans: list[Span], policy: dict[str, Any]) -> list[Span]:
-    """Decorate spans with decision + replacement based on policy.
-
-    Order of precedence for `decision`:
-      1. confidence + thresholds (if both available)
-      2. policy.type_actions[type]
-      3. policy.default_action
+    """Pass-through policy decorator for hybrid backend spans.
+    
+    The backend already computes review_risk, privacy_score, and decision.
+    This function only sets replacement text and default confidence.
+    Older backends still use type_actions / confidence thresholds.
     """
-    default_action = policy.get("default_action", "AUTO_REDACT")
     type_actions = policy.get("type_actions", {})
     type_thresholds = policy.get("type_thresholds", {})
     global_block = policy.get("global_block_threshold")
     global_review = policy.get("global_review_threshold")
+    default_action = policy.get("default_action", "AUTO_REDACT")
     default_confidence = policy.get("confidence", {}).get("default_value")
+
     out: list[Span] = []
     for span in spans:
         item = Span(**{**span.__dict__})
-        # Use confidence-based decision if possible, else type_actions, else default.
-        conf_decision = _decision_from_confidence(
-            item.type, item.confidence, type_thresholds, global_block, global_review,
-            default_action,
-        )
-        if conf_decision is not None:
-            item.decision = conf_decision
+
+        if getattr(item, "line_negative_suppressed", False):
+            item.decision = "ignore"
+            item.decision_reason = "line_local_negative_context"
+            item.replacement = f"[{item.type}]"
+            out.append(item)
+            continue
+
+        if item.decision_reason:
+            pass
+        elif item.decision in ("redact", "review"):
+            pass
         else:
-            item.decision = type_actions.get(item.type, default_action)
+            conf_decision = _decision_from_confidence(
+                item.type, item.confidence, type_thresholds, global_block, global_review,
+                default_action,
+            )
+            if conf_decision is not None:
+                item.decision = conf_decision
+                item.decision_reason = item.decision_reason or "confidence_based"
+            else:
+                item.decision = type_actions.get(item.type, default_action)
+                item.decision_reason = item.decision_reason or "type_actions"
+
         if item.confidence is None and default_confidence is not None:
             item.confidence = default_confidence
         item.replacement = f"[{item.type}]"
         out.append(item)
     return out
+
+
+def _is_redact_decision(decision: str) -> bool:
+    return decision in ("AUTO_REDACT", "redact")
+
+
+def _is_review_decision(decision: str) -> bool:
+    return decision in ("REVIEW", "review")
+
+
+def _is_visible_decision(decision: str) -> bool:
+    return decision in ("AUTO_REDACT", "REVIEW", "redact", "review", "ignore", "analysis")
 
 
 def redact_text(
@@ -96,8 +123,8 @@ def redact_text(
     pieces: list[str] = []
     cursor = 0
     for span in sorted(spans, key=lambda s: (s.start, s.end)):
-        should_redact = span.decision == "AUTO_REDACT" or (
-            span.decision == "REVIEW"
+        should_redact = _is_redact_decision(span.decision) or (
+            _is_review_decision(span.decision)
             and (span.type in redact_review_types or "*" in redact_review_types)
         )
         if not should_redact:
@@ -121,7 +148,7 @@ def build_response(*, text: str, spans: list[Span], policy: dict[str, Any],
     mode = policy.get("redaction_mode", "replace_with_tag")
     redact_review_types = set(policy.get("redact_review_types", []))
     redacted = redact_text(text, spans, mode=mode, redact_review_types=redact_review_types)
-    visible_spans = [span for span in spans if span.decision in {"AUTO_REDACT", "REVIEW"}]
+    visible_spans = [span for span in spans if _is_visible_decision(span.decision)]
     if policy.get("confidence", {}).get("calibrated") is False:
         warnings = [*warnings, "confidence_uncalibrated_null"]
     metadata = {

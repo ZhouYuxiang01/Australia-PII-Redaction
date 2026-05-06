@@ -1,0 +1,10 @@
+{
+  "total_prompts": 6000,
+  "completed_before_run": 0,
+  "completed_this_run": 6000,
+  "remaining_after_last_save": 0,
+  "progress_saved_every": 100,
+  "last_saved_at": 1777558395.7448359,
+  "merged_into_training_dataset": false,
+  "student_training_started": false
+}

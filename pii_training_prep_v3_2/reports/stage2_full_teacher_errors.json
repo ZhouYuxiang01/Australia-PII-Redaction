@@ -1,0 +1,22 @@
+{
+  "conversion_errors": [],
+  "validation_errors": [],
+  "malformed_json_count": 0,
+  "missing_verdict_count": 0,
+  "unexpected_label_count": 0,
+  "overconfident_distribution_count": 0,
+  "overconfident_distributions": [],
+  "raw_status_counts": {
+    "ok": 6000
+  },
+  "retry_count": 0,
+  "quality_warning_counts": {
+    "bare_span_overconfident_count": 0,
+    "bare_date_dob_overconfident_count": 0,
+    "weak_context_overconfident_count": 0,
+    "reverse_negative_non_pii_failure_count": 0,
+    "strong_positive_not_confident_count": 90
+  },
+  "merged_into_training_dataset": false,
+  "student_training_started": false
+}

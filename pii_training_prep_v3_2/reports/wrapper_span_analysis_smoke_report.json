@@ -1,0 +1,382 @@
+{
+  "backend": "hybrid_opf_qwen_v2",
+  "model_load_time_s": 142.4,
+  "fallback_mode": "full_and_regex",
+  "test_count": 7,
+  "results": [
+    {
+      "id": "5102_88411",
+      "text": "5102 88411",
+      "latency_ms": 212.7,
+      "span_count": 1,
+      "spans": [
+        {
+          "start": 0,
+          "end": 10,
+          "value": "5102 88411",
+          "source": "fallback_full_input",
+          "opf_top_type": null,
+          "top_type": "DRIVERS_LICENCE",
+          "top_probability": 0.2211175411939621,
+          "risk_score": 0.535224,
+          "decision": "analysis",
+          "type_distribution_topk": [
+            [
+              "DRIVERS_LICENCE",
+              0.2211175411939621
+            ],
+            [
+              "MOBILE",
+              0.18114542961120605
+            ],
+            [
+              "PAYMENT_CARD_NUMBER",
+              0.13964706659317017
+            ],
+            [
+              "AU_TFN",
+              0.057567428797483444
+            ],
+            [
+              "PENSION_CARD_NUMBER",
+              0.05551649630069733
+            ]
+          ]
+        }
+      ],
+      "opf_detected": 0,
+      "fallback_mode": "full_and_regex",
+      "warnings": []
+    },
+    {
+      "id": "123456",
+      "text": "123456",
+      "latency_ms": 132.3,
+      "span_count": 1,
+      "spans": [
+        {
+          "start": 0,
+          "end": 6,
+          "value": "123456",
+          "source": "model",
+          "opf_top_type": "BANK_ACCOUNT_NUMBER",
+          "top_type": "PAYMENT_CARD_NUMBER",
+          "top_probability": 0.4456526041030884,
+          "risk_score": 0.648135,
+          "decision": "redact",
+          "type_distribution_topk": [
+            [
+              "PAYMENT_CARD_NUMBER",
+              0.4456526041030884
+            ],
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.08683864027261734
+            ],
+            [
+              "STUDENT_ID",
+              0.05663854256272316
+            ],
+            [
+              "AU_TFN",
+              0.046749889850616455
+            ],
+            [
+              "NUMBER_PLATE",
+              0.013717830181121826
+            ]
+          ]
+        }
+      ],
+      "opf_detected": 1,
+      "fallback_mode": "none",
+      "warnings": []
+    },
+    {
+      "id": "date",
+      "text": "04/05/1998",
+      "latency_ms": 135.7,
+      "span_count": 1,
+      "spans": [
+        {
+          "start": 0,
+          "end": 10,
+          "value": "04/05/1998",
+          "source": "model",
+          "opf_top_type": "DATE_OF_BIRTH",
+          "top_type": "MEDICARE_EXPIRY",
+          "top_probability": 0.2494966983795166,
+          "risk_score": 0.614187,
+          "decision": "redact",
+          "type_distribution_topk": [
+            [
+              "MEDICARE_EXPIRY",
+              0.2494966983795166
+            ],
+            [
+              "PASSPORT_EXPIRY",
+              0.20088137686252594
+            ],
+            [
+              "DATE_OF_BIRTH",
+              0.18315333127975464
+            ],
+            [
+              "PASSPORT_START_DATE",
+              0.17044697701931
+            ],
+            [
+              "CREDIT_CARD_EXPIRY",
+              0.0006875979015603662
+            ]
+          ]
+        }
+      ],
+      "opf_detected": 1,
+      "fallback_mode": "none",
+      "warnings": []
+    },
+    {
+      "id": "alphanum",
+      "text": "L32K9P7H2Q",
+      "latency_ms": 137.4,
+      "span_count": 1,
+      "spans": [
+        {
+          "start": 0,
+          "end": 10,
+          "value": "L32K9P7H2Q",
+          "source": "fallback_full_input",
+          "opf_top_type": null,
+          "top_type": "USI",
+          "top_probability": 0.46954119205474854,
+          "risk_score": 0.58562,
+          "decision": "analysis",
+          "type_distribution_topk": [
+            [
+              "USI",
+              0.46954119205474854
+            ],
+            [
+              "NUMBER_PLATE",
+              0.08119964599609375
+            ],
+            [
+              "VEHICLE_REGO",
+              0.051707811653614044
+            ],
+            [
+              "DRIVERS_LICENCE",
+              0.019688470289111137
+            ],
+            [
+              "PASSPORT_NUMBER",
+              0.008439760655164719
+            ]
+          ]
+        }
+      ],
+      "opf_detected": 0,
+      "fallback_mode": "full_and_regex",
+      "warnings": []
+    },
+    {
+      "id": "order_neg",
+      "text": "Order #123456",
+      "latency_ms": 136.7,
+      "span_count": 2,
+      "spans": [
+        {
+          "start": 0,
+          "end": 13,
+          "value": "Order #123456",
+          "source": "fallback_full_input",
+          "opf_top_type": null,
+          "top_type": "PAYMENT_CARD_NUMBER",
+          "top_probability": 0.9582530856132507,
+          "risk_score": 0.035266,
+          "decision": "analysis",
+          "type_distribution_topk": [
+            [
+              "PAYMENT_CARD_NUMBER",
+              0.011277464218437672
+            ],
+            [
+              "EMPLOYEE_NUMBER",
+              0.00786105077713728
+            ],
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.007048798259347677
+            ],
+            [
+              "NUMBER_PLATE",
+              0.005841059610247612
+            ],
+            [
+              "STUDENT_ID",
+              0.0032269302755594254
+            ]
+          ]
+        },
+        {
+          "start": 7,
+          "end": 13,
+          "value": "123456",
+          "source": "regex_candidate:digit_sequence",
+          "opf_top_type": null,
+          "top_type": "PAYMENT_CARD_NUMBER",
+          "top_probability": 0.9582530856132507,
+          "risk_score": 0.035266,
+          "decision": "ignore",
+          "type_distribution_topk": [
+            [
+              "PAYMENT_CARD_NUMBER",
+              0.011277464218437672
+            ],
+            [
+              "EMPLOYEE_NUMBER",
+              0.00786105077713728
+            ],
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.007048798259347677
+            ],
+            [
+              "NUMBER_PLATE",
+              0.005841059610247612
+            ],
+            [
+              "STUDENT_ID",
+              0.0032269302755594254
+            ]
+          ]
+        }
+      ],
+      "opf_detected": 0,
+      "fallback_mode": "full_and_regex",
+      "warnings": []
+    },
+    {
+      "id": "dob_full",
+      "text": "DOB 04/05/1998",
+      "latency_ms": 138.1,
+      "span_count": 1,
+      "spans": [
+        {
+          "start": 4,
+          "end": 14,
+          "value": "04/05/1998",
+          "source": "model",
+          "opf_top_type": "DATE_OF_BIRTH",
+          "top_type": "DATE_OF_BIRTH",
+          "top_probability": 0.9415205121040344,
+          "risk_score": 0.47264,
+          "decision": "redact",
+          "type_distribution_topk": [
+            [
+              "DATE_OF_BIRTH",
+              0.9415205121040344
+            ],
+            [
+              "PASSPORT_EXPIRY",
+              0.0010544065153226256
+            ],
+            [
+              "MEDICARE_EXPIRY",
+              0.0006681609083898365
+            ],
+            [
+              "PASSPORT_START_DATE",
+              0.0002708439715206623
+            ],
+            [
+              "STUDENT_ID",
+              0.00014094241487327963
+            ]
+          ]
+        }
+      ],
+      "opf_detected": 1,
+      "fallback_mode": "none",
+      "warnings": []
+    },
+    {
+      "id": "bsb_full",
+      "text": "Bank details: BSB 062-001, account 123456789",
+      "latency_ms": 154.2,
+      "span_count": 2,
+      "spans": [
+        {
+          "start": 18,
+          "end": 25,
+          "value": "062-001",
+          "source": "model",
+          "opf_top_type": "BANK_ACCOUNT_NUMBER",
+          "top_type": "BANK_ACCOUNT_NUMBER",
+          "top_probability": 0.9447847008705139,
+          "risk_score": 0.945103,
+          "decision": "redact",
+          "type_distribution_topk": [
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.9447847008705139
+            ],
+            [
+              "PAYMENT_CARD_NUMBER",
+              0.0002887797309085727
+            ],
+            [
+              "MOBILE",
+              1.981195600819774e-05
+            ],
+            [
+              "PERSON",
+              7.604234269820154e-06
+            ],
+            [
+              "ADDRESS",
+              3.169656338286586e-06
+            ]
+          ]
+        },
+        {
+          "start": 35,
+          "end": 44,
+          "value": "123456789",
+          "source": "model",
+          "opf_top_type": "BANK_ACCOUNT_NUMBER",
+          "top_type": "BANK_ACCOUNT_NUMBER",
+          "top_probability": 0.9928499460220337,
+          "risk_score": 0.992871,
+          "decision": "redact",
+          "type_distribution_topk": [
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.9928499460220337
+            ],
+            [
+              "AU_TFN",
+              1.0635902981448453e-05
+            ],
+            [
+              "STUDENT_ID",
+              8.451715075352695e-06
+            ],
+            [
+              "EMPLOYEE_NUMBER",
+              2.4489327188348398e-06
+            ],
+            [
+              "PAYMENT_CARD_NUMBER",
+              2.2038786937628174e-06
+            ]
+          ]
+        }
+      ],
+      "opf_detected": 2,
+      "fallback_mode": "none",
+      "warnings": []
+    }
+  ]
+}

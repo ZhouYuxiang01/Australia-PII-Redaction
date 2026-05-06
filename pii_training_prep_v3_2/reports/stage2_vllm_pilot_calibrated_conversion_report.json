@@ -1,0 +1,21 @@
+{
+  "backend": "vllm_openai_async_calibrated_offline",
+  "prompts_attempted": 200,
+  "raw_ok_count": 200,
+  "valid_json_outputs": 200,
+  "converted_count": 200,
+  "conversion_error_count": 0,
+  "validation_error_count": 0,
+  "labels_outside_training_space": {},
+  "warnings": {
+    "possibly_overconfident_distribution": 1
+  },
+  "teacher_calls_executed": 0,
+  "full_6000_teacher_calls_executed": false,
+  "merged_into_training_dataset": false,
+  "total_wall_time_seconds": 2062.17,
+  "average_seconds_per_prompt": 10.311,
+  "source_teacher_call_count": 200,
+  "teacher_calls_executed_by_reconversion": 0,
+  "source_raw_path": "data/generated/stage2_vllm_pilot_200_raw.jsonl"
+}

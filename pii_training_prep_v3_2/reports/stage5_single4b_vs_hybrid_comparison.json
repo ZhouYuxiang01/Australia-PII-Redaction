@@ -1,0 +1,16 @@
+{
+  "hybrid": {
+    "overlap_f1": 0.897,
+    "overlap_recall": 0.974,
+    "type_accuracy": 0.986,
+    "p50_ms": 153,
+    "p95_ms": 308
+  },
+  "single_qwen4b": {
+    "overlap_f1": 0.9271,
+    "overlap_recall": 0.9125,
+    "overlap_precision": 0.9421,
+    "p50_ms": 116.35,
+    "p95_ms": 141.97
+  }
+}

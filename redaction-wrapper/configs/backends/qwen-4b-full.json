@@ -3,7 +3,7 @@
   "name": "qwen-4b-full",
   "model_version": "qwen3.5-4b-base-full-73class",
   "mode": "full",
-  "full_model_path": "/home/admin/ZYX/Qwen3.5_4b_base_Full_73class/outputs/qwen3_5_4b_base_full_73class",
+  "full_model_path": "${REDACTION_QWEN4B_FULL:-/home/admin/ZYX/Qwen3.5_4b_base_Full_73class/outputs/qwen3_5_4b_base_full_73class}",
   "max_new_tokens": 1500,
   "max_concurrent_generate": 2,
   "supported_types": [

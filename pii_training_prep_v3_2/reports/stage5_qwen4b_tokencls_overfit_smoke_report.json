@@ -1,0 +1,25 @@
+{
+  "model": "Qwen3.5-4B-Base",
+  "hidden_size": 2560,
+  "num_labels": 317,
+  "backbone_frozen": true,
+  "trainable_params": {
+    "backbone_trainable": 0,
+    "head_trainable": 811837,
+    "total_trainable": 811837
+  },
+  "smoke_samples": 100,
+  "smoke_steps": 50,
+  "initial_loss": 7.550052,
+  "final_loss": 0.267711,
+  "loss_decreased": true,
+  "token_accuracy": 0.9034,
+  "o_token_accuracy": 0.9624,
+  "positive_token_accuracy": 0.7933,
+  "logits_shape": [
+    4,
+    313,
+    317
+  ],
+  "train_time_seconds": 21.5
+}

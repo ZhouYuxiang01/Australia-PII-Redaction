@@ -1,0 +1,81 @@
+Name,Note,Data Classification,Category Type
+Aboriginality,"First Nations, Indigenous, Aboriginal",Highly Protected,Core attributes of a person
+Audio Information,"Audible Information, Sound Information",Protected,Tracking/Monitoring
+Bank Account Information,"Banking account information, bankaccountinformation",Protected,Payment
+Bank Account Number,"banking account number, BAN, bankaccountnumber, BSB, Account Number, ACC",Highly Protected,Payment
+Camera footage Audio,Video audio,Protected,Tracking/Monitoring
+Caring responsibilities,"Carer, Parent",Protected,Core attributes of a person
+Centrelink Reference Number,"Centrelink Number, CentrelinkNumber, centrelinkreferencenumber",Highly Protected,Government
+Citizenship Status,citizenshipstatus,Protected,Government
+Contract Type - Fixed Term / Temporary / Permanent etc.,"contracttype, contract, fixedcontract, temporarycontract, permanentcontract",Protected,Income Related
+Cookie Information,"cookies, cookieinformation,cookiedetails",Protected,Tracking/Monitoring
+Credit Card Expiry Details,"Credit Card Expiration, Credit Card End Date, CreditCardExpiryDetails, Debitcardexpirytdetails,debitcardenddate",Protected,Payment
+Criminal Records,"Criminal history, criminal background, criminal check, criminalrecords",Highly Protected,Government
+Date of Birth,"DOB, birthdate, birthday,dateofbirth, age",Protected,Core attributes of a person
+Device ID,"DeviceID, unique device identifier, device identification",Protected,Tracking/Monitoring
+Disability or Specific Condition,"Disability, impairment, medical condition, DisabilityorSpecificCondition",Highly Protected,Core attributes of a person
+Driver's Licence Number,"Driver'sLicenseNumber, DrivingLicenseNumber, Driver's ID, Drivinglicence",Highly Protected,Government
+Email address,"Email, electronic mail, email ID, Personalemail",Protected,Tracking/Monitoring
+Employee Number,"Employee ID, Staff ID, Worker Number, staffnumber",Highly Protected,Income Related
+Employment Information,"Employmentinformation,career information,Position no",Protected,Income Related
+Facial Recognition,"facial identification, face detection, face matching, Facialrecognition",Highly Protected,Biometrics
+Fingerprint,"Biometric, Thumbprint",Highly Protected,Biometrics
+First Name,"given name, personal name",Protected,Core attributes of a person
+Full Address,"Address, fulladdress, StreetAddress, Address line",Protected,Core attributes of a person
+Full Name,"fullname,complete name, GIVENNAME",Protected,Core attributes of a person
+Gender,"Sex, Male/Female, M/F",Protected,Core attributes of a person
+Geolocation Information,"Geolocation, Locationinformation, GPS",Protected,Tracking/Monitoring
+Hashed Payment Card Number,"Payment card number, encrypted card number, secure card number",Highly Protected,Payment
+Home phone,"landline, house phone, residential telephone",Protected,Contact Information
+IHI – unique health identifier,"IHI, health identifier, Individual Healthcare Identifier",Highly Protected,Government
+IP Address,"IP, Internet Protocol Address, Internet Protocol",Protected,Tracking/Monitoring
+Last Name,"Surname, Family name, Second name",Protected,Core attributes of a person
+Latitude of mailing/residential address,"Mailing address latitude, Residential address latitude, Latitude of address, latitude",Protected,Tracking/Monitoring
+Longitude of mailing/residential address,"Address longitude, longitude of address, residential address longitude, longitude",Protected,Tracking/Monitoring
+Marital Status,"marriage status, relationship status, marital situation",Protected,Government
+Medicare Expiry,"Medicare expiration, Medicare end date, Medicare coverage end",Highly Protected,Government
+Medicare Number,"MedicareID,Medicare identification number",Highly Protected,Government
+Military or Veteran Status,"Military, Veteran, Service member",Protected,Government
+Mobile phone,"Cell phone, smartphone, cellphone, mobile",Protected,Contact Information
+National Identity Card Details,National Identity Card,Highly Protected,Government
+Nationality,"citizenship, country of origin",Highly Protected,Government
+Next of Kin,Near relative,Highly Protected,Contact Information
+Number Plate,"numberplate, License Plate, Car Registration Plate",Protected,Government
+Passport Expiry date,"passport expiration, passport validity, passport expiration date",Highly Protected,Government
+Passport Number,"Passport, Passport ID",Highly Protected,Government
+Passport Start date,"passport start date, passport issue date, passport commencement date",Highly Protected,Government
+Payment Card Number,"credit card number, bank card number, debit card number",Highly Protected,Payment
+Pension Card / Senior Card Numbers,"Pension Card, Senior Card, SeniorCardNumber, PensionSeniorCard",Protected,Government
+Personnel Number / Staff Number,"Personnel Number, Staff Number, Employee Number",Protected,Income Related
+Pronoun,"personal pronoun, gender identity",Public,Core attributes of a person
+Racial or Ethnic Origin,"Race, Ethnicity, Racial origin, Cultural background",Highly Protected,Core attributes of a person
+Religion / Religious Beliefs,"Religion, faith, spirituality, Religousbeliefs",Protected,Core attributes of a person
+Salary / Wage,"Salary, Pay, Income, wage, earnings",Protected,Income Related
+Salary / Wage Expectation,"Salary expectation, wage expectation",Protected,Income Related
+Sexual Orientation,"Sexual orientation,sexual preference,sexuality",Highly Protected,Core attributes of a person
+Signature,"electronic signature, digital signature",Highly Protected,Biometrics
+Social Media Account,"Social mediaaccount, socialmediaprofile",Protected,Tracking/Monitoring
+Social Media History,"Social media records, online presence, digital footprint",Protected,Tracking/Monitoring
+Social Media ID,"Social media handle, social media username, social media profile",Protected,Tracking/Monitoring
+Socio Economic Status,"SES, Low SES",Highly Protected,Socio Economic
+Student ID,"Student identification, Student identification number, Student ID number",Protected,Government
+TFN,"Tax file number,Taxfilenumber",Highly Protected,Government
+UAC ID,"UAC, UAC ID, Universities Admissions Centre",Highly Protected,Government
+User Name,"Username,loginname",Protected,Tracking/Monitoring
+USI - unique student identifier,"USI, student identifier, UniqueStudentIdentifier",Highly Protected,Government
+Vehicle REGO,"Vehicle registration, car registration, vehicle license plate",Protected,Government
+Voice Recognition,"Speech recognition, audiorecognition",Highly Protected,Biometrics
+Website History,Browsing history,Protected,Tracking/Monitoring
+Work email,Workemail,Protected,Contact Information
+Workers Compensation Claims,"Workers Compensation, Workers Comp, Employee Compensation",Protected,Income Related
+Work phone,"office phone, business phone, professional phone",Public,Contact Information
+Medical Information,"diseases, syndromes, ailments",Highly Protected,Medical
+Counselling Records,counselling,Highly Protected,Medical
+Medical Certificate,"doctors certificate, med cert, medical certificate",Highly Protected,Medical
+Special Consideration,"spec con, special consideration reason",Highly Protected,Medical
+Scholarship,"scholarship name, scholarship ID",Highly Protected,Academic
+WAM score,WAM,Highly Protected,Academic
+Subject Results,subject results,Highly Protected,Academic
+Sanctions,"Academic sanction, Financial Sanction",Highly Protected,Academic
+Personal Debt,"Student Debt, Debt",Highly Protected,Income Related
+,,,

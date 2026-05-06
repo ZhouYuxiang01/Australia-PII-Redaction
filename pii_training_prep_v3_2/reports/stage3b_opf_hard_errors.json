@@ -1,0 +1,91 @@
+{
+  "description": "Labels with span F1 below 0.85 on dev or test set",
+  "problematic_labels": {
+    "ADDRESS_dev": {
+      "label": "ADDRESS",
+      "dataset": "dev",
+      "precision": 0.7549085985104943,
+      "recall": 0.9489795918367347,
+      "f1": 0.8408918586876751,
+      "f2": 0.9025731102062702
+    },
+    "CREDIT_CARD_EXPIRY_dev": {
+      "label": "CREDIT_CARD_EXPIRY",
+      "dataset": "dev",
+      "precision": 0.7288135593220338,
+      "recall": 0.9885057471264368,
+      "f1": 0.8390243902439024,
+      "f2": 0.9227467811158798
+    },
+    "GENDER_dev": {
+      "label": "GENDER",
+      "dataset": "dev",
+      "precision": 0.5128205128205128,
+      "recall": 0.4,
+      "f1": 0.449438202247191,
+      "f2": 0.41841004184100417
+    },
+    "LATITUDE_dev": {
+      "label": "LATITUDE",
+      "dataset": "dev",
+      "precision": 0.8571428571428571,
+      "recall": 0.7272727272727273,
+      "f1": 0.7868852459016394,
+      "f2": 0.7500000000000001
+    },
+    "LONGITUDE_dev": {
+      "label": "LONGITUDE",
+      "dataset": "dev",
+      "precision": 1.0,
+      "recall": 0.08695652173913043,
+      "f1": 0.16,
+      "f2": 0.10638297872340424
+    },
+    "SALARY_WAGE_EXPECTATION_dev": {
+      "label": "SALARY_WAGE_EXPECTATION",
+      "dataset": "dev",
+      "precision": 0.4878048780487805,
+      "recall": 1.0,
+      "f1": 0.6557377049180327,
+      "f2": 0.8264462809917356
+    },
+    "GENDER_test": {
+      "label": "GENDER",
+      "dataset": "test",
+      "precision": 0.5909090909090909,
+      "recall": 0.26,
+      "f1": 0.36111111111111116,
+      "f2": 0.29279279279279274
+    },
+    "LATITUDE_test": {
+      "label": "LATITUDE",
+      "dataset": "test",
+      "precision": 0.6071428571428571,
+      "recall": 0.4473684210526316,
+      "f1": 0.5151515151515151,
+      "f2": 0.47222222222222227
+    },
+    "LONGITUDE_test": {
+      "label": "LONGITUDE",
+      "dataset": "test",
+      "precision": 0.8571428571428571,
+      "recall": 0.1875,
+      "f1": 0.30769230769230765,
+      "f2": 0.22222222222222224
+    },
+    "SALARY_WAGE_EXPECTATION_test": {
+      "label": "SALARY_WAGE_EXPECTATION",
+      "dataset": "test",
+      "precision": 0.5354330708661418,
+      "recall": 0.9857142857142858,
+      "f1": 0.693928861938919,
+      "f2": 0.8437938351976406
+    }
+  },
+  "analysis_notes": [
+    "CRITICAL: GENDER on dev F1=0.4494 P=0.5128 R=0.4000",
+    "CRITICAL: LONGITUDE on dev F1=0.1600 P=1.0000 R=0.0870",
+    "CRITICAL: GENDER on test F1=0.3611 P=0.5909 R=0.2600",
+    "CRITICAL: LONGITUDE on test F1=0.3077 P=0.8571 R=0.1875"
+  ]
+}

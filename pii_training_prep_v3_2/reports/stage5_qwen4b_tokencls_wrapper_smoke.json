@@ -1,0 +1,564 @@
+{
+  "stage": "5",
+  "task": "6_wrapper_integration_smoke",
+  "backend": {
+    "name": "qwen4b-tokencls",
+    "model_version": "qwen4b-tokencls-v1",
+    "loaded": true,
+    "supported_types": [
+      "ABORIGINALITY",
+      "ADDRESS",
+      "AUDIO_INFORMATION",
+      "BANK_ACCOUNT_INFORMATION",
+      "BANK_ACCOUNT_NUMBER",
+      "CAMERA_FOOTAGE_AUDIO",
+      "CARING_RESPONSIBILITIES",
+      "CENTRELINK_REFERENCE_NUMBER",
+      "CITIZENSHIP_STATUS",
+      "CONTRACT_TYPE",
+      "COOKIE_INFORMATION",
+      "COUNSELLING_RECORDS",
+      "CREDIT_CARD_EXPIRY",
+      "CRIMINAL_RECORDS",
+      "DATE_OF_BIRTH",
+      "DEVICE_ID",
+      "DISABILITY_OR_SPECIFIC_CONDITION",
+      "DRIVERS_LICENCE",
+      "EMAIL_ADDRESS",
+      "EMPLOYEE_NUMBER",
+      "EMPLOYMENT_INFORMATION",
+      "FACIAL_RECOGNITION",
+      "FINGERPRINT",
+      "FIRST_NAME",
+      "GENDER",
+      "GEOLOCATION_INFORMATION",
+      "HASHED_PAYMENT_CARD_NUMBER",
+      "HOME_PHONE",
+      "IHI",
+      "IP_ADDRESS",
+      "LAST_NAME",
+      "LATITUDE",
+      "LONGITUDE",
+      "MARITAL_STATUS",
+      "MEDICAL_CERTIFICATE",
+      "MEDICAL_INFORMATION",
+      "MEDICARE_EXPIRY",
+      "MEDICARE_NUMBER",
+      "MILITARY_VETERAN_STATUS",
+      "MOBILE",
+      "NATIONALITY",
+      "NATIONAL_IDENTITY_CARD",
+      "NEXT_OF_KIN",
+      "NUMBER_PLATE",
+      "PASSPORT_EXPIRY",
+      "PASSPORT_NUMBER",
+      "PASSPORT_START_DATE",
+      "PAYMENT_CARD_NUMBER",
+      "PENSION_CARD_NUMBER",
+      "PERSON",
+      "PERSONAL_DEBT",
+      "PERSONNEL_NUMBER",
+      "PRONOUN",
+      "RACIAL_ETHNIC_ORIGIN",
+      "RELIGION_BELIEF",
+      "SALARY",
+      "SALARY_WAGE_EXPECTATION",
+      "SANCTIONS",
+      "SCHOLARSHIP",
+      "SEXUAL_ORIENTATION",
+      "SIGNATURE",
+      "SOCIAL_MEDIA_ACCOUNT",
+      "SOCIAL_MEDIA_HISTORY",
+      "SOCIAL_MEDIA_ID",
+      "SOCIO_ECONOMIC_STATUS",
+      "SPECIAL_CONSIDERATION",
+      "STUDENT_ID",
+      "SUBJECT_RESULTS",
+      "AU_TFN",
+      "UAC_ID",
+      "USERNAME",
+      "USI",
+      "VEHICLE_REGO",
+      "VOICE_RECOGNITION",
+      "WAM_SCORE",
+      "WEBSITE_HISTORY",
+      "WORKERS_COMPENSATION_CLAIM",
+      "WORK_EMAIL",
+      "WORK_PHONE"
+    ],
+    "pipeline": "qwen4b-tokencls-head",
+    "hidden_size": 2560,
+    "max_seq_len": 4096,
+    "checkpoint": "/home/admin/ZYX/pii_training_prep_v3_2/runs/qwen4b_tokencls_head_only/best_head.pt",
+    "output_top_k": 5
+  },
+  "num_examples": 7,
+  "total_latency_ms": 1480.4,
+  "total_spans": 10,
+  "results": [
+    {
+      "label": "A: Student number",
+      "text": "Student num = SID# 47009923.",
+      "latency_ms": 667.4,
+      "num_spans": 1,
+      "spans": [
+        {
+          "start": 13,
+          "end": 28,
+          "type": "STUDENT_ID",
+          "confidence": 0.909659,
+          "decision": "AUTO_REDACT",
+          "replacement": "[STUDENT_ID]",
+          "source": "model",
+          "postprocess": [],
+          "top_type": "STUDENT_ID",
+          "top_probability": 0.826325,
+          "top1_prob": 0.826325,
+          "top3_sum": 1.0,
+          "non_pii_prob": 0.090341,
+          "data_classification_weight": 0.5,
+          "type_distribution_topk": [
+            [
+              "I-STUDENT_ID",
+              0.826325
+            ],
+            [
+              "O",
+              0.090341
+            ],
+            [
+              "B-STUDENT_ID",
+              0.083333
+            ],
+            [
+              "I-CREDIT_CARD_EXPIRY",
+              0.0
+            ],
+            [
+              "E-STUDENT_ID",
+              0.0
+            ]
+          ],
+          "decision_reason": "qwen4b_tokencls_bioes_decode",
+          "policy_version": "qwen4b-tokencls-v1",
+          "display_value": " SID# 47009923."
+        }
+      ]
+    },
+    {
+      "label": "B: DOB/email/mobile",
+      "text": "DOB 04/05/1998, email alex@example.com, mobile 0412 345 678.",
+      "latency_ms": 157.5,
+      "num_spans": 3,
+      "spans": [
+        {
+          "start": 4,
+          "end": 14,
+          "type": "DATE_OF_BIRTH",
+          "confidence": 0.96137,
+          "decision": "AUTO_REDACT",
+          "replacement": "[DATE_OF_BIRTH]",
+          "source": "model",
+          "postprocess": [],
+          "top_type": "DATE_OF_BIRTH",
+          "top_probability": 0.822316,
+          "top1_prob": 0.822316,
+          "top3_sum": 0.987745,
+          "non_pii_prob": 0.012123,
+          "data_classification_weight": 0.5,
+          "type_distribution_topk": [
+            [
+              "I-DATE_OF_BIRTH",
+              0.822316
+            ],
+            [
+              "E-DATE_OF_BIRTH",
+              0.1
+            ],
+            [
+              "B-DATE_OF_BIRTH",
+              0.065429
+            ],
+            [
+              "O",
+              0.012123
+            ],
+            [
+              "B-CREDIT_CARD_EXPIRY",
+              0.000131
+            ]
+          ],
+          "decision_reason": "qwen4b_tokencls_bioes_decode",
+          "policy_version": "qwen4b-tokencls-v1",
+          "display_value": "04/05/1998"
+        },
+        {
+          "start": 21,
+          "end": 38,
+          "type": "EMAIL_ADDRESS",
+          "confidence": 0.99758,
+          "decision": "AUTO_REDACT",
+          "replacement": "[EMAIL_ADDRESS]",
+          "source": "model",
+          "postprocess": [],
+          "top_type": "EMAIL_ADDRESS",
+          "top_probability": 0.333333,
+          "top1_prob": 0.333333,
+          "top3_sum": 0.99758,
+          "non_pii_prob": 0.00241,
+          "data_classification_weight": 0.5,
+          "type_distribution_topk": [
+            [
+              "E-EMAIL_ADDRESS",
+              0.333333
+            ],
+            [
+              "B-EMAIL_ADDRESS",
+              0.333293
+            ],
+            [
+              "I-EMAIL_ADDRESS",
+              0.330953
+            ],
+            [
+              "O",
+              0.00241
+            ],
+            [
+              "B-USERNAME",
+              8e-06
+            ]
+          ],
+          "decision_reason": "qwen4b_tokencls_bioes_decode",
+          "policy_version": "qwen4b-tokencls-v1",
+          "display_value": " alex@example.com"
+        },
+        {
+          "start": 47,
+          "end": 59,
+          "type": "MOBILE",
+          "confidence": 0.939768,
+          "decision": "AUTO_REDACT",
+          "replacement": "[MOBILE]",
+          "source": "model",
+          "postprocess": [],
+          "top_type": "MOBILE",
+          "top_probability": 0.773116,
+          "top1_prob": 0.773116,
+          "top3_sum": 0.939768,
+          "non_pii_prob": 0.049222,
+          "data_classification_weight": 0.5,
+          "type_distribution_topk": [
+            [
+              "I-MOBILE",
+              0.773116
+            ],
+            [
+              "B-MOBILE",
+              0.083333
+            ],
+            [
+              "E-EMAIL_ADDRESS",
+              0.083319
+            ],
+            [
+              "O",
+              0.049222
+            ],
+            [
+              "I-AU_TFN",
+              0.010426
+            ]
+          ],
+          "decision_reason": "qwen4b_tokencls_bioes_decode",
+          "policy_version": "qwen4b-tokencls-v1",
+          "display_value": "0412 345 678"
+        }
+      ]
+    },
+    {
+      "label": "C: BSB/account",
+      "text": "BSB 062-001, account 123456789.",
+      "latency_ms": 126.0,
+      "num_spans": 0,
+      "spans": []
+    },
+    {
+      "label": "D: Ticket hard negative",
+      "text": "ticket id INC-0412-345-678, not a phone number.",
+      "latency_ms": 124.6,
+      "num_spans": 1,
+      "spans": [
+        {
+          "start": 9,
+          "end": 26,
+          "type": "VEHICLE_REGO",
+          "confidence": 0.066447,
+          "decision": "AUTO_REDACT",
+          "replacement": "[VEHICLE_REGO]",
+          "source": "model",
+          "postprocess": [],
+          "top_type": "VEHICLE_REGO",
+          "top_probability": 0.933552,
+          "top1_prob": 0.933552,
+          "top3_sum": 0.999989,
+          "non_pii_prob": 0.933552,
+          "data_classification_weight": 0.5,
+          "type_distribution_topk": [
+            [
+              "O",
+              0.933552
+            ],
+            [
+              "B-VEHICLE_REGO",
+              0.06578
+            ],
+            [
+              "I-AU_TFN",
+              0.000657
+            ],
+            [
+              "I-STUDENT_ID",
+              1.1e-05
+            ],
+            [
+              "I-PASSPORT_NUMBER",
+              0.0
+            ]
+          ],
+          "decision_reason": "qwen4b_tokencls_bioes_decode",
+          "policy_version": "qwen4b-tokencls-v1",
+          "display_value": " INC-0412-345-678"
+        }
+      ]
+    },
+    {
+      "label": "E: Room date",
+      "text": "room: 14/09/2002 Building A.",
+      "latency_ms": 115.9,
+      "num_spans": 0,
+      "spans": []
+    },
+    {
+      "label": "F: Fake card",
+      "text": "fake card test token: tok_4111111111111111.",
+      "latency_ms": 125.7,
+      "num_spans": 1,
+      "spans": [
+        {
+          "start": 21,
+          "end": 43,
+          "type": "HASHED_PAYMENT_CARD_NUMBER",
+          "confidence": 0.886661,
+          "decision": "AUTO_REDACT",
+          "replacement": "[HASHED_PAYMENT_CARD_NUMBER]",
+          "source": "model",
+          "postprocess": [],
+          "top_type": "HASHED_PAYMENT_CARD_NUMBER",
+          "top_probability": 0.781398,
+          "top1_prob": 0.781398,
+          "top3_sum": 0.887071,
+          "non_pii_prob": 0.052632,
+          "data_classification_weight": 0.5,
+          "type_distribution_topk": [
+            [
+              "I-PAYMENT_CARD_NUMBER",
+              0.781398
+            ],
+            [
+              "I-HASHED_PAYMENT_CARD_NUMBER",
+              0.053042
+            ],
+            [
+              "O",
+              0.052632
+            ],
+            [
+              "B-HASHED_PAYMENT_CARD_NUMBER",
+              0.052632
+            ],
+            [
+              "B-PAYMENT_CARD_NUMBER",
+              0.05173
+            ]
+          ],
+          "decision_reason": "qwen4b_tokencls_bioes_decode",
+          "policy_version": "qwen4b-tokencls-v1",
+          "display_value": " tok_4111111111111111."
+        }
+      ]
+    },
+    {
+      "label": "G: Mixed long note",
+      "text": "Patient: Maria Gonzalez, DOB 14/09/2002, SID 47009923. Email maria.gonzalez@hospital.example.com, phone 0412 345 678. Vehicle rego ABC123. Medicare 2123 45678 1.",
+      "latency_ms": 163.3,
+      "num_spans": 4,
+      "spans": [
+        {
+          "start": 40,
+          "end": 60,
+          "type": "STUDENT_ID",
+          "confidence": 0.720383,
+          "decision": "AUTO_REDACT",
+          "replacement": "[STUDENT_ID]",
+          "source": "model",
+          "postprocess": [],
+          "top_type": "STUDENT_ID",
+          "top_probability": 0.493484,
+          "top1_prob": 0.493484,
+          "top3_sum": 0.906195,
+          "non_pii_prob": 0.250039,
+          "data_classification_weight": 0.5,
+          "type_distribution_topk": [
+            [
+              "I-STUDENT_ID",
+              0.493484
+            ],
+            [
+              "O",
+              0.250039
+            ],
+            [
+              "I-IHI",
+              0.162672
+            ],
+            [
+              "B-STUDENT_ID",
+              0.083333
+            ],
+            [
+              "B-IHI",
+              0.00873
+            ]
+          ],
+          "decision_reason": "qwen4b_tokencls_bioes_decode",
+          "policy_version": "qwen4b-tokencls-v1",
+          "display_value": " SID 47009923. Email"
+        },
+        {
+          "start": 104,
+          "end": 116,
+          "type": "MOBILE",
+          "confidence": 0.984366,
+          "decision": "AUTO_REDACT",
+          "replacement": "[MOBILE]",
+          "source": "model",
+          "postprocess": [],
+          "top_type": "MOBILE",
+          "top_probability": 0.819884,
+          "top1_prob": 0.819884,
+          "top3_sum": 0.984366,
+          "non_pii_prob": 0.000381,
+          "data_classification_weight": 0.5,
+          "type_distribution_topk": [
+            [
+              "I-MOBILE",
+              0.819884
+            ],
+            [
+              "B-MOBILE",
+              0.083333
+            ],
+            [
+              "E-MOBILE",
+              0.081149
+            ],
+            [
+              "I-BANK_ACCOUNT_NUMBER",
+              0.011567
+            ],
+            [
+              "E-AU_TFN",
+              0.002179
+            ]
+          ],
+          "decision_reason": "qwen4b_tokencls_bioes_decode",
+          "policy_version": "qwen4b-tokencls-v1",
+          "display_value": "0412 345 678"
+        },
+        {
+          "start": 130,
+          "end": 137,
+          "type": "VEHICLE_REGO",
+          "confidence": 0.999114,
+          "decision": "AUTO_REDACT",
+          "replacement": "[VEHICLE_REGO]",
+          "source": "model",
+          "postprocess": [],
+          "top_type": "VEHICLE_REGO",
+          "top_probability": 0.499114,
+          "top1_prob": 0.499114,
+          "top3_sum": 0.999124,
+          "non_pii_prob": 8.2e-05,
+          "data_classification_weight": 0.5,
+          "type_distribution_topk": [
+            [
+              "I-VEHICLE_REGO",
+              0.499114
+            ],
+            [
+              "B-VEHICLE_REGO",
+              0.25001
+            ],
+            [
+              "E-VEHICLE_REGO",
+              0.25
+            ],
+            [
+              "I-DRIVERS_LICENCE",
+              0.000793
+            ],
+            [
+              "O",
+              8.2e-05
+            ]
+          ],
+          "decision_reason": "qwen4b_tokencls_bioes_decode",
+          "policy_version": "qwen4b-tokencls-v1",
+          "display_value": " ABC123"
+        },
+        {
+          "start": 148,
+          "end": 161,
+          "type": "MEDICARE_NUMBER",
+          "confidence": 0.91315,
+          "decision": "AUTO_REDACT",
+          "replacement": "[MEDICARE_NUMBER]",
+          "source": "model",
+          "postprocess": [],
+          "top_type": "MEDICARE_NUMBER",
+          "top_probability": 0.836227,
+          "top1_prob": 0.836227,
+          "top3_sum": 0.995131,
+          "non_pii_prob": 0.081981,
+          "data_classification_weight": 0.5,
+          "type_distribution_topk": [
+            [
+              "I-MEDICARE_NUMBER",
+              0.836227
+            ],
+            [
+              "O",
+              0.081981
+            ],
+            [
+              "B-MEDICARE_NUMBER",
+              0.076923
+            ],
+            [
+              "I-PENSION_CARD_NUMBER",
+              0.003809
+            ],
+            [
+              "I-AU_TFN",
+              0.001032
+            ]
+          ],
+          "decision_reason": "qwen4b_tokencls_bioes_decode",
+          "policy_version": "qwen4b-tokencls-v1",
+          "display_value": "2123 45678 1."
+        }
+      ]
+    }
+  ]
+}

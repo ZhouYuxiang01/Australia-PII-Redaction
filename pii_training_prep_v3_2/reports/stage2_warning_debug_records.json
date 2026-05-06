@@ -1,0 +1,1360 @@
+{
+  "source_raw": "data/generated/stage2_vllm_pilot_200_raw.jsonl",
+  "source_converted": "data/generated/stage2_vllm_pilot_200_converted.jsonl",
+  "source_warnings": "reports/stage2_vllm_pilot_warning_examples.json",
+  "debug_record_count": 43,
+  "records": [
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-009",
+      "warning_types": [
+        "bare_date_dob_overconfident"
+      ],
+      "context_type": "bare_span",
+      "span_value": "04/05/1998",
+      "context": "04/05/1998",
+      "candidate_list": [
+        "DATE_OF_BIRTH",
+        "PASSPORT_EXPIRY",
+        "PASSPORT_START_DATE",
+        "MEDICARE_EXPIRY",
+        "CREDIT_CARD_EXPIRY",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "DATE_OF_BIRTH": "strong_for",
+        "PASSPORT_EXPIRY": "weak_against",
+        "PASSPORT_START_DATE": "weak_against",
+        "MEDICARE_EXPIRY": "weak_against",
+        "CREDIT_CARD_EXPIRY": "strong_against",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"DATE_OF_BIRTH\":\"strong_for\",\"PASSPORT_EXPIRY\":\"weak_against\",\"PASSPORT_START_DATE\":\"weak_against\",\"MEDICARE_EXPIRY\":\"weak_against\",\"CREDIT_CARD_EXPIRY\":\"strong_against\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "DATE_OF_BIRTH": 0.638297,
+        "PASSPORT_EXPIRY": 0.106383,
+        "PASSPORT_START_DATE": 0.106383,
+        "MEDICARE_EXPIRY": 0.106383,
+        "CREDIT_CARD_EXPIRY": 0.021277,
+        "NON_PII": 0.021277
+      },
+      "top_type": "DATE_OF_BIRTH",
+      "top_probability": 0.638297,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 19.941
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-013",
+      "warning_types": [
+        "bare_span_overconfident"
+      ],
+      "context_type": "bare_span",
+      "span_value": "alex.chen@example.com",
+      "context": "alex.chen@example.com",
+      "candidate_list": [
+        "EMAIL_ADDRESS",
+        "WORK_EMAIL",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "EMAIL_ADDRESS": "strong_for",
+        "WORK_EMAIL": "neutral",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"EMAIL_ADDRESS\":\"strong_for\",\"WORK_EMAIL\":\"neutral\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "EMAIL_ADDRESS": 0.731708,
+        "WORK_EMAIL": 0.243902,
+        "NON_PII": 0.02439
+      },
+      "top_type": "EMAIL_ADDRESS",
+      "top_probability": 0.731708,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 9.227
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-016",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex.chen@example.com",
+      "context": "The documentation uses alex.chen@example.com as a placeholder address.",
+      "candidate_list": [
+        "EMAIL_ADDRESS",
+        "WORK_EMAIL",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "EMAIL_ADDRESS": "strong_for",
+        "WORK_EMAIL": "weak_against",
+        "NON_PII": "strong_for"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"EMAIL_ADDRESS\":\"strong_for\",\"WORK_EMAIL\":\"weak_against\",\"NON_PII\":\"strong_for\"}}",
+      "converted_distribution": {
+        "EMAIL_ADDRESS": 0.461539,
+        "WORK_EMAIL": 0.076923,
+        "NON_PII": 0.461538
+      },
+      "top_type": "EMAIL_ADDRESS",
+      "top_probability": 0.461539,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 9.478
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-019",
+      "warning_types": [
+        "strong_positive_not_confident"
+      ],
+      "context_type": "strong_positive_context",
+      "span_value": "Mia",
+      "context": "First name: Mia",
+      "candidate_list": [
+        "PERSON",
+        "FIRST_NAME",
+        "LAST_NAME",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "PERSON": "strong_for",
+        "FIRST_NAME": "strong_for",
+        "LAST_NAME": "strong_against",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"PERSON\":\"strong_for\",\"FIRST_NAME\":\"strong_for\",\"LAST_NAME\":\"strong_against\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "PERSON": 0.483871,
+        "FIRST_NAME": 0.483871,
+        "LAST_NAME": 0.016129,
+        "NON_PII": 0.016129
+      },
+      "top_type": "PERSON",
+      "top_probability": 0.483871,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 10.987
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-027",
+      "warning_types": [
+        "strong_positive_not_confident"
+      ],
+      "context_type": "strong_positive_context",
+      "span_value": "-33.8688",
+      "context": "Latitude -33.8688 was captured for the residential address.",
+      "candidate_list": [
+        "LATITUDE",
+        "LONGITUDE",
+        "GEOLOCATION_INFORMATION",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "LATITUDE": "strong_for",
+        "LONGITUDE": "strong_against",
+        "GEOLOCATION_INFORMATION": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"LATITUDE\":\"strong_for\",\"LONGITUDE\":\"strong_against\",\"GEOLOCATION_INFORMATION\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "LATITUDE": 0.483871,
+        "LONGITUDE": 0.016129,
+        "GEOLOCATION_INFORMATION": 0.483871,
+        "NON_PII": 0.016129
+      },
+      "top_type": "LATITUDE",
+      "top_probability": 0.483871,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 11.786
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-028",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "-33.8688",
+      "context": "Version -33.8688 appears in the simulated telemetry output.",
+      "candidate_list": [
+        "LATITUDE",
+        "LONGITUDE",
+        "GEOLOCATION_INFORMATION",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "LATITUDE": "strong_for",
+        "LONGITUDE": "strong_against",
+        "GEOLOCATION_INFORMATION": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"LATITUDE\":\"strong_for\",\"LONGITUDE\":\"strong_against\",\"GEOLOCATION_INFORMATION\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "LATITUDE": 0.483871,
+        "LONGITUDE": 0.016129,
+        "GEOLOCATION_INFORMATION": 0.483871,
+        "NON_PII": 0.016129
+      },
+      "top_type": "LATITUDE",
+      "top_probability": 0.483871,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 11.794
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-033",
+      "warning_types": [
+        "bare_span_overconfident"
+      ],
+      "context_type": "bare_span",
+      "span_value": "4111111111111111",
+      "context": "4111111111111111",
+      "candidate_list": [
+        "PAYMENT_CARD_NUMBER",
+        "MEDICARE_NUMBER",
+        "IHI",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "PAYMENT_CARD_NUMBER": "strong_for",
+        "MEDICARE_NUMBER": "strong_against",
+        "IHI": "strong_against",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"PAYMENT_CARD_NUMBER\":\"strong_for\",\"MEDICARE_NUMBER\":\"strong_against\",\"IHI\":\"strong_against\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "PAYMENT_CARD_NUMBER": 0.909091,
+        "MEDICARE_NUMBER": 0.030303,
+        "IHI": 0.030303,
+        "NON_PII": 0.030303
+      },
+      "top_type": "PAYMENT_CARD_NUMBER",
+      "top_probability": 0.909091,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 12.587
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-034",
+      "warning_types": [
+        "weak_context_overconfident"
+      ],
+      "context_type": "weak_context",
+      "span_value": "4111111111111111",
+      "context": "Number: 4111111111111111",
+      "candidate_list": [
+        "PAYMENT_CARD_NUMBER",
+        "MEDICARE_NUMBER",
+        "IHI",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "PAYMENT_CARD_NUMBER": "strong_for",
+        "MEDICARE_NUMBER": "strong_against",
+        "IHI": "strong_against",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"PAYMENT_CARD_NUMBER\":\"strong_for\",\"MEDICARE_NUMBER\":\"strong_against\",\"IHI\":\"strong_against\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "PAYMENT_CARD_NUMBER": 0.909091,
+        "MEDICARE_NUMBER": 0.030303,
+        "IHI": 0.030303,
+        "NON_PII": 0.030303
+      },
+      "top_type": "PAYMENT_CARD_NUMBER",
+      "top_probability": 0.909091,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 13.044
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-036",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "4111111111111111",
+      "context": "Test token 4111111111111111 was generated by the sandbox.",
+      "candidate_list": [
+        "PAYMENT_CARD_NUMBER",
+        "MEDICARE_NUMBER",
+        "IHI",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "PAYMENT_CARD_NUMBER": "strong_for",
+        "MEDICARE_NUMBER": "strong_against",
+        "IHI": "strong_against",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"PAYMENT_CARD_NUMBER\":\"strong_for\",\"MEDICARE_NUMBER\":\"strong_against\",\"IHI\":\"strong_against\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "PAYMENT_CARD_NUMBER": 0.909091,
+        "MEDICARE_NUMBER": 0.030303,
+        "IHI": 0.030303,
+        "NON_PII": 0.030303
+      },
+      "top_type": "PAYMENT_CARD_NUMBER",
+      "top_probability": 0.909091,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 13.044
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-039",
+      "warning_types": [
+        "strong_positive_not_confident"
+      ],
+      "context_type": "strong_positive_context",
+      "span_value": "alex_chen91",
+      "context": "Social media account alex_chen91 was listed on the disclosure form.",
+      "candidate_list": [
+        "SOCIAL_MEDIA_ACCOUNT",
+        "SOCIAL_MEDIA_ID",
+        "USERNAME",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "SOCIAL_MEDIA_ACCOUNT": "strong_for",
+        "SOCIAL_MEDIA_ID": "strong_for",
+        "USERNAME": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"SOCIAL_MEDIA_ACCOUNT\":\"strong_for\",\"SOCIAL_MEDIA_ID\":\"strong_for\",\"USERNAME\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "SOCIAL_MEDIA_ACCOUNT": 0.329671,
+        "SOCIAL_MEDIA_ID": 0.32967,
+        "USERNAME": 0.32967,
+        "NON_PII": 0.010989
+      },
+      "top_type": "SOCIAL_MEDIA_ACCOUNT",
+      "top_probability": 0.329671,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 11.372
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-040",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex_chen91",
+      "context": "The tutorial uses alex_chen91 as a fake login example.",
+      "candidate_list": [
+        "SOCIAL_MEDIA_ACCOUNT",
+        "SOCIAL_MEDIA_ID",
+        "USERNAME",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "SOCIAL_MEDIA_ACCOUNT": "weak_against",
+        "SOCIAL_MEDIA_ID": "weak_against",
+        "USERNAME": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"SOCIAL_MEDIA_ACCOUNT\":\"weak_against\",\"SOCIAL_MEDIA_ID\":\"weak_against\",\"USERNAME\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "SOCIAL_MEDIA_ACCOUNT": 0.121952,
+        "SOCIAL_MEDIA_ID": 0.121951,
+        "USERNAME": 0.731707,
+        "NON_PII": 0.02439
+      },
+      "top_type": "USERNAME",
+      "top_probability": 0.731707,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 12.524
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-124",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex.chen@example.com",
+      "context": "The documentation uses alex.chen@example.com as a placeholder address.",
+      "candidate_list": [
+        "EMAIL_ADDRESS",
+        "WORK_EMAIL",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "EMAIL_ADDRESS": "strong_for",
+        "WORK_EMAIL": "weak_against",
+        "NON_PII": "strong_for"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"EMAIL_ADDRESS\":\"strong_for\",\"WORK_EMAIL\":\"weak_against\",\"NON_PII\":\"strong_for\"}}",
+      "converted_distribution": {
+        "EMAIL_ADDRESS": 0.461539,
+        "WORK_EMAIL": 0.076923,
+        "NON_PII": 0.461538
+      },
+      "top_type": "EMAIL_ADDRESS",
+      "top_probability": 0.461539,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 9.06
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-127",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "-33.8688",
+      "context": "Version -33.8688 appears in the simulated telemetry output.",
+      "candidate_list": [
+        "LATITUDE",
+        "LONGITUDE",
+        "GEOLOCATION_INFORMATION",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "LATITUDE": "strong_for",
+        "LONGITUDE": "strong_against",
+        "GEOLOCATION_INFORMATION": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"LATITUDE\":\"strong_for\",\"LONGITUDE\":\"strong_against\",\"GEOLOCATION_INFORMATION\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "LATITUDE": 0.483871,
+        "LONGITUDE": 0.016129,
+        "GEOLOCATION_INFORMATION": 0.483871,
+        "NON_PII": 0.016129
+      },
+      "top_type": "LATITUDE",
+      "top_probability": 0.483871,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 11.95
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-129",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "4111111111111111",
+      "context": "Test token 4111111111111111 was generated by the sandbox.",
+      "candidate_list": [
+        "PAYMENT_CARD_NUMBER",
+        "MEDICARE_NUMBER",
+        "IHI",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "PAYMENT_CARD_NUMBER": "strong_for",
+        "MEDICARE_NUMBER": "strong_against",
+        "IHI": "strong_against",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"PAYMENT_CARD_NUMBER\":\"strong_for\",\"MEDICARE_NUMBER\":\"strong_against\",\"IHI\":\"strong_against\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "PAYMENT_CARD_NUMBER": 0.909091,
+        "MEDICARE_NUMBER": 0.030303,
+        "IHI": 0.030303,
+        "NON_PII": 0.030303
+      },
+      "top_type": "PAYMENT_CARD_NUMBER",
+      "top_probability": 0.909091,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 13.057
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-130",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex_chen91",
+      "context": "The tutorial uses alex_chen91 as a fake login example.",
+      "candidate_list": [
+        "SOCIAL_MEDIA_ACCOUNT",
+        "SOCIAL_MEDIA_ID",
+        "USERNAME",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "SOCIAL_MEDIA_ACCOUNT": "weak_against",
+        "SOCIAL_MEDIA_ID": "weak_against",
+        "USERNAME": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"SOCIAL_MEDIA_ACCOUNT\":\"weak_against\",\"SOCIAL_MEDIA_ID\":\"weak_against\",\"USERNAME\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "SOCIAL_MEDIA_ACCOUNT": 0.121952,
+        "SOCIAL_MEDIA_ID": 0.121951,
+        "USERNAME": 0.731707,
+        "NON_PII": 0.02439
+      },
+      "top_type": "USERNAME",
+      "top_probability": 0.731707,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 12.804
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-134",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex.chen@example.com",
+      "context": "The documentation uses alex.chen@example.com as a placeholder address.",
+      "candidate_list": [
+        "EMAIL_ADDRESS",
+        "WORK_EMAIL",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "EMAIL_ADDRESS": "strong_for",
+        "WORK_EMAIL": "weak_against",
+        "NON_PII": "strong_for"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"EMAIL_ADDRESS\":\"strong_for\",\"WORK_EMAIL\":\"weak_against\",\"NON_PII\":\"strong_for\"}}",
+      "converted_distribution": {
+        "EMAIL_ADDRESS": 0.461539,
+        "WORK_EMAIL": 0.076923,
+        "NON_PII": 0.461538
+      },
+      "top_type": "EMAIL_ADDRESS",
+      "top_probability": 0.461539,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 8.774
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-137",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "-33.8688",
+      "context": "Version -33.8688 appears in the simulated telemetry output.",
+      "candidate_list": [
+        "LATITUDE",
+        "LONGITUDE",
+        "GEOLOCATION_INFORMATION",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "LATITUDE": "strong_for",
+        "LONGITUDE": "strong_against",
+        "GEOLOCATION_INFORMATION": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"LATITUDE\":\"strong_for\",\"LONGITUDE\":\"strong_against\",\"GEOLOCATION_INFORMATION\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "LATITUDE": 0.483871,
+        "LONGITUDE": 0.016129,
+        "GEOLOCATION_INFORMATION": 0.483871,
+        "NON_PII": 0.016129
+      },
+      "top_type": "LATITUDE",
+      "top_probability": 0.483871,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 11.617
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-139",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "4111111111111111",
+      "context": "Test token 4111111111111111 was generated by the sandbox.",
+      "candidate_list": [
+        "PAYMENT_CARD_NUMBER",
+        "MEDICARE_NUMBER",
+        "IHI",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "PAYMENT_CARD_NUMBER": "strong_for",
+        "MEDICARE_NUMBER": "strong_against",
+        "IHI": "strong_against",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"PAYMENT_CARD_NUMBER\":\"strong_for\",\"MEDICARE_NUMBER\":\"strong_against\",\"IHI\":\"strong_against\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "PAYMENT_CARD_NUMBER": 0.909091,
+        "MEDICARE_NUMBER": 0.030303,
+        "IHI": 0.030303,
+        "NON_PII": 0.030303
+      },
+      "top_type": "PAYMENT_CARD_NUMBER",
+      "top_probability": 0.909091,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 12.745
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-140",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex_chen91",
+      "context": "The tutorial uses alex_chen91 as a fake login example.",
+      "candidate_list": [
+        "SOCIAL_MEDIA_ACCOUNT",
+        "SOCIAL_MEDIA_ID",
+        "USERNAME",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "SOCIAL_MEDIA_ACCOUNT": "weak_against",
+        "SOCIAL_MEDIA_ID": "weak_against",
+        "USERNAME": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"SOCIAL_MEDIA_ACCOUNT\":\"weak_against\",\"SOCIAL_MEDIA_ID\":\"weak_against\",\"USERNAME\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "SOCIAL_MEDIA_ACCOUNT": 0.121952,
+        "SOCIAL_MEDIA_ID": 0.121951,
+        "USERNAME": 0.731707,
+        "NON_PII": 0.02439
+      },
+      "top_type": "USERNAME",
+      "top_probability": 0.731707,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 12.469
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-144",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex.chen@example.com",
+      "context": "The documentation uses alex.chen@example.com as a placeholder address.",
+      "candidate_list": [
+        "EMAIL_ADDRESS",
+        "WORK_EMAIL",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "EMAIL_ADDRESS": "strong_for",
+        "WORK_EMAIL": "weak_against",
+        "NON_PII": "strong_for"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"EMAIL_ADDRESS\":\"strong_for\",\"WORK_EMAIL\":\"weak_against\",\"NON_PII\":\"strong_for\"}}",
+      "converted_distribution": {
+        "EMAIL_ADDRESS": 0.461539,
+        "WORK_EMAIL": 0.076923,
+        "NON_PII": 0.461538
+      },
+      "top_type": "EMAIL_ADDRESS",
+      "top_probability": 0.461539,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 9.193
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-147",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "-33.8688",
+      "context": "Version -33.8688 appears in the simulated telemetry output.",
+      "candidate_list": [
+        "LATITUDE",
+        "LONGITUDE",
+        "GEOLOCATION_INFORMATION",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "LATITUDE": "strong_for",
+        "LONGITUDE": "strong_against",
+        "GEOLOCATION_INFORMATION": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"LATITUDE\":\"strong_for\",\"LONGITUDE\":\"strong_against\",\"GEOLOCATION_INFORMATION\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "LATITUDE": 0.483871,
+        "LONGITUDE": 0.016129,
+        "GEOLOCATION_INFORMATION": 0.483871,
+        "NON_PII": 0.016129
+      },
+      "top_type": "LATITUDE",
+      "top_probability": 0.483871,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 11.707
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-149",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "4111111111111111",
+      "context": "Test token 4111111111111111 was generated by the sandbox.",
+      "candidate_list": [
+        "PAYMENT_CARD_NUMBER",
+        "MEDICARE_NUMBER",
+        "IHI",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "PAYMENT_CARD_NUMBER": "strong_for",
+        "MEDICARE_NUMBER": "strong_against",
+        "IHI": "strong_against",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"PAYMENT_CARD_NUMBER\":\"strong_for\",\"MEDICARE_NUMBER\":\"strong_against\",\"IHI\":\"strong_against\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "PAYMENT_CARD_NUMBER": 0.909091,
+        "MEDICARE_NUMBER": 0.030303,
+        "IHI": 0.030303,
+        "NON_PII": 0.030303
+      },
+      "top_type": "PAYMENT_CARD_NUMBER",
+      "top_probability": 0.909091,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 12.627
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-150",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex_chen91",
+      "context": "The tutorial uses alex_chen91 as a fake login example.",
+      "candidate_list": [
+        "SOCIAL_MEDIA_ACCOUNT",
+        "SOCIAL_MEDIA_ID",
+        "USERNAME",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "SOCIAL_MEDIA_ACCOUNT": "weak_against",
+        "SOCIAL_MEDIA_ID": "weak_against",
+        "USERNAME": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"SOCIAL_MEDIA_ACCOUNT\":\"weak_against\",\"SOCIAL_MEDIA_ID\":\"weak_against\",\"USERNAME\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "SOCIAL_MEDIA_ACCOUNT": 0.121952,
+        "SOCIAL_MEDIA_ID": 0.121951,
+        "USERNAME": 0.731707,
+        "NON_PII": 0.02439
+      },
+      "top_type": "USERNAME",
+      "top_probability": 0.731707,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 12.374
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-154",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex.chen@example.com",
+      "context": "The documentation uses alex.chen@example.com as a placeholder address.",
+      "candidate_list": [
+        "EMAIL_ADDRESS",
+        "WORK_EMAIL",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "EMAIL_ADDRESS": "strong_for",
+        "WORK_EMAIL": "weak_against",
+        "NON_PII": "strong_for"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"EMAIL_ADDRESS\":\"strong_for\",\"WORK_EMAIL\":\"weak_against\",\"NON_PII\":\"strong_for\"}}",
+      "converted_distribution": {
+        "EMAIL_ADDRESS": 0.461539,
+        "WORK_EMAIL": 0.076923,
+        "NON_PII": 0.461538
+      },
+      "top_type": "EMAIL_ADDRESS",
+      "top_probability": 0.461539,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 9.104
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-157",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "-33.8688",
+      "context": "Version -33.8688 appears in the simulated telemetry output.",
+      "candidate_list": [
+        "LATITUDE",
+        "LONGITUDE",
+        "GEOLOCATION_INFORMATION",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "LATITUDE": "strong_for",
+        "LONGITUDE": "strong_against",
+        "GEOLOCATION_INFORMATION": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"LATITUDE\":\"strong_for\",\"LONGITUDE\":\"strong_against\",\"GEOLOCATION_INFORMATION\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "LATITUDE": 0.483871,
+        "LONGITUDE": 0.016129,
+        "GEOLOCATION_INFORMATION": 0.483871,
+        "NON_PII": 0.016129
+      },
+      "top_type": "LATITUDE",
+      "top_probability": 0.483871,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 11.71
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-159",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "4111111111111111",
+      "context": "Test token 4111111111111111 was generated by the sandbox.",
+      "candidate_list": [
+        "PAYMENT_CARD_NUMBER",
+        "MEDICARE_NUMBER",
+        "IHI",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "PAYMENT_CARD_NUMBER": "strong_for",
+        "MEDICARE_NUMBER": "strong_against",
+        "IHI": "strong_against",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"PAYMENT_CARD_NUMBER\":\"strong_for\",\"MEDICARE_NUMBER\":\"strong_against\",\"IHI\":\"strong_against\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "PAYMENT_CARD_NUMBER": 0.909091,
+        "MEDICARE_NUMBER": 0.030303,
+        "IHI": 0.030303,
+        "NON_PII": 0.030303
+      },
+      "top_type": "PAYMENT_CARD_NUMBER",
+      "top_probability": 0.909091,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 12.741
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-160",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex_chen91",
+      "context": "The tutorial uses alex_chen91 as a fake login example.",
+      "candidate_list": [
+        "SOCIAL_MEDIA_ACCOUNT",
+        "SOCIAL_MEDIA_ID",
+        "USERNAME",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "SOCIAL_MEDIA_ACCOUNT": "weak_against",
+        "SOCIAL_MEDIA_ID": "weak_against",
+        "USERNAME": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"SOCIAL_MEDIA_ACCOUNT\":\"weak_against\",\"SOCIAL_MEDIA_ID\":\"weak_against\",\"USERNAME\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "SOCIAL_MEDIA_ACCOUNT": 0.121952,
+        "SOCIAL_MEDIA_ID": 0.121951,
+        "USERNAME": 0.731707,
+        "NON_PII": 0.02439
+      },
+      "top_type": "USERNAME",
+      "top_probability": 0.731707,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 12.491
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-164",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex.chen@example.com",
+      "context": "The documentation uses alex.chen@example.com as a placeholder address.",
+      "candidate_list": [
+        "EMAIL_ADDRESS",
+        "WORK_EMAIL",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "EMAIL_ADDRESS": "strong_for",
+        "WORK_EMAIL": "weak_against",
+        "NON_PII": "strong_for"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"EMAIL_ADDRESS\":\"strong_for\",\"WORK_EMAIL\":\"weak_against\",\"NON_PII\":\"strong_for\"}}",
+      "converted_distribution": {
+        "EMAIL_ADDRESS": 0.461539,
+        "WORK_EMAIL": 0.076923,
+        "NON_PII": 0.461538
+      },
+      "top_type": "EMAIL_ADDRESS",
+      "top_probability": 0.461539,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 9.034
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-167",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "-33.8688",
+      "context": "Version -33.8688 appears in the simulated telemetry output.",
+      "candidate_list": [
+        "LATITUDE",
+        "LONGITUDE",
+        "GEOLOCATION_INFORMATION",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "LATITUDE": "strong_for",
+        "LONGITUDE": "strong_against",
+        "GEOLOCATION_INFORMATION": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"LATITUDE\":\"strong_for\",\"LONGITUDE\":\"strong_against\",\"GEOLOCATION_INFORMATION\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "LATITUDE": 0.483871,
+        "LONGITUDE": 0.016129,
+        "GEOLOCATION_INFORMATION": 0.483871,
+        "NON_PII": 0.016129
+      },
+      "top_type": "LATITUDE",
+      "top_probability": 0.483871,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 11.819
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-169",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "4111111111111111",
+      "context": "Test token 4111111111111111 was generated by the sandbox.",
+      "candidate_list": [
+        "PAYMENT_CARD_NUMBER",
+        "MEDICARE_NUMBER",
+        "IHI",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "PAYMENT_CARD_NUMBER": "strong_for",
+        "MEDICARE_NUMBER": "strong_against",
+        "IHI": "strong_against",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"PAYMENT_CARD_NUMBER\":\"strong_for\",\"MEDICARE_NUMBER\":\"strong_against\",\"IHI\":\"strong_against\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "PAYMENT_CARD_NUMBER": 0.909091,
+        "MEDICARE_NUMBER": 0.030303,
+        "IHI": 0.030303,
+        "NON_PII": 0.030303
+      },
+      "top_type": "PAYMENT_CARD_NUMBER",
+      "top_probability": 0.909091,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 12.613
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-170",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex_chen91",
+      "context": "The tutorial uses alex_chen91 as a fake login example.",
+      "candidate_list": [
+        "SOCIAL_MEDIA_ACCOUNT",
+        "SOCIAL_MEDIA_ID",
+        "USERNAME",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "SOCIAL_MEDIA_ACCOUNT": "weak_against",
+        "SOCIAL_MEDIA_ID": "weak_against",
+        "USERNAME": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"SOCIAL_MEDIA_ACCOUNT\":\"weak_against\",\"SOCIAL_MEDIA_ID\":\"weak_against\",\"USERNAME\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "SOCIAL_MEDIA_ACCOUNT": 0.121952,
+        "SOCIAL_MEDIA_ID": 0.121951,
+        "USERNAME": 0.731707,
+        "NON_PII": 0.02439
+      },
+      "top_type": "USERNAME",
+      "top_probability": 0.731707,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 12.353
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-174",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex.chen@example.com",
+      "context": "The documentation uses alex.chen@example.com as a placeholder address.",
+      "candidate_list": [
+        "EMAIL_ADDRESS",
+        "WORK_EMAIL",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "EMAIL_ADDRESS": "strong_for",
+        "WORK_EMAIL": "weak_against",
+        "NON_PII": "strong_for"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"EMAIL_ADDRESS\":\"strong_for\",\"WORK_EMAIL\":\"weak_against\",\"NON_PII\":\"strong_for\"}}",
+      "converted_distribution": {
+        "EMAIL_ADDRESS": 0.461539,
+        "WORK_EMAIL": 0.076923,
+        "NON_PII": 0.461538
+      },
+      "top_type": "EMAIL_ADDRESS",
+      "top_probability": 0.461539,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 9.14
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-177",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "-33.8688",
+      "context": "Version -33.8688 appears in the simulated telemetry output.",
+      "candidate_list": [
+        "LATITUDE",
+        "LONGITUDE",
+        "GEOLOCATION_INFORMATION",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "LATITUDE": "strong_for",
+        "LONGITUDE": "strong_against",
+        "GEOLOCATION_INFORMATION": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"LATITUDE\":\"strong_for\",\"LONGITUDE\":\"strong_against\",\"GEOLOCATION_INFORMATION\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "LATITUDE": 0.483871,
+        "LONGITUDE": 0.016129,
+        "GEOLOCATION_INFORMATION": 0.483871,
+        "NON_PII": 0.016129
+      },
+      "top_type": "LATITUDE",
+      "top_probability": 0.483871,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 11.923
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-179",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "4111111111111111",
+      "context": "Test token 4111111111111111 was generated by the sandbox.",
+      "candidate_list": [
+        "PAYMENT_CARD_NUMBER",
+        "MEDICARE_NUMBER",
+        "IHI",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "PAYMENT_CARD_NUMBER": "strong_for",
+        "MEDICARE_NUMBER": "strong_against",
+        "IHI": "strong_against",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"PAYMENT_CARD_NUMBER\":\"strong_for\",\"MEDICARE_NUMBER\":\"strong_against\",\"IHI\":\"strong_against\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "PAYMENT_CARD_NUMBER": 0.909091,
+        "MEDICARE_NUMBER": 0.030303,
+        "IHI": 0.030303,
+        "NON_PII": 0.030303
+      },
+      "top_type": "PAYMENT_CARD_NUMBER",
+      "top_probability": 0.909091,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 12.729
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-180",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex_chen91",
+      "context": "The tutorial uses alex_chen91 as a fake login example.",
+      "candidate_list": [
+        "SOCIAL_MEDIA_ACCOUNT",
+        "SOCIAL_MEDIA_ID",
+        "USERNAME",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "SOCIAL_MEDIA_ACCOUNT": "weak_against",
+        "SOCIAL_MEDIA_ID": "weak_against",
+        "USERNAME": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"SOCIAL_MEDIA_ACCOUNT\":\"weak_against\",\"SOCIAL_MEDIA_ID\":\"weak_against\",\"USERNAME\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "SOCIAL_MEDIA_ACCOUNT": 0.121952,
+        "SOCIAL_MEDIA_ID": 0.121951,
+        "USERNAME": 0.731707,
+        "NON_PII": 0.02439
+      },
+      "top_type": "USERNAME",
+      "top_probability": 0.731707,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 12.128
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-184",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex.chen@example.com",
+      "context": "The documentation uses alex.chen@example.com as a placeholder address.",
+      "candidate_list": [
+        "EMAIL_ADDRESS",
+        "WORK_EMAIL",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "EMAIL_ADDRESS": "strong_for",
+        "WORK_EMAIL": "weak_against",
+        "NON_PII": "strong_for"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"EMAIL_ADDRESS\":\"strong_for\",\"WORK_EMAIL\":\"weak_against\",\"NON_PII\":\"strong_for\"}}",
+      "converted_distribution": {
+        "EMAIL_ADDRESS": 0.461539,
+        "WORK_EMAIL": 0.076923,
+        "NON_PII": 0.461538
+      },
+      "top_type": "EMAIL_ADDRESS",
+      "top_probability": 0.461539,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 9.227
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-187",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "-33.8688",
+      "context": "Version -33.8688 appears in the simulated telemetry output.",
+      "candidate_list": [
+        "LATITUDE",
+        "LONGITUDE",
+        "GEOLOCATION_INFORMATION",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "LATITUDE": "strong_for",
+        "LONGITUDE": "strong_against",
+        "GEOLOCATION_INFORMATION": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"LATITUDE\":\"strong_for\",\"LONGITUDE\":\"strong_against\",\"GEOLOCATION_INFORMATION\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "LATITUDE": 0.483871,
+        "LONGITUDE": 0.016129,
+        "GEOLOCATION_INFORMATION": 0.483871,
+        "NON_PII": 0.016129
+      },
+      "top_type": "LATITUDE",
+      "top_probability": 0.483871,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 11.856
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-189",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "4111111111111111",
+      "context": "Test token 4111111111111111 was generated by the sandbox.",
+      "candidate_list": [
+        "PAYMENT_CARD_NUMBER",
+        "MEDICARE_NUMBER",
+        "IHI",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "PAYMENT_CARD_NUMBER": "strong_for",
+        "MEDICARE_NUMBER": "strong_against",
+        "IHI": "strong_against",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"PAYMENT_CARD_NUMBER\":\"strong_for\",\"MEDICARE_NUMBER\":\"strong_against\",\"IHI\":\"strong_against\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "PAYMENT_CARD_NUMBER": 0.909091,
+        "MEDICARE_NUMBER": 0.030303,
+        "IHI": 0.030303,
+        "NON_PII": 0.030303
+      },
+      "top_type": "PAYMENT_CARD_NUMBER",
+      "top_probability": 0.909091,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 11.97
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-190",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex_chen91",
+      "context": "The tutorial uses alex_chen91 as a fake login example.",
+      "candidate_list": [
+        "SOCIAL_MEDIA_ACCOUNT",
+        "SOCIAL_MEDIA_ID",
+        "USERNAME",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "SOCIAL_MEDIA_ACCOUNT": "weak_against",
+        "SOCIAL_MEDIA_ID": "weak_against",
+        "USERNAME": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"SOCIAL_MEDIA_ACCOUNT\":\"weak_against\",\"SOCIAL_MEDIA_ID\":\"weak_against\",\"USERNAME\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "SOCIAL_MEDIA_ACCOUNT": 0.121952,
+        "SOCIAL_MEDIA_ID": 0.121951,
+        "USERNAME": 0.731707,
+        "NON_PII": 0.02439
+      },
+      "top_type": "USERNAME",
+      "top_probability": 0.731707,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 11.507
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-194",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex.chen@example.com",
+      "context": "The documentation uses alex.chen@example.com as a placeholder address.",
+      "candidate_list": [
+        "EMAIL_ADDRESS",
+        "WORK_EMAIL",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "EMAIL_ADDRESS": "strong_for",
+        "WORK_EMAIL": "weak_against",
+        "NON_PII": "strong_for"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"EMAIL_ADDRESS\":\"strong_for\",\"WORK_EMAIL\":\"weak_against\",\"NON_PII\":\"strong_for\"}}",
+      "converted_distribution": {
+        "EMAIL_ADDRESS": 0.461539,
+        "WORK_EMAIL": 0.076923,
+        "NON_PII": 0.461538
+      },
+      "top_type": "EMAIL_ADDRESS",
+      "top_probability": 0.461539,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 8.121
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-197",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "-33.8688",
+      "context": "Version -33.8688 appears in the simulated telemetry output.",
+      "candidate_list": [
+        "LATITUDE",
+        "LONGITUDE",
+        "GEOLOCATION_INFORMATION",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "LATITUDE": "strong_for",
+        "LONGITUDE": "strong_against",
+        "GEOLOCATION_INFORMATION": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"LATITUDE\":\"strong_for\",\"LONGITUDE\":\"strong_against\",\"GEOLOCATION_INFORMATION\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "LATITUDE": 0.483871,
+        "LONGITUDE": 0.016129,
+        "GEOLOCATION_INFORMATION": 0.483871,
+        "NON_PII": 0.016129
+      },
+      "top_type": "LATITUDE",
+      "top_probability": 0.483871,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 10.238
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-199",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "4111111111111111",
+      "context": "Test token 4111111111111111 was generated by the sandbox.",
+      "candidate_list": [
+        "PAYMENT_CARD_NUMBER",
+        "MEDICARE_NUMBER",
+        "IHI",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "PAYMENT_CARD_NUMBER": "strong_for",
+        "MEDICARE_NUMBER": "strong_against",
+        "IHI": "strong_against",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"PAYMENT_CARD_NUMBER\":\"strong_for\",\"MEDICARE_NUMBER\":\"strong_against\",\"IHI\":\"strong_against\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "PAYMENT_CARD_NUMBER": 0.909091,
+        "MEDICARE_NUMBER": 0.030303,
+        "IHI": 0.030303,
+        "NON_PII": 0.030303
+      },
+      "top_type": "PAYMENT_CARD_NUMBER",
+      "top_probability": 0.909091,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 10.033
+    },
+    {
+      "prompt_id": "STAGE2-VLLM-PILOT-200",
+      "warning_types": [
+        "reverse_negative_non_pii_failure"
+      ],
+      "context_type": "reverse_negative_context",
+      "span_value": "alex_chen91",
+      "context": "The tutorial uses alex_chen91 as a fake login example.",
+      "candidate_list": [
+        "SOCIAL_MEDIA_ACCOUNT",
+        "SOCIAL_MEDIA_ID",
+        "USERNAME",
+        "NON_PII"
+      ],
+      "teacher_raw_verdicts": {
+        "SOCIAL_MEDIA_ACCOUNT": "weak_against",
+        "SOCIAL_MEDIA_ID": "weak_against",
+        "USERNAME": "strong_for",
+        "NON_PII": "strong_against"
+      },
+      "teacher_raw_output_text": "{\"verdicts\":{\"SOCIAL_MEDIA_ACCOUNT\":\"weak_against\",\"SOCIAL_MEDIA_ID\":\"weak_against\",\"USERNAME\":\"strong_for\",\"NON_PII\":\"strong_against\"}}",
+      "converted_distribution": {
+        "SOCIAL_MEDIA_ACCOUNT": 0.121952,
+        "SOCIAL_MEDIA_ID": 0.121951,
+        "USERNAME": 0.731707,
+        "NON_PII": 0.02439
+      },
+      "top_type": "USERNAME",
+      "top_probability": 0.731707,
+      "raw_status": "ok",
+      "raw_elapsed_seconds": 9.514
+    }
+  ]
+}

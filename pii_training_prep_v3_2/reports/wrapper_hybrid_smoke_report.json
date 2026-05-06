@@ -1,0 +1,213 @@
+{
+  "backend": "hybrid_opf_qwen",
+  "model_load_time_s": 142.5,
+  "test_count": 7,
+  "total_spans_detected": 6,
+  "results": [
+    {
+      "id": "DOB",
+      "text": "Student DOB 14/09/2002.",
+      "latency_ms": 214.3,
+      "span_count": 1,
+      "spans": [
+        {
+          "start": 12,
+          "end": 22,
+          "value": "14/09/2002",
+          "opf_top_type": "DATE_OF_BIRTH",
+          "top_type": "DATE_OF_BIRTH",
+          "top_probability": 0.8755082488059998,
+          "risk_score": 0.457515,
+          "decision": "redact",
+          "type_distribution_topk": [
+            [
+              "DATE_OF_BIRTH",
+              0.8755082488059998
+            ],
+            [
+              "MEDICARE_EXPIRY",
+              0.011576320976018906
+            ],
+            [
+              "STUDENT_ID",
+              0.007211369462311268
+            ]
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "Email",
+      "text": "Email amelia.chen@student.example.edu.au.",
+      "latency_ms": 142.9,
+      "span_count": 1,
+      "spans": [
+        {
+          "start": 6,
+          "end": 40,
+          "value": "amelia.chen@student.example.edu.au",
+          "opf_top_type": "EMAIL_ADDRESS",
+          "top_type": "WORK_EMAIL",
+          "top_probability": 0.38622450828552246,
+          "risk_score": 0.365219,
+          "decision": "review",
+          "type_distribution_topk": [
+            [
+              "WORK_EMAIL",
+              0.38622450828552246
+            ],
+            [
+              "EMAIL_ADDRESS",
+              0.3405716121196747
+            ],
+            [
+              "STUDENT_ID",
+              0.0010726979235187173
+            ]
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "Phone",
+      "text": "Mobile 0412 345 678.",
+      "latency_ms": 135.7,
+      "span_count": 1,
+      "spans": [
+        {
+          "start": 7,
+          "end": 20,
+          "value": "0412 345 678.",
+          "opf_top_type": "MOBILE",
+          "top_type": "MOBILE",
+          "top_probability": 0.6509392857551575,
+          "risk_score": 0.400006,
+          "decision": "redact",
+          "type_distribution_topk": [
+            [
+              "MOBILE",
+              0.6509392857551575
+            ],
+            [
+              "HOME_PHONE",
+              0.13075460493564606
+            ],
+            [
+              "WORK_PHONE",
+              0.009174594655632973
+            ]
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "Bank",
+      "text": "Bank details: BSB 062-001, account 123456789.",
+      "latency_ms": 146.0,
+      "span_count": 2,
+      "spans": [
+        {
+          "start": 18,
+          "end": 25,
+          "value": "062-001",
+          "opf_top_type": "BANK_ACCOUNT_NUMBER",
+          "top_type": "BANK_ACCOUNT_NUMBER",
+          "top_probability": 0.9447847008705139,
+          "risk_score": 0.945103,
+          "decision": "redact",
+          "type_distribution_topk": [
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.9447847008705139
+            ],
+            [
+              "PAYMENT_CARD_NUMBER",
+              0.0002887797309085727
+            ],
+            [
+              "MOBILE",
+              1.981195600819774e-05
+            ]
+          ]
+        },
+        {
+          "start": 35,
+          "end": 44,
+          "value": "123456789",
+          "opf_top_type": "BANK_ACCOUNT_NUMBER",
+          "top_type": "BANK_ACCOUNT_NUMBER",
+          "top_probability": 0.9928499460220337,
+          "risk_score": 0.992871,
+          "decision": "redact",
+          "type_distribution_topk": [
+            [
+              "BANK_ACCOUNT_NUMBER",
+              0.9928499460220337
+            ],
+            [
+              "AU_TFN",
+              1.0635902981448453e-05
+            ],
+            [
+              "STUDENT_ID",
+              8.451715075352695e-06
+            ]
+          ]
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "id": "Medicare",
+      "text": "Medicare number is 2123 45678 1 and expiry is 01/2026.",
+      "latency_ms": 23.6,
+      "span_count": 0,
+      "spans": [],
+      "warnings": []
+    },
+    {
+      "id": "Negative",
+      "text": "Order #123456 shipped today.",
+      "latency_ms": 13.3,
+      "span_count": 0,
+      "spans": [],
+      "warnings": []
+    },
+    {
+      "id": "Gender/Salary",
+      "text": "Gender: Male. Salary expectation: $120,000.",
+      "latency_ms": 140.6,
+      "span_count": 1,
+      "spans": [
+        {
+          "start": 34,
+          "end": 43,
+          "value": "$120,000.",
+          "opf_top_type": "SALARY",
+          "top_type": "SALARY_WAGE_EXPECTATION",
+          "top_probability": 0.3129003047943115,
+          "risk_score": 0.472222,
+          "decision": "redact",
+          "type_distribution_topk": [
+            [
+              "SALARY_WAGE_EXPECTATION",
+              0.23668517172336578
+            ],
+            [
+              "SCHOLARSHIP",
+              0.19158075749874115
+            ],
+            [
+              "SALARY",
+              0.11423264443874359
+            ]
+          ]
+        }
+      ],
+      "warnings": []
+    }
+  ]
+}
