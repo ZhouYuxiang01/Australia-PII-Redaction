@@ -1,0 +1,18 @@
+{
+  "warning_examples": {
+    "bare_span_overconfident": [],
+    "bare_date_dob_overconfident": [],
+    "weak_context_overconfident": [],
+    "reverse_negative_non_pii_failure": [],
+    "hard_negative_non_pii_failure": [],
+    "strong_positive_not_confident": []
+  },
+  "warning_counts": {
+    "bare_span_overconfident_count": 0,
+    "bare_date_dob_overconfident_count": 0,
+    "weak_context_overconfident_count": 0,
+    "reverse_negative_non_pii_failure_count": 0,
+    "hard_negative_non_pii_failure_count": 0,
+    "strong_positive_not_confident_count": 0
+  }
+}

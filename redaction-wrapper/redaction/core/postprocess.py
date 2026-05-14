@@ -59,7 +59,7 @@ COMPETING_CONTEXT_TRIGGERS: dict[str, tuple[str, ...]] = {
     "CREDIT_CARD_EXPIRY": ("card expiry", "card exp", "cc exp", "exp"),
     "MEDICARE_EXPIRY": ("medicare expiry", "medicare card expiry", "card expiry"),
     "PAYMENT_CARD_NUMBER": ("card", "card number", "payment card", "card used"),
-    "PHONE": ("mobile", "phone", "tel"),
+    "PHONE": ("mobile", "phone", "tel", "call back", "callback"),
     "STUDENT_ID": ("sid", "student id", "student number"),
     "UAC_ID": ("uac", "uac id", "uac no", "uac number"),
     "VEHICLE_ID": ("rego", "vehicle registration", "number plate", "license plate", "licence plate"),
@@ -77,6 +77,7 @@ OPERATIONAL_IP_MARKERS = (
     "health probe", "jump host", "port ", "diagnostics", "patching", "monitoring",
     "succeeded from", "nat gateway", "egress traffic", "load balancer",
     "service endpoint", "reverse proxy", "pod ip", "node ip",
+    "server ip", "internal infrastructure", "not a user ip",
 )
 
 PERSONAL_IP_MARKERS = ("login ip", "user ip", "ip flagged", "account")
@@ -88,6 +89,42 @@ OPERATIONAL_PHONE_MARKERS = (
 )
 
 PERSONAL_PHONE_MARKERS = ("emergency contact", "personal phone", "mobile:", "mobile phone", "direct phone", "direct dial")
+
+PUBLIC_URL_CONTEXT_MARKERS = (
+    "find out more", "go to", "website to", "information on the website",
+    "check your visa status", "apply for your student visa", "quality assurance",
+)
+
+WEBSITE_HISTORY_CONTEXT_MARKERS = ("website history", "browser history", "browsing history", "visited")
+
+SECTION_HEADING_WORDS = {
+    "DETAILS", "INFORMATION", "IMPORTANT", "OVERSEAS", "STUDENT", "STUDENTS",
+}
+
+DOCUMENT_METADATA_DATE_MARKERS = ("created:", "updated:", "generated:", "printed:")
+
+COURSE_PROVIDER_CODE_MARKERS = (
+    "course:", "course code", "provider:", "provider code", "cricos", "university",
+)
+
+AGGREGATE_ACADEMIC_MARKERS = (
+    "aggregate score", "class average", "cohort average", "department-level summary",
+    "department level summary", "group average", "summary only", "no individual",
+)
+
+NON_PAYMENT_CARD_MARKERS = (
+    "loyalty card", "retail points card", "points card", "membership card",
+    "gift card", "not a payment card",
+)
+
+SOFTWARE_CODE_MARKERS = (
+    "activation code", "software licence", "software license", "licence key",
+    "license key", "not a usi",
+)
+
+INTERNAL_BANK_ROUTING_MARKERS = (
+    "bsb-like", "branch code", "internal routing", "not a bank bsb", "not a bank field",
+)
 
 OPERATIONAL_NUMERIC_MARKERS = (
     "maintenance request", "work order", "barcode", "reserve copy", "meter replacement",
@@ -101,14 +138,29 @@ SENSITIVE_NUMERIC_MARKERS = (
     "card used", "payment card", "card number", "account number", "uac id", "uac no",
 )
 
+SUPPRESSED_LABELS: set[str] = set()
+
 VEHICLE_FALSE_POSITIVE_MARKERS = (
     "example plate", "training slide", "sample plate", "fake plate", "test plate",
     "not a plate", "demo rego", "demo plate", "screenshot", "screenshots only",
+    "fleet code", "not a licence plate", "not a license plate",
 )
 
 VEHICLE_POSITIVE_MARKERS = (
     "vehicle rego", "vehicle registration", "number plate", "license plate",
     "licence plate", "car rego", "rego:",
+)
+
+CONTEXT_RESET_MARKERS = (
+    "actual details below",
+    "actual student below",
+    "details below",
+    "the actual details",
+)
+
+MEDICAL_STRUCTURED_BOUNDARY_RE = re.compile(
+    r"\.\s*(?:Medicare|IHI|Medical\s+cert|Medical\s+certificate|Call\s+back|Callback|Phone|Mobile|DOB|SID|Student|Email|Address)\b",
+    re.IGNORECASE,
 )
 
 
@@ -303,6 +355,14 @@ CONTEXTUAL_RESCUE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
         re.compile(r"\bnational\s+id\s*[:#=\-]?\s*(?P<value>NID-[A-Z]{2}-\d{6}-[A-Z])\b", re.IGNORECASE),
     ),
     (
+        "NATIONAL_IDENTITY_CARD",
+        re.compile(
+            r"\bnational\s+id(?:entity)?(?:\s+(?:card|number|no\.?))?\s*[:#=\-]?\s*"
+            r"(?P<value>[A-Z]{2,4}(?:-[A-Z0-9]{1,8}){2,5})\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
         "CENTRELINK_REFERENCE_NUMBER",
         re.compile(
             r"\bcentrelink\s+reference\s+number\s*[:#=\-]?\s*"
@@ -316,11 +376,11 @@ CONTEXTUAL_RESCUE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ),
     (
         "AU_BANK_ACCOUNT",
-        re.compile(r"\bBSB\s*[:#=\-]?\s*(?P<value>\d{3}-\d{3})\b", re.IGNORECASE),
+        re.compile(r"\bBSB\s*(?:is|was|code|number|no\.?)?\s*[:#=\-]?\s*(?P<value>\d{3}[-\s]\d{3})\b", re.IGNORECASE),
     ),
     (
         "AU_BANK_ACCOUNT",
-        re.compile(r"\bAccount\s+Number\s*[:#=\-]?\s*(?P<value>\d{6,10})\b", re.IGNORECASE),
+        re.compile(r"\bAccount\s+Number\s*[:#=\-]?\s*(?P<value>\d{6,10}|\d{2,4}(?:\s\d{2,4}){1,3})\b", re.IGNORECASE),
     ),
     (
         "AU_BANK_ACCOUNT",
@@ -376,8 +436,9 @@ CONTEXTUAL_RESCUE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     (
         "PHONE",
         re.compile(
-            r"\b(?:mobile|phone|home\s+phone|work\s+phone)\s*[:#=\-]?\s*"
-            r"(?P<value>(?:\+61\s?)?\d{3,4}\s\d{3}\s\d{3}|04\s\d{2}\s\d{3}\s\d{3}|\(\d{2}\)\s\d{4}\s\d{4})\b",
+            r"\b(?:mobile|phone|home\s+phone|work\s+phone|telephone|fax|tel|call\s+back|callback)\s*[:#=\-]?\s*"
+            r"(?P<value>(?:\+?61\s?[2378](?:\s?\d){8})|(?:\+61\s?)?\d{3,4}\s\d{3}\s\d{3}|"
+            r"04\s\d{2}\s\d{3}\s\d{3}|\(\d{2}\)\s\d{4}\s\d{4})\b",
             re.IGNORECASE,
         ),
     ),
@@ -394,6 +455,14 @@ CONTEXTUAL_RESCUE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
         re.compile(
             r"\b(?:card\s+used(?:\s+last\s+time)?|card\s+number|payment\s+card)\b[^.\n]{0,80}?\b"
             r"(?:exp|expiry|expires?)\s*[:#=\-]?\s*(?P<value>\d{1,2}/\d{2,4})\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "HASHED_PAYMENT_CARD_NUMBER",
+        re.compile(
+            r"\b(?:stored\s+)?(?:hashed\s+card(?:\s+ref)?|card\s+hash|payment\s+hash)\s*[:#=\-]?\s*"
+            r"(?P<value>(?:sha256:)?[A-Fa-f0-9]{32,128})\b",
             re.IGNORECASE,
         ),
     ),
@@ -434,9 +503,11 @@ CONTEXTUAL_RESCUE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     (
         "MEDICAL_INFORMATION",
         re.compile(
-            r"\bReason\s*[:#=\-]?\s*(?P<value>[^\n\r]*"
-            r"(?:migraine|anxiety|depression|injury|illness|condition|flare-up|symptoms|disease|syndrome|ailment)"
-            r"[^\n\r]*)",
+            r"\bReason\s*[:#=\-]?\s*"
+            r"(?P<value>(?=[^\n\r]*(?:migraine|anxiety|depression|injury|illness|condition|flare-up|symptoms|disease|syndrome|ailment))"
+            r"[A-Za-z][^\n\r]*?(?:migraine|anxiety|depression|injury|illness|condition|flare-up|symptoms|disease|syndrome|ailment)"
+            r"[^\n\r]*?)"
+            r"(?=(?:\.\s*(?:Medicare|IHI|Medical\s+cert|Medical\s+certificate|Call\s+back|Callback|Phone|Mobile|DOB|SID|Student|Email|Address)\b)|[;\n\r]|$)",
             re.IGNORECASE,
         ),
     ),
@@ -451,6 +522,14 @@ CONTEXTUAL_RESCUE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     (
         "WORKERS_COMPENSATION_CLAIM",
         re.compile(r"\bClaim\s+number\s*[:#=\-]?\s*(?P<value>WC-\d{4}-\d{5})\b", re.IGNORECASE),
+    ),
+    (
+        "SUBJECT_RESULTS",
+        re.compile(
+            r"(?:\bResults?\s*:\s*|;\s*)"
+            r"(?P<value>[A-Z]{4}\d{4}\s*:\s*[A-Z]{1,2}\s*\d{1,3})\b",
+            re.IGNORECASE,
+        ),
     ),
     (
         "SANCTIONS",
@@ -486,8 +565,165 @@ CONTEXTUAL_RESCUE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
         re.compile(r"\bReligion\s*/\s*Religious\s+Beliefs\s*[:#=\-]?\s*(?P<value>[^\n\r]+)", re.IGNORECASE),
     ),
     (
+        "CRIMINAL_RECORDS",
+        re.compile(
+            r"\bcriminal\s+(?:record|history)\s*(?:field|status)?\s*[:#=\-]?\s*"
+            r"(?P<value>[^.\n\r;]{2,160}?(?:conviction|offence|criminal|police|record)[^.\n\r;]*)",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "MILITARY_VETERAN_STATUS",
+        re.compile(
+            r"\b(?:military|veteran)(?:\s*/\s*veteran)?\s+status\s*[:#=\-]?\s*"
+            r"(?P<value>[^.\n\r;]{2,160}?(?:defence|defense|veteran|military|service|transition)[^.\n\r;]*)",
+            re.IGNORECASE,
+        ),
+    ),
+    (
         "SOCIO_ECONOMIC_STATUS",
         re.compile(r"\bSocio\s+Economic\s+Status\s*[:#=\-]?\s*(?P<value>[^\n\r]+)", re.IGNORECASE),
+    ),
+]
+
+CONTEXTUAL_REVIEW_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
+    (
+        "CONTRACT_TYPE",
+        re.compile(
+            r"\bContract(?:\s+type)?\s*[:#=\-]?\s*"
+            r"(?P<value>fixed[- ]term|permanent(?:\s+(?:full|part)[- ]time)?|casual|continuing|ongoing|temporary)\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "CONTRACT_TYPE",
+        re.compile(
+            r"\bRole\s*[:#=\-]?[^\n\r|.]{0,120}?\("
+            r"(?P<value>fixed[- ]term|permanent(?:\s+(?:full|part)[- ]time)?|casual|continuing|ongoing|temporary)\)",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "SALARY",
+        re.compile(
+            r"\b(?:Salary\s+range|Salary|Current\s+wage|Remuneration)\s*[:#=\-]?\s*"
+            r"(?P<value>(?:AUD\s*)?\$?\d{2,3}(?:,\d{3}|k)"
+            r"(?:\s*(?:-|to)\s*(?:AUD\s*)?\$?\d{2,3}(?:,\d{3}|k))?"
+            r"(?:\s*(?:per\s+annum|p\.a\.|pa))?)",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "SALARY_WAGE_EXPECTATION",
+        re.compile(
+            r"\b(?:Salary\s+wage\s+expectation|Wage\s+expectation|Expected\s+salary|Expectation)\s*[:#=\-]?\s*"
+            r"(?P<value>(?:approximately\s+)?(?:AUD\s*)?\$?\d{2,3}(?:,\d{3}|k)(?:\s*(?:per\s+annum|p\.a\.|pa))?)",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "PERSONNEL_NUMBER",
+        re.compile(r"\bPersonnel(?:\s+(?:Number|No\.?))?\s*[:#=\-]?\s*(?P<value>P\d{5,10})\b", re.IGNORECASE),
+    ),
+    (
+        "IHI",
+        re.compile(r"\bIHI\s*[:#=\-]?\s*(?P<value>\d{16}|\d{4}\s\d{4}\s\d{4}\s\d{4})\b", re.IGNORECASE),
+    ),
+    (
+        "PAYMENT_CARD_NUMBER",
+        re.compile(
+            r"\bCard\s*[:#=\-]?\s*"
+            r"(?P<value>\d{13,19}|\d{4}\s\d{4}\s\d{4}\s\d{4}|\*{4}\s\*{4}\s\*{4}\s\d{4})\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "MEDICAL_INFORMATION",
+        re.compile(
+            r"\bDiagnosis\s*[:#=\-]?\s*"
+            r"(?P<value>[A-Za-z][A-Za-z /+\-]{2,80}?)(?=\s*(?:\||$|[.;\n\r]))",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "COUNSELLING_RECORDS",
+        re.compile(
+            r"\bTreatment\s*[:#=\-]?\s*"
+            r"(?P<value>counselling\s*[:#=\-]\s*[^|.\n\r;]{3,100}|[^|.\n\r;]{0,50}\bcounselling\b[^|.\n\r;]{0,100})",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "COUNSELLING_RECORDS",
+        re.compile(
+            r"\b(?P<value>(?:trauma-informed|mindfulness-based|grief)\s+therapy(?:\s*\([^)]{1,60}\))?)\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "MEDICAL_CERTIFICATE",
+        re.compile(
+            r"\b(?P<value>medical\s+certificate[^|\n\r;]{0,120}?"
+            r"(?:\([^)]{4,40}\)|\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|\d{1,2}\s+[A-Za-z]+\s+\d{4}))",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "FACIAL_RECOGNITION",
+        re.compile(
+            r"\bFace\s*[:#=\-]?\s*(?P<value>face\s+ID\s+on\s+file|face\s+biometric\s+enrolled|facial\s+recognition[^|.\n\r;]{0,80})",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "FINGERPRINT",
+        re.compile(
+            r"\bFingerprint\s*[:#=\-]?\s*(?P<value>fingerprint\s+registered|fingerprint\s+scan[^|.\n\r;]{0,80})",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "VOICE_RECOGNITION",
+        re.compile(
+            r"\bVoice\s*[:#=\-]?\s*(?P<value>voiceprint\s+on\s+file|voice\s+biometric\s+enrolled|voice\s+recognition[^|.\n\r;]{0,80})",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "SIGNATURE",
+        re.compile(
+            r"\b(?:Sig|Signature)\s*[:#=\-]?\s*"
+            r"(?P<value>e-signature\s+on\s+file|digital\s+signature\s+registered|signature\s+image\s+ref\s+SIG-\d{4}-\d{5}|signature\s+on\s+file)",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "AUDIO_INFORMATION",
+        re.compile(
+            r"\bAudio(?:\s+evidence)?\s*[:#=\-]?\s*"
+            r"(?P<value>voice\s+memo\s+attached|recorded\s+audio\s+message\s+on\s+file|audio\s+recording[^|.\n\r;]{0,80})",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "CAMERA_FOOTAGE_AUDIO",
+        re.compile(r"\bCCTV\s*[:#=\-]?\s*(?P<value>CCTV\s+footage[^|.\n\r;]{0,100})", re.IGNORECASE),
+    ),
+    (
+        "COOKIE_INFORMATION",
+        re.compile(
+            r"\b(?:Cookie|Session)\s*[:#=\-]?\s*"
+            r"(?P<value>(?:session_id|PHPSESSID)=[A-Za-z0-9]{16,100})\b",
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        "SOCIAL_MEDIA_HISTORY",
+        re.compile(
+            r"\bActivity\s*[:#=\-]?\s*"
+            r"(?P<value>(?:social\s+media\s+history|Instagram\s+account\s+activity\s+log|[^|.\n\r;]{0,50}account\s+activity\s+log)[^|.\n\r;]*)",
+            re.IGNORECASE,
+        ),
     ),
 ]
 
@@ -525,6 +761,10 @@ def normalize_contextual_type(span: Span, text: str) -> Span:
         return _with_type(span, "PASSPORT_EXPIRY", "taxonomy_alias")
     if span.type == "STUDENT_ID" and re.fullmatch(r"E\d{6}", value or "") and "staff id" in before:
         return _with_type(span, "EMPLOYEE_NUMBER", "taxonomy_alias")
+    if span.type != "UAC_ID" and re.fullmatch(r"\d(?:[ -]?\d){8,9}", value or "") and _has_uac_positive_context(text, span.start):
+        return _with_type(span, "UAC_ID", "uac_context_label_conflict")
+    if span.type != "NATIONAL_IDENTITY_CARD" and _has_national_id_positive_context(text, span.start):
+        return _with_type(span, "NATIONAL_IDENTITY_CARD", "national_id_context_label_conflict")
     if span.type == "DISABILITY_OR_SPECIFIC_CONDITION" and any(k in before for k in ["medical detail", "reason:"]):
         return _with_type(span, "MEDICAL_INFORMATION", "taxonomy_alias")
     if span.type == "AU_DRIVERS_LICENCE" and any(trigger in line_ctx for trigger in VEHICLE_CONTEXT_TRIGGERS):
@@ -540,21 +780,129 @@ def _contains_any(ctx: str, markers: tuple[str, ...]) -> bool:
     return any(marker in ctx for marker in markers)
 
 
+def _context_after_reset_marker(ctx: str) -> str:
+    lowered = ctx.lower()
+    positions = [(lowered.rfind(marker), marker) for marker in CONTEXT_RESET_MARKERS]
+    positions = [(pos, marker) for pos, marker in positions if pos >= 0]
+    if not positions:
+        return ctx
+    pos, marker = max(positions, key=lambda item: item[0])
+    return ctx[pos + len(marker):]
+
+
 def _contains_alpha(value: str) -> bool:
     return bool(re.search(r"[A-Za-z]", value or ""))
 
 
+def _looks_like_url(value: str) -> bool:
+    return bool(re.search(r"^(?:https?://)?[A-Za-z0-9.-]+\.[A-Za-z]{2,}(?:/|$)", value or "", re.IGNORECASE))
+
+
+def _is_template_heading_token(value: str, line_ctx: str) -> bool:
+    normalized = re.sub(r"[^A-Za-z]", "", value or "").upper()
+    if normalized not in SECTION_HEADING_WORDS:
+        return False
+    return bool(re.search(r"\b(?:information\s+for|student\s+details|course\s+details|important)\b", line_ctx))
+
+
+def _has_bank_account_positive_context(text: str, start: int) -> bool:
+    before = _context_before(text, start, chars=48)
+    return bool(re.search(
+        r"\b(?:bsb|acct|account\s+(?:number|no\.?)|bank\s+account|refund\s+account|payee\s+account)\b"
+        r"[\s:#=\-]*$",
+        before,
+        re.IGNORECASE,
+    ))
+
+
+def _has_uac_positive_context(text: str, start: int) -> bool:
+    before = _context_before(text, start, chars=48)
+    return bool(re.search(
+        r"\buac(?:\s+(?:id|app|no\.?|number))?\s*[:#=\-]?\s*$",
+        before,
+        re.IGNORECASE,
+    ))
+
+
+def _has_national_id_positive_context(text: str, start: int) -> bool:
+    before = _context_before(text, start, chars=64)
+    return bool(re.search(
+        r"\bnational\s+id(?:entity)?(?:\s+(?:card|number|no\.?))?\s*[:#=\-]?\s*$",
+        before,
+        re.IGNORECASE,
+    ))
+
+
+def _looks_like_usi_value(value: str) -> bool:
+    compact = re.sub(r"[^A-Za-z0-9]", "", value or "").upper()
+    return bool(
+        re.fullmatch(r"[A-Z0-9]{10,12}", compact)
+        and re.search(r"[A-Z]", compact)
+        and re.search(r"\d", compact)
+    )
+
+
+def _is_private_ipv4(value: str) -> bool:
+    m = re.fullmatch(r"\s*(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\s*", value or "")
+    if not m:
+        return False
+    octets = [int(x) for x in m.groups()]
+    if any(x > 255 for x in octets):
+        return False
+    return (
+        octets[0] == 10
+        or (octets[0] == 172 and 16 <= octets[1] <= 31)
+        or (octets[0] == 192 and octets[1] == 168)
+        or octets[0] == 127
+        or (octets[0] == 169 and octets[1] == 254)
+    )
+
+
 def should_drop_false_positive(span: Span, text: str) -> bool:
     line_ctx = _line_context(text, span.start, span.end)
+    effective_line_ctx = _context_after_reset_marker(line_ctx)
     before = _context_before(text, span.start, chars=40)
+    window_ctx = _context_window(text, span.start, span.end, chars=96)
+    if span.type in {"SUBJECT_RESULTS", "WAM_SCORE"} and _contains_any(effective_line_ctx, AGGREGATE_ACADEMIC_MARKERS):
+        return True
+    if span.type in {"EMAIL", "WORK_EMAIL"} and _looks_like_url(span.value):
+        return True
+    if span.type == "WEBSITE_HISTORY" and _looks_like_url(span.value):
+        if _contains_any(window_ctx, WEBSITE_HISTORY_CONTEXT_MARKERS):
+            return False
+        return _contains_any(window_ctx, PUBLIC_URL_CONTEXT_MARKERS)
+    if _is_template_heading_token(span.value, line_ctx):
+        return True
+    if span.type in {"PASSPORT_EXPIRY", "PASSPORT_START_DATE", "MEDICARE_EXPIRY", "CREDIT_CARD_EXPIRY"}:
+        if _contains_any(before, DOCUMENT_METADATA_DATE_MARKERS):
+            return True
+    if span.type == "PAYMENT_CARD_NUMBER" and _contains_any(effective_line_ctx, DOCUMENT_METADATA_DATE_MARKERS):
+        return True
+    if span.type == "PAYMENT_CARD_NUMBER" and _contains_any(effective_line_ctx, NON_PAYMENT_CARD_MARKERS):
+        return True
+    if span.type == "CENTRELINK_REFERENCE_NUMBER" and _contains_any(effective_line_ctx, COURSE_PROVIDER_CODE_MARKERS):
+        return True
+    if span.type == "USI":
+        if not _looks_like_usi_value(span.value):
+            return True
+        if _contains_any(effective_line_ctx, SOFTWARE_CODE_MARKERS):
+            return True
     if span.type == "AU_DRIVERS_LICENCE":
-        return any(marker in line_ctx for marker in [
+        return any(marker in effective_line_ctx for marker in [
             "invoice", "receipt", "claim number", "ticket", "reference", "job ref",
             "system-generated", "system generated", "not staff id", "permit ref",
         ])
     if span.type in {"UAC_ID", "AU_BANK_ACCOUNT", "PENSION_CARD_NUMBER"}:
+        if span.type == "UAC_ID" and not re.fullmatch(r"\d(?:[ -]?\d){8,9}", span.value or ""):
+            return True
         if span.type == "AU_BANK_ACCOUNT" and _contains_alpha(span.value):
             return True
+        if span.type == "AU_BANK_ACCOUNT" and _contains_any(effective_line_ctx, INTERNAL_BANK_ROUTING_MARKERS):
+            return True
+        if span.type == "AU_BANK_ACCOUNT" and _has_bank_account_positive_context(text, span.start):
+            return False
+        if span.type == "UAC_ID" and _has_uac_positive_context(text, span.start):
+            return False
         return any(marker in line_ctx for marker in [
             "invoice", "receipt", "ticket", "reference", "test token", "placeholder",
             "system-generated", "system generated", "permit ref", "not staff id",
@@ -562,31 +910,37 @@ def should_drop_false_positive(span: Span, text: str) -> bool:
     if span.type == "EMAIL":
         return (
             bool(re.search(r"placeholder\s+email\s*[:#=\-]?\s*$", before, re.IGNORECASE))
-            or _contains_any(line_ctx, OPERATIONAL_EMAIL_MARKERS)
+            or _contains_any(effective_line_ctx, OPERATIONAL_EMAIL_MARKERS)
         )
     if span.type == "IP_ADDRESS":
-        if _contains_any(line_ctx, PERSONAL_IP_MARKERS):
+        if _is_private_ipv4(span.value) or _contains_any(effective_line_ctx, OPERATIONAL_IP_MARKERS):
+            return True
+        if _contains_any(effective_line_ctx, PERSONAL_IP_MARKERS):
             return False
-        return _contains_any(line_ctx, OPERATIONAL_IP_MARKERS)
+        return _contains_any(effective_line_ctx, OPERATIONAL_IP_MARKERS)
     if span.type in {"PHONE", "MOBILE", "HOME_PHONE", "WORK_PHONE", "AU_PHONE"}:
-        personal_phone = _contains_any(line_ctx, PERSONAL_PHONE_MARKERS)
-        if "not a direct dial" in line_ctx:
+        personal_phone = _contains_any(effective_line_ctx, PERSONAL_PHONE_MARKERS)
+        if "not a direct dial" in effective_line_ctx:
             personal_phone = False
         if personal_phone:
             return False
-        return _contains_any(line_ctx, OPERATIONAL_PHONE_MARKERS)
+        return _contains_any(effective_line_ctx, OPERATIONAL_PHONE_MARKERS)
     if span.type in {"AU_TFN", "LATITUDE", "LONGITUDE", "GEOLOCATION_INFORMATION"}:
-        if _contains_any(line_ctx, SENSITIVE_NUMERIC_MARKERS):
+        if _contains_any(effective_line_ctx, SENSITIVE_NUMERIC_MARKERS):
             return False
-        return _contains_any(line_ctx, OPERATIONAL_NUMERIC_MARKERS)
-    if span.type == "VEHICLE_ID":
-        if _contains_any(line_ctx, VEHICLE_FALSE_POSITIVE_MARKERS):
+        if span.type in {"LATITUDE", "LONGITUDE", "GEOLOCATION_INFORMATION"} and _contains_any(effective_line_ctx, OPERATIONAL_IP_MARKERS):
             return True
-        if _contains_any(line_ctx, VEHICLE_POSITIVE_MARKERS):
+        return _contains_any(effective_line_ctx, OPERATIONAL_NUMERIC_MARKERS)
+    if span.type == "VEHICLE_ID":
+        if _contains_any(effective_line_ctx, VEHICLE_FALSE_POSITIVE_MARKERS):
+            return True
+        if _contains_any(effective_line_ctx, VEHICLE_POSITIVE_MARKERS):
             return False
-        return _contains_any(line_ctx, VEHICLE_FALSE_POSITIVE_MARKERS)
+        return _contains_any(effective_line_ctx, VEHICLE_FALSE_POSITIVE_MARKERS)
     if span.type == "PAYMENT_CARD_NUMBER":
         return bool(re.search(r"(?:test\s+token|token)\s*[:#=\-]?\s*(?:tok[_-]?)?$", before, re.IGNORECASE))
+    if span.type == "ADDRESS":
+        return bool(re.fullmatch(r"\d{3,4}", (span.value or "").strip()))
     return False
 
 
@@ -659,9 +1013,13 @@ def add_contextual_rescue_spans(text: str, existing: list[Span]) -> list[Span]:
     spans = list(existing)
     occupied = {(span.start, span.end, span.type): idx for idx, span in enumerate(spans)}
     for span_type, pattern in CONTEXTUAL_RESCUE_PATTERNS:
+        if span_type in SUPPRESSED_LABELS:
+            continue
         for match in pattern.finditer(text):
             start, end = match.start("value"), match.end("value")
-            value = text[start:end]
+            start, end, value = _trim_contextual_value(span_type, text, start, end)
+            if not value:
+                continue
             if span_type == "EMAIL" and re.search(
                 r"placeholder\s+email\s*[:#=\-]?\s*$",
                 _context_before(text, start, chars=40),
@@ -694,6 +1052,45 @@ def add_contextual_rescue_spans(text: str, existing: list[Span]) -> list[Span]:
     return spans
 
 
+def add_contextual_review_spans(text: str, existing: list[Span]) -> list[Span]:
+    """Add lower-confidence contextual PII candidates for human review."""
+    spans = list(existing)
+    occupied = {(span.start, span.end, span.type): idx for idx, span in enumerate(spans)}
+    for span_type, pattern in CONTEXTUAL_REVIEW_PATTERNS:
+        if span_type in SUPPRESSED_LABELS:
+            continue
+        for match in pattern.finditer(text):
+            start, end = match.start("value"), match.end("value")
+            start, end, value = _trim_contextual_value(span_type, text, start, end)
+            if not value:
+                continue
+            key = (start, end, span_type)
+            if key in occupied:
+                idx = occupied[key]
+                current = Span(**{**spans[idx].__dict__})
+                if current.decision not in ("redact", "review"):
+                    current.decision = "review"
+                    current.decision_reason = "contextual_review_candidate"
+                    current.risk_score = max(current.risk_score or 0.0, 0.25)
+                current.postprocess = [*current.postprocess, "contextual_review_candidate"]
+                spans[idx] = current
+                continue
+            spans.append(Span(
+                start=start,
+                end=end,
+                type=span_type,
+                value=value,
+                confidence=0.6,
+                decision="review",
+                decision_reason="contextual_review_candidate",
+                replacement=f"[{span_type}]",
+                source="rule",
+                postprocess=["contextual_review_candidate"],
+            ))
+            occupied[key] = len(spans) - 1
+    return spans
+
+
 def _has_trigger(ctx: str, triggers: tuple[str, ...]) -> bool:
     return _latest_trigger_position(ctx, triggers) >= 0
 
@@ -711,6 +1108,7 @@ def _latest_trigger_position(ctx: str, triggers: tuple[str, ...]) -> int:
 
 
 def _has_negative_trigger(ctx: str, triggers: tuple[str, ...]) -> bool:
+    ctx = _context_after_reset_marker(ctx)
     for trigger in triggers:
         if not trigger:
             continue
@@ -747,6 +1145,20 @@ def _line_context_before(text: str, start: int) -> str:
 
 def _trim_match(text: str, start: int, end: int) -> tuple[int, int, str]:
     value = text[start:end]
+    left_trim = len(value) - len(value.lstrip())
+    right_trim = len(value.rstrip())
+    start += left_trim
+    end = start + right_trim - left_trim
+    return start, end, text[start:end]
+
+
+def _trim_contextual_value(label: str, text: str, start: int, end: int) -> tuple[int, int, str]:
+    value = text[start:end]
+    if label == "MEDICAL_INFORMATION":
+        boundary = MEDICAL_STRUCTURED_BOUNDARY_RE.search(value)
+        if boundary:
+            value = value[:boundary.start()]
+        value = value.rstrip(" .;")
     left_trim = len(value) - len(value.lstrip())
     right_trim = len(value.rstrip())
     start += left_trim
@@ -802,6 +1214,10 @@ def _registry_rule_context_allowed(label: str, line_before: str, line_ctx: str) 
         return "medicare" in line_ctx
     if label == "PASSPORT_EXPIRY":
         return "passport" in line_ctx
+    if label == "IP_ADDRESS":
+        if _contains_any(line_ctx, OPERATIONAL_IP_MARKERS):
+            return False
+        return True
     if label == "MEDICAL_INFORMATION":
         return "special consideration" not in line_ctx
     return True
@@ -809,7 +1225,11 @@ def _registry_rule_context_allowed(label: str, line_before: str, line_ctx: str) 
 
 def _vehicle_registry_confidence(value: str) -> float:
     compact = value.replace(" ", "-").upper()
-    if re.fullmatch(r"(?:[A-Z]{3}\d{2}[A-Z]|[A-Z]{1,3}-\d{1,4}(?:-[A-Z]{2,4})?)", compact):
+    if re.fullmatch(
+        r"(?:[A-Z]{3}\d{2}[A-Z]|[A-Z]{1,3}-\d{1,4}(?:-[A-Z]{2,4})?|"
+        r"(?:NSW|VIC|QLD|SA|WA|TAS|ACT|NT)-[A-Z0-9]{2,4}-[A-Z0-9]{1,4})",
+        compact,
+    ):
         return 1.0
     return 0.8
 
@@ -820,9 +1240,14 @@ def add_registry_contextual_spans(text: str, existing: list[Span],
     spans = list(existing)
     occupied = {(span.start, span.end, span.type): idx for idx, span in enumerate(spans)}
     for rule in load_postprocess_rule_registry(repo_root):
+        if rule.label in SUPPRESSED_LABELS:
+            continue
         for pattern in rule.patterns:
             for match in pattern.finditer(text):
                 start, end, value = _registry_match_value(text, match)
+                start, end, value = _trim_contextual_value(rule.label, text, start, end)
+                if not value:
+                    continue
                 ctx_before = _trigger_context_before(text, start, rule)
                 line_before = _line_context_before(text, start)
                 line_ctx = _line_context(text, start, end)
@@ -902,6 +1327,51 @@ def _label_alias_map(repo_root: str | None = None) -> dict[str, str]:
     return dict(registry.get("label_alias_normalization", {}))
 
 
+@lru_cache(maxsize=4)
+def _taxonomy_classification_map(repo_root: str | None = None) -> dict[str, str]:
+    root = Path(repo_root) if repo_root is not None else _repo_root_from_here()
+    taxonomy_path = root / "configs" / "postprocess" / "taxonomy_surface_forms.csv"
+    if not taxonomy_path.exists():
+        return {}
+    out: dict[str, str] = {}
+    with taxonomy_path.open("r", encoding="utf-8-sig", newline="") as f:
+        for row in csv.DictReader(f):
+            label = (row.get("canonical_label") or "").strip()
+            classification = (row.get("data_classification") or "").strip()
+            if label and classification:
+                out[label] = classification
+    return out
+
+
+def _classification_weight(label: str) -> float:
+    if label == "Highly Protected":
+        return 1.0
+    if label == "Protected":
+        return 0.5
+    return 0.0
+
+
+def apply_missing_data_classification(spans: list[Span]) -> list[Span]:
+    taxonomy = _taxonomy_classification_map()
+    if not taxonomy:
+        return spans
+    out: list[Span] = []
+    for span in spans:
+        classification = span.data_classification or taxonomy.get(span.type, "")
+        if not classification:
+            out.append(span)
+            continue
+        if span.data_classification == classification and span.data_classification_weight is not None:
+            out.append(span)
+            continue
+        item = Span(**{**span.__dict__})
+        item.data_classification = classification
+        if item.data_classification_weight is None:
+            item.data_classification_weight = _classification_weight(classification)
+        out.append(item)
+    return out
+
+
 def canonicalize_span_label(span: Span, alias_map: dict[str, str]) -> Span:
     new_type = alias_map.get(span.type, span.type)
     if new_type == span.type:
@@ -928,6 +1398,8 @@ def safe_postprocess_spans(text: str, spans: list[Span], policy: dict[str, Any])
             span.postprocess = [*span.postprocess, "value_reset_from_offsets"]
         if alias_map:
             span = canonicalize_span_label(span, alias_map)
+        if span.type in SUPPRESSED_LABELS:
+            continue
         if config.get("drop_common_hard_negatives", True) and should_drop_false_positive(span, text):
             continue
         if config.get("normalize_contextual_labels", True):
@@ -946,7 +1418,11 @@ def safe_postprocess_spans(text: str, spans: list[Span], policy: dict[str, Any])
         processed = add_contextual_rescue_spans(text, processed)
     if config.get("add_registry_contextual_spans", True):
         processed = add_registry_contextual_spans(text, processed)
+    if config.get("add_contextual_review_spans", True):
+        processed = add_contextual_review_spans(text, processed)
     if config.get("drop_common_hard_negatives", True):
         processed = [span for span in processed if not should_drop_false_positive(span, text)]
+    processed = [span for span in processed if span.type not in SUPPRESSED_LABELS]
     processed = resolve_overlaps(processed)
+    processed = apply_missing_data_classification(processed)
     return processed, warnings

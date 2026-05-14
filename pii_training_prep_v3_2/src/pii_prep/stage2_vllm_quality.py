@@ -18,6 +18,8 @@ CONTEXT_ALIASES = {
     "strong_positive": "strong_positive",
     "reverse_negative_context": "reverse_negative",
     "reverse_negative": "reverse_negative",
+    "hard_negative_context": "hard_negative",
+    "hard_negative": "hard_negative",
 }
 
 WARNING_NAMES = [
@@ -25,6 +27,7 @@ WARNING_NAMES = [
     "bare_date_dob_overconfident",
     "weak_context_overconfident",
     "reverse_negative_non_pii_failure",
+    "hard_negative_non_pii_failure",
     "strong_positive_not_confident",
 ]
 
@@ -36,6 +39,7 @@ def analyze_quality(rows: list[dict[str, Any]]) -> tuple[dict[str, Any], dict[st
         "weak_context": [],
         "strong_positive": [],
         "reverse_negative": [],
+        "hard_negative": [],
     }
     warnings: dict[str, list[dict[str, Any]]] = {name: [] for name in WARNING_NAMES}
 
@@ -178,6 +182,8 @@ def collect_warnings(row: dict[str, Any], context: str, warnings: dict[str, list
         warnings["weak_context_overconfident"].append(warning_example(row, "weak context top_probability > 0.80"))
     if context == "reverse_negative" and row.get("top_type") != "NON_PII":
         warnings["reverse_negative_non_pii_failure"].append(warning_example(row, "reverse/negative context did not rank NON_PII first"))
+    if context == "hard_negative" and row.get("top_type") != "NON_PII":
+        warnings["hard_negative_non_pii_failure"].append(warning_example(row, "hard-negative context did not rank NON_PII first"))
     if context == "strong_positive" and top_prob < 0.50:
         warnings["strong_positive_not_confident"].append(warning_example(row, "strong positive context top_probability < 0.50"))
 

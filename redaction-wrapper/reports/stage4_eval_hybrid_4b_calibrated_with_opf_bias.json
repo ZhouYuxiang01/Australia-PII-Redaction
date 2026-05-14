@@ -1,0 +1,721 @@
+{
+  "task": "wrapper_hybrid_full_offline_eval",
+  "backend_config": "configs/backends/hybrid-opf-qwen4b-calibrated.json",
+  "policy_config": "configs/policies/hybrid-80class-v2-4b.json",
+  "policy_id": "hybrid-80class-v2-4b",
+  "schema_version": "redaction-output-v1",
+  "test_set": "/home/admin/ZYX/pii_training_prep_v3_2/data/train/opf_test_opf_format.jsonl",
+  "total_records": 9659,
+  "evaluated": 9659,
+  "skipped_long": 0,
+  "errors": 0,
+  "elapsed_seconds": 858.38,
+  "throughput_examples_per_sec": 11.253,
+  "metrics": {
+    "exact": {
+      "precision": 0.7395,
+      "recall": 0.8047,
+      "f1": 0.7707,
+      "tp": 10813,
+      "fp": 3809,
+      "fn": 2624
+    },
+    "overlap": {
+      "precision": 0.8713,
+      "recall": 0.9428,
+      "f1": 0.9056,
+      "f2": 0.9276,
+      "tp": 12740,
+      "fp": 1882,
+      "fn": 773
+    },
+    "type_accuracy_on_overlap": 0.9584,
+    "type_correct": 12210,
+    "type_total": 12740
+  },
+  "per_label": {
+    "ABORIGINALITY": {
+      "support": 95,
+      "precision": 0.9583,
+      "recall": 0.9684,
+      "f1": 0.9634,
+      "tp": 92,
+      "fp": 4,
+      "fn": 3
+    },
+    "ADDRESS": {
+      "support": 1108,
+      "precision": 0.9368,
+      "recall": 0.9901,
+      "f1": 0.9627,
+      "tp": 1097,
+      "fp": 74,
+      "fn": 11
+    },
+    "AUDIO_INFORMATION": {
+      "support": 57,
+      "precision": 0.9492,
+      "recall": 0.9825,
+      "f1": 0.9655,
+      "tp": 56,
+      "fp": 3,
+      "fn": 1
+    },
+    "AU_BANK_ACCOUNT": {
+      "support": 357,
+      "precision": 0.9169,
+      "recall": 0.8964,
+      "f1": 0.9065,
+      "tp": 320,
+      "fp": 29,
+      "fn": 37
+    },
+    "AU_DRIVERS_LICENCE": {
+      "support": 244,
+      "precision": 0.9157,
+      "recall": 0.9795,
+      "f1": 0.9465,
+      "tp": 239,
+      "fp": 22,
+      "fn": 5
+    },
+    "AU_PASSPORT": {
+      "support": 328,
+      "precision": 0.9728,
+      "recall": 0.9817,
+      "f1": 0.9772,
+      "tp": 322,
+      "fp": 9,
+      "fn": 6
+    },
+    "AU_TFN": {
+      "support": 244,
+      "precision": 0.8889,
+      "recall": 0.8852,
+      "f1": 0.8871,
+      "tp": 216,
+      "fp": 27,
+      "fn": 28
+    },
+    "CAMERA_FOOTAGE_AUDIO": {
+      "support": 57,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 57,
+      "fp": 0,
+      "fn": 0
+    },
+    "CARING_RESPONSIBILITIES": {
+      "support": 76,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 76,
+      "fp": 0,
+      "fn": 0
+    },
+    "CENTRELINK_REFERENCE_NUMBER": {
+      "support": 86,
+      "precision": 1.0,
+      "recall": 0.9302,
+      "f1": 0.9639,
+      "tp": 80,
+      "fp": 0,
+      "fn": 6
+    },
+    "CITIZENSHIP_STATUS": {
+      "support": 86,
+      "precision": 1.0,
+      "recall": 0.9302,
+      "f1": 0.9639,
+      "tp": 80,
+      "fp": 0,
+      "fn": 6
+    },
+    "CONTRACT_TYPE": {
+      "support": 127,
+      "precision": 0.918,
+      "recall": 0.8819,
+      "f1": 0.8996,
+      "tp": 112,
+      "fp": 10,
+      "fn": 15
+    },
+    "COOKIE_INFORMATION": {
+      "support": 92,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 92,
+      "fp": 0,
+      "fn": 0
+    },
+    "COUNSELLING_RECORDS": {
+      "support": 133,
+      "precision": 1.0,
+      "recall": 0.985,
+      "f1": 0.9924,
+      "tp": 131,
+      "fp": 0,
+      "fn": 2
+    },
+    "CREDIT_CARD_EXPIRY": {
+      "support": 162,
+      "precision": 0.7419,
+      "recall": 0.9938,
+      "f1": 0.8496,
+      "tp": 161,
+      "fp": 56,
+      "fn": 1
+    },
+    "CRIMINAL_RECORDS": {
+      "support": 86,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 86,
+      "fp": 0,
+      "fn": 0
+    },
+    "DATE_OF_BIRTH": {
+      "support": 1052,
+      "precision": 0.9204,
+      "recall": 1.0,
+      "f1": 0.9585,
+      "tp": 1052,
+      "fp": 91,
+      "fn": 0
+    },
+    "DEVICE_ID": {
+      "support": 92,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 92,
+      "fp": 0,
+      "fn": 0
+    },
+    "DISABILITY_OR_SPECIFIC_CONDITION": {
+      "support": 133,
+      "precision": 1.0,
+      "recall": 0.9925,
+      "f1": 0.9962,
+      "tp": 132,
+      "fp": 0,
+      "fn": 1
+    },
+    "EMAIL": {
+      "support": 507,
+      "precision": 0.5015,
+      "recall": 0.9744,
+      "f1": 0.6622,
+      "tp": 494,
+      "fp": 491,
+      "fn": 13
+    },
+    "EMPLOYEE_NUMBER": {
+      "support": 127,
+      "precision": 0.8819,
+      "recall": 0.8819,
+      "f1": 0.8819,
+      "tp": 112,
+      "fp": 15,
+      "fn": 15
+    },
+    "EMPLOYMENT_INFORMATION": {
+      "support": 127,
+      "precision": 1.0,
+      "recall": 0.8031,
+      "f1": 0.8908,
+      "tp": 102,
+      "fp": 0,
+      "fn": 25
+    },
+    "FACIAL_RECOGNITION": {
+      "support": 74,
+      "precision": 0.9804,
+      "recall": 0.6757,
+      "f1": 0.8,
+      "tp": 50,
+      "fp": 1,
+      "fn": 24
+    },
+    "FINGERPRINT": {
+      "support": 74,
+      "precision": 1.0,
+      "recall": 0.6892,
+      "f1": 0.816,
+      "tp": 51,
+      "fp": 0,
+      "fn": 23
+    },
+    "GENDER": {
+      "support": 50,
+      "precision": 0.5256,
+      "recall": 0.82,
+      "f1": 0.6406,
+      "tp": 41,
+      "fp": 37,
+      "fn": 9
+    },
+    "GEOLOCATION_INFORMATION": {
+      "support": 98,
+      "precision": 0.4224,
+      "recall": 0.5,
+      "f1": 0.4579,
+      "tp": 49,
+      "fp": 67,
+      "fn": 49
+    },
+    "IHI": {
+      "support": 168,
+      "precision": 0.9941,
+      "recall": 1.0,
+      "f1": 0.997,
+      "tp": 168,
+      "fp": 1,
+      "fn": 0
+    },
+    "IP_ADDRESS": {
+      "support": 92,
+      "precision": 1.0,
+      "recall": 0.9891,
+      "f1": 0.9945,
+      "tp": 91,
+      "fp": 0,
+      "fn": 1
+    },
+    "LATITUDE": {
+      "support": 98,
+      "precision": 0.125,
+      "recall": 0.1429,
+      "f1": 0.1333,
+      "tp": 14,
+      "fp": 98,
+      "fn": 84
+    },
+    "LONGITUDE": {
+      "support": 92,
+      "precision": 0.3019,
+      "recall": 0.1739,
+      "f1": 0.2207,
+      "tp": 16,
+      "fp": 37,
+      "fn": 76
+    },
+    "MARITAL_STATUS": {
+      "support": 76,
+      "precision": 0.9744,
+      "recall": 1.0,
+      "f1": 0.987,
+      "tp": 76,
+      "fp": 2,
+      "fn": 0
+    },
+    "MEDICAL_CERTIFICATE": {
+      "support": 133,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 133,
+      "fp": 0,
+      "fn": 0
+    },
+    "MEDICAL_INFORMATION": {
+      "support": 133,
+      "precision": 1.0,
+      "recall": 0.9925,
+      "f1": 0.9962,
+      "tp": 132,
+      "fp": 0,
+      "fn": 1
+    },
+    "MEDICARE_EXPIRY": {
+      "support": 168,
+      "precision": 1.0,
+      "recall": 0.9524,
+      "f1": 0.9756,
+      "tp": 160,
+      "fp": 0,
+      "fn": 8
+    },
+    "MEDICARE_NUMBER": {
+      "support": 168,
+      "precision": 0.9822,
+      "recall": 0.9881,
+      "f1": 0.9852,
+      "tp": 166,
+      "fp": 3,
+      "fn": 2
+    },
+    "MILITARY_VETERAN_STATUS": {
+      "support": 76,
+      "precision": 0.987,
+      "recall": 1.0,
+      "f1": 0.9935,
+      "tp": 76,
+      "fp": 1,
+      "fn": 0
+    },
+    "NATIONALITY": {
+      "support": 86,
+      "precision": 0.9529,
+      "recall": 0.9419,
+      "f1": 0.9474,
+      "tp": 81,
+      "fp": 4,
+      "fn": 5
+    },
+    "NATIONAL_IDENTITY_CARD": {
+      "support": 86,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 86,
+      "fp": 0,
+      "fn": 0
+    },
+    "NEXT_OF_KIN": {
+      "support": 57,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 57,
+      "fp": 0,
+      "fn": 0
+    },
+    "PASSPORT_EXPIRY": {
+      "support": 84,
+      "precision": 0.8481,
+      "recall": 0.7976,
+      "f1": 0.8221,
+      "tp": 67,
+      "fp": 12,
+      "fn": 17
+    },
+    "PASSPORT_START_DATE": {
+      "support": 84,
+      "precision": 1.0,
+      "recall": 0.8571,
+      "f1": 0.9231,
+      "tp": 72,
+      "fp": 0,
+      "fn": 12
+    },
+    "PAYMENT_CARD_NUMBER": {
+      "support": 272,
+      "precision": 0.5449,
+      "recall": 0.9375,
+      "f1": 0.6892,
+      "tp": 255,
+      "fp": 213,
+      "fn": 17
+    },
+    "PENSION_CARD_NUMBER": {
+      "support": 57,
+      "precision": 1.0,
+      "recall": 0.8772,
+      "f1": 0.9346,
+      "tp": 50,
+      "fp": 0,
+      "fn": 7
+    },
+    "PERSON": {
+      "support": 1961,
+      "precision": 0.9809,
+      "recall": 0.9969,
+      "f1": 0.9889,
+      "tp": 1955,
+      "fp": 38,
+      "fn": 6
+    },
+    "PERSONAL_DEBT": {
+      "support": 76,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 76,
+      "fp": 0,
+      "fn": 0
+    },
+    "PERSONNEL_NUMBER": {
+      "support": 127,
+      "precision": 0.973,
+      "recall": 0.8504,
+      "f1": 0.9076,
+      "tp": 108,
+      "fp": 3,
+      "fn": 19
+    },
+    "PHONE": {
+      "support": 563,
+      "precision": 0.5748,
+      "recall": 0.9964,
+      "f1": 0.729,
+      "tp": 561,
+      "fp": 415,
+      "fn": 2
+    },
+    "PRONOUN": {
+      "support": 95,
+      "precision": 0.9302,
+      "recall": 0.4211,
+      "f1": 0.5797,
+      "tp": 40,
+      "fp": 3,
+      "fn": 55
+    },
+    "RACIAL_ETHNIC_ORIGIN": {
+      "support": 95,
+      "precision": 1.0,
+      "recall": 0.9474,
+      "f1": 0.973,
+      "tp": 90,
+      "fp": 0,
+      "fn": 5
+    },
+    "RELIGION_BELIEF": {
+      "support": 95,
+      "precision": 0.9314,
+      "recall": 1.0,
+      "f1": 0.9645,
+      "tp": 95,
+      "fp": 7,
+      "fn": 0
+    },
+    "SALARY": {
+      "support": 292,
+      "precision": 0.9114,
+      "recall": 0.4932,
+      "f1": 0.64,
+      "tp": 144,
+      "fp": 14,
+      "fn": 148
+    },
+    "SALARY_WAGE_EXPECTATION": {
+      "support": 70,
+      "precision": 0.5541,
+      "recall": 0.5857,
+      "f1": 0.5694,
+      "tp": 41,
+      "fp": 33,
+      "fn": 29
+    },
+    "SANCTIONS": {
+      "support": 158,
+      "precision": 0.9801,
+      "recall": 0.9367,
+      "f1": 0.9579,
+      "tp": 148,
+      "fp": 3,
+      "fn": 10
+    },
+    "SCHOLARSHIP": {
+      "support": 158,
+      "precision": 0.981,
+      "recall": 0.981,
+      "f1": 0.981,
+      "tp": 155,
+      "fp": 3,
+      "fn": 3
+    },
+    "SEXUAL_ORIENTATION": {
+      "support": 95,
+      "precision": 0.9892,
+      "recall": 0.9684,
+      "f1": 0.9787,
+      "tp": 92,
+      "fp": 1,
+      "fn": 3
+    },
+    "SIGNATURE": {
+      "support": 74,
+      "precision": 1.0,
+      "recall": 0.5811,
+      "f1": 0.735,
+      "tp": 43,
+      "fp": 0,
+      "fn": 31
+    },
+    "SOCIAL_MEDIA_ACCOUNT": {
+      "support": 92,
+      "precision": 1.0,
+      "recall": 0.2065,
+      "f1": 0.3423,
+      "tp": 19,
+      "fp": 0,
+      "fn": 73
+    },
+    "SOCIAL_MEDIA_HISTORY": {
+      "support": 92,
+      "precision": 0.9889,
+      "recall": 0.9674,
+      "f1": 0.978,
+      "tp": 89,
+      "fp": 1,
+      "fn": 3
+    },
+    "SOCIAL_MEDIA_ID": {
+      "support": 92,
+      "precision": 0.5099,
+      "recall": 0.837,
+      "f1": 0.6337,
+      "tp": 77,
+      "fp": 74,
+      "fn": 15
+    },
+    "SOCIO_ECONOMIC_STATUS": {
+      "support": 95,
+      "precision": 0.9485,
+      "recall": 0.9684,
+      "f1": 0.9583,
+      "tp": 92,
+      "fp": 5,
+      "fn": 3
+    },
+    "SPECIAL_CONSIDERATION": {
+      "support": 133,
+      "precision": 0.9767,
+      "recall": 0.9474,
+      "f1": 0.9618,
+      "tp": 126,
+      "fp": 3,
+      "fn": 7
+    },
+    "STUDENT_ID": {
+      "support": 327,
+      "precision": 1.0,
+      "recall": 0.9969,
+      "f1": 0.9985,
+      "tp": 326,
+      "fp": 0,
+      "fn": 1
+    },
+    "SUBJECT_RESULTS": {
+      "support": 158,
+      "precision": 1.0,
+      "recall": 0.9684,
+      "f1": 0.9839,
+      "tp": 153,
+      "fp": 0,
+      "fn": 5
+    },
+    "UAC_ID": {
+      "support": 86,
+      "precision": 1.0,
+      "recall": 0.4884,
+      "f1": 0.6562,
+      "tp": 42,
+      "fp": 0,
+      "fn": 44
+    },
+    "USERNAME": {
+      "support": 92,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 92,
+      "fp": 0,
+      "fn": 0
+    },
+    "USI": {
+      "support": 86,
+      "precision": 0.8515,
+      "recall": 1.0,
+      "f1": 0.9198,
+      "tp": 86,
+      "fp": 15,
+      "fn": 0
+    },
+    "VEHICLE_ID": {
+      "support": 164,
+      "precision": 0.1699,
+      "recall": 0.5366,
+      "f1": 0.2581,
+      "tp": 88,
+      "fp": 430,
+      "fn": 76
+    },
+    "VOICE_RECOGNITION": {
+      "support": 74,
+      "precision": 1.0,
+      "recall": 0.6081,
+      "f1": 0.7563,
+      "tp": 45,
+      "fp": 0,
+      "fn": 29
+    },
+    "WAM_SCORE": {
+      "support": 158,
+      "precision": 0.8093,
+      "recall": 0.9937,
+      "f1": 0.892,
+      "tp": 157,
+      "fp": 37,
+      "fn": 1
+    },
+    "WEBSITE_HISTORY": {
+      "support": 92,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 92,
+      "fp": 0,
+      "fn": 0
+    },
+    "WORKERS_COMPENSATION_CLAIM": {
+      "support": 57,
+      "precision": 0.9828,
+      "recall": 1.0,
+      "f1": 0.9913,
+      "tp": 57,
+      "fp": 1,
+      "fn": 0
+    },
+    "WORK_EMAIL": {
+      "support": 127,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 127
+    },
+    "WORK_PHONE": {
+      "support": 127,
+      "precision": 0.6042,
+      "recall": 0.2283,
+      "f1": 0.3314,
+      "tp": 29,
+      "fp": 19,
+      "fn": 98
+    }
+  },
+  "decision_distribution": {
+    "redact": 10076,
+    "AUTO_REDACT": 4546,
+    "ignore": 5658,
+    "review": 812,
+    "REVIEW": 224
+  },
+  "redaction_cost": {
+    "total_gold_chars": 253436,
+    "total_pred_redacted_chars": 254712,
+    "over_redaction_chars": 26331,
+    "under_redaction_chars": 23504,
+    "over_redaction_rate_vs_pred": 0.1034,
+    "under_redaction_rate_vs_gold": 0.0927,
+    "high_risk_under_redaction_chars": 2725,
+    "high_risk_under_redaction_rate": 0.1486
+  },
+  "latency_seconds": {
+    "count": 9659,
+    "mean": 0.0888,
+    "p50": 0.0699,
+    "p95": 0.1909,
+    "p99": 0.2595,
+    "max": 0.422
+  },
+  "error_examples": []
+}

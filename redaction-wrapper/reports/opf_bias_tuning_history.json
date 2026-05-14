@@ -1,0 +1,1462 @@
+[
+  {
+    "phase": "init",
+    "biases": {
+      "transition_bias_background_stay": 0.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8699,
+    "overlap_p": 0.8146,
+    "overlap_r": 0.9332,
+    "exact_f1": 0.8547,
+    "tp_o": 391,
+    "fp_o": 89,
+    "fn_o": 28,
+    "n_predictions_visible": 480,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r1.transition_bias_background_stay",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.6
+  },
+  {
+    "phase": "r1.transition_bias_background_stay",
+    "biases": {
+      "transition_bias_background_stay": -1.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8711,
+    "overlap_p": 0.815,
+    "overlap_r": 0.9356,
+    "exact_f1": 0.8561,
+    "tp_o": 392,
+    "fp_o": 89,
+    "fn_o": 27,
+    "n_predictions_visible": 481,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r1.transition_bias_background_stay",
+    "biases": {
+      "transition_bias_background_stay": -0.5,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8711,
+    "overlap_p": 0.815,
+    "overlap_r": 0.9356,
+    "exact_f1": 0.8561,
+    "tp_o": 392,
+    "fp_o": 89,
+    "fn_o": 27,
+    "n_predictions_visible": 481,
+    "elapsed_s": 26.6
+  },
+  {
+    "phase": "r1.transition_bias_background_stay",
+    "biases": {
+      "transition_bias_background_stay": 0.5,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8699,
+    "overlap_p": 0.8146,
+    "overlap_r": 0.9332,
+    "exact_f1": 0.8543,
+    "tp_o": 391,
+    "fp_o": 89,
+    "fn_o": 28,
+    "n_predictions_visible": 480,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r1.transition_bias_background_stay",
+    "biases": {
+      "transition_bias_background_stay": 1.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8661,
+    "overlap_p": 0.8134,
+    "overlap_r": 0.926,
+    "exact_f1": 0.8504,
+    "tp_o": 388,
+    "fp_o": 89,
+    "fn_o": 31,
+    "n_predictions_visible": 477,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r1.transition_bias_background_stay",
+    "biases": {
+      "transition_bias_background_stay": 2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8645,
+    "overlap_p": 0.8143,
+    "overlap_r": 0.9212,
+    "exact_f1": 0.8486,
+    "tp_o": 386,
+    "fp_o": 88,
+    "fn_o": 33,
+    "n_predictions_visible": 474,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r1.transition_bias_background_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": -2.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8733,
+    "overlap_p": 0.817,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8582,
+    "tp_o": 393,
+    "fp_o": 88,
+    "fn_o": 26,
+    "n_predictions_visible": 481,
+    "elapsed_s": 26.9
+  },
+  {
+    "phase": "r1.transition_bias_background_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": -1.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.6
+  },
+  {
+    "phase": "r1.transition_bias_background_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": -0.5,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.9
+  },
+  {
+    "phase": "r1.transition_bias_background_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.5,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8704,
+    "overlap_p": 0.812,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.855,
+    "tp_o": 393,
+    "fp_o": 91,
+    "fn_o": 26,
+    "n_predictions_visible": 484,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r1.transition_bias_background_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 1.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8695,
+    "overlap_p": 0.8103,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.854,
+    "tp_o": 393,
+    "fp_o": 92,
+    "fn_o": 26,
+    "n_predictions_visible": 485,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r1.transition_bias_background_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 2.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8675,
+    "overlap_p": 0.807,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8519,
+    "tp_o": 393,
+    "fp_o": 94,
+    "fn_o": 26,
+    "n_predictions_visible": 487,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r1.transition_bias_inside_to_continue",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": -2.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8711,
+    "overlap_p": 0.815,
+    "overlap_r": 0.9356,
+    "exact_f1": 0.8561,
+    "tp_o": 392,
+    "fp_o": 89,
+    "fn_o": 27,
+    "n_predictions_visible": 481,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r1.transition_bias_inside_to_continue",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": -1.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8701,
+    "overlap_p": 0.8133,
+    "overlap_r": 0.9356,
+    "exact_f1": 0.855,
+    "tp_o": 392,
+    "fp_o": 90,
+    "fn_o": 27,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r1.transition_bias_inside_to_continue",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": -0.5,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r1.transition_bias_inside_to_continue",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.5,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8714,
+    "overlap_p": 0.8137,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8561,
+    "tp_o": 393,
+    "fp_o": 90,
+    "fn_o": 26,
+    "n_predictions_visible": 483,
+    "elapsed_s": 26.6
+  },
+  {
+    "phase": "r1.transition_bias_inside_to_continue",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 1.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8714,
+    "overlap_p": 0.8137,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8561,
+    "tp_o": 393,
+    "fp_o": 90,
+    "fn_o": 26,
+    "n_predictions_visible": 483,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r1.transition_bias_inside_to_continue",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 2.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8714,
+    "overlap_p": 0.8137,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8561,
+    "tp_o": 393,
+    "fp_o": 90,
+    "fn_o": 26,
+    "n_predictions_visible": 483,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r1.transition_bias_inside_to_end",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": -2.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8733,
+    "overlap_p": 0.817,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8582,
+    "tp_o": 393,
+    "fp_o": 88,
+    "fn_o": 26,
+    "n_predictions_visible": 481,
+    "elapsed_s": 26.9
+  },
+  {
+    "phase": "r1.transition_bias_inside_to_end",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": -1.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r1.transition_bias_inside_to_end",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": -0.5,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r1.transition_bias_inside_to_end",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.5,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.6
+  },
+  {
+    "phase": "r1.transition_bias_inside_to_end",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 1.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8714,
+    "overlap_p": 0.8137,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8561,
+    "tp_o": 393,
+    "fp_o": 90,
+    "fn_o": 26,
+    "n_predictions_visible": 483,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r1.transition_bias_inside_to_end",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 2.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8714,
+    "overlap_p": 0.8137,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8561,
+    "tp_o": 393,
+    "fp_o": 90,
+    "fn_o": 26,
+    "n_predictions_visible": 483,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r1.transition_bias_end_to_background",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": -2.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8733,
+    "overlap_p": 0.817,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8582,
+    "tp_o": 393,
+    "fp_o": 88,
+    "fn_o": 26,
+    "n_predictions_visible": 481,
+    "elapsed_s": 26.6
+  },
+  {
+    "phase": "r1.transition_bias_end_to_background",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": -1.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.9
+  },
+  {
+    "phase": "r1.transition_bias_end_to_background",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": -0.5,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r1.transition_bias_end_to_background",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.5,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8704,
+    "overlap_p": 0.812,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.855,
+    "tp_o": 393,
+    "fp_o": 91,
+    "fn_o": 26,
+    "n_predictions_visible": 484,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r1.transition_bias_end_to_background",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 1.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8695,
+    "overlap_p": 0.8103,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.854,
+    "tp_o": 393,
+    "fp_o": 92,
+    "fn_o": 26,
+    "n_predictions_visible": 485,
+    "elapsed_s": 27.0
+  },
+  {
+    "phase": "r1.transition_bias_end_to_background",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 2.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8675,
+    "overlap_p": 0.807,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8519,
+    "tp_o": 393,
+    "fp_o": 94,
+    "fn_o": 26,
+    "n_predictions_visible": 487,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r1.transition_bias_end_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": -2.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r1.transition_bias_end_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": -1.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r1.transition_bias_end_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": -0.5
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r1.transition_bias_end_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.5
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r1.transition_bias_end_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 1.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r1.transition_bias_end_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 2.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r2.transition_bias_background_stay",
+    "biases": {
+      "transition_bias_background_stay": -1.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8711,
+    "overlap_p": 0.815,
+    "overlap_r": 0.9356,
+    "exact_f1": 0.8561,
+    "tp_o": 392,
+    "fp_o": 89,
+    "fn_o": 27,
+    "n_predictions_visible": 481,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r2.transition_bias_background_stay",
+    "biases": {
+      "transition_bias_background_stay": -0.5,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8711,
+    "overlap_p": 0.815,
+    "overlap_r": 0.9356,
+    "exact_f1": 0.8561,
+    "tp_o": 392,
+    "fp_o": 89,
+    "fn_o": 27,
+    "n_predictions_visible": 481,
+    "elapsed_s": 26.6
+  },
+  {
+    "phase": "r2.transition_bias_background_stay",
+    "biases": {
+      "transition_bias_background_stay": 0.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8699,
+    "overlap_p": 0.8146,
+    "overlap_r": 0.9332,
+    "exact_f1": 0.8547,
+    "tp_o": 391,
+    "fp_o": 89,
+    "fn_o": 28,
+    "n_predictions_visible": 480,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r2.transition_bias_background_stay",
+    "biases": {
+      "transition_bias_background_stay": 0.5,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8699,
+    "overlap_p": 0.8146,
+    "overlap_r": 0.9332,
+    "exact_f1": 0.8543,
+    "tp_o": 391,
+    "fp_o": 89,
+    "fn_o": 28,
+    "n_predictions_visible": 480,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r2.transition_bias_background_stay",
+    "biases": {
+      "transition_bias_background_stay": 1.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8661,
+    "overlap_p": 0.8134,
+    "overlap_r": 0.926,
+    "exact_f1": 0.8504,
+    "tp_o": 388,
+    "fp_o": 89,
+    "fn_o": 31,
+    "n_predictions_visible": 477,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r2.transition_bias_background_stay",
+    "biases": {
+      "transition_bias_background_stay": 2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8645,
+    "overlap_p": 0.8143,
+    "overlap_r": 0.9212,
+    "exact_f1": 0.8486,
+    "tp_o": 386,
+    "fp_o": 88,
+    "fn_o": 33,
+    "n_predictions_visible": 474,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r2.transition_bias_background_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": -2.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8733,
+    "overlap_p": 0.817,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8582,
+    "tp_o": 393,
+    "fp_o": 88,
+    "fn_o": 26,
+    "n_predictions_visible": 481,
+    "elapsed_s": 26.9
+  },
+  {
+    "phase": "r2.transition_bias_background_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": -1.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.6
+  },
+  {
+    "phase": "r2.transition_bias_background_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": -0.5,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.9
+  },
+  {
+    "phase": "r2.transition_bias_background_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.5,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8704,
+    "overlap_p": 0.812,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.855,
+    "tp_o": 393,
+    "fp_o": 91,
+    "fn_o": 26,
+    "n_predictions_visible": 484,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r2.transition_bias_background_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 1.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8695,
+    "overlap_p": 0.8103,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.854,
+    "tp_o": 393,
+    "fp_o": 92,
+    "fn_o": 26,
+    "n_predictions_visible": 485,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r2.transition_bias_background_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 2.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8675,
+    "overlap_p": 0.807,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8519,
+    "tp_o": 393,
+    "fp_o": 94,
+    "fn_o": 26,
+    "n_predictions_visible": 487,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r2.transition_bias_inside_to_continue",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": -2.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8711,
+    "overlap_p": 0.815,
+    "overlap_r": 0.9356,
+    "exact_f1": 0.8561,
+    "tp_o": 392,
+    "fp_o": 89,
+    "fn_o": 27,
+    "n_predictions_visible": 481,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r2.transition_bias_inside_to_continue",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": -1.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8701,
+    "overlap_p": 0.8133,
+    "overlap_r": 0.9356,
+    "exact_f1": 0.855,
+    "tp_o": 392,
+    "fp_o": 90,
+    "fn_o": 27,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r2.transition_bias_inside_to_continue",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": -0.5,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r2.transition_bias_inside_to_continue",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.5,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8714,
+    "overlap_p": 0.8137,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8561,
+    "tp_o": 393,
+    "fp_o": 90,
+    "fn_o": 26,
+    "n_predictions_visible": 483,
+    "elapsed_s": 26.6
+  },
+  {
+    "phase": "r2.transition_bias_inside_to_continue",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 1.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8714,
+    "overlap_p": 0.8137,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8561,
+    "tp_o": 393,
+    "fp_o": 90,
+    "fn_o": 26,
+    "n_predictions_visible": 483,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r2.transition_bias_inside_to_continue",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 2.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8714,
+    "overlap_p": 0.8137,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8561,
+    "tp_o": 393,
+    "fp_o": 90,
+    "fn_o": 26,
+    "n_predictions_visible": 483,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r2.transition_bias_inside_to_end",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": -2.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8733,
+    "overlap_p": 0.817,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8582,
+    "tp_o": 393,
+    "fp_o": 88,
+    "fn_o": 26,
+    "n_predictions_visible": 481,
+    "elapsed_s": 26.9
+  },
+  {
+    "phase": "r2.transition_bias_inside_to_end",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": -1.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r2.transition_bias_inside_to_end",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": -0.5,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r2.transition_bias_inside_to_end",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.5,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.6
+  },
+  {
+    "phase": "r2.transition_bias_inside_to_end",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 1.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8714,
+    "overlap_p": 0.8137,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8561,
+    "tp_o": 393,
+    "fp_o": 90,
+    "fn_o": 26,
+    "n_predictions_visible": 483,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r2.transition_bias_inside_to_end",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 2.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8714,
+    "overlap_p": 0.8137,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8561,
+    "tp_o": 393,
+    "fp_o": 90,
+    "fn_o": 26,
+    "n_predictions_visible": 483,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r2.transition_bias_end_to_background",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": -2.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8733,
+    "overlap_p": 0.817,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8582,
+    "tp_o": 393,
+    "fp_o": 88,
+    "fn_o": 26,
+    "n_predictions_visible": 481,
+    "elapsed_s": 26.6
+  },
+  {
+    "phase": "r2.transition_bias_end_to_background",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": -1.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.9
+  },
+  {
+    "phase": "r2.transition_bias_end_to_background",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": -0.5,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r2.transition_bias_end_to_background",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.5,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8704,
+    "overlap_p": 0.812,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.855,
+    "tp_o": 393,
+    "fp_o": 91,
+    "fn_o": 26,
+    "n_predictions_visible": 484,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r2.transition_bias_end_to_background",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 1.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8695,
+    "overlap_p": 0.8103,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.854,
+    "tp_o": 393,
+    "fp_o": 92,
+    "fn_o": 26,
+    "n_predictions_visible": 485,
+    "elapsed_s": 27.0
+  },
+  {
+    "phase": "r2.transition_bias_end_to_background",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 2.0,
+      "transition_bias_end_to_start": 0.0
+    },
+    "overlap_f1": 0.8675,
+    "overlap_p": 0.807,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8519,
+    "tp_o": 393,
+    "fp_o": 94,
+    "fn_o": 26,
+    "n_predictions_visible": 487,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r2.transition_bias_end_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": -2.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r2.transition_bias_end_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": -1.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.8
+  },
+  {
+    "phase": "r2.transition_bias_end_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": -0.5
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r2.transition_bias_end_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 0.5
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r2.transition_bias_end_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 1.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.7
+  },
+  {
+    "phase": "r2.transition_bias_end_to_start",
+    "biases": {
+      "transition_bias_background_stay": -2.0,
+      "transition_bias_background_to_start": 0.0,
+      "transition_bias_inside_to_continue": 0.0,
+      "transition_bias_inside_to_end": 0.0,
+      "transition_bias_end_to_background": 0.0,
+      "transition_bias_end_to_start": 2.0
+    },
+    "overlap_f1": 0.8724,
+    "overlap_p": 0.8154,
+    "overlap_r": 0.9379,
+    "exact_f1": 0.8571,
+    "tp_o": 393,
+    "fp_o": 89,
+    "fn_o": 26,
+    "n_predictions_visible": 482,
+    "elapsed_s": 26.8
+  }
+]

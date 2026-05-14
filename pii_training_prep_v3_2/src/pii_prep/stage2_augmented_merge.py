@@ -70,7 +70,7 @@ def stage2_row_to_record(row: dict[str, Any]) -> dict[str, Any]:
         text = value if not text else text
     end = start + len(value)
     context_type = str(row.get("context_type", "unknown"))
-    subtype = "candidate_level_negative" if context_type == "reverse_negative_context" else "qwen_5way_ranking"
+    subtype = "candidate_level_negative" if is_candidate_level_negative_context(context_type) else "qwen_5way_ranking"
     weight = row.get("training_weight", default_stage2_weight(row))
     span = {
         "start": start,
@@ -103,6 +103,8 @@ def stage2_row_to_record(row: dict[str, Any]) -> dict[str, Any]:
 
 def default_stage2_weight(row: dict[str, Any]) -> float:
     context_type = row.get("context_type")
+    if context_type == "hard_negative_context":
+        return 0.8
     if context_type == "reverse_negative_context":
         return 0.5
     if str(row.get("ambiguity_group", "")).startswith("zero_example_"):
@@ -110,6 +112,10 @@ def default_stage2_weight(row: dict[str, Any]) -> float:
     if context_type == "strong_positive_context":
         return 0.7
     return 0.5
+
+
+def is_candidate_level_negative_context(context_type: str) -> bool:
+    return context_type in {"reverse_negative_context", "reverse_negative", "hard_negative_context", "hard_negative"}
 
 
 def validate_merged_records(records: list[dict[str, Any]], training_labels: set[str]) -> dict[str, Any]:
@@ -258,6 +264,7 @@ def merge_project(root: Path | str = ".") -> dict[str, Any]:
     root = Path(root)
     stage1_path = root / "data" / "processed" / "stage1_v3_2_canonical.jsonl"
     stage2_path = root / "data" / "generated" / "stage2_full_teacher_converted.jsonl"
+    hard_negative_stage2_path = root / "data" / "generated" / "stage2_hard_negative_teacher_converted.jsonl"
     training_path = root / "pii_schema" / "training_label_space_80.json"
     quality_path = root / "reports" / "stage2_full_teacher_quality_report.json"
     warning_path = root / "reports" / "stage2_full_teacher_warning_examples.json"
@@ -267,12 +274,17 @@ def merge_project(root: Path | str = ".") -> dict[str, Any]:
     warnings_path = root / "reports" / "stage2_augmented_warning_examples.json"
 
     stage1_records = load_jsonl(stage1_path)
-    stage2_rows = load_jsonl(stage2_path)
+    stage2_rows_by_input = {str(stage2_path): load_jsonl(stage2_path)}
+    if hard_negative_stage2_path.exists():
+        stage2_rows_by_input[str(hard_negative_stage2_path)] = load_jsonl(hard_negative_stage2_path)
+    stage2_rows = [row for rows in stage2_rows_by_input.values() for row in rows]
     training_labels = set(json.loads(training_path.read_text(encoding="utf-8")))
     merged, audit, distribution, warnings = merge_augmented_dataset(stage1_records, stage2_rows, training_labels)
     audit["inputs"] = {
         "stage1_path": str(stage1_path),
         "stage2_path": str(stage2_path),
+        "stage2_paths": list(stage2_rows_by_input),
+        "stage2_row_count_by_input": {path: len(rows) for path, rows in stage2_rows_by_input.items()},
         "training_label_space": str(training_path),
         "stage2_quality_report": str(quality_path),
         "stage2_warning_examples": str(warning_path),

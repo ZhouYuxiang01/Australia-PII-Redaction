@@ -1,13 +1,13 @@
 {
   "splits": {
     "train": {
-      "record_count": 81298,
+      "record_count": 81334,
       "validation_error_count": 0,
       "validation_errors": [],
       "offset_mismatch_count": 0,
       "labels_outside_training_space": {},
       "source_record_distribution": {
-        "candidate_level_negative": 3426,
+        "candidate_level_negative": 3462,
         "chat": 568,
         "clinical": 1652,
         "document_level_negative": 60946,
@@ -22,13 +22,13 @@
       }
     },
     "dev": {
-      "record_count": 10034,
+      "record_count": 10046,
       "validation_error_count": 0,
       "validation_errors": [],
       "offset_mismatch_count": 0,
       "labels_outside_training_space": {},
       "source_record_distribution": {
-        "candidate_level_negative": 420,
+        "candidate_level_negative": 432,
         "chat": 77,
         "clinical": 210,
         "document_level_negative": 7551,
@@ -43,13 +43,13 @@
       }
     },
     "test": {
-      "record_count": 9659,
+      "record_count": 9671,
       "validation_error_count": 0,
       "validation_errors": [],
       "offset_mismatch_count": 0,
       "labels_outside_training_space": {},
       "source_record_distribution": {
-        "candidate_level_negative": 54,
+        "candidate_level_negative": 66,
         "chat": 61,
         "clinical": 243,
         "document_level_negative": 7494,

@@ -10,6 +10,7 @@ v2: Added deterministic rescue post-processing for strong-format PII types
 """
 from __future__ import annotations
 
+import json
 import os
 import re
 import sys
@@ -120,6 +121,91 @@ LINE_LOCAL_NEGATIVE_PHRASES = (
 )
 
 POSTIVE_CONTEXT_WINDOW = 150
+BROAD_REGEX_SOURCES = {
+    "regex_candidate:alphanum_token",
+    "regex_candidate:date_like",
+    "regex_candidate:digit_sequence",
+    "regex_candidate:phone_like",
+}
+POSITIVE_CONTEXT_MARKERS: dict[str, tuple[str, ...]] = {
+    "AU_BANK_ACCOUNT": ("account", "acct", "bank", "bsb"),
+    "BANK_ACCOUNT_NUMBER": ("account", "acct", "bank", "bsb"),
+    "AU_DRIVERS_LICENCE": ("drivers licence", "driver licence", "licence", "license"),
+    "AU_PASSPORT": ("passport",),
+    "AU_TFN": ("tfn", "tax file"),
+    "CENTRELINK_REFERENCE_NUMBER": ("centrelink",),
+    "CREDIT_CARD_EXPIRY": ("card", "exp", "expiry"),
+    "DATE_OF_BIRTH": ("dob", "birth", "bday", "birthday", "born"),
+    "EMAIL": ("email", "mail", "contact"),
+    "EMAIL_ADDRESS": ("email", "mail", "contact"),
+    "EMPLOYEE_NUMBER": ("employee", "staff", "personnel"),
+    "IHI": ("ihi",),
+    "MEDICARE_EXPIRY": ("medicare", "card expiry"),
+    "MEDICARE_NUMBER": ("medicare",),
+    "NATIONAL_IDENTITY_CARD": ("national id", "identity card"),
+    "PASSPORT_EXPIRY": ("passport", "expiry", "expires"),
+    "PASSPORT_START_DATE": ("passport", "start date"),
+    "PAYMENT_CARD_NUMBER": ("card", "payment", "credit card"),
+    "PENSION_CARD_NUMBER": ("pension", "card"),
+    "PHONE": ("phone", "mobile", "tel", "telephone", "contact", "call back", "callback"),
+    "MOBILE": ("phone", "mobile", "tel", "telephone", "contact", "call back", "callback"),
+    "SOCIAL_MEDIA_ID": ("social", "instagram", "insta", "handle"),
+    "STUDENT_ID": ("student", "sid"),
+    "UAC_ID": ("uac",),
+    "USI": ("usi",),
+    "VEHICLE_ID": ("vehicle", "rego", "plate", "registration"),
+    "VEHICLE_REGO": ("vehicle", "rego", "plate", "registration"),
+}
+REVIEW_THRESHOLD = 0.25
+MIN_TOP1_PII_DEFAULT = 0.20
+MIN_TOP3_MASS = 0.40
+NON_PII_REVIEW_THRESHOLD = 0.50
+NON_PII_SUPPRESS_THRESHOLD = 0.85
+
+
+def _safety_first_decision(
+    *,
+    source: str,
+    top_type: str,
+    top1_prob: float,
+    top3_sum: float,
+    non_pii_prob: float,
+    risk_score: float,
+    neg_context: bool,
+    line_neg: bool,
+    has_per_label_threshold: bool,
+    min_top1_pii: float,
+    has_positive_context: bool = True,
+    review_threshold: float = REVIEW_THRESHOLD,
+    min_top1_pii_default: float = MIN_TOP1_PII_DEFAULT,
+    min_top3_mass: float = MIN_TOP3_MASS,
+    non_pii_review_threshold: float = NON_PII_REVIEW_THRESHOLD,
+    non_pii_suppress_threshold: float = NON_PII_SUPPRESS_THRESHOLD,
+) -> tuple[str, str, float, bool]:
+    """Route uncertain PII-like candidates to review unless negative evidence is strong."""
+    if line_neg:
+        return "ignore", "line_local_negative_context", 0.0, True
+    if source == "fallback_full_input":
+        return "review", "fallback_analysis_review", max(risk_score, review_threshold), False
+    if non_pii_prob >= non_pii_suppress_threshold:
+        return "ignore", "non_pii_high", 0.0, False
+    if source in BROAD_REGEX_SOURCES and not has_positive_context and top1_prob < min_top1_pii_default:
+        return "ignore", "broad_regex_without_positive_context", 0.0, False
+    if neg_context and not has_positive_context and top1_prob < 0.70:
+        return "ignore", "negative_context_without_positive_context", 0.0, False
+    if not has_positive_context and top1_prob < min_top1_pii_default:
+        return "ignore", "low_evidence_without_positive_context", 0.0, False
+    if non_pii_prob >= non_pii_review_threshold:
+        return "review", "safety_review_non_pii_uncertain", max(risk_score, review_threshold), False
+    if has_per_label_threshold and top1_prob < min_top1_pii:
+        return "review", "safety_review_low_pii_evidence_per_label", max(risk_score, review_threshold), False
+    if top1_prob < min_top1_pii_default and top3_sum < min_top3_mass:
+        return "review", "safety_review_low_pii_evidence", max(risk_score, review_threshold), False
+    if neg_context and top1_prob < 0.70:
+        return "review", "safety_review_negative_context_uncertain", max(risk_score, review_threshold), False
+    if risk_score >= review_threshold:
+        return "review", "high_top3_uncertainty_risk", risk_score, False
+    return "redact", "low_top3_uncertainty_risk", risk_score, False
 
 QWEN_VERIFIER_DEFAULT_TYPES = {
     "AU_BANK_ACCOUNT",
@@ -144,10 +230,28 @@ def _has_negative_context(text, span_start, span_end):
     return any(phrase in window for phrase in NEGATIVE_CONTEXT_PHRASES)
 
 
+def _has_positive_context(text: str, span_start: int, span_end: int, span_type: str) -> bool:
+    window = text[max(0, span_start - 120): min(len(text), span_end + 20)].lower()
+    markers = POSITIVE_CONTEXT_MARKERS.get(span_type, ())
+    return any(marker in window for marker in markers)
+
+
 _DISAMBIGUATOR_PHRASES = (
     "but ", "but,", "however", "actually", "the real",
     "this one", "this number", "this card", "the actual",
+    "actual details", "details below",
 )
+
+_NON_NEGATIVE_LITERAL_RE = re.compile(
+    r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}|"
+    r"https?://\S+|"
+    r"\b[A-Za-z0-9.-]+\.(?:com|org|net|edu|gov|au|test)\b",
+    re.IGNORECASE,
+)
+
+
+def _mask_non_negative_literals(text: str) -> str:
+    return _NON_NEGATIVE_LITERAL_RE.sub(" ", text)
 
 
 def _has_line_local_negative(text, span_start, span_end):
@@ -168,6 +272,8 @@ def _has_line_local_negative(text, span_start, span_end):
     if span_value_lower:
         pre_lower = pre_lower.replace(span_value_lower, "", 1)
     post_lower = text[span_end:window_end].lower()
+    pre_lower = _mask_non_negative_literals(pre_lower)
+    post_lower = _mask_non_negative_literals(post_lower)
 
     for phrase in LINE_LOCAL_NEGATIVE_PHRASES:
         # Trigger before span: rejected if a disambiguator appears AFTER the trigger.
@@ -373,6 +479,7 @@ class HybridOpfQwenBackend(RedactionBackend):
         qwen_verifier_require_trigger: bool = False,
         qwen_verifier_min_risk_score: float = 0.25,
         qwen_verifier_low_top1_threshold: float = 0.70,
+        per_label_thresholds_path: str | Path | None = None,
     ) -> None:
         self._name = name
         self._model_version = model_version
@@ -416,6 +523,21 @@ class HybridOpfQwenBackend(RedactionBackend):
         self._qwen_verifier_require_trigger = bool(qwen_verifier_require_trigger)
         self._qwen_verifier_min_risk_score = float(qwen_verifier_min_risk_score)
         self._qwen_verifier_low_top1_threshold = float(qwen_verifier_low_top1_threshold)
+
+        self._per_label_top1_min: dict[str, float] = {}
+        self._per_label_thresholds_path: Path | None = None
+        if per_label_thresholds_path:
+            path = Path(per_label_thresholds_path)
+            if path.is_file():
+                try:
+                    payload = json.loads(path.read_text(encoding="utf-8"))
+                    self._per_label_top1_min = {
+                        str(k): float(v)
+                        for k, v in (payload.get("top1_prob_min") or {}).items()
+                    }
+                    self._per_label_thresholds_path = path
+                except Exception:
+                    self._per_label_top1_min = {}
 
         self._lock = threading.Lock()
         self._loaded = False
@@ -574,40 +696,25 @@ class HybridOpfQwenBackend(RedactionBackend):
 
             risk_score = uncertainty * dc_weight
 
-            REVIEW_THRESHOLD = 0.25
-            MIN_TOP1_PII = 0.20
-            MIN_TOP3_MASS = 0.40
-            NON_PII_SUPPRESS = 0.50
+            min_top1_pii = self._per_label_top1_min.get(top_type, MIN_TOP1_PII_DEFAULT)
 
             neg_context = _has_negative_context(text, int(cs.get("start", 0)), int(cs.get("end", 0)))
             line_neg = _has_line_local_negative(text, int(cs.get("start", 0)), int(cs.get("end", 0)))
+            positive_context = _has_positive_context(text, int(cs.get("start", 0)), int(cs.get("end", 0)), top_type)
 
-            if line_neg:
-                decision = "ignore"
-                reason = "line_local_negative_context"
-                risk_score = 0.0
-                line_negative_suppressed = True
-            elif source == "fallback_full_input":
-                decision = "review"
-                reason = "fallback_analysis_review"
-            elif non_pii_prob >= NON_PII_SUPPRESS:
-                decision = "ignore"
-                reason = "non_pii_high"
-            elif top1_prob < MIN_TOP1_PII and top3_sum < MIN_TOP3_MASS:
-                decision = "ignore"
-                reason = "low_pii_evidence"
-            elif neg_context and top1_prob < 0.70:
-                decision = "ignore"
-                reason = "negative_context"
-            elif risk_score >= REVIEW_THRESHOLD:
-                decision = "review"
-                reason = "high_top3_uncertainty_risk"
-            else:
-                decision = "redact"
-                reason = "low_top3_uncertainty_risk"
-
-            if decision == "ignore":
-                risk_score = 0.0
+            decision, reason, risk_score, line_negative_suppressed = _safety_first_decision(
+                source=source,
+                top_type=top_type,
+                top1_prob=top1_prob,
+                top3_sum=top3_sum,
+                non_pii_prob=non_pii_prob,
+                risk_score=risk_score,
+                neg_context=neg_context,
+                line_neg=line_neg,
+                has_per_label_threshold=top_type in self._per_label_top1_min,
+                min_top1_pii=min_top1_pii,
+                has_positive_context=positive_context,
+            )
             pii_evidence_passed = decision != "ignore"
             evidence_reason = reason
 
@@ -638,7 +745,7 @@ class HybridOpfQwenBackend(RedactionBackend):
             span.data_classification_weight = dc_weight
             span.type_distribution_topk = topk
             span.decision_reason = reason
-            span.line_negative_suppressed = line_neg
+            span.line_negative_suppressed = line_negative_suppressed
             span.review_threshold = REVIEW_THRESHOLD
             span.policy_version = "top3_risk_v1"
             span.pii_evidence_passed = pii_evidence_passed

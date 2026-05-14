@@ -1,8 +1,8 @@
 {
   "splits": {
     "train": {
-      "record_count": 81298,
-      "span_count": 113318,
+      "record_count": 81334,
+      "span_count": 113354,
       "label_distribution": {
         "ABORIGINALITY": 808,
         "ADDRESS": 9388,
@@ -48,7 +48,7 @@
         "NATIONALITY": 727,
         "NATIONAL_IDENTITY_CARD": 727,
         "NEXT_OF_KIN": 581,
-        "NON_PII": 3441,
+        "NON_PII": 3477,
         "NUMBER_PLATE": 755,
         "PASSPORT_EXPIRY": 726,
         "PASSPORT_NUMBER": 2729,
@@ -86,7 +86,7 @@
         "WORK_PHONE": 950
       },
       "source_record_distribution": {
-        "candidate_level_negative": 3426,
+        "candidate_level_negative": 3462,
         "chat": 568,
         "clinical": 1652,
         "document_level_negative": 60946,
@@ -100,20 +100,20 @@
         "system_log": 369
       },
       "source_span_distribution": {
-        "candidate_level_negative": 3426,
+        "candidate_level_negative": 3462,
         "qwen_5way_ranking": 1695,
         "sonnet_high_conf": 89594,
         "sonnet_low_conf": 18603
       },
-      "non_pii_count": 3441,
+      "non_pii_count": 3477,
       "high_entropy_sample_count": 339,
       "zero_example_labels_missing": [],
       "missing_label_count": 0,
       "missing_labels": []
     },
     "dev": {
-      "record_count": 10034,
-      "span_count": 13838,
+      "record_count": 10046,
+      "span_count": 13850,
       "label_distribution": {
         "ABORIGINALITY": 97,
         "ADDRESS": 1176,
@@ -159,7 +159,7 @@
         "NATIONALITY": 87,
         "NATIONAL_IDENTITY_CARD": 87,
         "NEXT_OF_KIN": 62,
-        "NON_PII": 426,
+        "NON_PII": 438,
         "NUMBER_PLATE": 90,
         "PASSPORT_EXPIRY": 90,
         "PASSPORT_NUMBER": 343,
@@ -197,7 +197,7 @@
         "WORK_PHONE": 123
       },
       "source_record_distribution": {
-        "candidate_level_negative": 420,
+        "candidate_level_negative": 432,
         "chat": 77,
         "clinical": 210,
         "document_level_negative": 7551,
@@ -211,20 +211,20 @@
         "system_log": 40
       },
       "source_span_distribution": {
-        "candidate_level_negative": 420,
+        "candidate_level_negative": 432,
         "qwen_5way_ranking": 180,
         "sonnet_high_conf": 10898,
         "sonnet_low_conf": 2340
       },
-      "non_pii_count": 426,
+      "non_pii_count": 438,
       "high_entropy_sample_count": 46,
       "zero_example_labels_missing": [],
       "missing_label_count": 0,
       "missing_labels": []
     },
     "test": {
-      "record_count": 9659,
-      "span_count": 13576,
+      "record_count": 9671,
+      "span_count": 13588,
       "label_distribution": {
         "ABORIGINALITY": 95,
         "ADDRESS": 1108,
@@ -270,7 +270,7 @@
         "NATIONALITY": 86,
         "NATIONAL_IDENTITY_CARD": 86,
         "NEXT_OF_KIN": 57,
-        "NON_PII": 63,
+        "NON_PII": 75,
         "NUMBER_PLATE": 85,
         "PASSPORT_EXPIRY": 84,
         "PASSPORT_NUMBER": 328,
@@ -308,7 +308,7 @@
         "WORK_PHONE": 127
       },
       "source_record_distribution": {
-        "candidate_level_negative": 54,
+        "candidate_level_negative": 66,
         "chat": 61,
         "clinical": 243,
         "document_level_negative": 7494,
@@ -322,12 +322,12 @@
         "system_log": 41
       },
       "source_span_distribution": {
-        "candidate_level_negative": 54,
+        "candidate_level_negative": 66,
         "qwen_5way_ranking": 225,
         "sonnet_high_conf": 10921,
         "sonnet_low_conf": 2376
       },
-      "non_pii_count": 63,
+      "non_pii_count": 75,
       "high_entropy_sample_count": 39,
       "zero_example_labels_missing": [],
       "missing_label_count": 0,
@@ -342,8 +342,8 @@
     "offset_mismatch_count": 0
   },
   "split_ratios": {
-    "train": 0.805002,
-    "dev": 0.099355,
-    "test": 0.095642
+    "train": 0.804881,
+    "dev": 0.099415,
+    "test": 0.095704
   }
 }

@@ -1,0 +1,127 @@
+{
+  "redacted_text": "refund details: bank name written as Southern Mutual; acct: [AU_BANK_ACCOUNT]; email [EMAIL]",
+  "spans": [
+    {
+      "start": 60,
+      "end": 72,
+      "type": "AU_BANK_ACCOUNT",
+      "confidence": 1.0,
+      "decision": "AUTO_REDACT",
+      "replacement": "[AU_BANK_ACCOUNT]",
+      "source": "rule",
+      "postprocess": [
+        "label_alias_normalization",
+        "contextual_identifier_rescue",
+        "registry_contextual_rescue"
+      ],
+      "opf_top_type": "MOBILE",
+      "top_type": "BANK_ACCOUNT_NUMBER",
+      "top_probability": 0.7035310864448547,
+      "risk_score": 0.29364649776834995,
+      "top1_prob": 0.7035310864448547,
+      "top3_sum": 0.70635350223165,
+      "non_pii_prob": 0.0,
+      "uncertainty": 0.29364649776834995,
+      "data_classification": "Highly Protected",
+      "data_classification_weight": 1.0,
+      "type_distribution_topk": [
+        [
+          "BANK_ACCOUNT_NUMBER",
+          0.7035310864448547
+        ],
+        [
+          "PAYMENT_CARD_NUMBER",
+          0.0018066872144117951
+        ],
+        [
+          "AU_TFN",
+          0.001015728572383523
+        ],
+        [
+          "MOBILE",
+          0.0005672250408679247
+        ],
+        [
+          "PASSPORT_NUMBER",
+          0.00047581910621374846
+        ]
+      ],
+      "decision_reason": "type_actions",
+      "review_threshold": 0.25,
+      "policy_version": "top3_risk_v1",
+      "pii_evidence_passed": true,
+      "evidence_reason": "high_top3_uncertainty_risk",
+      "detector_source": "qwen",
+      "qwen_top_type": "BANK_ACCOUNT_NUMBER"
+    },
+    {
+      "start": 80,
+      "end": 113,
+      "type": "EMAIL",
+      "confidence": 1.0,
+      "decision": "AUTO_REDACT",
+      "replacement": "[EMAIL]",
+      "source": "rule",
+      "postprocess": [
+        "rescue_email_full",
+        "label_alias_normalization",
+        "contextual_identifier_rescue",
+        "registry_contextual_rescue"
+      ],
+      "opf_top_type": "EMAIL_ADDRESS",
+      "top_type": "EMAIL_ADDRESS",
+      "top_probability": 0.6753519177436829,
+      "risk_score": 0.1260863592979149,
+      "top1_prob": 0.6753519177436829,
+      "top3_sum": 0.7478272814041702,
+      "non_pii_prob": 0.0,
+      "uncertainty": 0.2521727185958298,
+      "data_classification": "Protected",
+      "data_classification_weight": 0.5,
+      "type_distribution_topk": [
+        [
+          "EMAIL_ADDRESS",
+          0.6753519177436829
+        ],
+        [
+          "WORK_EMAIL",
+          0.07225212454795837
+        ],
+        [
+          "PERSON",
+          0.00022323911252897233
+        ],
+        [
+          "PAYMENT_CARD_NUMBER",
+          0.00014468847075477242
+        ],
+        [
+          "SALARY",
+          9.858186240307987e-05
+        ]
+      ],
+      "decision_reason": "type_actions",
+      "review_threshold": 0.25,
+      "policy_version": "top3_risk_v1",
+      "pii_evidence_passed": true,
+      "evidence_reason": "deterministic_email_full",
+      "detector_source": "rescue:email_full",
+      "deterministic_evidence": true,
+      "deterministic_type": "EMAIL_ADDRESS",
+      "qwen_top_type": "EMAIL_ADDRESS"
+    }
+  ],
+  "metadata": {
+    "model_version": "opf-hard-79-qwen4b-spanhead-v1",
+    "taxonomy_version": "au-pii-80-v1",
+    "schema_version": "redaction-output-v1",
+    "policy_id": "hybrid-80class-v2-4b",
+    "normalization": "NFC",
+    "raw_offset_mapping_applied": false,
+    "redaction_mode": "replace_with_tag",
+    "redact_review_types": [],
+    "created_at": "2026-05-08T22:29:33.551560+00:00",
+    "input_length": 113
+  },
+  "warnings": []
+}

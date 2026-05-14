@@ -155,11 +155,19 @@ def load_cache(root: Path, split: str, cache_name_prefix: str = "qwen_spancls_em
     return torch.load(root / "data" / "cache" / f"{cache_name_prefix}_{split}.pt", map_location="cpu", weights_only=False)
 
 
-def build_targets(records: list[dict[str, Any]], labels: list[str]) -> tuple[torch.Tensor, torch.Tensor, dict[str, int]]:
+def build_targets(
+    records: list[dict[str, Any]],
+    labels: list[str],
+    *,
+    source_weight_overrides: dict[str, float] | None = None,
+    label_weight_overrides: dict[str, float] | None = None,
+) -> tuple[torch.Tensor, torch.Tensor, dict[str, int]]:
     label_set = set(labels)
     labels_outside: Counter[str] = Counter()
     targets = []
     weights = []
+    source_weight_overrides = source_weight_overrides or {}
+    label_weight_overrides = label_weight_overrides or {}
     for row in records:
         distribution = row.get("target_distribution", {})
         for label in distribution:
@@ -170,8 +178,34 @@ def build_targets(records: list[dict[str, Any]], labels: list[str]) -> tuple[tor
         values = torch.tensor([float(distribution.get(label, 0.0)) for label in labels], dtype=torch.float32)
         total = values.sum().clamp_min(1e-12)
         targets.append(values / total)
-        weights.append(float(row.get("training_weight", 1.0)))
+        top_type = str(row.get("top_type"))
+        source = str(row.get("source", "unknown"))
+        weight = float(row.get("training_weight", 1.0))
+        weight *= float(source_weight_overrides.get(source, 1.0))
+        weight *= float(label_weight_overrides.get(top_type, 1.0))
+        weights.append(weight)
     return torch.stack(targets, dim=0), torch.tensor(weights, dtype=torch.float32), dict(labels_outside)
+
+
+def parse_weight_overrides(raw: str | None) -> dict[str, float]:
+    if not raw:
+        return {}
+    overrides: dict[str, float] = {}
+    for item in raw.split(","):
+        item = item.strip()
+        if not item:
+            continue
+        if "=" not in item:
+            raise ValueError(f"weight override must be NAME=FLOAT, got {item!r}")
+        key, value = item.split("=", 1)
+        key = key.strip()
+        if not key:
+            raise ValueError(f"weight override has empty name: {item!r}")
+        multiplier = float(value)
+        if multiplier <= 0:
+            raise ValueError(f"weight override must be positive for {key}: {multiplier}")
+        overrides[key] = multiplier
+    return overrides
 
 
 def make_loader(features: torch.Tensor, targets: torch.Tensor, weights: torch.Tensor, *, batch_size: int, shuffle: bool) -> DataLoader:
@@ -388,6 +422,8 @@ def run_head_training(
     cache_name_prefix: str = "qwen_spancls_embeddings",
     run_dir_name: str = "qwen_spancls_heads",
     report_prefix: str = "stage3a_head",
+    source_weight_overrides: dict[str, float] | None = None,
+    label_weight_overrides: dict[str, float] | None = None,
 ) -> dict[str, Any]:
     root = Path(root)
     experiments = experiments or EXPERIMENTS
@@ -398,7 +434,12 @@ def run_head_training(
     weights: dict[str, torch.Tensor] = {}
     labels_outside: dict[str, dict[str, int]] = {}
     for split, cache in caches.items():
-        targets[split], weights[split], labels_outside[split] = build_targets(cache["records"], labels)
+        targets[split], weights[split], labels_outside[split] = build_targets(
+            cache["records"],
+            labels,
+            source_weight_overrides=source_weight_overrides,
+            label_weight_overrides=label_weight_overrides,
+        )
     reports_dir = root / "reports"
     summary: dict[str, Any] = {
         "stage": "3A.3",
@@ -409,6 +450,8 @@ def run_head_training(
         "max_epochs": max_epochs,
         "patience": patience,
         "learning_rate": learning_rate,
+        "source_weight_overrides": source_weight_overrides or {},
+        "label_weight_overrides": label_weight_overrides or {},
         "labels_outside_training_space": labels_outside,
         "qwen_model_loaded": False,
         "lora_started": False,
@@ -481,6 +524,10 @@ def main(argv: list[str] | None = None) -> int:
                         help="checkpoint dir under runs/, e.g. qwen4b_spancls_heads")
     parser.add_argument("--report-prefix", default="stage3a_head",
                         help="report filename prefix under reports/, e.g. stage3a_qwen4b_head")
+    parser.add_argument("--source-weight-overrides", default="",
+                        help="comma-separated source multipliers, e.g. candidate_level_negative=3,qwen_5way_ranking=1.5")
+    parser.add_argument("--label-weight-overrides", default="",
+                        help="comma-separated top_type multipliers, e.g. NON_PII=2")
     args = parser.parse_args(argv)
     summary = run_head_training(
         args.root,
@@ -492,6 +539,8 @@ def main(argv: list[str] | None = None) -> int:
         cache_name_prefix=args.cache_name_prefix,
         run_dir_name=args.run_dir_name,
         report_prefix=args.report_prefix,
+        source_weight_overrides=parse_weight_overrides(args.source_weight_overrides),
+        label_weight_overrides=parse_weight_overrides(args.label_weight_overrides),
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     failed = {name: data for name, data in summary["experiments"].items() if data["status"] != "completed"}

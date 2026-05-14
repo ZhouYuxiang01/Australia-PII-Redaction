@@ -13,7 +13,9 @@ def main() -> None:
     assert "id=\"ocr-band\" hidden" in html, "file extraction panel should be hidden by default"
     assert 'decision === "PASS"' not in html, "PASS should not be a user-visible frontend state"
     assert ".pill.pass" not in html, "PASS should not be styled as a user-visible decision"
-    assert "<th" in html and ">Value</th>" in html, "detected table should show source value after Pos"
+    assert "<th" in html and ">Value</th>" in html, "detected table should show source value first"
+    assert ">Pos</th>" not in html, "detected table should not show offsets in the user-facing layout"
+    assert ">Confidentiality</th>" in html, "detected table should show data sensitivity classification"
     assert ">OPF</th>" not in html, "OPF internals should not be shown as a detected-table column"
     assert ">Qwen</th>" not in html, "Qwen internals should not be shown as a detected-table column"
     assert "renderSpans(spans, sourceText)" in html, "span rows should derive source values from input text"
@@ -23,14 +25,11 @@ def main() -> None:
     assert 'span.source === "rule" && span.decision_reason === "type_actions" && !hasModelScores(span)' in html, (
         "100% fallback must be limited to policy-only rule spans without model scores"
     )
-    assert "var riskScore = isPolicyOnlySpan(span) ? 0 : span.risk_score" in html, (
-        "risk should only be forced to 0 for policy-only spans without model scores"
-    )
-    assert ".risk-bar.zero" in html and 'cls += " zero"' in html, (
-        "0% risk should still render a progress track"
-    )
+    assert "riskLevelBadge(riskScore)" in html, "risk should render as a low/medium/high badge"
+    assert "riskBar(" not in html, "risk should not render the old numeric progress bar"
+    assert "Math.round(riskScore * 100)" not in html, "risk should not show a numeric percentage"
     assert "<colgroup>" in html, "detected table should use fixed columns for alignment"
-    for cls in ("w-type", "w-pos", "w-value", "w-prob", "w-risk", "w-decision", "w-topk"):
+    for cls in ("w-value", "w-type", "w-confidentiality", "w-prob", "w-risk", "w-decision", "w-topk"):
         assert f'class="{cls}"' in html, f"missing detected table column sizing class {cls}"
     assert "table-layout: fixed" in html, "detected table needs fixed layout to avoid scattered columns"
     assert "class=\"num-head\"" in html, "numeric headers should align with numeric cells"

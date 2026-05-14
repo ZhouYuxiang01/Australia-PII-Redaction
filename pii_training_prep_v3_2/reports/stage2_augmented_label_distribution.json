@@ -44,7 +44,7 @@
     "NATIONALITY": 900,
     "NATIONAL_IDENTITY_CARD": 900,
     "NEXT_OF_KIN": 700,
-    "NON_PII": 3930,
+    "NON_PII": 3990,
     "NUMBER_PLATE": 930,
     "PASSPORT_EXPIRY": 900,
     "PASSPORT_NUMBER": 3400,
@@ -126,7 +126,7 @@
     "NATIONALITY": 900,
     "NATIONAL_IDENTITY_CARD": 900,
     "NEXT_OF_KIN": 700,
-    "NON_PII": 3930,
+    "NON_PII": 3990,
     "NUMBER_PLATE": 930,
     "PASSPORT_EXPIRY": 900,
     "PASSPORT_NUMBER": 3400,
@@ -164,10 +164,10 @@
     "WORK_PHONE": 1200
   },
   "non_pii_distribution": {
-    "top_type_count": 3930,
-    "candidate_count": 140732,
-    "probability_sum": 10492.267846,
-    "probability_mean": 0.074555
+    "top_type_count": 3990,
+    "candidate_count": 140792,
+    "probability_sum": 10547.324668,
+    "probability_mean": 0.074914
   },
   "all_80_classes_represented": true,
   "missing_classes": []

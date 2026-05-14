@@ -12,12 +12,9 @@
 #                            Auto-detected if unset:
 #                              1. miniconda3/envs/opf/bin/python (has opf+torch+transformers+fastapi)
 #                              2. $(command -v python3)
-#   WRAPPER_OCR_PROVIDER     auto | rapidocr | paddle | tesseract (default auto)
-#                            auto uses local RapidOCR, then Tesseract.
-#   RAPIDOCR_MIN_CONFIDENCE  default 0.30
-#   PADDLEOCR_LANG           default en
-#   PADDLEOCR_USE_GPU        default false
-#   PADDLEOCR_MIN_CONFIDENCE default 0.30
+#   WRAPPER_QWEN_VL_MODEL    default /home/admin/model/Qwen3.5-9B-Base
+#   WRAPPER_QWEN_VL_DEVICE   default cuda when available, otherwise cpu
+#   WRAPPER_QWEN_VL_DTYPE    default bfloat16
 
 set -uo pipefail
 

@@ -18,6 +18,26 @@ class Stage3DatasetSplitTests(unittest.TestCase):
 
         self.assertEqual(group_key(a), group_key(b))
 
+    def test_group_key_keeps_hard_negative_self_consistency_together(self):
+        base = {
+            "metadata": {
+                "subtype": "candidate_level_negative",
+                "ambiguity_group": "hard_negative_bank_name",
+                "context_type": "hard_negative_context",
+            },
+            "text": 'Bank name written as "Southern Mutual"; acct: 0088 1992 44.',
+            "spans": [
+                {
+                    "value": "Southern Mutual",
+                    "format_candidates": ["BANK_ACCOUNT_NUMBER", "BANK_ACCOUNT_INFORMATION", "NON_PII"],
+                }
+            ],
+        }
+        a = {**base, "id": "STAGE2-STAGE2-HARDNEG-BASE-0001-SC1"}
+        b = {**base, "id": "STAGE2-STAGE2-HARDNEG-BASE-0001-SC3"}
+
+        self.assertEqual(group_key(a), group_key(b))
+
     def test_build_audit_v2_splits_record_and_span_sources(self):
         records = [
             {"id": "doc", "metadata": {"subtype": "doc_level"}, "spans": []},

@@ -1,0 +1,567 @@
+{
+  "split_record_counts": {
+    "train": 113354,
+    "dev": 13850,
+    "test": 13588
+  },
+  "exact_duplicate_text_cross_split_count": 75,
+  "exact_duplicate_text_examples": [
+    {
+      "key": "123456789",
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": "04/05/1998",
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "alex.chen@example.com",
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": "Mia",
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "12 King St",
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": "-33.8688",
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "ABC123",
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "Confirmed field. Student ID 123456789 was used for enrolment.",
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": "(02) 4567 8901",
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "Record note. Date: 04/05/1998",
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": "Confirmed field. Date of birth 04/05/1998 was confirmed during intake.",
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "Record note. Address: alex.chen@example.com",
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "Confirmed field. Please email Alex at alex.chen@example.com about the case.",
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": "Record note. Name: Mia",
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": "Record note. Coordinate: -33.8688",
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "Record note. Identifier: ABC123",
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "Confirmed field. Vehicle rego ABC123 is attached to the parking permit.",
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "4111111111111111",
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "Confirmed field. Payment card number 4111111111111111 was entered on the billing page.",
+      "splits": [
+        "test",
+        "train"
+      ]
+    }
+  ],
+  "exact_duplicate_text_start_end_value_cross_split_count": 75,
+  "exact_duplicate_text_start_end_value_cross_split_rate": 0.000533,
+  "exact_duplicate_text_start_end_value_examples": [
+    {
+      "key": [
+        "123456789",
+        0,
+        9,
+        "123456789"
+      ],
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "04/05/1998",
+        0,
+        10,
+        "04/05/1998"
+      ],
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "alex.chen@example.com",
+        0,
+        21,
+        "alex.chen@example.com"
+      ],
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "Mia",
+        0,
+        3,
+        "Mia"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "12 King St",
+        0,
+        10,
+        "12 King St"
+      ],
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "-33.8688",
+        0,
+        8,
+        "-33.8688"
+      ],
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "ABC123",
+        0,
+        6,
+        "ABC123"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "Confirmed field. Student ID 123456789 was used for enrolment.",
+        28,
+        37,
+        "123456789"
+      ],
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "(02) 4567 8901",
+        0,
+        14,
+        "(02) 4567 8901"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "Record note. Date: 04/05/1998",
+        19,
+        29,
+        "04/05/1998"
+      ],
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "Confirmed field. Date of birth 04/05/1998 was confirmed during intake.",
+        31,
+        41,
+        "04/05/1998"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "Record note. Address: alex.chen@example.com",
+        22,
+        43,
+        "alex.chen@example.com"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "Confirmed field. Please email Alex at alex.chen@example.com about the case.",
+        38,
+        59,
+        "alex.chen@example.com"
+      ],
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "Record note. Name: Mia",
+        19,
+        22,
+        "Mia"
+      ],
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "Record note. Coordinate: -33.8688",
+        25,
+        33,
+        "-33.8688"
+      ],
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "Confirmed field. The field label is LATITUDE. Value: -33.8688.",
+        53,
+        61,
+        "-33.8688"
+      ],
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "Record note. Identifier: ABC123",
+        25,
+        31,
+        "ABC123"
+      ],
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "Confirmed field. Vehicle rego ABC123 is attached to the parking permit.",
+        30,
+        36,
+        "ABC123"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "4111111111111111",
+        0,
+        16,
+        "4111111111111111"
+      ],
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": [
+        "Confirmed field. Payment card number 4111111111111111 was entered on the billing page.",
+        37,
+        53,
+        "4111111111111111"
+      ],
+      "splits": [
+        "test",
+        "train"
+      ]
+    }
+  ],
+  "duplicate_record_id_cross_split_count": 0,
+  "duplicate_record_id_examples": [],
+  "duplicate_example_id_cross_split_count": 0,
+  "duplicate_example_id_examples": [],
+  "template_group_cross_split_count": 0,
+  "template_group_examples": [],
+  "normalized_text_overlap_count": 75,
+  "normalized_text_overlap_examples": [
+    {
+      "key": "123456789",
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": "04/05/1998",
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "alex.chen@example.com",
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": "mia",
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "12 king st",
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": "-33.8688",
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "abc123",
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "confirmed field. student id 123456789 was used for enrolment.",
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": "(02) 4567 8901",
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "record note. date: 04/05/1998",
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": "confirmed field. date of birth 04/05/1998 was confirmed during intake.",
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "record note. address: alex.chen@example.com",
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "confirmed field. please email alex at alex.chen@example.com about the case.",
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": "record note. name: mia",
+      "splits": [
+        "dev",
+        "train"
+      ]
+    },
+    {
+      "key": "record note. coordinate: -33.8688",
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "confirmed field. the field label is latitude. value: -33.8688.",
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "record note. identifier: abc123",
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "confirmed field. vehicle rego abc123 is attached to the parking permit.",
+      "splits": [
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "4111111111111111",
+      "splits": [
+        "dev",
+        "test",
+        "train"
+      ]
+    },
+    {
+      "key": "confirmed field. payment card number 4111111111111111 was entered on the billing page.",
+      "splits": [
+        "test",
+        "train"
+      ]
+    }
+  ],
+  "near_duplicate_warning": false,
+  "exact_duplicate_warning": true,
+  "severity_policy": "Severe if record_id, example_id, or template group crosses splits, or if exact (text,start,end,value) overlap exceeds 1% of examples. Low-rate synthetic bare-span/template value repeats are reported as warnings.",
+  "severe_leakage_detected": false,
+  "lora_started": false,
+  "opf_started": false
+}

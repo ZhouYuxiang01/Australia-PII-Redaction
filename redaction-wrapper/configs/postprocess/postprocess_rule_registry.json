@@ -21,6 +21,7 @@
     "AU_MOBILE_LOCAL": "(?<!\\d)04(?:\\s?\\d){8}(?!\\d)",
     "AU_MOBILE_INTL": "(?<!\\d)(?:\\+61\\s?4)(?:\\s?\\d){8}(?!\\d)",
     "AU_LANDLINE": "(?<!\\d)(?:\\(?0[2378]\\)?\\s?\\d{4}\\s?\\d{4})(?!\\d)",
+    "AU_LANDLINE_INTL": "(?<!\\d)(?:\\+?61\\s?[2378])(?:\\s?\\d){8}(?!\\d)",
     "BSB": "(?<!\\d)\\d{3}[-\\s]?\\d{3}(?!\\d)",
     "BANK_ACCOUNT_GROUPED_6_10": "(?<!\\d)\\d(?:[ -]?\\d){5,9}(?!\\d)",
     "TFN_9_GROUPED": "(?<!\\d)\\d{3}[\\s-]?\\d{3}[\\s-]?\\d{3}(?!\\d)",
@@ -43,7 +44,7 @@
     "LATITUDE_FLOAT": "(?<![\\d.])(?P<value>-(?:[1-4]\\d|[1-9])\\.\\d{3,})(?![\\d.])",
     "LONGITUDE_FLOAT": "(?<![\\d.])(?P<value>(?:1[0-7]\\d|180)\\.\\d{3,})(?![\\d.])",
     "CENTRELINK_CRN": "\\b(?:CRN\\s*)?\\d{3}\\s?\\d{3}\\s?\\d{3}[A-Z]\\b",
-    "NATIONAL_ID_ALNUM_DASH": "\\b[A-Z]{2,4}(?:-[A-Z0-9]{1,6}){2,5}\\b",
+    "NATIONAL_ID_ALNUM_DASH": "\\b[A-Z]{2,4}(?:-[A-Z0-9]{1,8}){2,5}\\b",
     "SOCIAL_HANDLE": "(?<![\\w.])@[A-Za-z0-9_\\.]{3,30}\\b",
     "DOMAIN_OR_URL": "\\b(?:https?://)?[A-Za-z0-9.-]+\\.[A-Za-z]{2,}(?:/[\\w./?=&%-]*)?\\b",
     "DEVICE_ID_ALNUM_DASH": "\\b[A-Z]{2,10}(?:-[A-Z0-9]{2,8}){2,6}\\b",
@@ -84,7 +85,8 @@
     "INTEGER_SCORE": "(?<!\\d)(?P<value>\\d{1,2}|100)(?!\\d)",
     "CITIZENSHIP_TEXT": "(?im)\\bcitizenship\\s+status\\s*[:#=\\-]?\\s*(?P<value>(?:Australian citizen|Permanent Resident|Temporary visa holder|New Zealand citizen|PR))",
     "CARING_RESPONSIBILITY_TEXT": "(?im)\\bcaring\\s+responsibilities\\s*[:#=\\-]?\\s*(?P<value>(?:cares for [^\\n\\r]+|has shared caring duties|parent/carer responsibilities))",
-    "MEDICAL_FREE_TEXT": "(?im)\\b(?:medical detail|medical reason|reason)\\s*[:#=\\-]?\\s*(?P<value>(?!(?:illness in group)\\b)(?=[^\\n\\r]*(?:migraine|anxiety|depression|injury|illness|condition|flare-up|symptoms|disease|syndrome|ailment))[A-Za-z][^\\n\\r]{2,80})"
+    "MEDICAL_FREE_TEXT": "(?im)\\b(?:medical detail|medical reason|reason)\\s*[:#=\\-]?\\s*(?P<value>(?!(?:illness in group)\\b)(?=[^\\n\\r]*(?:migraine|anxiety|depression|injury|illness|condition|flare-up|symptoms|disease|syndrome|ailment))[A-Za-z][^\\n\\r]{2,80})",
+    "GENDER_TEXT": "(?i)\\b(?:male|female|non[- ]?binary|nonbinary|genderfluid|gender[ -]?queer|trans(?:gender)?)\\b"
   },
   "label_alias_normalization": {
     "BANK_ACCOUNT_INFORMATION": "AU_BANK_ACCOUNT",
@@ -482,9 +484,11 @@
         "cellphone",
         "smartphone",
         "phone",
+        "telephone",
         "call",
         "contact",
         "tel",
+        "fax",
         "m:"
       ],
       "negative_triggers": [
@@ -508,6 +512,7 @@
       "patterns": [
         "AU_MOBILE_LOCAL",
         "AU_MOBILE_INTL",
+        "AU_LANDLINE_INTL",
         "AU_LANDLINE"
       ],
       "require_positive_trigger": true,
@@ -2253,6 +2258,33 @@
       "rule_mode": "context_required",
       "suppress_if_negative_trigger_in_window": true,
       "notes": "Generate formal forms, messy notes, chat snippets, multi-person variants, and hard negatives using listed triggers."
+    },
+    "GENDER": {
+      "enabled": true,
+      "patterns": [
+        "GENDER_TEXT"
+      ],
+      "positive_triggers": [
+        "gender",
+        "sex",
+        "gender identity",
+        "identifies as",
+        "self-identified"
+      ],
+      "negative_triggers": [
+        "gender studies",
+        "gender bias",
+        "gender pay gap",
+        "gender ratio",
+        "transgender rights",
+        "gender equality",
+        "discussion",
+        "policy"
+      ],
+      "require_positive_trigger": true,
+      "window_left_chars": 50,
+      "window_right_chars": 30,
+      "priority": 60
     }
   }
 }

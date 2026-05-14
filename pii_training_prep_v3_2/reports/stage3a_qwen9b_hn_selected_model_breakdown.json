@@ -1,0 +1,2241 @@
+{
+  "selected_model": "last_linear",
+  "selected_checkpoint": "runs/qwen9b_hn_spancls_heads/last_linear/head.pt",
+  "selected_temperature": 1.004767,
+  "breakdown": {
+    "train": {
+      "per_source": {
+        "candidate_level_negative": {
+          "example_count": 3462,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.105113,
+          "brier_score": 0.002838,
+          "ece": 0.098866
+        },
+        "qwen_5way_ranking": {
+          "example_count": 1695,
+          "top1_accuracy": 0.778761,
+          "top3_accuracy": 0.964602,
+          "nll": 0.437992,
+          "brier_score": 0.029421,
+          "ece": 0.051558
+        },
+        "sonnet_high_conf": {
+          "example_count": 89594,
+          "top1_accuracy": 0.989419,
+          "top3_accuracy": 1.0,
+          "nll": 0.066351,
+          "brier_score": 0.013743,
+          "ece": 0.042534
+        },
+        "sonnet_low_conf": {
+          "example_count": 18603,
+          "top1_accuracy": 0.98812,
+          "top3_accuracy": 1.0,
+          "nll": 0.06777,
+          "brier_score": 0.014948,
+          "ece": 0.04292
+        }
+      },
+      "per_label": {
+        "ABORIGINALITY": {
+          "example_count": 808,
+          "top1_accuracy": 0.990099,
+          "top3_accuracy": 1.0,
+          "nll": 0.060472,
+          "brier_score": 0.01212,
+          "ece": 0.045151
+        },
+        "ADDRESS": {
+          "example_count": 9388,
+          "top1_accuracy": 0.997444,
+          "top3_accuracy": 1.0,
+          "nll": 0.053362,
+          "brier_score": 0.000657,
+          "ece": 0.048629
+        },
+        "AUDIO_INFORMATION": {
+          "example_count": 581,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.037098,
+          "brier_score": 0.000768,
+          "ece": 0.036318
+        },
+        "AU_TFN": {
+          "example_count": 2003,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.046912,
+          "brier_score": 0.001123,
+          "ece": 0.045518
+        },
+        "BANK_ACCOUNT_INFORMATION": {
+          "example_count": 252,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.025926,
+          "brier_score": 0.000107,
+          "ece": 0.025589
+        },
+        "BANK_ACCOUNT_NUMBER": {
+          "example_count": 2942,
+          "top1_accuracy": 0.989803,
+          "top3_accuracy": 0.990823,
+          "nll": 0.089449,
+          "brier_score": 0.002197,
+          "ece": 0.068941
+        },
+        "CAMERA_FOOTAGE_AUDIO": {
+          "example_count": 581,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.002607,
+          "brier_score": 0.004504,
+          "ece": 0.002601
+        },
+        "CARING_RESPONSIBILITIES": {
+          "example_count": 734,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.057931,
+          "brier_score": 0.000879,
+          "ece": 0.056068
+        },
+        "CENTRELINK_REFERENCE_NUMBER": {
+          "example_count": 727,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.012541,
+          "brier_score": 0.002986,
+          "ece": 0.012425
+        },
+        "CITIZENSHIP_STATUS": {
+          "example_count": 727,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.018239,
+          "brier_score": 0.00216,
+          "ece": 0.018048
+        },
+        "CONTRACT_TYPE": {
+          "example_count": 950,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.058514,
+          "brier_score": 0.00071,
+          "ece": 0.056668
+        },
+        "COOKIE_INFORMATION": {
+          "example_count": 734,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.040625,
+          "brier_score": 0.001584,
+          "ece": 0.039432
+        },
+        "COUNSELLING_RECORDS": {
+          "example_count": 962,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.034712,
+          "brier_score": 0.000714,
+          "ece": 0.034071
+        },
+        "CREDIT_CARD_EXPIRY": {
+          "example_count": 1362,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.054333,
+          "brier_score": 0.001689,
+          "ece": 0.052364
+        },
+        "CRIMINAL_RECORDS": {
+          "example_count": 727,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.045914,
+          "brier_score": 0.000439,
+          "ece": 0.044776
+        },
+        "DATE_OF_BIRTH": {
+          "example_count": 8761,
+          "top1_accuracy": 0.994521,
+          "top3_accuracy": 0.999658,
+          "nll": 0.055673,
+          "brier_score": 0.000492,
+          "ece": 0.04712
+        },
+        "DEVICE_ID": {
+          "example_count": 734,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.062002,
+          "brier_score": 0.004723,
+          "ece": 0.058656
+        },
+        "DISABILITY_OR_SPECIFIC_CONDITION": {
+          "example_count": 962,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.061198,
+          "brier_score": 0.000801,
+          "ece": 0.059183
+        },
+        "DRIVERS_LICENCE": {
+          "example_count": 2003,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.04518,
+          "brier_score": 0.001309,
+          "ece": 0.043809
+        },
+        "EMAIL_ADDRESS": {
+          "example_count": 4203,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.04816,
+          "brier_score": 0.002455,
+          "ece": 0.046393
+        },
+        "EMPLOYEE_NUMBER": {
+          "example_count": 950,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.05098,
+          "brier_score": 0.00094,
+          "ece": 0.04944
+        },
+        "EMPLOYMENT_INFORMATION": {
+          "example_count": 950,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.061215,
+          "brier_score": 0.000688,
+          "ece": 0.059236
+        },
+        "FACIAL_RECOGNITION": {
+          "example_count": 558,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.070338,
+          "brier_score": 0.002707,
+          "ece": 0.067283
+        },
+        "FINGERPRINT": {
+          "example_count": 558,
+          "top1_accuracy": 0.998208,
+          "top3_accuracy": 1.0,
+          "nll": 0.126981,
+          "brier_score": 0.016732,
+          "ece": 0.115216
+        },
+        "FIRST_NAME": {
+          "example_count": 315,
+          "top1_accuracy": 0.742857,
+          "top3_accuracy": 1.0,
+          "nll": 0.324905,
+          "brier_score": 0.005973,
+          "ece": 0.138663
+        },
+        "GENDER": {
+          "example_count": 402,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.003897,
+          "brier_score": 0.004314,
+          "ece": 0.003876
+        },
+        "GEOLOCATION_INFORMATION": {
+          "example_count": 788,
+          "top1_accuracy": 0.911168,
+          "top3_accuracy": 1.0,
+          "nll": 0.301031,
+          "brier_score": 0.075391,
+          "ece": 0.112955
+        },
+        "HASHED_PAYMENT_CARD_NUMBER": {
+          "example_count": 401,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.045259,
+          "brier_score": 0.00172,
+          "ece": 0.043831
+        },
+        "HOME_PHONE": {
+          "example_count": 300,
+          "top1_accuracy": 0.9,
+          "top3_accuracy": 0.9,
+          "nll": 0.360778,
+          "brier_score": 0.004912,
+          "ece": 0.103582
+        },
+        "IHI": {
+          "example_count": 1172,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.04335,
+          "brier_score": 0.001043,
+          "ece": 0.042181
+        },
+        "IP_ADDRESS": {
+          "example_count": 734,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.050478,
+          "brier_score": 0.000943,
+          "ece": 0.048972
+        },
+        "LAST_NAME": {
+          "example_count": 246,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.040751,
+          "brier_score": 0.000242,
+          "ece": 0.039898
+        },
+        "LATITUDE": {
+          "example_count": 746,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.014398,
+          "brier_score": 0.005503,
+          "ece": 0.010216
+        },
+        "LONGITUDE": {
+          "example_count": 734,
+          "top1_accuracy": 0.46594,
+          "top3_accuracy": 1.0,
+          "nll": 1.199898,
+          "brier_score": 0.708905,
+          "ece": 0.356283
+        },
+        "MARITAL_STATUS": {
+          "example_count": 734,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.033071,
+          "brier_score": 0.0009,
+          "ece": 0.032458
+        },
+        "MEDICAL_CERTIFICATE": {
+          "example_count": 962,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.054624,
+          "brier_score": 0.000333,
+          "ece": 0.053074
+        },
+        "MEDICAL_INFORMATION": {
+          "example_count": 962,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.043059,
+          "brier_score": 0.000666,
+          "ece": 0.042005
+        },
+        "MEDICARE_EXPIRY": {
+          "example_count": 1172,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.058187,
+          "brier_score": 0.001906,
+          "ece": 0.055981
+        },
+        "MEDICARE_NUMBER": {
+          "example_count": 1172,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.034873,
+          "brier_score": 0.000753,
+          "ece": 0.034218
+        },
+        "MILITARY_VETERAN_STATUS": {
+          "example_count": 734,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.0465,
+          "brier_score": 0.000885,
+          "ece": 0.04516
+        },
+        "MOBILE": {
+          "example_count": 4048,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.047365,
+          "brier_score": 0.001117,
+          "ece": 0.045926
+        },
+        "NATIONALITY": {
+          "example_count": 727,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.064117,
+          "brier_score": 0.001884,
+          "ece": 0.061638
+        },
+        "NATIONAL_IDENTITY_CARD": {
+          "example_count": 727,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.02472,
+          "brier_score": 0.001705,
+          "ece": 0.024327
+        },
+        "NEXT_OF_KIN": {
+          "example_count": 581,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.038056,
+          "brier_score": 0.00088,
+          "ece": 0.037205
+        },
+        "NON_PII": {
+          "example_count": 3477,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.10747,
+          "brier_score": 0.002847,
+          "ece": 0.100505
+        },
+        "NUMBER_PLATE": {
+          "example_count": 755,
+          "top1_accuracy": 0.442384,
+          "top3_accuracy": 1.0,
+          "nll": 0.893047,
+          "brier_score": 0.560875,
+          "ece": 0.238105
+        },
+        "PASSPORT_EXPIRY": {
+          "example_count": 726,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.055414,
+          "brier_score": 0.001835,
+          "ece": 0.053343
+        },
+        "PASSPORT_NUMBER": {
+          "example_count": 2729,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.044635,
+          "brier_score": 0.000982,
+          "ece": 0.043414
+        },
+        "PASSPORT_START_DATE": {
+          "example_count": 726,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.046736,
+          "brier_score": 0.00088,
+          "ece": 0.045426
+        },
+        "PAYMENT_CARD_NUMBER": {
+          "example_count": 1832,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.057459,
+          "brier_score": 0.001673,
+          "ece": 0.054121
+        },
+        "PENSION_CARD_NUMBER": {
+          "example_count": 581,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.039929,
+          "brier_score": 0.001309,
+          "ece": 0.038834
+        },
+        "PERSON": {
+          "example_count": 15231,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.047841,
+          "brier_score": 0.00044,
+          "ece": 0.046604
+        },
+        "PERSONAL_DEBT": {
+          "example_count": 734,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.061563,
+          "brier_score": 0.000474,
+          "ece": 0.059625
+        },
+        "PERSONNEL_NUMBER": {
+          "example_count": 950,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.041772,
+          "brier_score": 0.000826,
+          "ece": 0.040744
+        },
+        "PRONOUN": {
+          "example_count": 808,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.047414,
+          "brier_score": 0.000674,
+          "ece": 0.046134
+        },
+        "RACIAL_ETHNIC_ORIGIN": {
+          "example_count": 808,
+          "top1_accuracy": 0.975248,
+          "top3_accuracy": 1.0,
+          "nll": 0.178802,
+          "brier_score": 0.049858,
+          "ece": 0.107745
+        },
+        "RELIGION_BELIEF": {
+          "example_count": 808,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.075817,
+          "brier_score": 0.002744,
+          "ece": 0.072512
+        },
+        "SALARY": {
+          "example_count": 2397,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.028029,
+          "brier_score": 0.001787,
+          "ece": 0.027432
+        },
+        "SALARY_WAGE_EXPECTATION": {
+          "example_count": 488,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.003461,
+          "brier_score": 0.004483,
+          "ece": 0.003424
+        },
+        "SANCTIONS": {
+          "example_count": 1190,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.047049,
+          "brier_score": 0.000577,
+          "ece": 0.045809
+        },
+        "SCHOLARSHIP": {
+          "example_count": 1190,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.045734,
+          "brier_score": 0.000559,
+          "ece": 0.044576
+        },
+        "SEXUAL_ORIENTATION": {
+          "example_count": 808,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.083362,
+          "brier_score": 0.004921,
+          "ece": 0.07907
+        },
+        "SIGNATURE": {
+          "example_count": 558,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.067256,
+          "brier_score": 0.002186,
+          "ece": 0.064433
+        },
+        "SOCIAL_MEDIA_ACCOUNT": {
+          "example_count": 788,
+          "top1_accuracy": 0.935279,
+          "top3_accuracy": 1.0,
+          "nll": 0.089199,
+          "brier_score": 0.005404,
+          "ece": 0.049497
+        },
+        "SOCIAL_MEDIA_HISTORY": {
+          "example_count": 734,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.048646,
+          "brier_score": 0.004495,
+          "ece": 0.046187
+        },
+        "SOCIAL_MEDIA_ID": {
+          "example_count": 734,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.026079,
+          "brier_score": 0.001778,
+          "ece": 0.025594
+        },
+        "SOCIO_ECONOMIC_STATUS": {
+          "example_count": 808,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.048592,
+          "brier_score": 0.00047,
+          "ece": 0.04731
+        },
+        "SPECIAL_CONSIDERATION": {
+          "example_count": 962,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.055089,
+          "brier_score": 0.000712,
+          "ece": 0.053399
+        },
+        "STUDENT_ID": {
+          "example_count": 2583,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.047408,
+          "brier_score": 0.001129,
+          "ece": 0.045973
+        },
+        "SUBJECT_RESULTS": {
+          "example_count": 1190,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.018441,
+          "brier_score": 0.002289,
+          "ece": 0.018209
+        },
+        "UAC_ID": {
+          "example_count": 727,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.02772,
+          "brier_score": 0.001558,
+          "ece": 0.027227
+        },
+        "USERNAME": {
+          "example_count": 767,
+          "top1_accuracy": 0.960887,
+          "top3_accuracy": 1.0,
+          "nll": 0.106272,
+          "brier_score": 0.003098,
+          "ece": 0.078039
+        },
+        "USI": {
+          "example_count": 727,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.051492,
+          "brier_score": 0.000523,
+          "ece": 0.050042
+        },
+        "VEHICLE_REGO": {
+          "example_count": 761,
+          "top1_accuracy": 0.555848,
+          "top3_accuracy": 1.0,
+          "nll": 0.807542,
+          "brier_score": 0.474561,
+          "ece": 0.116694
+        },
+        "VOICE_RECOGNITION": {
+          "example_count": 558,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.015005,
+          "brier_score": 0.00281,
+          "ece": 0.01481
+        },
+        "WAM_SCORE": {
+          "example_count": 1190,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.044765,
+          "brier_score": 0.000312,
+          "ece": 0.043717
+        },
+        "WEBSITE_HISTORY": {
+          "example_count": 734,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.033151,
+          "brier_score": 0.00091,
+          "ece": 0.032535
+        },
+        "WORKERS_COMPENSATION_CLAIM": {
+          "example_count": 581,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.017837,
+          "brier_score": 0.002256,
+          "ece": 0.017646
+        },
+        "WORK_EMAIL": {
+          "example_count": 950,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.031777,
+          "brier_score": 0.001548,
+          "ece": 0.031079
+        },
+        "WORK_PHONE": {
+          "example_count": 950,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.031108,
+          "brier_score": 0.001614,
+          "ece": 0.030447
+        }
+      },
+      "high_entropy_samples": {
+        "example_count": 3762,
+        "top1_accuracy": 0.900319,
+        "top3_accuracy": 0.984051,
+        "nll": 0.280882,
+        "brier_score": 0.015745,
+        "ece": 0.097932
+      },
+      "non_pii": {
+        "example_count": 3477,
+        "top1_accuracy": 1.0,
+        "top3_accuracy": 1.0,
+        "nll": 0.10747,
+        "brier_score": 0.002847,
+        "ece": 0.100505
+      },
+      "zero_example_recovered_labels": {
+        "BANK_ACCOUNT_INFORMATION": {
+          "example_count": 252,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.025926,
+          "brier_score": 0.000107,
+          "ece": 0.025589
+        },
+        "FIRST_NAME": {
+          "example_count": 315,
+          "top1_accuracy": 0.742857,
+          "top3_accuracy": 1.0,
+          "nll": 0.324905,
+          "brier_score": 0.005973,
+          "ece": 0.138663
+        },
+        "HOME_PHONE": {
+          "example_count": 300,
+          "top1_accuracy": 0.9,
+          "top3_accuracy": 0.9,
+          "nll": 0.360778,
+          "brier_score": 0.004912,
+          "ece": 0.103582
+        },
+        "LAST_NAME": {
+          "example_count": 246,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.040751,
+          "brier_score": 0.000242,
+          "ece": 0.039898
+        }
+      },
+      "semantic_context_based_labels": {
+        "example_count": 60350,
+        "top1_accuracy": 0.995775,
+        "top3_accuracy": 1.0,
+        "nll": 0.054029,
+        "brier_score": 0.003069,
+        "ece": 0.045616
+      },
+      "pattern_based_labels": {
+        "example_count": 49527,
+        "top1_accuracy": 0.973974,
+        "top3_accuracy": 0.998789,
+        "nll": 0.094441,
+        "brier_score": 0.027741,
+        "ece": 0.042561
+      }
+    },
+    "dev": {
+      "per_source": {
+        "candidate_level_negative": {
+          "example_count": 432,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.302741,
+          "brier_score": 0.104015,
+          "ece": 0.258712
+        },
+        "qwen_5way_ranking": {
+          "example_count": 180,
+          "top1_accuracy": 0.816667,
+          "top3_accuracy": 1.0,
+          "nll": 0.513389,
+          "brier_score": 0.044514,
+          "ece": 0.149468
+        },
+        "sonnet_high_conf": {
+          "example_count": 10898,
+          "top1_accuracy": 0.987062,
+          "top3_accuracy": 0.999908,
+          "nll": 0.0736,
+          "brier_score": 0.016303,
+          "ece": 0.044481
+        },
+        "sonnet_low_conf": {
+          "example_count": 2340,
+          "top1_accuracy": 0.993162,
+          "top3_accuracy": 1.0,
+          "nll": 0.066925,
+          "brier_score": 0.011963,
+          "ece": 0.046192
+        }
+      },
+      "per_label": {
+        "ABORIGINALITY": {
+          "example_count": 97,
+          "top1_accuracy": 0.958763,
+          "top3_accuracy": 1.0,
+          "nll": 0.180103,
+          "brier_score": 0.063763,
+          "ece": 0.038496
+        },
+        "ADDRESS": {
+          "example_count": 1176,
+          "top1_accuracy": 0.994898,
+          "top3_accuracy": 1.0,
+          "nll": 0.055565,
+          "brier_score": 0.000813,
+          "ece": 0.051902
+        },
+        "AUDIO_INFORMATION": {
+          "example_count": 62,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.040331,
+          "brier_score": 0.001503,
+          "ece": 0.039186
+        },
+        "AU_TFN": {
+          "example_count": 253,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.047394,
+          "brier_score": 0.001193,
+          "ece": 0.045951
+        },
+        "BANK_ACCOUNT_INFORMATION": {
+          "example_count": 21,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.026596,
+          "brier_score": 8.8e-05,
+          "ece": 0.026242
+        },
+        "BANK_ACCOUNT_NUMBER": {
+          "example_count": 388,
+          "top1_accuracy": 0.997423,
+          "top3_accuracy": 1.0,
+          "nll": 0.106874,
+          "brier_score": 0.007663,
+          "ece": 0.084672
+        },
+        "CAMERA_FOOTAGE_AUDIO": {
+          "example_count": 62,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.002754,
+          "brier_score": 0.004478,
+          "ece": 0.002748
+        },
+        "CARING_RESPONSIBILITIES": {
+          "example_count": 90,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.061654,
+          "brier_score": 0.001553,
+          "ece": 0.059419
+        },
+        "CENTRELINK_REFERENCE_NUMBER": {
+          "example_count": 87,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.014674,
+          "brier_score": 0.002826,
+          "ece": 0.014492
+        },
+        "CITIZENSHIP_STATUS": {
+          "example_count": 87,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.020772,
+          "brier_score": 0.002428,
+          "ece": 0.02037
+        },
+        "CONTRACT_TYPE": {
+          "example_count": 123,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.061356,
+          "brier_score": 0.001244,
+          "ece": 0.05922
+        },
+        "COOKIE_INFORMATION": {
+          "example_count": 74,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.04539,
+          "brier_score": 0.001986,
+          "ece": 0.043844
+        },
+        "COUNSELLING_RECORDS": {
+          "example_count": 105,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.03679,
+          "brier_score": 0.00086,
+          "ece": 0.035989
+        },
+        "CREDIT_CARD_EXPIRY": {
+          "example_count": 174,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.073656,
+          "brier_score": 0.009831,
+          "ece": 0.066694
+        },
+        "CRIMINAL_RECORDS": {
+          "example_count": 87,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.051582,
+          "brier_score": 0.001521,
+          "ece": 0.049841
+        },
+        "DATE_OF_BIRTH": {
+          "example_count": 1094,
+          "top1_accuracy": 0.991773,
+          "top3_accuracy": 1.0,
+          "nll": 0.060431,
+          "brier_score": 0.000589,
+          "ece": 0.048253
+        },
+        "DEVICE_ID": {
+          "example_count": 74,
+          "top1_accuracy": 0.986486,
+          "top3_accuracy": 1.0,
+          "nll": 0.100347,
+          "brier_score": 0.02268,
+          "ece": 0.086435
+        },
+        "DISABILITY_OR_SPECIFIC_CONDITION": {
+          "example_count": 105,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.064645,
+          "brier_score": 0.001881,
+          "ece": 0.062139
+        },
+        "DRIVERS_LICENCE": {
+          "example_count": 253,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.054243,
+          "brier_score": 0.003906,
+          "ece": 0.051461
+        },
+        "EMAIL_ADDRESS": {
+          "example_count": 526,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.049675,
+          "brier_score": 0.00213,
+          "ece": 0.047802
+        },
+        "EMPLOYEE_NUMBER": {
+          "example_count": 123,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.056378,
+          "brier_score": 0.002209,
+          "ece": 0.054159
+        },
+        "EMPLOYMENT_INFORMATION": {
+          "example_count": 123,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.074414,
+          "brier_score": 0.006032,
+          "ece": 0.06985
+        },
+        "FACIAL_RECOGNITION": {
+          "example_count": 68,
+          "top1_accuracy": 0.985294,
+          "top3_accuracy": 1.0,
+          "nll": 0.142899,
+          "brier_score": 0.030151,
+          "ece": 0.067201
+        },
+        "FINGERPRINT": {
+          "example_count": 68,
+          "top1_accuracy": 0.985294,
+          "top3_accuracy": 1.0,
+          "nll": 0.163768,
+          "brier_score": 0.036556,
+          "ece": 0.135418
+        },
+        "FIRST_NAME": {
+          "example_count": 30,
+          "top1_accuracy": 0.9,
+          "top3_accuracy": 1.0,
+          "nll": 0.127387,
+          "brier_score": 0.003984,
+          "ece": 0.0769
+        },
+        "GENDER": {
+          "example_count": 50,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.004745,
+          "brier_score": 0.0042,
+          "ece": 0.004714
+        },
+        "GEOLOCATION_INFORMATION": {
+          "example_count": 86,
+          "top1_accuracy": 0.837209,
+          "top3_accuracy": 1.0,
+          "nll": 0.458454,
+          "brier_score": 0.115248,
+          "ece": 0.141888
+        },
+        "HASHED_PAYMENT_CARD_NUMBER": {
+          "example_count": 50,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.075337,
+          "brier_score": 0.012607,
+          "ece": 0.067983
+        },
+        "HOME_PHONE": {
+          "example_count": 36,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.246349,
+          "brier_score": 0.000176,
+          "ece": 0.145664
+        },
+        "IHI": {
+          "example_count": 160,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.053217,
+          "brier_score": 0.00255,
+          "ece": 0.05099
+        },
+        "IP_ADDRESS": {
+          "example_count": 74,
+          "top1_accuracy": 0.986486,
+          "top3_accuracy": 1.0,
+          "nll": 0.083132,
+          "brier_score": 0.017379,
+          "ece": 0.057675
+        },
+        "LAST_NAME": {
+          "example_count": 24,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.040839,
+          "brier_score": 0.000313,
+          "ece": 0.039958
+        },
+        "LATITUDE": {
+          "example_count": 74,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.001953,
+          "brier_score": 0.00468,
+          "ece": 0.001947
+        },
+        "LONGITUDE": {
+          "example_count": 74,
+          "top1_accuracy": 0.445946,
+          "top3_accuracy": 1.0,
+          "nll": 1.254781,
+          "brier_score": 0.701464,
+          "ece": 0.354203
+        },
+        "MARITAL_STATUS": {
+          "example_count": 90,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.040167,
+          "brier_score": 0.004294,
+          "ece": 0.037888
+        },
+        "MEDICAL_CERTIFICATE": {
+          "example_count": 105,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.055241,
+          "brier_score": 0.000466,
+          "ece": 0.053623
+        },
+        "MEDICAL_INFORMATION": {
+          "example_count": 105,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.044653,
+          "brier_score": 0.000934,
+          "ece": 0.043443
+        },
+        "MEDICARE_EXPIRY": {
+          "example_count": 160,
+          "top1_accuracy": 0.99375,
+          "top3_accuracy": 0.99375,
+          "nll": 0.108956,
+          "brier_score": 0.01631,
+          "ece": 0.062564
+        },
+        "MEDICARE_NUMBER": {
+          "example_count": 160,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.040933,
+          "brier_score": 0.002146,
+          "ece": 0.039473
+        },
+        "MILITARY_VETERAN_STATUS": {
+          "example_count": 90,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.062006,
+          "brier_score": 0.005617,
+          "ece": 0.057727
+        },
+        "MOBILE": {
+          "example_count": 514,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.053038,
+          "brier_score": 0.003697,
+          "ece": 0.050218
+        },
+        "NATIONALITY": {
+          "example_count": 87,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.076272,
+          "brier_score": 0.006365,
+          "ece": 0.071808
+        },
+        "NATIONAL_IDENTITY_CARD": {
+          "example_count": 87,
+          "top1_accuracy": 0.988506,
+          "top3_accuracy": 1.0,
+          "nll": 0.042379,
+          "brier_score": 0.010853,
+          "ece": 0.036393
+        },
+        "NEXT_OF_KIN": {
+          "example_count": 62,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.041893,
+          "brier_score": 0.001694,
+          "ece": 0.040592
+        },
+        "NON_PII": {
+          "example_count": 438,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.309887,
+          "brier_score": 0.10296,
+          "ece": 0.262772
+        },
+        "NUMBER_PLATE": {
+          "example_count": 90,
+          "top1_accuracy": 0.422222,
+          "top3_accuracy": 1.0,
+          "nll": 0.856675,
+          "brier_score": 0.538358,
+          "ece": 0.196146
+        },
+        "PASSPORT_EXPIRY": {
+          "example_count": 90,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.085202,
+          "brier_score": 0.01254,
+          "ece": 0.075745
+        },
+        "PASSPORT_NUMBER": {
+          "example_count": 343,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.043776,
+          "brier_score": 0.00107,
+          "ece": 0.042572
+        },
+        "PASSPORT_START_DATE": {
+          "example_count": 90,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.055423,
+          "brier_score": 0.002451,
+          "ece": 0.053109
+        },
+        "PAYMENT_CARD_NUMBER": {
+          "example_count": 233,
+          "top1_accuracy": 0.995708,
+          "top3_accuracy": 1.0,
+          "nll": 0.084671,
+          "brier_score": 0.007988,
+          "ece": 0.06956
+        },
+        "PENSION_CARD_NUMBER": {
+          "example_count": 62,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.043697,
+          "brier_score": 0.002035,
+          "ece": 0.04218
+        },
+        "PERSON": {
+          "example_count": 1883,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.048651,
+          "brier_score": 0.000665,
+          "ece": 0.047271
+        },
+        "PERSONAL_DEBT": {
+          "example_count": 90,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.064674,
+          "brier_score": 0.000916,
+          "ece": 0.062459
+        },
+        "PERSONNEL_NUMBER": {
+          "example_count": 123,
+          "top1_accuracy": 0.99187,
+          "top3_accuracy": 1.0,
+          "nll": 0.06217,
+          "brier_score": 0.007123,
+          "ece": 0.056115
+        },
+        "PRONOUN": {
+          "example_count": 97,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.057099,
+          "brier_score": 0.00213,
+          "ece": 0.054909
+        },
+        "RACIAL_ETHNIC_ORIGIN": {
+          "example_count": 97,
+          "top1_accuracy": 0.938144,
+          "top3_accuracy": 1.0,
+          "nll": 0.208689,
+          "brier_score": 0.070988,
+          "ece": 0.126466
+        },
+        "RELIGION_BELIEF": {
+          "example_count": 97,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.082288,
+          "brier_score": 0.004775,
+          "ece": 0.078071
+        },
+        "SALARY": {
+          "example_count": 311,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.028175,
+          "brier_score": 0.002512,
+          "ece": 0.027323
+        },
+        "SALARY_WAGE_EXPECTATION": {
+          "example_count": 60,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.009384,
+          "brier_score": 0.004607,
+          "ece": 0.009008
+        },
+        "SANCTIONS": {
+          "example_count": 152,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.049579,
+          "brier_score": 0.001118,
+          "ece": 0.048044
+        },
+        "SCHOLARSHIP": {
+          "example_count": 152,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.048226,
+          "brier_score": 0.00104,
+          "ece": 0.046799
+        },
+        "SEXUAL_ORIENTATION": {
+          "example_count": 97,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.087982,
+          "brier_score": 0.008404,
+          "ece": 0.082122
+        },
+        "SIGNATURE": {
+          "example_count": 68,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.080357,
+          "brier_score": 0.006761,
+          "ece": 0.075279
+        },
+        "SOCIAL_MEDIA_ACCOUNT": {
+          "example_count": 77,
+          "top1_accuracy": 0.948052,
+          "top3_accuracy": 1.0,
+          "nll": 0.082088,
+          "brier_score": 0.013757,
+          "ece": 0.054813
+        },
+        "SOCIAL_MEDIA_HISTORY": {
+          "example_count": 74,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.047043,
+          "brier_score": 0.003275,
+          "ece": 0.045059
+        },
+        "SOCIAL_MEDIA_ID": {
+          "example_count": 74,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.03577,
+          "brier_score": 0.003434,
+          "ece": 0.034269
+        },
+        "SOCIO_ECONOMIC_STATUS": {
+          "example_count": 97,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.053255,
+          "brier_score": 0.001443,
+          "ece": 0.051469
+        },
+        "SPECIAL_CONSIDERATION": {
+          "example_count": 105,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.058321,
+          "brier_score": 0.001409,
+          "ece": 0.056227
+        },
+        "STUDENT_ID": {
+          "example_count": 320,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.05184,
+          "brier_score": 0.002259,
+          "ece": 0.049762
+        },
+        "SUBJECT_RESULTS": {
+          "example_count": 152,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.020647,
+          "brier_score": 0.002562,
+          "ece": 0.020197
+        },
+        "UAC_ID": {
+          "example_count": 87,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.032129,
+          "brier_score": 0.002427,
+          "ece": 0.031135
+        },
+        "USERNAME": {
+          "example_count": 74,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.073103,
+          "brier_score": 0.006288,
+          "ece": 0.068229
+        },
+        "USI": {
+          "example_count": 87,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.051599,
+          "brier_score": 0.000649,
+          "ece": 0.050105
+        },
+        "VEHICLE_REGO": {
+          "example_count": 90,
+          "top1_accuracy": 0.555556,
+          "top3_accuracy": 1.0,
+          "nll": 0.820317,
+          "brier_score": 0.50283,
+          "ece": 0.104238
+        },
+        "VOICE_RECOGNITION": {
+          "example_count": 68,
+          "top1_accuracy": 0.985294,
+          "top3_accuracy": 1.0,
+          "nll": 0.04622,
+          "brier_score": 0.019329,
+          "ece": 0.02619
+        },
+        "WAM_SCORE": {
+          "example_count": 152,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.043617,
+          "brier_score": 0.000513,
+          "ece": 0.042576
+        },
+        "WEBSITE_HISTORY": {
+          "example_count": 74,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.033241,
+          "brier_score": 0.000934,
+          "ece": 0.032614
+        },
+        "WORKERS_COMPENSATION_CLAIM": {
+          "example_count": 62,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.025001,
+          "brier_score": 0.003319,
+          "ece": 0.024093
+        },
+        "WORK_EMAIL": {
+          "example_count": 123,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.035429,
+          "brier_score": 0.002069,
+          "ece": 0.034391
+        },
+        "WORK_PHONE": {
+          "example_count": 123,
+          "top1_accuracy": 0.99187,
+          "top3_accuracy": 1.0,
+          "nll": 0.06386,
+          "brier_score": 0.015746,
+          "ece": 0.036142
+        }
+      },
+      "high_entropy_samples": {
+        "example_count": 144,
+        "top1_accuracy": 0.770833,
+        "top3_accuracy": 1.0,
+        "nll": 0.700228,
+        "brier_score": 0.069165,
+        "ece": 0.233034
+      },
+      "non_pii": {
+        "example_count": 438,
+        "top1_accuracy": 1.0,
+        "top3_accuracy": 1.0,
+        "nll": 0.309887,
+        "brier_score": 0.10296,
+        "ece": 0.262772
+      },
+      "zero_example_recovered_labels": {
+        "BANK_ACCOUNT_INFORMATION": {
+          "example_count": 21,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.026596,
+          "brier_score": 8.8e-05,
+          "ece": 0.026242
+        },
+        "FIRST_NAME": {
+          "example_count": 30,
+          "top1_accuracy": 0.9,
+          "top3_accuracy": 1.0,
+          "nll": 0.127387,
+          "brier_score": 0.003984,
+          "ece": 0.0769
+        },
+        "HOME_PHONE": {
+          "example_count": 36,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.246349,
+          "brier_score": 0.000176,
+          "ece": 0.145664
+        },
+        "LAST_NAME": {
+          "example_count": 24,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.040839,
+          "brier_score": 0.000313,
+          "ece": 0.039958
+        }
+      },
+      "semantic_context_based_labels": {
+        "example_count": 7253,
+        "top1_accuracy": 0.994347,
+        "top3_accuracy": 1.0,
+        "nll": 0.06071,
+        "brier_score": 0.005906,
+        "ece": 0.045891
+      },
+      "pattern_based_labels": {
+        "example_count": 6159,
+        "top1_accuracy": 0.975808,
+        "top3_accuracy": 0.999838,
+        "nll": 0.098365,
+        "brier_score": 0.027712,
+        "ece": 0.042092
+      }
+    },
+    "test": {
+      "per_source": {
+        "candidate_level_negative": {
+          "example_count": 66,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.395351,
+          "brier_score": 0.165693,
+          "ece": 0.312995
+        },
+        "qwen_5way_ranking": {
+          "example_count": 225,
+          "top1_accuracy": 0.88,
+          "top3_accuracy": 0.986667,
+          "nll": 0.390015,
+          "brier_score": 0.052691,
+          "ece": 0.092535
+        },
+        "sonnet_high_conf": {
+          "example_count": 10921,
+          "top1_accuracy": 0.988554,
+          "top3_accuracy": 1.0,
+          "nll": 0.071255,
+          "brier_score": 0.015354,
+          "ece": 0.043968
+        },
+        "sonnet_low_conf": {
+          "example_count": 2376,
+          "top1_accuracy": 0.992424,
+          "top3_accuracy": 1.0,
+          "nll": 0.06557,
+          "brier_score": 0.011445,
+          "ece": 0.04687
+        }
+      },
+      "per_label": {
+        "ABORIGINALITY": {
+          "example_count": 95,
+          "top1_accuracy": 0.989474,
+          "top3_accuracy": 1.0,
+          "nll": 0.097609,
+          "brier_score": 0.021734,
+          "ece": 0.039477
+        },
+        "ADDRESS": {
+          "example_count": 1108,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.050598,
+          "brier_score": 0.000597,
+          "ece": 0.048991
+        },
+        "AUDIO_INFORMATION": {
+          "example_count": 57,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.039864,
+          "brier_score": 0.000997,
+          "ece": 0.038878
+        },
+        "AU_TFN": {
+          "example_count": 244,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.058891,
+          "brier_score": 0.004756,
+          "ece": 0.054823
+        },
+        "BANK_ACCOUNT_INFORMATION": {
+          "example_count": 27,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.02484,
+          "brier_score": 0.00013,
+          "ece": 0.024533
+        },
+        "BANK_ACCOUNT_NUMBER": {
+          "example_count": 330,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.066264,
+          "brier_score": 0.002957,
+          "ece": 0.063102
+        },
+        "CAMERA_FOOTAGE_AUDIO": {
+          "example_count": 57,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.002969,
+          "brier_score": 0.004432,
+          "ece": 0.002963
+        },
+        "CARING_RESPONSIBILITIES": {
+          "example_count": 76,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.060701,
+          "brier_score": 0.002411,
+          "ece": 0.058234
+        },
+        "CENTRELINK_REFERENCE_NUMBER": {
+          "example_count": 86,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.017097,
+          "brier_score": 0.002621,
+          "ece": 0.016847
+        },
+        "CITIZENSHIP_STATUS": {
+          "example_count": 86,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.033511,
+          "brier_score": 0.005684,
+          "ece": 0.031264
+        },
+        "CONTRACT_TYPE": {
+          "example_count": 127,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.06359,
+          "brier_score": 0.002333,
+          "ece": 0.060496
+        },
+        "COOKIE_INFORMATION": {
+          "example_count": 92,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.045368,
+          "brier_score": 0.001635,
+          "ece": 0.04392
+        },
+        "COUNSELLING_RECORDS": {
+          "example_count": 133,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.036067,
+          "brier_score": 0.000971,
+          "ece": 0.035277
+        },
+        "CREDIT_CARD_EXPIRY": {
+          "example_count": 162,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.063178,
+          "brier_score": 0.006139,
+          "ece": 0.058999
+        },
+        "CRIMINAL_RECORDS": {
+          "example_count": 86,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.050265,
+          "brier_score": 0.000728,
+          "ece": 0.04883
+        },
+        "DATE_OF_BIRTH": {
+          "example_count": 1052,
+          "top1_accuracy": 0.997148,
+          "top3_accuracy": 1.0,
+          "nll": 0.053244,
+          "brier_score": 0.00065,
+          "ece": 0.048105
+        },
+        "DEVICE_ID": {
+          "example_count": 92,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.09172,
+          "brier_score": 0.017454,
+          "ece": 0.082204
+        },
+        "DISABILITY_OR_SPECIFIC_CONDITION": {
+          "example_count": 133,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.075456,
+          "brier_score": 0.004871,
+          "ece": 0.071056
+        },
+        "DRIVERS_LICENCE": {
+          "example_count": 244,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.04739,
+          "brier_score": 0.002024,
+          "ece": 0.045656
+        },
+        "EMAIL_ADDRESS": {
+          "example_count": 507,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.047989,
+          "brier_score": 0.002297,
+          "ece": 0.046394
+        },
+        "EMPLOYEE_NUMBER": {
+          "example_count": 127,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.065952,
+          "brier_score": 0.003525,
+          "ece": 0.062783
+        },
+        "EMPLOYMENT_INFORMATION": {
+          "example_count": 127,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.064258,
+          "brier_score": 0.001604,
+          "ece": 0.061859
+        },
+        "FACIAL_RECOGNITION": {
+          "example_count": 74,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.081349,
+          "brier_score": 0.006574,
+          "ece": 0.076523
+        },
+        "FINGERPRINT": {
+          "example_count": 74,
+          "top1_accuracy": 0.945946,
+          "top3_accuracy": 1.0,
+          "nll": 0.20789,
+          "brier_score": 0.066306,
+          "ece": 0.111642
+        },
+        "FIRST_NAME": {
+          "example_count": 45,
+          "top1_accuracy": 0.933333,
+          "top3_accuracy": 1.0,
+          "nll": 0.161959,
+          "brier_score": 0.008472,
+          "ece": 0.064158
+        },
+        "GENDER": {
+          "example_count": 50,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.007366,
+          "brier_score": 0.003963,
+          "ece": 0.00726
+        },
+        "GEOLOCATION_INFORMATION": {
+          "example_count": 104,
+          "top1_accuracy": 0.826923,
+          "top3_accuracy": 1.0,
+          "nll": 0.470308,
+          "brier_score": 0.126533,
+          "ece": 0.128011
+        },
+        "HASHED_PAYMENT_CARD_NUMBER": {
+          "example_count": 49,
+          "top1_accuracy": 0.979592,
+          "top3_accuracy": 1.0,
+          "nll": 0.111898,
+          "brier_score": 0.032778,
+          "ece": 0.060292
+        },
+        "HOME_PHONE": {
+          "example_count": 54,
+          "top1_accuracy": 0.944444,
+          "top3_accuracy": 0.944444,
+          "nll": 0.252824,
+          "brier_score": 0.003529,
+          "ece": 0.093868
+        },
+        "IHI": {
+          "example_count": 168,
+          "top1_accuracy": 0.994048,
+          "top3_accuracy": 1.0,
+          "nll": 0.056853,
+          "brier_score": 0.007899,
+          "ece": 0.04709
+        },
+        "IP_ADDRESS": {
+          "example_count": 92,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.05825,
+          "brier_score": 0.001993,
+          "ece": 0.056032
+        },
+        "LAST_NAME": {
+          "example_count": 30,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.043398,
+          "brier_score": 0.000232,
+          "ece": 0.042454
+        },
+        "LATITUDE": {
+          "example_count": 92,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.003307,
+          "brier_score": 0.004674,
+          "ece": 0.003244
+        },
+        "LONGITUDE": {
+          "example_count": 92,
+          "top1_accuracy": 0.48913,
+          "top3_accuracy": 1.0,
+          "nll": 1.081583,
+          "brier_score": 0.639715,
+          "ece": 0.301174
+        },
+        "MARITAL_STATUS": {
+          "example_count": 76,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.038392,
+          "brier_score": 0.001527,
+          "ece": 0.037318
+        },
+        "MEDICAL_CERTIFICATE": {
+          "example_count": 133,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.056351,
+          "brier_score": 0.000557,
+          "ece": 0.054653
+        },
+        "MEDICAL_INFORMATION": {
+          "example_count": 133,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.045588,
+          "brier_score": 0.001015,
+          "ece": 0.044308
+        },
+        "MEDICARE_EXPIRY": {
+          "example_count": 168,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.069357,
+          "brier_score": 0.006014,
+          "ece": 0.065062
+        },
+        "MEDICARE_NUMBER": {
+          "example_count": 168,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.039476,
+          "brier_score": 0.001125,
+          "ece": 0.038477
+        },
+        "MILITARY_VETERAN_STATUS": {
+          "example_count": 76,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.057359,
+          "brier_score": 0.006407,
+          "ece": 0.05322
+        },
+        "MOBILE": {
+          "example_count": 509,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.052884,
+          "brier_score": 0.003717,
+          "ece": 0.049944
+        },
+        "NATIONALITY": {
+          "example_count": 86,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.07382,
+          "brier_score": 0.005307,
+          "ece": 0.069734
+        },
+        "NATIONAL_IDENTITY_CARD": {
+          "example_count": 86,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.028822,
+          "brier_score": 0.002307,
+          "ece": 0.028032
+        },
+        "NEXT_OF_KIN": {
+          "example_count": 57,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.050119,
+          "brier_score": 0.002321,
+          "ece": 0.048167
+        },
+        "NON_PII": {
+          "example_count": 75,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.426734,
+          "brier_score": 0.146354,
+          "ece": 0.333219
+        },
+        "NUMBER_PLATE": {
+          "example_count": 85,
+          "top1_accuracy": 0.447059,
+          "top3_accuracy": 1.0,
+          "nll": 0.908045,
+          "brier_score": 0.535965,
+          "ece": 0.249837
+        },
+        "PASSPORT_EXPIRY": {
+          "example_count": 84,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.064421,
+          "brier_score": 0.005355,
+          "ece": 0.060191
+        },
+        "PASSPORT_NUMBER": {
+          "example_count": 328,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.047608,
+          "brier_score": 0.002371,
+          "ece": 0.04563
+        },
+        "PASSPORT_START_DATE": {
+          "example_count": 84,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.047111,
+          "brier_score": 0.00103,
+          "ece": 0.045743
+        },
+        "PAYMENT_CARD_NUMBER": {
+          "example_count": 223,
+          "top1_accuracy": 0.982063,
+          "top3_accuracy": 1.0,
+          "nll": 0.095882,
+          "brier_score": 0.021608,
+          "ece": 0.071559
+        },
+        "PENSION_CARD_NUMBER": {
+          "example_count": 57,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.044771,
+          "brier_score": 0.001917,
+          "ece": 0.043248
+        },
+        "PERSON": {
+          "example_count": 1886,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.048678,
+          "brier_score": 0.000727,
+          "ece": 0.047302
+        },
+        "PERSONAL_DEBT": {
+          "example_count": 76,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.063371,
+          "brier_score": 0.000767,
+          "ece": 0.061262
+        },
+        "PERSONNEL_NUMBER": {
+          "example_count": 127,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.060522,
+          "brier_score": 0.006398,
+          "ece": 0.055816
+        },
+        "PRONOUN": {
+          "example_count": 95,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.059321,
+          "brier_score": 0.004674,
+          "ece": 0.055593
+        },
+        "RACIAL_ETHNIC_ORIGIN": {
+          "example_count": 95,
+          "top1_accuracy": 0.968421,
+          "top3_accuracy": 1.0,
+          "nll": 0.16363,
+          "brier_score": 0.045421,
+          "ece": 0.120047
+        },
+        "RELIGION_BELIEF": {
+          "example_count": 95,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.075434,
+          "brier_score": 0.006254,
+          "ece": 0.070947
+        },
+        "SALARY": {
+          "example_count": 292,
+          "top1_accuracy": 0.996575,
+          "top3_accuracy": 1.0,
+          "nll": 0.032969,
+          "brier_score": 0.004179,
+          "ece": 0.030166
+        },
+        "SALARY_WAGE_EXPECTATION": {
+          "example_count": 70,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.022418,
+          "brier_score": 0.010647,
+          "ece": 0.018505
+        },
+        "SANCTIONS": {
+          "example_count": 158,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.052804,
+          "brier_score": 0.001542,
+          "ece": 0.050969
+        },
+        "SCHOLARSHIP": {
+          "example_count": 158,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.053589,
+          "brier_score": 0.004189,
+          "ece": 0.050198
+        },
+        "SEXUAL_ORIENTATION": {
+          "example_count": 95,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.083438,
+          "brier_score": 0.00555,
+          "ece": 0.078961
+        },
+        "SIGNATURE": {
+          "example_count": 74,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.068914,
+          "brier_score": 0.001895,
+          "ece": 0.066178
+        },
+        "SOCIAL_MEDIA_ACCOUNT": {
+          "example_count": 92,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.028891,
+          "brier_score": 0.003313,
+          "ece": 0.027712
+        },
+        "SOCIAL_MEDIA_HISTORY": {
+          "example_count": 92,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.059377,
+          "brier_score": 0.008108,
+          "ece": 0.055154
+        },
+        "SOCIAL_MEDIA_ID": {
+          "example_count": 92,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.045964,
+          "brier_score": 0.006385,
+          "ece": 0.042767
+        },
+        "SOCIO_ECONOMIC_STATUS": {
+          "example_count": 95,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.055487,
+          "brier_score": 0.001543,
+          "ece": 0.053544
+        },
+        "SPECIAL_CONSIDERATION": {
+          "example_count": 133,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.065225,
+          "brier_score": 0.00272,
+          "ece": 0.062249
+        },
+        "STUDENT_ID": {
+          "example_count": 327,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.048843,
+          "brier_score": 0.002075,
+          "ece": 0.047007
+        },
+        "SUBJECT_RESULTS": {
+          "example_count": 158,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.020677,
+          "brier_score": 0.002636,
+          "ece": 0.020223
+        },
+        "UAC_ID": {
+          "example_count": 86,
+          "top1_accuracy": 0.988372,
+          "top3_accuracy": 1.0,
+          "nll": 0.061212,
+          "brier_score": 0.012908,
+          "ece": 0.049629
+        },
+        "USERNAME": {
+          "example_count": 92,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.079114,
+          "brier_score": 0.005687,
+          "ece": 0.074496
+        },
+        "USI": {
+          "example_count": 86,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.060938,
+          "brier_score": 0.005793,
+          "ece": 0.056708
+        },
+        "VEHICLE_REGO": {
+          "example_count": 79,
+          "top1_accuracy": 0.594937,
+          "top3_accuracy": 1.0,
+          "nll": 0.782301,
+          "brier_score": 0.455634,
+          "ece": 0.170713
+        },
+        "VOICE_RECOGNITION": {
+          "example_count": 74,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.014328,
+          "brier_score": 0.002892,
+          "ece": 0.014148
+        },
+        "WAM_SCORE": {
+          "example_count": 158,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.045934,
+          "brier_score": 0.000594,
+          "ece": 0.04475
+        },
+        "WEBSITE_HISTORY": {
+          "example_count": 92,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.035535,
+          "brier_score": 0.000804,
+          "ece": 0.034827
+        },
+        "WORKERS_COMPENSATION_CLAIM": {
+          "example_count": 57,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.020292,
+          "brier_score": 0.002712,
+          "ece": 0.019815
+        },
+        "WORK_EMAIL": {
+          "example_count": 127,
+          "top1_accuracy": 0.992126,
+          "top3_accuracy": 1.0,
+          "nll": 0.061238,
+          "brier_score": 0.010342,
+          "ece": 0.051616
+        },
+        "WORK_PHONE": {
+          "example_count": 127,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.057966,
+          "brier_score": 0.009177,
+          "ece": 0.052852
+        }
+      },
+      "high_entropy_samples": {
+        "example_count": 114,
+        "top1_accuracy": 0.789474,
+        "top3_accuracy": 0.973684,
+        "nll": 0.774596,
+        "brier_score": 0.086797,
+        "ece": 0.264613
+      },
+      "non_pii": {
+        "example_count": 75,
+        "top1_accuracy": 1.0,
+        "top3_accuracy": 1.0,
+        "nll": 0.426734,
+        "brier_score": 0.146354,
+        "ece": 0.333219
+      },
+      "zero_example_recovered_labels": {
+        "BANK_ACCOUNT_INFORMATION": {
+          "example_count": 27,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.02484,
+          "brier_score": 0.00013,
+          "ece": 0.024533
+        },
+        "FIRST_NAME": {
+          "example_count": 45,
+          "top1_accuracy": 0.933333,
+          "top3_accuracy": 1.0,
+          "nll": 0.161959,
+          "brier_score": 0.008472,
+          "ece": 0.064158
+        },
+        "HOME_PHONE": {
+          "example_count": 54,
+          "top1_accuracy": 0.944444,
+          "top3_accuracy": 0.944444,
+          "nll": 0.252824,
+          "brier_score": 0.003529,
+          "ece": 0.093868
+        },
+        "LAST_NAME": {
+          "example_count": 30,
+          "top1_accuracy": 1.0,
+          "top3_accuracy": 1.0,
+          "nll": 0.043398,
+          "brier_score": 0.000232,
+          "ece": 0.042454
+        }
+      },
+      "semantic_context_based_labels": {
+        "example_count": 7414,
+        "top1_accuracy": 0.995819,
+        "top3_accuracy": 1.0,
+        "nll": 0.059495,
+        "brier_score": 0.005526,
+        "ece": 0.047247
+      },
+      "pattern_based_labels": {
+        "example_count": 6099,
+        "top1_accuracy": 0.977209,
+        "top3_accuracy": 0.999508,
+        "nll": 0.094232,
+        "brier_score": 0.027172,
+        "ece": 0.044226
+      }
+    }
+  },
+  "lora_started": false,
+  "opf_started": false
+}

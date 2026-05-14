@@ -1,0 +1,1147 @@
+{
+  "experiment": "concat_mlp",
+  "status": "completed",
+  "input_dim": 12288,
+  "logits_shape": [
+    2,
+    80
+  ],
+  "training": {
+    "best_epoch": 9,
+    "best_dev_nll": 0.105457,
+    "epochs_ran": 14,
+    "history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.968981,
+        "dev_loss": 0.363477,
+        "dev_nll": 0.114735
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.260647,
+        "dev_loss": 0.333207,
+        "dev_nll": 0.110359
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.248294,
+        "dev_loss": 0.355274,
+        "dev_nll": 0.114946
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.242456,
+        "dev_loss": 0.342339,
+        "dev_nll": 0.107014
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.239829,
+        "dev_loss": 0.350742,
+        "dev_nll": 0.110793
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.237811,
+        "dev_loss": 0.343817,
+        "dev_nll": 0.109608
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.236558,
+        "dev_loss": 0.350791,
+        "dev_nll": 0.111968
+      },
+      {
+        "epoch": 8,
+        "train_loss": 0.235598,
+        "dev_loss": 0.357608,
+        "dev_nll": 0.1124
+      },
+      {
+        "epoch": 9,
+        "train_loss": 0.23499,
+        "dev_loss": 0.3257,
+        "dev_nll": 0.105457
+      },
+      {
+        "epoch": 10,
+        "train_loss": 0.234458,
+        "dev_loss": 0.35632,
+        "dev_nll": 0.112955
+      },
+      {
+        "epoch": 11,
+        "train_loss": 0.233988,
+        "dev_loss": 0.351177,
+        "dev_nll": 0.113363
+      },
+      {
+        "epoch": 12,
+        "train_loss": 0.233723,
+        "dev_loss": 0.347585,
+        "dev_nll": 0.111175
+      },
+      {
+        "epoch": 13,
+        "train_loss": 0.233482,
+        "dev_loss": 0.362142,
+        "dev_nll": 0.114404
+      },
+      {
+        "epoch": 14,
+        "train_loss": 0.23322,
+        "dev_loss": 0.349753,
+        "dev_nll": 0.113829
+      }
+    ],
+    "wall_time_seconds": 33.679
+  },
+  "temperature": 1.136699,
+  "labels_outside_training_space": {
+    "train": {},
+    "dev": {},
+    "test": {}
+  },
+  "metrics": {
+    "before_temperature": {
+      "train": {
+        "top1_accuracy": 0.991266,
+        "top3_accuracy": 0.999391,
+        "nll": 0.067047,
+        "brier_score": 0.006439,
+        "ece": 0.051429,
+        "per_source_accuracy": {
+          "candidate_level_negative": 1.0,
+          "qwen_5way_ranking": 0.849558,
+          "sonnet_high_conf": 0.993459,
+          "sonnet_low_conf": 0.991991
+        },
+        "non_pii_accuracy": 1.0,
+        "per_label_top1_accuracy": {
+          "ABORIGINALITY": 1.0,
+          "ADDRESS": 0.997444,
+          "AUDIO_INFORMATION": 1.0,
+          "AU_TFN": 1.0,
+          "BANK_ACCOUNT_INFORMATION": 1.0,
+          "BANK_ACCOUNT_NUMBER": 0.983685,
+          "CAMERA_FOOTAGE_AUDIO": 1.0,
+          "CARING_RESPONSIBILITIES": 1.0,
+          "CENTRELINK_REFERENCE_NUMBER": 1.0,
+          "CITIZENSHIP_STATUS": 1.0,
+          "CONTRACT_TYPE": 1.0,
+          "COOKIE_INFORMATION": 1.0,
+          "COUNSELLING_RECORDS": 1.0,
+          "CREDIT_CARD_EXPIRY": 1.0,
+          "CRIMINAL_RECORDS": 1.0,
+          "DATE_OF_BIRTH": 0.994521,
+          "DEVICE_ID": 1.0,
+          "DISABILITY_OR_SPECIFIC_CONDITION": 1.0,
+          "DRIVERS_LICENCE": 1.0,
+          "EMAIL_ADDRESS": 1.0,
+          "EMPLOYEE_NUMBER": 1.0,
+          "EMPLOYMENT_INFORMATION": 1.0,
+          "FACIAL_RECOGNITION": 1.0,
+          "FINGERPRINT": 1.0,
+          "FIRST_NAME": 0.914286,
+          "GENDER": 1.0,
+          "GEOLOCATION_INFORMATION": 1.0,
+          "HASHED_PAYMENT_CARD_NUMBER": 1.0,
+          "HOME_PHONE": 0.84,
+          "IHI": 1.0,
+          "IP_ADDRESS": 1.0,
+          "LAST_NAME": 1.0,
+          "LATITUDE": 0.983914,
+          "LONGITUDE": 1.0,
+          "MARITAL_STATUS": 1.0,
+          "MEDICAL_CERTIFICATE": 1.0,
+          "MEDICAL_INFORMATION": 1.0,
+          "MEDICARE_EXPIRY": 0.999147,
+          "MEDICARE_NUMBER": 1.0,
+          "MILITARY_VETERAN_STATUS": 1.0,
+          "MOBILE": 1.0,
+          "NATIONALITY": 1.0,
+          "NATIONAL_IDENTITY_CARD": 1.0,
+          "NEXT_OF_KIN": 1.0,
+          "NON_PII": 1.0,
+          "NUMBER_PLATE": 0.0,
+          "PASSPORT_EXPIRY": 1.0,
+          "PASSPORT_NUMBER": 1.0,
+          "PASSPORT_START_DATE": 1.0,
+          "PAYMENT_CARD_NUMBER": 1.0,
+          "PENSION_CARD_NUMBER": 1.0,
+          "PERSON": 1.0,
+          "PERSONAL_DEBT": 1.0,
+          "PERSONNEL_NUMBER": 1.0,
+          "PRONOUN": 1.0,
+          "RACIAL_ETHNIC_ORIGIN": 1.0,
+          "RELIGION_BELIEF": 1.0,
+          "SALARY": 1.0,
+          "SALARY_WAGE_EXPECTATION": 1.0,
+          "SANCTIONS": 1.0,
+          "SCHOLARSHIP": 1.0,
+          "SEXUAL_ORIENTATION": 1.0,
+          "SIGNATURE": 1.0,
+          "SOCIAL_MEDIA_ACCOUNT": 0.965736,
+          "SOCIAL_MEDIA_HISTORY": 1.0,
+          "SOCIAL_MEDIA_ID": 1.0,
+          "SOCIO_ECONOMIC_STATUS": 1.0,
+          "SPECIAL_CONSIDERATION": 1.0,
+          "STUDENT_ID": 1.0,
+          "SUBJECT_RESULTS": 1.0,
+          "UAC_ID": 1.0,
+          "USERNAME": 1.0,
+          "USI": 1.0,
+          "VEHICLE_REGO": 1.0,
+          "VOICE_RECOGNITION": 1.0,
+          "WAM_SCORE": 1.0,
+          "WEBSITE_HISTORY": 1.0,
+          "WORKERS_COMPENSATION_CLAIM": 1.0,
+          "WORK_EMAIL": 1.0,
+          "WORK_PHONE": 1.0
+        },
+        "confusion_top_pairs": [
+          {
+            "gold": "NUMBER_PLATE",
+            "predicted": "VEHICLE_REGO",
+            "count": 734
+          },
+          {
+            "gold": "DATE_OF_BIRTH",
+            "predicted": "MEDICARE_EXPIRY",
+            "count": 45
+          },
+          {
+            "gold": "HOME_PHONE",
+            "predicted": "MOBILE",
+            "count": 45
+          },
+          {
+            "gold": "BANK_ACCOUNT_NUMBER",
+            "predicted": "AU_TFN",
+            "count": 30
+          },
+          {
+            "gold": "FIRST_NAME",
+            "predicted": "PERSON",
+            "count": 27
+          },
+          {
+            "gold": "SOCIAL_MEDIA_ACCOUNT",
+            "predicted": "USERNAME",
+            "count": 27
+          },
+          {
+            "gold": "ADDRESS",
+            "predicted": "NON_PII",
+            "count": 24
+          },
+          {
+            "gold": "NUMBER_PLATE",
+            "predicted": "USERNAME",
+            "count": 21
+          },
+          {
+            "gold": "BANK_ACCOUNT_NUMBER",
+            "predicted": "STUDENT_ID",
+            "count": 18
+          },
+          {
+            "gold": "LATITUDE",
+            "predicted": "GEOLOCATION_INFORMATION",
+            "count": 12
+          },
+          {
+            "gold": "HOME_PHONE",
+            "predicted": "NON_PII",
+            "count": 3
+          },
+          {
+            "gold": "DATE_OF_BIRTH",
+            "predicted": "PASSPORT_EXPIRY",
+            "count": 3
+          },
+          {
+            "gold": "MEDICARE_EXPIRY",
+            "predicted": "CREDIT_CARD_EXPIRY",
+            "count": 1
+          }
+        ],
+        "example_count": 113354,
+        "loss": 0.232892
+      },
+      "dev": {
+        "top1_accuracy": 0.96361,
+        "top3_accuracy": 0.999061,
+        "nll": 0.105457,
+        "brier_score": 0.034946,
+        "ece": 0.069187,
+        "per_source_accuracy": {
+          "candidate_level_negative": 0.138889,
+          "qwen_5way_ranking": 0.816667,
+          "sonnet_high_conf": 0.992751,
+          "sonnet_low_conf": 0.991453
+        },
+        "non_pii_accuracy": 0.150685,
+        "per_label_top1_accuracy": {
+          "ABORIGINALITY": 1.0,
+          "ADDRESS": 0.994898,
+          "AUDIO_INFORMATION": 1.0,
+          "AU_TFN": 1.0,
+          "BANK_ACCOUNT_INFORMATION": 1.0,
+          "BANK_ACCOUNT_NUMBER": 0.966495,
+          "CAMERA_FOOTAGE_AUDIO": 1.0,
+          "CARING_RESPONSIBILITIES": 1.0,
+          "CENTRELINK_REFERENCE_NUMBER": 1.0,
+          "CITIZENSHIP_STATUS": 1.0,
+          "CONTRACT_TYPE": 1.0,
+          "COOKIE_INFORMATION": 1.0,
+          "COUNSELLING_RECORDS": 1.0,
+          "CREDIT_CARD_EXPIRY": 0.994253,
+          "CRIMINAL_RECORDS": 1.0,
+          "DATE_OF_BIRTH": 0.991773,
+          "DEVICE_ID": 1.0,
+          "DISABILITY_OR_SPECIFIC_CONDITION": 1.0,
+          "DRIVERS_LICENCE": 0.996047,
+          "EMAIL_ADDRESS": 1.0,
+          "EMPLOYEE_NUMBER": 1.0,
+          "EMPLOYMENT_INFORMATION": 0.99187,
+          "FACIAL_RECOGNITION": 1.0,
+          "FINGERPRINT": 1.0,
+          "FIRST_NAME": 1.0,
+          "GENDER": 1.0,
+          "GEOLOCATION_INFORMATION": 1.0,
+          "HASHED_PAYMENT_CARD_NUMBER": 1.0,
+          "HOME_PHONE": 0.833333,
+          "IHI": 1.0,
+          "IP_ADDRESS": 1.0,
+          "LAST_NAME": 1.0,
+          "LATITUDE": 1.0,
+          "LONGITUDE": 1.0,
+          "MARITAL_STATUS": 1.0,
+          "MEDICAL_CERTIFICATE": 1.0,
+          "MEDICAL_INFORMATION": 1.0,
+          "MEDICARE_EXPIRY": 0.99375,
+          "MEDICARE_NUMBER": 1.0,
+          "MILITARY_VETERAN_STATUS": 1.0,
+          "MOBILE": 1.0,
+          "NATIONALITY": 1.0,
+          "NATIONAL_IDENTITY_CARD": 1.0,
+          "NEXT_OF_KIN": 1.0,
+          "NON_PII": 0.150685,
+          "NUMBER_PLATE": 0.0,
+          "PASSPORT_EXPIRY": 0.988889,
+          "PASSPORT_NUMBER": 1.0,
+          "PASSPORT_START_DATE": 1.0,
+          "PAYMENT_CARD_NUMBER": 1.0,
+          "PENSION_CARD_NUMBER": 1.0,
+          "PERSON": 1.0,
+          "PERSONAL_DEBT": 1.0,
+          "PERSONNEL_NUMBER": 0.99187,
+          "PRONOUN": 1.0,
+          "RACIAL_ETHNIC_ORIGIN": 1.0,
+          "RELIGION_BELIEF": 1.0,
+          "SALARY": 1.0,
+          "SALARY_WAGE_EXPECTATION": 1.0,
+          "SANCTIONS": 1.0,
+          "SCHOLARSHIP": 1.0,
+          "SEXUAL_ORIENTATION": 1.0,
+          "SIGNATURE": 1.0,
+          "SOCIAL_MEDIA_ACCOUNT": 1.0,
+          "SOCIAL_MEDIA_HISTORY": 1.0,
+          "SOCIAL_MEDIA_ID": 1.0,
+          "SOCIO_ECONOMIC_STATUS": 1.0,
+          "SPECIAL_CONSIDERATION": 1.0,
+          "STUDENT_ID": 1.0,
+          "SUBJECT_RESULTS": 1.0,
+          "UAC_ID": 1.0,
+          "USERNAME": 1.0,
+          "USI": 1.0,
+          "VEHICLE_REGO": 1.0,
+          "VOICE_RECOGNITION": 1.0,
+          "WAM_SCORE": 1.0,
+          "WEBSITE_HISTORY": 1.0,
+          "WORKERS_COMPENSATION_CLAIM": 1.0,
+          "WORK_EMAIL": 1.0,
+          "WORK_PHONE": 0.98374
+        },
+        "confusion_top_pairs": [
+          {
+            "gold": "NON_PII",
+            "predicted": "ADDRESS",
+            "count": 363
+          },
+          {
+            "gold": "NUMBER_PLATE",
+            "predicted": "VEHICLE_REGO",
+            "count": 90
+          },
+          {
+            "gold": "BANK_ACCOUNT_NUMBER",
+            "predicted": "STUDENT_ID",
+            "count": 12
+          },
+          {
+            "gold": "DATE_OF_BIRTH",
+            "predicted": "MEDICARE_EXPIRY",
+            "count": 9
+          },
+          {
+            "gold": "ADDRESS",
+            "predicted": "NON_PII",
+            "count": 6
+          },
+          {
+            "gold": "HOME_PHONE",
+            "predicted": "MOBILE",
+            "count": 6
+          },
+          {
+            "gold": "NON_PII",
+            "predicted": "MOBILE",
+            "count": 6
+          },
+          {
+            "gold": "NON_PII",
+            "predicted": "MEDICARE_EXPIRY",
+            "count": 3
+          },
+          {
+            "gold": "WORK_PHONE",
+            "predicted": "MOBILE",
+            "count": 2
+          },
+          {
+            "gold": "PASSPORT_EXPIRY",
+            "predicted": "CREDIT_CARD_EXPIRY",
+            "count": 1
+          },
+          {
+            "gold": "MEDICARE_EXPIRY",
+            "predicted": "PASSPORT_EXPIRY",
+            "count": 1
+          },
+          {
+            "gold": "PERSONNEL_NUMBER",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "BANK_ACCOUNT_NUMBER",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "EMPLOYMENT_INFORMATION",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "DRIVERS_LICENCE",
+            "predicted": "PASSPORT_NUMBER",
+            "count": 1
+          },
+          {
+            "gold": "CREDIT_CARD_EXPIRY",
+            "predicted": "MEDICARE_EXPIRY",
+            "count": 1
+          }
+        ],
+        "example_count": 13850,
+        "loss": 0.3257
+      },
+      "test": {
+        "top1_accuracy": 0.990433,
+        "top3_accuracy": 0.999043,
+        "nll": 0.070413,
+        "brier_score": 0.008869,
+        "ece": 0.052264,
+        "per_source_accuracy": {
+          "candidate_level_negative": 0.590909,
+          "qwen_5way_ranking": 0.92,
+          "sonnet_high_conf": 0.992949,
+          "sonnet_low_conf": 0.996633
+        },
+        "non_pii_accuracy": 0.64,
+        "per_label_top1_accuracy": {
+          "ABORIGINALITY": 1.0,
+          "ADDRESS": 1.0,
+          "AUDIO_INFORMATION": 1.0,
+          "AU_TFN": 1.0,
+          "BANK_ACCOUNT_INFORMATION": 1.0,
+          "BANK_ACCOUNT_NUMBER": 1.0,
+          "CAMERA_FOOTAGE_AUDIO": 1.0,
+          "CARING_RESPONSIBILITIES": 1.0,
+          "CENTRELINK_REFERENCE_NUMBER": 1.0,
+          "CITIZENSHIP_STATUS": 1.0,
+          "CONTRACT_TYPE": 0.992126,
+          "COOKIE_INFORMATION": 1.0,
+          "COUNSELLING_RECORDS": 1.0,
+          "CREDIT_CARD_EXPIRY": 1.0,
+          "CRIMINAL_RECORDS": 1.0,
+          "DATE_OF_BIRTH": 0.997148,
+          "DEVICE_ID": 1.0,
+          "DISABILITY_OR_SPECIFIC_CONDITION": 1.0,
+          "DRIVERS_LICENCE": 1.0,
+          "EMAIL_ADDRESS": 1.0,
+          "EMPLOYEE_NUMBER": 1.0,
+          "EMPLOYMENT_INFORMATION": 1.0,
+          "FACIAL_RECOGNITION": 1.0,
+          "FINGERPRINT": 1.0,
+          "FIRST_NAME": 1.0,
+          "GENDER": 1.0,
+          "GEOLOCATION_INFORMATION": 1.0,
+          "HASHED_PAYMENT_CARD_NUMBER": 0.959184,
+          "HOME_PHONE": 0.888889,
+          "IHI": 1.0,
+          "IP_ADDRESS": 1.0,
+          "LAST_NAME": 1.0,
+          "LATITUDE": 1.0,
+          "LONGITUDE": 1.0,
+          "MARITAL_STATUS": 1.0,
+          "MEDICAL_CERTIFICATE": 1.0,
+          "MEDICAL_INFORMATION": 1.0,
+          "MEDICARE_EXPIRY": 0.994048,
+          "MEDICARE_NUMBER": 1.0,
+          "MILITARY_VETERAN_STATUS": 1.0,
+          "MOBILE": 1.0,
+          "NATIONALITY": 1.0,
+          "NATIONAL_IDENTITY_CARD": 1.0,
+          "NEXT_OF_KIN": 1.0,
+          "NON_PII": 0.64,
+          "NUMBER_PLATE": 0.0,
+          "PASSPORT_EXPIRY": 1.0,
+          "PASSPORT_NUMBER": 1.0,
+          "PASSPORT_START_DATE": 1.0,
+          "PAYMENT_CARD_NUMBER": 1.0,
+          "PENSION_CARD_NUMBER": 1.0,
+          "PERSON": 1.0,
+          "PERSONAL_DEBT": 1.0,
+          "PERSONNEL_NUMBER": 0.992126,
+          "PRONOUN": 1.0,
+          "RACIAL_ETHNIC_ORIGIN": 0.989474,
+          "RELIGION_BELIEF": 1.0,
+          "SALARY": 1.0,
+          "SALARY_WAGE_EXPECTATION": 1.0,
+          "SANCTIONS": 1.0,
+          "SCHOLARSHIP": 1.0,
+          "SEXUAL_ORIENTATION": 1.0,
+          "SIGNATURE": 1.0,
+          "SOCIAL_MEDIA_ACCOUNT": 1.0,
+          "SOCIAL_MEDIA_HISTORY": 1.0,
+          "SOCIAL_MEDIA_ID": 1.0,
+          "SOCIO_ECONOMIC_STATUS": 1.0,
+          "SPECIAL_CONSIDERATION": 1.0,
+          "STUDENT_ID": 1.0,
+          "SUBJECT_RESULTS": 1.0,
+          "UAC_ID": 0.988372,
+          "USERNAME": 1.0,
+          "USI": 1.0,
+          "VEHICLE_REGO": 0.987342,
+          "VOICE_RECOGNITION": 1.0,
+          "WAM_SCORE": 1.0,
+          "WEBSITE_HISTORY": 1.0,
+          "WORKERS_COMPENSATION_CLAIM": 1.0,
+          "WORK_EMAIL": 1.0,
+          "WORK_PHONE": 0.992126
+        },
+        "confusion_top_pairs": [
+          {
+            "gold": "NUMBER_PLATE",
+            "predicted": "VEHICLE_REGO",
+            "count": 75
+          },
+          {
+            "gold": "NON_PII",
+            "predicted": "ADDRESS",
+            "count": 27
+          },
+          {
+            "gold": "NUMBER_PLATE",
+            "predicted": "USERNAME",
+            "count": 9
+          },
+          {
+            "gold": "HOME_PHONE",
+            "predicted": "MOBILE",
+            "count": 6
+          },
+          {
+            "gold": "DATE_OF_BIRTH",
+            "predicted": "MEDICARE_EXPIRY",
+            "count": 3
+          },
+          {
+            "gold": "HASHED_PAYMENT_CARD_NUMBER",
+            "predicted": "PAYMENT_CARD_NUMBER",
+            "count": 2
+          },
+          {
+            "gold": "UAC_ID",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "PERSONNEL_NUMBER",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "WORK_PHONE",
+            "predicted": "MOBILE",
+            "count": 1
+          },
+          {
+            "gold": "MEDICARE_EXPIRY",
+            "predicted": "CREDIT_CARD_EXPIRY",
+            "count": 1
+          },
+          {
+            "gold": "NUMBER_PLATE",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "VEHICLE_REGO",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "RACIAL_ETHNIC_ORIGIN",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "CONTRACT_TYPE",
+            "predicted": "NON_PII",
+            "count": 1
+          }
+        ],
+        "example_count": 13588,
+        "loss": 0.225825
+      }
+    },
+    "after_temperature": {
+      "train": {
+        "top1_accuracy": 0.991266,
+        "top3_accuracy": 0.999391,
+        "nll": 0.089307,
+        "brier_score": 0.00731,
+        "ece": 0.072142,
+        "per_source_accuracy": {
+          "candidate_level_negative": 1.0,
+          "qwen_5way_ranking": 0.849558,
+          "sonnet_high_conf": 0.993459,
+          "sonnet_low_conf": 0.991991
+        },
+        "non_pii_accuracy": 1.0,
+        "per_label_top1_accuracy": {
+          "ABORIGINALITY": 1.0,
+          "ADDRESS": 0.997444,
+          "AUDIO_INFORMATION": 1.0,
+          "AU_TFN": 1.0,
+          "BANK_ACCOUNT_INFORMATION": 1.0,
+          "BANK_ACCOUNT_NUMBER": 0.983685,
+          "CAMERA_FOOTAGE_AUDIO": 1.0,
+          "CARING_RESPONSIBILITIES": 1.0,
+          "CENTRELINK_REFERENCE_NUMBER": 1.0,
+          "CITIZENSHIP_STATUS": 1.0,
+          "CONTRACT_TYPE": 1.0,
+          "COOKIE_INFORMATION": 1.0,
+          "COUNSELLING_RECORDS": 1.0,
+          "CREDIT_CARD_EXPIRY": 1.0,
+          "CRIMINAL_RECORDS": 1.0,
+          "DATE_OF_BIRTH": 0.994521,
+          "DEVICE_ID": 1.0,
+          "DISABILITY_OR_SPECIFIC_CONDITION": 1.0,
+          "DRIVERS_LICENCE": 1.0,
+          "EMAIL_ADDRESS": 1.0,
+          "EMPLOYEE_NUMBER": 1.0,
+          "EMPLOYMENT_INFORMATION": 1.0,
+          "FACIAL_RECOGNITION": 1.0,
+          "FINGERPRINT": 1.0,
+          "FIRST_NAME": 0.914286,
+          "GENDER": 1.0,
+          "GEOLOCATION_INFORMATION": 1.0,
+          "HASHED_PAYMENT_CARD_NUMBER": 1.0,
+          "HOME_PHONE": 0.84,
+          "IHI": 1.0,
+          "IP_ADDRESS": 1.0,
+          "LAST_NAME": 1.0,
+          "LATITUDE": 0.983914,
+          "LONGITUDE": 1.0,
+          "MARITAL_STATUS": 1.0,
+          "MEDICAL_CERTIFICATE": 1.0,
+          "MEDICAL_INFORMATION": 1.0,
+          "MEDICARE_EXPIRY": 0.999147,
+          "MEDICARE_NUMBER": 1.0,
+          "MILITARY_VETERAN_STATUS": 1.0,
+          "MOBILE": 1.0,
+          "NATIONALITY": 1.0,
+          "NATIONAL_IDENTITY_CARD": 1.0,
+          "NEXT_OF_KIN": 1.0,
+          "NON_PII": 1.0,
+          "NUMBER_PLATE": 0.0,
+          "PASSPORT_EXPIRY": 1.0,
+          "PASSPORT_NUMBER": 1.0,
+          "PASSPORT_START_DATE": 1.0,
+          "PAYMENT_CARD_NUMBER": 1.0,
+          "PENSION_CARD_NUMBER": 1.0,
+          "PERSON": 1.0,
+          "PERSONAL_DEBT": 1.0,
+          "PERSONNEL_NUMBER": 1.0,
+          "PRONOUN": 1.0,
+          "RACIAL_ETHNIC_ORIGIN": 1.0,
+          "RELIGION_BELIEF": 1.0,
+          "SALARY": 1.0,
+          "SALARY_WAGE_EXPECTATION": 1.0,
+          "SANCTIONS": 1.0,
+          "SCHOLARSHIP": 1.0,
+          "SEXUAL_ORIENTATION": 1.0,
+          "SIGNATURE": 1.0,
+          "SOCIAL_MEDIA_ACCOUNT": 0.965736,
+          "SOCIAL_MEDIA_HISTORY": 1.0,
+          "SOCIAL_MEDIA_ID": 1.0,
+          "SOCIO_ECONOMIC_STATUS": 1.0,
+          "SPECIAL_CONSIDERATION": 1.0,
+          "STUDENT_ID": 1.0,
+          "SUBJECT_RESULTS": 1.0,
+          "UAC_ID": 1.0,
+          "USERNAME": 1.0,
+          "USI": 1.0,
+          "VEHICLE_REGO": 1.0,
+          "VOICE_RECOGNITION": 1.0,
+          "WAM_SCORE": 1.0,
+          "WEBSITE_HISTORY": 1.0,
+          "WORKERS_COMPENSATION_CLAIM": 1.0,
+          "WORK_EMAIL": 1.0,
+          "WORK_PHONE": 1.0
+        },
+        "confusion_top_pairs": [
+          {
+            "gold": "NUMBER_PLATE",
+            "predicted": "VEHICLE_REGO",
+            "count": 734
+          },
+          {
+            "gold": "DATE_OF_BIRTH",
+            "predicted": "MEDICARE_EXPIRY",
+            "count": 45
+          },
+          {
+            "gold": "HOME_PHONE",
+            "predicted": "MOBILE",
+            "count": 45
+          },
+          {
+            "gold": "BANK_ACCOUNT_NUMBER",
+            "predicted": "AU_TFN",
+            "count": 30
+          },
+          {
+            "gold": "FIRST_NAME",
+            "predicted": "PERSON",
+            "count": 27
+          },
+          {
+            "gold": "SOCIAL_MEDIA_ACCOUNT",
+            "predicted": "USERNAME",
+            "count": 27
+          },
+          {
+            "gold": "ADDRESS",
+            "predicted": "NON_PII",
+            "count": 24
+          },
+          {
+            "gold": "NUMBER_PLATE",
+            "predicted": "USERNAME",
+            "count": 21
+          },
+          {
+            "gold": "BANK_ACCOUNT_NUMBER",
+            "predicted": "STUDENT_ID",
+            "count": 18
+          },
+          {
+            "gold": "LATITUDE",
+            "predicted": "GEOLOCATION_INFORMATION",
+            "count": 12
+          },
+          {
+            "gold": "HOME_PHONE",
+            "predicted": "NON_PII",
+            "count": 3
+          },
+          {
+            "gold": "DATE_OF_BIRTH",
+            "predicted": "PASSPORT_EXPIRY",
+            "count": 3
+          },
+          {
+            "gold": "MEDICARE_EXPIRY",
+            "predicted": "CREDIT_CARD_EXPIRY",
+            "count": 1
+          }
+        ],
+        "example_count": 113354,
+        "loss": 0.237129
+      },
+      "dev": {
+        "top1_accuracy": 0.96361,
+        "top3_accuracy": 0.999061,
+        "nll": 0.124288,
+        "brier_score": 0.033964,
+        "ece": 0.087071,
+        "per_source_accuracy": {
+          "candidate_level_negative": 0.138889,
+          "qwen_5way_ranking": 0.816667,
+          "sonnet_high_conf": 0.992751,
+          "sonnet_low_conf": 0.991453
+        },
+        "non_pii_accuracy": 0.150685,
+        "per_label_top1_accuracy": {
+          "ABORIGINALITY": 1.0,
+          "ADDRESS": 0.994898,
+          "AUDIO_INFORMATION": 1.0,
+          "AU_TFN": 1.0,
+          "BANK_ACCOUNT_INFORMATION": 1.0,
+          "BANK_ACCOUNT_NUMBER": 0.966495,
+          "CAMERA_FOOTAGE_AUDIO": 1.0,
+          "CARING_RESPONSIBILITIES": 1.0,
+          "CENTRELINK_REFERENCE_NUMBER": 1.0,
+          "CITIZENSHIP_STATUS": 1.0,
+          "CONTRACT_TYPE": 1.0,
+          "COOKIE_INFORMATION": 1.0,
+          "COUNSELLING_RECORDS": 1.0,
+          "CREDIT_CARD_EXPIRY": 0.994253,
+          "CRIMINAL_RECORDS": 1.0,
+          "DATE_OF_BIRTH": 0.991773,
+          "DEVICE_ID": 1.0,
+          "DISABILITY_OR_SPECIFIC_CONDITION": 1.0,
+          "DRIVERS_LICENCE": 0.996047,
+          "EMAIL_ADDRESS": 1.0,
+          "EMPLOYEE_NUMBER": 1.0,
+          "EMPLOYMENT_INFORMATION": 0.99187,
+          "FACIAL_RECOGNITION": 1.0,
+          "FINGERPRINT": 1.0,
+          "FIRST_NAME": 1.0,
+          "GENDER": 1.0,
+          "GEOLOCATION_INFORMATION": 1.0,
+          "HASHED_PAYMENT_CARD_NUMBER": 1.0,
+          "HOME_PHONE": 0.833333,
+          "IHI": 1.0,
+          "IP_ADDRESS": 1.0,
+          "LAST_NAME": 1.0,
+          "LATITUDE": 1.0,
+          "LONGITUDE": 1.0,
+          "MARITAL_STATUS": 1.0,
+          "MEDICAL_CERTIFICATE": 1.0,
+          "MEDICAL_INFORMATION": 1.0,
+          "MEDICARE_EXPIRY": 0.99375,
+          "MEDICARE_NUMBER": 1.0,
+          "MILITARY_VETERAN_STATUS": 1.0,
+          "MOBILE": 1.0,
+          "NATIONALITY": 1.0,
+          "NATIONAL_IDENTITY_CARD": 1.0,
+          "NEXT_OF_KIN": 1.0,
+          "NON_PII": 0.150685,
+          "NUMBER_PLATE": 0.0,
+          "PASSPORT_EXPIRY": 0.988889,
+          "PASSPORT_NUMBER": 1.0,
+          "PASSPORT_START_DATE": 1.0,
+          "PAYMENT_CARD_NUMBER": 1.0,
+          "PENSION_CARD_NUMBER": 1.0,
+          "PERSON": 1.0,
+          "PERSONAL_DEBT": 1.0,
+          "PERSONNEL_NUMBER": 0.99187,
+          "PRONOUN": 1.0,
+          "RACIAL_ETHNIC_ORIGIN": 1.0,
+          "RELIGION_BELIEF": 1.0,
+          "SALARY": 1.0,
+          "SALARY_WAGE_EXPECTATION": 1.0,
+          "SANCTIONS": 1.0,
+          "SCHOLARSHIP": 1.0,
+          "SEXUAL_ORIENTATION": 1.0,
+          "SIGNATURE": 1.0,
+          "SOCIAL_MEDIA_ACCOUNT": 1.0,
+          "SOCIAL_MEDIA_HISTORY": 1.0,
+          "SOCIAL_MEDIA_ID": 1.0,
+          "SOCIO_ECONOMIC_STATUS": 1.0,
+          "SPECIAL_CONSIDERATION": 1.0,
+          "STUDENT_ID": 1.0,
+          "SUBJECT_RESULTS": 1.0,
+          "UAC_ID": 1.0,
+          "USERNAME": 1.0,
+          "USI": 1.0,
+          "VEHICLE_REGO": 1.0,
+          "VOICE_RECOGNITION": 1.0,
+          "WAM_SCORE": 1.0,
+          "WEBSITE_HISTORY": 1.0,
+          "WORKERS_COMPENSATION_CLAIM": 1.0,
+          "WORK_EMAIL": 1.0,
+          "WORK_PHONE": 0.98374
+        },
+        "confusion_top_pairs": [
+          {
+            "gold": "NON_PII",
+            "predicted": "ADDRESS",
+            "count": 363
+          },
+          {
+            "gold": "NUMBER_PLATE",
+            "predicted": "VEHICLE_REGO",
+            "count": 90
+          },
+          {
+            "gold": "BANK_ACCOUNT_NUMBER",
+            "predicted": "STUDENT_ID",
+            "count": 12
+          },
+          {
+            "gold": "DATE_OF_BIRTH",
+            "predicted": "MEDICARE_EXPIRY",
+            "count": 9
+          },
+          {
+            "gold": "ADDRESS",
+            "predicted": "NON_PII",
+            "count": 6
+          },
+          {
+            "gold": "HOME_PHONE",
+            "predicted": "MOBILE",
+            "count": 6
+          },
+          {
+            "gold": "NON_PII",
+            "predicted": "MOBILE",
+            "count": 6
+          },
+          {
+            "gold": "NON_PII",
+            "predicted": "MEDICARE_EXPIRY",
+            "count": 3
+          },
+          {
+            "gold": "WORK_PHONE",
+            "predicted": "MOBILE",
+            "count": 2
+          },
+          {
+            "gold": "PASSPORT_EXPIRY",
+            "predicted": "CREDIT_CARD_EXPIRY",
+            "count": 1
+          },
+          {
+            "gold": "MEDICARE_EXPIRY",
+            "predicted": "PASSPORT_EXPIRY",
+            "count": 1
+          },
+          {
+            "gold": "PERSONNEL_NUMBER",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "BANK_ACCOUNT_NUMBER",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "EMPLOYMENT_INFORMATION",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "DRIVERS_LICENCE",
+            "predicted": "PASSPORT_NUMBER",
+            "count": 1
+          },
+          {
+            "gold": "CREDIT_CARD_EXPIRY",
+            "predicted": "MEDICARE_EXPIRY",
+            "count": 1
+          }
+        ],
+        "example_count": 13850,
+        "loss": 0.321316
+      },
+      "test": {
+        "top1_accuracy": 0.990433,
+        "top3_accuracy": 0.999043,
+        "nll": 0.092188,
+        "brier_score": 0.009822,
+        "ece": 0.071731,
+        "per_source_accuracy": {
+          "candidate_level_negative": 0.590909,
+          "qwen_5way_ranking": 0.92,
+          "sonnet_high_conf": 0.992949,
+          "sonnet_low_conf": 0.996633
+        },
+        "non_pii_accuracy": 0.64,
+        "per_label_top1_accuracy": {
+          "ABORIGINALITY": 1.0,
+          "ADDRESS": 1.0,
+          "AUDIO_INFORMATION": 1.0,
+          "AU_TFN": 1.0,
+          "BANK_ACCOUNT_INFORMATION": 1.0,
+          "BANK_ACCOUNT_NUMBER": 1.0,
+          "CAMERA_FOOTAGE_AUDIO": 1.0,
+          "CARING_RESPONSIBILITIES": 1.0,
+          "CENTRELINK_REFERENCE_NUMBER": 1.0,
+          "CITIZENSHIP_STATUS": 1.0,
+          "CONTRACT_TYPE": 0.992126,
+          "COOKIE_INFORMATION": 1.0,
+          "COUNSELLING_RECORDS": 1.0,
+          "CREDIT_CARD_EXPIRY": 1.0,
+          "CRIMINAL_RECORDS": 1.0,
+          "DATE_OF_BIRTH": 0.997148,
+          "DEVICE_ID": 1.0,
+          "DISABILITY_OR_SPECIFIC_CONDITION": 1.0,
+          "DRIVERS_LICENCE": 1.0,
+          "EMAIL_ADDRESS": 1.0,
+          "EMPLOYEE_NUMBER": 1.0,
+          "EMPLOYMENT_INFORMATION": 1.0,
+          "FACIAL_RECOGNITION": 1.0,
+          "FINGERPRINT": 1.0,
+          "FIRST_NAME": 1.0,
+          "GENDER": 1.0,
+          "GEOLOCATION_INFORMATION": 1.0,
+          "HASHED_PAYMENT_CARD_NUMBER": 0.959184,
+          "HOME_PHONE": 0.888889,
+          "IHI": 1.0,
+          "IP_ADDRESS": 1.0,
+          "LAST_NAME": 1.0,
+          "LATITUDE": 1.0,
+          "LONGITUDE": 1.0,
+          "MARITAL_STATUS": 1.0,
+          "MEDICAL_CERTIFICATE": 1.0,
+          "MEDICAL_INFORMATION": 1.0,
+          "MEDICARE_EXPIRY": 0.994048,
+          "MEDICARE_NUMBER": 1.0,
+          "MILITARY_VETERAN_STATUS": 1.0,
+          "MOBILE": 1.0,
+          "NATIONALITY": 1.0,
+          "NATIONAL_IDENTITY_CARD": 1.0,
+          "NEXT_OF_KIN": 1.0,
+          "NON_PII": 0.64,
+          "NUMBER_PLATE": 0.0,
+          "PASSPORT_EXPIRY": 1.0,
+          "PASSPORT_NUMBER": 1.0,
+          "PASSPORT_START_DATE": 1.0,
+          "PAYMENT_CARD_NUMBER": 1.0,
+          "PENSION_CARD_NUMBER": 1.0,
+          "PERSON": 1.0,
+          "PERSONAL_DEBT": 1.0,
+          "PERSONNEL_NUMBER": 0.992126,
+          "PRONOUN": 1.0,
+          "RACIAL_ETHNIC_ORIGIN": 0.989474,
+          "RELIGION_BELIEF": 1.0,
+          "SALARY": 1.0,
+          "SALARY_WAGE_EXPECTATION": 1.0,
+          "SANCTIONS": 1.0,
+          "SCHOLARSHIP": 1.0,
+          "SEXUAL_ORIENTATION": 1.0,
+          "SIGNATURE": 1.0,
+          "SOCIAL_MEDIA_ACCOUNT": 1.0,
+          "SOCIAL_MEDIA_HISTORY": 1.0,
+          "SOCIAL_MEDIA_ID": 1.0,
+          "SOCIO_ECONOMIC_STATUS": 1.0,
+          "SPECIAL_CONSIDERATION": 1.0,
+          "STUDENT_ID": 1.0,
+          "SUBJECT_RESULTS": 1.0,
+          "UAC_ID": 0.988372,
+          "USERNAME": 1.0,
+          "USI": 1.0,
+          "VEHICLE_REGO": 0.987342,
+          "VOICE_RECOGNITION": 1.0,
+          "WAM_SCORE": 1.0,
+          "WEBSITE_HISTORY": 1.0,
+          "WORKERS_COMPENSATION_CLAIM": 1.0,
+          "WORK_EMAIL": 1.0,
+          "WORK_PHONE": 0.992126
+        },
+        "confusion_top_pairs": [
+          {
+            "gold": "NUMBER_PLATE",
+            "predicted": "VEHICLE_REGO",
+            "count": 75
+          },
+          {
+            "gold": "NON_PII",
+            "predicted": "ADDRESS",
+            "count": 27
+          },
+          {
+            "gold": "NUMBER_PLATE",
+            "predicted": "USERNAME",
+            "count": 9
+          },
+          {
+            "gold": "HOME_PHONE",
+            "predicted": "MOBILE",
+            "count": 6
+          },
+          {
+            "gold": "DATE_OF_BIRTH",
+            "predicted": "MEDICARE_EXPIRY",
+            "count": 3
+          },
+          {
+            "gold": "HASHED_PAYMENT_CARD_NUMBER",
+            "predicted": "PAYMENT_CARD_NUMBER",
+            "count": 2
+          },
+          {
+            "gold": "UAC_ID",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "PERSONNEL_NUMBER",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "WORK_PHONE",
+            "predicted": "MOBILE",
+            "count": 1
+          },
+          {
+            "gold": "MEDICARE_EXPIRY",
+            "predicted": "CREDIT_CARD_EXPIRY",
+            "count": 1
+          },
+          {
+            "gold": "NUMBER_PLATE",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "VEHICLE_REGO",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "RACIAL_ETHNIC_ORIGIN",
+            "predicted": "NON_PII",
+            "count": 1
+          },
+          {
+            "gold": "CONTRACT_TYPE",
+            "predicted": "NON_PII",
+            "count": 1
+          }
+        ],
+        "example_count": 13588,
+        "loss": 0.229434
+      }
+    }
+  },
+  "risk_score_calibration_placeholder": null,
+  "qwen_model_loaded": false,
+  "lora_started": false,
+  "opf_started": false
+}

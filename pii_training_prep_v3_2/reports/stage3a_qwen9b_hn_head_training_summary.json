@@ -1,0 +1,68 @@
+{
+  "stage": "3A.3",
+  "label_count": 80,
+  "experiments": {
+    "mean_linear": {
+      "status": "completed",
+      "best_epoch": 4,
+      "best_dev_nll": 0.123679,
+      "dev_nll_after_temperature": 0.147429,
+      "test_top1_after_temperature": 0.989108,
+      "test_nll_after_temperature": 0.106485,
+      "checkpoint": "runs/qwen9b_hn_spancls_heads/mean_linear/head.pt"
+    },
+    "first_linear": {
+      "status": "completed",
+      "best_epoch": 17,
+      "best_dev_nll": 0.149362,
+      "dev_nll_after_temperature": 0.183026,
+      "test_top1_after_temperature": 0.9738,
+      "test_nll_after_temperature": 0.145497,
+      "checkpoint": "runs/qwen9b_hn_spancls_heads/first_linear/head.pt"
+    },
+    "last_linear": {
+      "status": "completed",
+      "best_epoch": 11,
+      "best_dev_nll": 0.08469,
+      "dev_nll_after_temperature": 0.085335,
+      "test_top1_after_temperature": 0.987489,
+      "test_nll_after_temperature": 0.077113,
+      "checkpoint": "runs/qwen9b_hn_spancls_heads/last_linear/head.pt"
+    },
+    "concat_mlp": {
+      "status": "completed",
+      "best_epoch": 9,
+      "best_dev_nll": 0.105457,
+      "dev_nll_after_temperature": 0.124288,
+      "test_top1_after_temperature": 0.990433,
+      "test_nll_after_temperature": 0.092188,
+      "checkpoint": "runs/qwen9b_hn_spancls_heads/concat_mlp/head.pt"
+    }
+  },
+  "device": "cuda",
+  "batch_size": 1024,
+  "max_epochs": 30,
+  "patience": 5,
+  "learning_rate": 0.001,
+  "source_weight_overrides": {
+    "candidate_level_negative": 3.0,
+    "qwen_5way_ranking": 1.5
+  },
+  "label_weight_overrides": {
+    "NON_PII": 2.0
+  },
+  "labels_outside_training_space": {
+    "train": {},
+    "dev": {},
+    "test": {}
+  },
+  "qwen_model_loaded": false,
+  "lora_started": false,
+  "opf_started": false,
+  "classifier_full_training_started": false,
+  "best_experiment_by_dev_nll": {
+    "experiment": "last_linear",
+    "best_dev_nll": 0.08469
+  },
+  "wall_time_seconds": 103.4
+}

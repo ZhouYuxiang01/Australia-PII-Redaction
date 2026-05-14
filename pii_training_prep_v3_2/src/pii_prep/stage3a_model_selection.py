@@ -126,20 +126,53 @@ def normalize_text(text: str) -> str:
     return re.sub(r"\s+", " ", text.casefold()).strip()
 
 
-def choose_best_model(eval_reports: dict[str, dict[str, Any]]) -> dict[str, Any]:
+def choose_best_model(
+    eval_reports: dict[str, dict[str, Any]],
+    selection_strategy: str = "dev_nll",
+    *,
+    run_dir_name: str = "qwen_spancls_heads",
+) -> dict[str, Any]:
     candidates = []
     for name, report in eval_reports.items():
         dev = report["metrics"]["after_temperature"]["dev"]
-        sort_key = [float(dev["nll"]), float(dev["ece"]), -float(dev["top3_accuracy"])]
+        sort_key = selection_sort_key(dev, selection_strategy)
         candidates.append((sort_key, name, report))
     sort_key, name, report = sorted(candidates, key=lambda item: (item[0], item[1]))[0]
     return {
         "selected_model": name,
-        "selected_checkpoint": f"runs/qwen_spancls_heads/{name}/head.pt",
+        "selected_checkpoint": f"runs/{run_dir_name}/{name}/head.pt",
         "selected_temperature": report["temperature"],
         "selection_sort_key": [round(value, 6) for value in sort_key],
-        "reason": "Selected using calibrated dev metrics only: lowest dev NLL, then lowest dev ECE, then highest dev top3 accuracy.",
+        "selection_strategy": selection_strategy,
+        "reason": selection_reason(selection_strategy),
     }
+
+
+def selection_sort_key(dev: dict[str, Any], selection_strategy: str) -> list[float]:
+    nll_key = [float(dev["nll"]), float(dev["ece"]), -float(dev["top3_accuracy"])]
+    if selection_strategy == "dev_nll":
+        return nll_key
+    if selection_strategy != "hard_negative_aware":
+        raise ValueError(f"unknown selection_strategy: {selection_strategy}")
+    hard_negative_values = []
+    per_source = dev.get("per_source_accuracy") or {}
+    if "candidate_level_negative" in per_source:
+        hard_negative_values.append(float(per_source["candidate_level_negative"]))
+    if dev.get("non_pii_accuracy") is not None:
+        hard_negative_values.append(float(dev["non_pii_accuracy"]))
+    if not hard_negative_values:
+        return nll_key
+    hard_negative_floor = min(hard_negative_values)
+    return [1.0 - hard_negative_floor, *nll_key]
+
+
+def selection_reason(selection_strategy: str) -> str:
+    if selection_strategy == "hard_negative_aware":
+        return (
+            "Selected using calibrated dev metrics only: highest conservative hard-negative/NON_PII recall first, "
+            "then lowest dev NLL, lowest dev ECE, and highest dev top3 accuracy."
+        )
+    return "Selected using calibrated dev metrics only: lowest dev NLL, then lowest dev ECE, then highest dev top3 accuracy."
 
 
 def template_group(row: dict[str, Any]) -> str:
@@ -299,14 +332,22 @@ def load_selected_model(root: Path, selected_model: str, checkpoint_path: Path) 
     return model, checkpoint
 
 
-def selected_model_predictions(root: Path, selected_model: str, temperature: float, labels: list[str]) -> dict[str, dict[str, Any]]:
-    checkpoint_path = root / "runs" / "qwen_spancls_heads" / selected_model / "head.pt"
+def selected_model_predictions(
+    root: Path,
+    selected_model: str,
+    temperature: float,
+    labels: list[str],
+    *,
+    run_dir_name: str = "qwen_spancls_heads",
+    cache_name_prefix: str = "qwen_spancls_embeddings",
+) -> dict[str, dict[str, Any]]:
+    checkpoint_path = root / "runs" / run_dir_name / selected_model / "head.pt"
     model, _checkpoint = load_selected_model(root, selected_model, checkpoint_path)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     outputs = {}
     for split in ["train", "dev", "test"]:
-        cache = load_cache(root, split)
+        cache = load_cache(root, split, cache_name_prefix)
         features = select_features(cache, selected_model)
         logits = run_logits(model, features, batch_size=2048, device=device) / float(temperature)
         targets = targets_from_records(cache["records"], labels)
@@ -415,14 +456,22 @@ def prediction_examples(outputs: dict[str, dict[str, Any]], labels: list[str], l
     return rows
 
 
-def run_model_selection(root: Path | str = ".") -> dict[str, Any]:
+def run_model_selection(
+    root: Path | str = ".",
+    *,
+    selection_strategy: str = "dev_nll",
+    report_prefix: str = "stage3a_head",
+    run_dir_name: str = "qwen_spancls_heads",
+    cache_name_prefix: str = "qwen_spancls_embeddings",
+    output_prefix: str = "stage3a",
+) -> dict[str, Any]:
     root = Path(root)
     reports = {
-        experiment: json.loads((root / "reports" / f"stage3a_head_eval_{experiment}.json").read_text(encoding="utf-8"))
+        experiment: json.loads((root / "reports" / f"{report_prefix}_eval_{experiment}.json").read_text(encoding="utf-8"))
         for experiment in EXPERIMENTS
     }
-    summary = json.loads((root / "reports" / "stage3a_head_training_summary.json").read_text(encoding="utf-8"))
-    selection = choose_best_model(reports)
+    summary = json.loads((root / "reports" / f"{report_prefix}_training_summary.json").read_text(encoding="utf-8"))
+    selection = choose_best_model(reports, selection_strategy=selection_strategy, run_dir_name=run_dir_name)
     selected = selection["selected_model"]
     selection_report = {
         **selection,
@@ -438,6 +487,9 @@ def run_model_selection(root: Path | str = ".") -> dict[str, Any]:
             for name, report in reports.items()
         },
         "selection_used_test_metrics": False,
+        "report_prefix": report_prefix,
+        "run_dir_name": run_dir_name,
+        "cache_name_prefix": cache_name_prefix,
         "qwen_model_loaded": False,
         "lora_started": False,
         "opf_started": False,
@@ -449,7 +501,14 @@ def run_model_selection(root: Path | str = ".") -> dict[str, Any]:
     }
     leakage = leakage_summary(rows_by_split)
     labels = load_labels(root)
-    outputs = selected_model_predictions(root, selected, float(selection["selected_temperature"]), labels)
+    outputs = selected_model_predictions(
+        root,
+        selected,
+        float(selection["selected_temperature"]),
+        labels,
+        run_dir_name=run_dir_name,
+        cache_name_prefix=cache_name_prefix,
+    )
     breakdown = {
         "selected_model": selected,
         "selected_checkpoint": selection["selected_checkpoint"],
@@ -460,18 +519,30 @@ def run_model_selection(root: Path | str = ".") -> dict[str, Any]:
     }
     examples = prediction_examples(outputs, labels)
     reports_dir = root / "reports"
-    write_json(reports_dir / "stage3a_model_selection_report.json", selection_report)
-    write_json(reports_dir / "stage3a_leakage_check_report.json", leakage)
-    write_json(reports_dir / "stage3a_selected_model_breakdown.json", breakdown)
-    write_jsonl(reports_dir / "stage3a_selected_model_error_examples.jsonl", examples)
+    write_json(reports_dir / f"{output_prefix}_model_selection_report.json", selection_report)
+    write_json(reports_dir / f"{output_prefix}_leakage_check_report.json", leakage)
+    write_json(reports_dir / f"{output_prefix}_selected_model_breakdown.json", breakdown)
+    write_jsonl(reports_dir / f"{output_prefix}_selected_model_error_examples.jsonl", examples)
     return selection_report
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", default=".")
+    parser.add_argument("--selection-strategy", choices=["dev_nll", "hard_negative_aware"], default="dev_nll")
+    parser.add_argument("--report-prefix", default="stage3a_head")
+    parser.add_argument("--run-dir-name", default="qwen_spancls_heads")
+    parser.add_argument("--cache-name-prefix", default="qwen_spancls_embeddings")
+    parser.add_argument("--output-prefix", default="stage3a")
     args = parser.parse_args(argv)
-    report = run_model_selection(args.root)
+    report = run_model_selection(
+        args.root,
+        selection_strategy=args.selection_strategy,
+        report_prefix=args.report_prefix,
+        run_dir_name=args.run_dir_name,
+        cache_name_prefix=args.cache_name_prefix,
+        output_prefix=args.output_prefix,
+    )
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
 

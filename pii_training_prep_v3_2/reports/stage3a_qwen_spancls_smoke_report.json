@@ -3,38 +3,38 @@
   "model_path": "/home/admin/model/Qwen3.5-9B-Base",
   "model_loaded_successfully": true,
   "label_count": 80,
-  "train_sample_limit": 1000,
-  "dev_sample_limit": 200,
+  "train_sample_limit": 16,
+  "dev_sample_limit": 16,
   "epochs": 1,
-  "batch_size": 1,
+  "batch_size": 4,
   "max_length": 1536,
   "bf16": true,
   "device": "cuda",
   "hidden_size": 4096,
   "logits_shape_last_eval": [
-    1,
+    4,
     80
   ],
   "labels_outside_training_space": {},
   "mapping_failure_count": 0,
   "training": {
-    "train_loss": 5.152364,
-    "train_steps": 1000,
-    "train_valid_examples": 1000
+    "train_loss": 6.328513,
+    "train_steps": 4,
+    "train_valid_examples": 16
   },
   "dev": {
-    "top1_accuracy": 0.7,
-    "top3_accuracy": 0.875,
-    "nll": 3.515891,
-    "brier_score": 0.51506,
-    "ece": 0.256567,
+    "top1_accuracy": 0.1875,
+    "top3_accuracy": 0.25,
+    "nll": 6.750873,
+    "brier_score": 0.910088,
+    "ece": 0.294208,
     "per_source_accuracy": {
-      "sonnet_high_conf": 0.742515,
-      "sonnet_low_conf": 0.484848
+      "sonnet_high_conf": 0.142857,
+      "sonnet_low_conf": 0.5
     },
     "non_pii_accuracy": null,
-    "example_count": 200,
-    "loss": 4.174172
+    "example_count": 16,
+    "loss": 6.608512
   },
   "parameter_report": {
     "qwen_trainable_parameter_count": 0,
@@ -45,5 +45,5 @@
   "student_full_training_started": false,
   "lora_started": false,
   "opf_started": false,
-  "wall_time_seconds": 199.285
+  "wall_time_seconds": 3.317
 }

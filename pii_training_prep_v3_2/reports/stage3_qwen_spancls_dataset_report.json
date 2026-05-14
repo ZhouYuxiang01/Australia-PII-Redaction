@@ -1,7 +1,7 @@
 {
   "splits": {
     "train": {
-      "example_count": 113318,
+      "example_count": 113354,
       "empty_span_record_count": 0,
       "validation_error_count": 0,
       "validation_errors": [],
@@ -51,7 +51,7 @@
         "NATIONALITY": 727,
         "NATIONAL_IDENTITY_CARD": 727,
         "NEXT_OF_KIN": 581,
-        "NON_PII": 3441,
+        "NON_PII": 3477,
         "NUMBER_PLATE": 755,
         "PASSPORT_EXPIRY": 726,
         "PASSPORT_NUMBER": 2729,
@@ -89,14 +89,14 @@
         "WORK_PHONE": 950
       },
       "source_distribution": {
-        "candidate_level_negative": 3426,
+        "candidate_level_negative": 3462,
         "qwen_5way_ranking": 1695,
         "sonnet_high_conf": 89594,
         "sonnet_low_conf": 18603
       }
     },
     "dev": {
-      "example_count": 13838,
+      "example_count": 13850,
       "empty_span_record_count": 0,
       "validation_error_count": 0,
       "validation_errors": [],
@@ -146,7 +146,7 @@
         "NATIONALITY": 87,
         "NATIONAL_IDENTITY_CARD": 87,
         "NEXT_OF_KIN": 62,
-        "NON_PII": 426,
+        "NON_PII": 438,
         "NUMBER_PLATE": 90,
         "PASSPORT_EXPIRY": 90,
         "PASSPORT_NUMBER": 343,
@@ -184,14 +184,14 @@
         "WORK_PHONE": 123
       },
       "source_distribution": {
-        "candidate_level_negative": 420,
+        "candidate_level_negative": 432,
         "qwen_5way_ranking": 180,
         "sonnet_high_conf": 10898,
         "sonnet_low_conf": 2340
       }
     },
     "test": {
-      "example_count": 13576,
+      "example_count": 13588,
       "empty_span_record_count": 0,
       "validation_error_count": 0,
       "validation_errors": [],
@@ -241,7 +241,7 @@
         "NATIONALITY": 86,
         "NATIONAL_IDENTITY_CARD": 86,
         "NEXT_OF_KIN": 57,
-        "NON_PII": 63,
+        "NON_PII": 75,
         "NUMBER_PLATE": 85,
         "PASSPORT_EXPIRY": 84,
         "PASSPORT_NUMBER": 328,
@@ -279,7 +279,7 @@
         "WORK_PHONE": 127
       },
       "source_distribution": {
-        "candidate_level_negative": 54,
+        "candidate_level_negative": 66,
         "qwen_5way_ranking": 225,
         "sonnet_high_conf": 10921,
         "sonnet_low_conf": 2376

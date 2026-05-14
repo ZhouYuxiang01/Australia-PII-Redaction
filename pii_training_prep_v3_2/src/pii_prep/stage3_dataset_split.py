@@ -73,22 +73,20 @@ def build_audit_v2(records: list[dict[str, Any]], base_audit: dict[str, Any]) ->
 def group_key(record: dict[str, Any]) -> str:
     record_id = str(record.get("id", ""))
     metadata = record.get("metadata", {})
+    if metadata.get("subtype") == "candidate_level_negative" and record.get("spans"):
+        span = record.get("spans", [{}])[0]
+        return "|".join(
+            [
+                "stage2-near-duplicate",
+                str(metadata.get("ambiguity_group")),
+                str(metadata.get("context_type")),
+                str(span.get("value")),
+                str(record.get("text")),
+                ",".join(span.get("format_candidates", [])),
+            ]
+        )
     if record_id.startswith("STAGE2-STAGE2-FULL-BASE-"):
         base = record_id.rsplit("-SC", 1)[0]
-        if not record.get("spans"):
-            return base
-        span = record.get("spans", [{}])[0]
-        if metadata.get("subtype") == "candidate_level_negative":
-            return "|".join(
-                [
-                    "stage2-near-duplicate",
-                    str(metadata.get("ambiguity_group")),
-                    str(metadata.get("context_type")),
-                    str(span.get("value")),
-                    str(record.get("text")),
-                    ",".join(span.get("format_candidates", [])),
-                ]
-            )
         return base
     if record_id.startswith("AU-PII-"):
         parts = record_id.split("-")

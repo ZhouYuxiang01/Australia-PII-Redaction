@@ -41,6 +41,18 @@ NEGATIVE_CONTEXT_MARKERS = {
     "test token",
     "tutorial",
     "fake",
+    "public",
+    "guide",
+    "handbook",
+    "template",
+    "main line",
+    "reception",
+    "course code",
+    "router",
+    "internal",
+    "demo",
+    "asset",
+    "invoice",
 }
 
 
@@ -78,6 +90,8 @@ def build_json_only_prompt(prompt_record: dict[str, Any]) -> str:
         "- strong_positive_context: strong_for is allowed when the context clearly identifies the label.\n"
         "- reverse_negative_context: NON_PII should usually be strong_for.\n"
         "- reverse_negative_context: PII labels that only match by format should usually be weak_against or strong_against.\n\n"
+        "- hard_negative_context: This is a hard-negative candidate; choose NON_PII when the span is a public, placeholder, template, demo, internal, course, asset, invoice, or organisation-level value rather than an individual's PII.\n"
+        "- hard_negative_context: PII labels that only match by surface format should usually be weak_against or strong_against.\n\n"
         "Verdict meanings:\n"
         "- strong_for: Context strongly suggests this type\n"
         "- weak_for: Context mildly suggests this type\n"
@@ -131,11 +145,13 @@ def calibrate_raw_scores(
         for label in candidate_labels:
             if label != "NON_PII" and verdicts.get(label) == "strong_for":
                 calibrated[label] = VERDICT_MULTIPLIERS["weak_for"]
-    if context_type == "reverse_negative":
+    if context_type in {"reverse_negative", "hard_negative"}:
         if "NON_PII" in calibrated:
             calibrated["NON_PII"] = max(calibrated["NON_PII"], VERDICT_MULTIPLIERS["strong_for"])
         for label in candidate_labels:
             if label != "NON_PII" and verdicts.get(label) == "strong_for" and not prompt_record.get("rule_verified_unique", False):
+                calibrated[label] = VERDICT_MULTIPLIERS["weak_against"]
+            if context_type == "hard_negative" and label != "NON_PII" and verdicts.get(label) == "weak_for" and not prompt_record.get("rule_verified_unique", False):
                 calibrated[label] = VERDICT_MULTIPLIERS["weak_against"]
         context = str(prompt_record.get("context", "")).lower()
         if "NON_PII" in calibrated and any(marker in context for marker in NEGATIVE_CONTEXT_MARKERS):
@@ -148,6 +164,8 @@ def normalize_context_type(context_type: str) -> str:
         return "strong_positive"
     if context_type == "reverse_negative_context":
         return "reverse_negative"
+    if context_type == "hard_negative_context":
+        return "hard_negative"
     return context_type
 
 

@@ -14,6 +14,8 @@ from redaction.core import (
 )
 from redaction.backends.hybrid_opf_qwen import (
     _apply_qwen_verifier_verdict,
+    _has_line_local_negative,
+    _safety_first_decision,
     _select_qwen_verifier_candidates,
 )
 from redaction.core.postprocess import load_postprocess_rule_registry
@@ -44,6 +46,201 @@ def test_repair_offsets_to_input_unique_value() -> None:
     assert any("round_trip_mismatch" in w for w in warns)
     assert inp[repaired[0].start:repaired[0].end] == "Alice Wong"
     assert inp[repaired[1].start:repaired[1].end] == "0421 909 121"
+
+
+def test_line_local_negative_ignores_test_inside_email_domains() -> None:
+    text = (
+        "Contact email olivia.zhang@student.example.test and mobile 0415 890 291. "
+        "Current address: 8/235 Gumleaf Terrace, Chatswood NSW 2067."
+    )
+
+    phone_start = text.index("0415 890 291")
+    address_start = text.index("8/235 Gumleaf")
+
+    assert not _has_line_local_negative(text, phone_start, phone_start + len("0415 890 291"))
+    assert not _has_line_local_negative(
+        text,
+        address_start,
+        address_start + len("8/235 Gumleaf Terrace, Chatswood NSW 2067"),
+    )
+
+
+def test_line_local_negative_still_suppresses_real_test_context() -> None:
+    text = "test token mobile 0415 890 291"
+    start = text.index("0415 890 291")
+
+    assert _has_line_local_negative(text, start, start + len("0415 890 291"))
+
+
+def test_line_local_negative_stops_at_actual_details_transition() -> None:
+    text = (
+        "Ticket INC-0412-345-678. Reference UAC-123456789-TEST. "
+        "Actual details below: Name Riley Morgan, DOB 03/12/2001, UAC ID 221904778."
+    )
+
+    reference_start = text.index("AC-123456789")
+    person_start = text.index("Riley Morgan")
+    uac_start = text.index("221904778")
+
+    assert _has_line_local_negative(text, reference_start, reference_start + len("AC-123456789"))
+    assert not _has_line_local_negative(text, person_start, person_start + len("Riley Morgan"))
+    assert not _has_line_local_negative(text, uac_start, uac_start + len("221904778"))
+
+
+def test_safety_first_decision_reviews_low_evidence_pii_candidates() -> None:
+    decision, reason, risk_score, line_suppressed = _safety_first_decision(
+        source="fallback_regex:digit_sequence",
+        top_type="IHI",
+        top1_prob=0.08,
+        top3_sum=0.22,
+        non_pii_prob=0.10,
+        risk_score=0.03,
+        neg_context=False,
+        line_neg=False,
+        has_per_label_threshold=True,
+        min_top1_pii=0.55,
+    )
+
+    assert decision == "review"
+    assert reason == "safety_review_low_pii_evidence_per_label"
+    assert risk_score == 0.25
+    assert not line_suppressed
+
+
+def test_safety_first_decision_only_ignores_strong_negative_evidence() -> None:
+    line_decision, line_reason, line_risk, line_suppressed = _safety_first_decision(
+        source="fallback_regex:phone_like",
+        top_type="PHONE",
+        top1_prob=0.91,
+        top3_sum=0.96,
+        non_pii_prob=0.02,
+        risk_score=0.02,
+        neg_context=False,
+        line_neg=True,
+        has_per_label_threshold=False,
+        min_top1_pii=0.20,
+    )
+    moderate_decision, moderate_reason, moderate_risk, _ = _safety_first_decision(
+        source="fallback_regex:phone_like",
+        top_type="PHONE",
+        top1_prob=0.70,
+        top3_sum=0.88,
+        non_pii_prob=0.60,
+        risk_score=0.02,
+        neg_context=False,
+        line_neg=False,
+        has_per_label_threshold=False,
+        min_top1_pii=0.20,
+    )
+    strong_decision, strong_reason, strong_risk, _ = _safety_first_decision(
+        source="fallback_regex:phone_like",
+        top_type="PHONE",
+        top1_prob=0.70,
+        top3_sum=0.88,
+        non_pii_prob=0.90,
+        risk_score=0.02,
+        neg_context=False,
+        line_neg=False,
+        has_per_label_threshold=False,
+        min_top1_pii=0.20,
+    )
+
+    assert (line_decision, line_reason, line_risk, line_suppressed) == (
+        "ignore",
+        "line_local_negative_context",
+        0.0,
+        True,
+    )
+    assert (moderate_decision, moderate_reason, moderate_risk) == (
+        "review",
+        "safety_review_non_pii_uncertain",
+        0.25,
+    )
+    assert (strong_decision, strong_reason, strong_risk) == (
+        "ignore",
+        "non_pii_high",
+        0.0,
+    )
+
+
+def test_safety_first_decision_ignores_low_evidence_broad_regex_without_context() -> None:
+    no_context_decision, no_context_reason, no_context_risk, _ = _safety_first_decision(
+        source="regex_candidate:digit_sequence",
+        top_type="PAYMENT_CARD_NUMBER",
+        top1_prob=0.04,
+        top3_sum=0.18,
+        non_pii_prob=0.0,
+        risk_score=0.02,
+        neg_context=False,
+        line_neg=False,
+        has_per_label_threshold=True,
+        min_top1_pii=0.70,
+        has_positive_context=False,
+    )
+    contextual_decision, contextual_reason, contextual_risk, _ = _safety_first_decision(
+        source="regex_candidate:digit_sequence",
+        top_type="PAYMENT_CARD_NUMBER",
+        top1_prob=0.04,
+        top3_sum=0.18,
+        non_pii_prob=0.0,
+        risk_score=0.02,
+        neg_context=False,
+        line_neg=False,
+        has_per_label_threshold=True,
+        min_top1_pii=0.70,
+        has_positive_context=True,
+    )
+
+    assert (no_context_decision, no_context_reason, no_context_risk) == (
+        "ignore",
+        "broad_regex_without_positive_context",
+        0.0,
+    )
+    assert (contextual_decision, contextual_reason, contextual_risk) == (
+        "review",
+        "safety_review_low_pii_evidence_per_label",
+        0.25,
+    )
+
+
+def test_safety_first_decision_ignores_low_evidence_model_without_context() -> None:
+    low_decision, low_reason, low_risk, _ = _safety_first_decision(
+        source="model",
+        top_type="STUDENT_ID",
+        top1_prob=0.10,
+        top3_sum=0.22,
+        non_pii_prob=0.0,
+        risk_score=0.02,
+        neg_context=False,
+        line_neg=False,
+        has_per_label_threshold=True,
+        min_top1_pii=0.70,
+        has_positive_context=False,
+    )
+    neg_decision, neg_reason, neg_risk, _ = _safety_first_decision(
+        source="model",
+        top_type="AU_PASSPORT",
+        top1_prob=0.38,
+        top3_sum=0.72,
+        non_pii_prob=0.0,
+        risk_score=0.05,
+        neg_context=True,
+        line_neg=False,
+        has_per_label_threshold=False,
+        min_top1_pii=0.20,
+        has_positive_context=False,
+    )
+
+    assert (low_decision, low_reason, low_risk) == (
+        "ignore",
+        "low_evidence_without_positive_context",
+        0.0,
+    )
+    assert (neg_decision, neg_reason, neg_risk) == (
+        "ignore",
+        "negative_context_without_positive_context",
+        0.0,
+    )
 
 
 def test_resolve_overlaps_keeps_longer() -> None:
@@ -207,7 +404,11 @@ def test_safe_postprocess_rescues_contextual_structured_fields() -> None:
         "Medicare: 8259 87832 8\n"
         "Medical certificate says unfit from 02/05/2025 to 24/02/2026\n"
     )
-    cleaned, _ = safe_postprocess_spans(text, [], {"postprocess": {}})
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [],
+        {"postprocess": {"add_contextual_identifier_spans": True}},
+    )
     pairs = [(s.type, s.value) for s in cleaned]
     assert ("STUDENT_ID", "426318590") in pairs
     assert ("EMPLOYEE_NUMBER", "E942830") in pairs
@@ -227,17 +428,23 @@ def test_safe_postprocess_rescues_identifier_verification_fields() -> None:
         "Medicare expiry: 03/2032\n"
         "Medicare number is Medicare: 2938-4756-12-1. Card expiry: 08/2029\n"
         "National ID: NID-RS-420252-M\n"
+        "National ID AUS-PR-6570932\n"
         "Centrelink Reference Number: 948 686 159Q\n"
         "Passport Number: P8581172\n"
         "Passport start date: 14/08/2019\n"
         "Passport expiry date: 07/2034\n"
         "Scholarship ref: SCH-2026-8556Z\n"
     )
-    cleaned, _ = safe_postprocess_spans(text, [], {"postprocess": {}})
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [],
+        {"postprocess": {"add_contextual_identifier_spans": True}},
+    )
     pairs = [(s.type, s.value) for s in cleaned]
     assert ("MEDICARE_EXPIRY", "03/2032") in pairs
     assert ("MEDICARE_EXPIRY", "08/2029") in pairs
     assert ("NATIONAL_IDENTITY_CARD", "NID-RS-420252-M") in pairs
+    assert ("NATIONAL_IDENTITY_CARD", "AUS-PR-6570932") in pairs
     assert ("CENTRELINK_REFERENCE_NUMBER", "948 686 159Q") in pairs
     assert ("AU_PASSPORT", "P8581172") in pairs
     assert ("PASSPORT_START_DATE", "14/08/2019") in pairs
@@ -275,6 +482,83 @@ def test_safe_postprocess_rescues_messy_contextual_formats() -> None:
     assert ("CREDIT_CARD_EXPIRY", "08/29") in pairs
     assert ("VEHICLE_ID", "VIC-987-XYZ") in pairs
     assert ("PHONE", "221 904 778") not in pairs
+
+
+def test_safe_postprocess_adds_contextual_review_candidates_for_semantic_pii() -> None:
+    text = (
+        "Contract: fixed-term\n"
+        "Salary range: $109,000 - $120,000 per annum\n"
+        "Diagnosis: hypertension\n"
+        "Treatment: counselling: mindfulness-based therapy\n"
+        "Evidence: medical certificate from Dr. Jun Patel (15/07/2025)\n"
+        "Biometrics: Face: face ID on file | Fingerprint: fingerprint registered | Voice: voiceprint on file | "
+        "Sig: e-signature on file\n"
+        "Audio: voice memo attached\n"
+        "Cookie: PHPSESSID=0123456789abcdef0123456789abcdef\n"
+        "Activity: social media history on Instagram\n"
+    )
+
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [],
+        {
+            "postprocess": {
+                "add_contextual_review_spans": True,
+                "add_contextual_identifier_spans": False,
+                "add_registry_contextual_spans": False,
+            }
+        },
+    )
+    pairs = {(s.type, s.value) for s in cleaned}
+
+    assert ("CONTRACT_TYPE", "fixed-term") in pairs
+    assert ("SALARY", "$109,000 - $120,000 per annum") in pairs
+    assert ("MEDICAL_INFORMATION", "hypertension") in pairs
+    assert ("COUNSELLING_RECORDS", "counselling: mindfulness-based therapy") in pairs
+    assert ("MEDICAL_CERTIFICATE", "medical certificate from Dr. Jun Patel (15/07/2025)") in pairs
+    assert ("FACIAL_RECOGNITION", "face ID on file") in pairs
+    assert ("FINGERPRINT", "fingerprint registered") in pairs
+    assert ("VOICE_RECOGNITION", "voiceprint on file") in pairs
+    assert ("SIGNATURE", "e-signature on file") in pairs
+    assert ("AUDIO_INFORMATION", "voice memo attached") in pairs
+    assert ("COOKIE_INFORMATION", "PHPSESSID=0123456789abcdef0123456789abcdef") in pairs
+    assert ("SOCIAL_MEDIA_HISTORY", "social media history on Instagram") in pairs
+    assert all(
+        span.decision == "review" and span.decision_reason == "contextual_review_candidate"
+        for span in cleaned
+    )
+
+
+def test_safe_postprocess_suppresses_gender_and_pronoun_labels() -> None:
+    text = "gender: male\nsex: female\npronouns: she/her"
+    spans = [
+        Span(
+            start=text.index("gender"),
+            end=text.index("female") + len("female"),
+            type="GENDER",
+            value="gender: male\nsex: female",
+            confidence=0.03,
+            decision="review",
+            source="fallback_full_input",
+        ),
+        Span(
+            start=text.index("she/her"),
+            end=text.index("she/her") + len("she/her"),
+            type="PRONOUN",
+            value="she/her",
+            confidence=0.9,
+            decision="redact",
+            source="model",
+        ),
+    ]
+
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        spans,
+        {"postprocess": {"add_contextual_identifier_spans": True, "add_registry_contextual_spans": True}},
+    )
+
+    assert all(span.type not in {"GENDER", "PRONOUN"} for span in cleaned)
 
 
 def test_postprocess_registry_files_load_without_new_taxonomy() -> None:
@@ -323,12 +607,200 @@ def test_registry_driven_contextual_fallback_rules() -> None:
     assert ("DATE_OF_BIRTH", "7.3.2004") in pairs
     assert ("STUDENT_ID", "5102 88411") in pairs
     assert ("UAC_ID", "221 904 778") in pairs
+    uac = next(s for s in cleaned if s.type == "UAC_ID")
+    assert uac.data_classification == "Highly Protected"
+    assert uac.data_classification_weight == 1.0
     assert ("AU_BANK_ACCOUNT", "0088 1992 44") in pairs
     assert ("PAYMENT_CARD_NUMBER", "4111 9090 3333 1200") in pairs
     assert ("CREDIT_CARD_EXPIRY", "08/29") in pairs
     assert ("MEDICARE_EXPIRY", "08/2029") in pairs
     assert ("VEHICLE_ID", "VIC-987-XYZ") in pairs
     assert ("VEHICLE_ID", "NSW CXT-72Q") in pairs
+
+
+def test_safe_postprocess_rescues_inline_refund_bank_and_hash_fields() -> None:
+    text = (
+        "Refund details copied from a messy email:\n"
+        "Payee Xavier Kelly gave BSB 697-894 and account number 639 178 972. "
+        "Stored hashed card ref sha256:4723b26560741ff3c4951cd9ae00ef2a28d90c0e02af1dd8f706c14e6f71f8. "
+        "Do not treat invoice INV-738-475 as a bank field."
+    )
+
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [],
+        {"postprocess": {"add_contextual_identifier_spans": True, "add_registry_contextual_spans": True}},
+    )
+
+    pairs = [(s.type, s.value) for s in cleaned]
+    assert ("AU_BANK_ACCOUNT", "697-894") in pairs
+    assert ("AU_BANK_ACCOUNT", "639 178 972") in pairs
+    assert (
+        "HASHED_PAYMENT_CARD_NUMBER",
+        "sha256:4723b26560741ff3c4951cd9ae00ef2a28d90c0e02af1dd8f706c14e6f71f8",
+    ) in pairs
+    assert not any(s.value == "INV-738-475" and s.decision != "ignore" for s in cleaned)
+
+
+def test_safe_postprocess_keeps_structured_fields_inside_medical_notes() -> None:
+    text = (
+        "Wellbeing / special consideration note:\n"
+        "Student Ryan Fernandez, SID 892835042, DOB 16-12-1997. "
+        "Reason mentions migraine flare-up and condition: chronic migraine. "
+        "Medicare 9393 68460 6, card expiry 07/2029; IHI 8003 3386 2614 5535. "
+        "Medical cert states unfit from 16/09/2025 to 22/12/2025. "
+        "Call back 0497 348 386."
+    )
+
+    cleaned, _ = safe_postprocess_spans(text, [], {"postprocess": {}})
+    pairs = [(s.type, s.value) for s in cleaned]
+
+    assert ("MEDICAL_INFORMATION", "mentions migraine flare-up and condition: chronic migraine") in pairs
+    assert ("MEDICARE_NUMBER", "9393 68460 6") in pairs
+    assert ("MEDICARE_EXPIRY", "07/2029") in pairs
+    assert ("IHI", "8003 3386 2614 5535") in pairs
+    assert ("MEDICAL_CERTIFICATE", "16/09/2025") in pairs
+    assert ("MEDICAL_CERTIFICATE", "22/12/2025") in pairs
+    assert ("PHONE", "0497 348 386") in pairs
+
+
+def test_safe_postprocess_rescues_actual_details_after_hard_negative_prefix() -> None:
+    text = (
+        "Room 14/09/2002 Building A. Ticket INC-0412-345-678. "
+        "Reference UAC-123456789-TEST. Receipt REC-062-001. "
+        "Gift receipt GIFT-4111111111111111. Actual details below: "
+        "Name Riley Morgan, DOB 03/12/2001, UAC ID 221904778, USI Q7XH-22PL-9A"
+    )
+
+    cleaned, _ = safe_postprocess_spans(text, [], {"postprocess": {}})
+    pairs = [(s.type, s.value) for s in cleaned]
+
+    assert ("DATE_OF_BIRTH", "03/12/2001") in pairs
+    assert ("UAC_ID", "221904778") in pairs
+    assert ("USI", "Q7XH-22PL-9A") in pairs
+    assert all(value != "14/09/2002" for _, value in pairs)
+    assert all("GIFT-" not in value for _, value in pairs)
+
+
+def test_safe_postprocess_relabels_contextual_uac_and_national_id_conflicts() -> None:
+    text = "UAC ID 221904778. National ID AUS-PR-6570932."
+    uac_start = text.index("221904778")
+    national_start = text.index("AUS-PR")
+
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [
+            Span(start=uac_start, end=uac_start + len("221904778"), type="STUDENT_ID", value="221904778", confidence=0.95),
+            Span(start=national_start, end=national_start + len("AUS-PR-6570932"), type="AU_PASSPORT", value="AUS-PR-6570932", confidence=0.95),
+        ],
+        {"postprocess": {}},
+    )
+
+    assert [(s.type, s.value) for s in cleaned] == [
+        ("UAC_ID", "221904778"),
+        ("NATIONAL_IDENTITY_CARD", "AUS-PR-6570932"),
+    ]
+
+
+def test_safe_postprocess_rescues_legal_status_free_text() -> None:
+    text = (
+        "Criminal record field: spent conviction declared on form. "
+        "Military/veteran status: defence transition support requested."
+    )
+
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [],
+        {"postprocess": {"add_contextual_identifier_spans": True}},
+    )
+
+    assert [(s.type, s.value) for s in cleaned] == [
+        ("CRIMINAL_RECORDS", "spent conviction declared on form"),
+        ("MILITARY_VETERAN_STATUS", "defence transition support requested"),
+    ]
+
+
+def test_safe_postprocess_rescues_inline_course_result_items() -> None:
+    text = "Results: COMP5318: F 26; COMP9601: D 78; DATA5703: F 18. Course ref CRS-35200 is not SID."
+
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [],
+        {"postprocess": {"add_contextual_identifier_spans": True}},
+    )
+
+    assert [(s.type, s.value) for s in cleaned] == [
+        ("SUBJECT_RESULTS", "COMP5318: F 26"),
+        ("SUBJECT_RESULTS", "COMP9601: D 78"),
+        ("SUBJECT_RESULTS", "DATA5703: F 18"),
+    ]
+
+
+def test_safe_postprocess_drops_common_non_pii_operational_and_aggregate_tokens() -> None:
+    examples = [
+        (
+            "Aggregate score: 71. Department-level summary only.",
+            "Aggregate score: 71. Department-level summary only.",
+            "SUBJECT_RESULTS",
+        ),
+        (
+            "Loyalty card: 6746 9208 8513 5345. Retail points card, not a payment card.",
+            "6746 9208 8513 5345",
+            "PAYMENT_CARD_NUMBER",
+        ),
+        (
+            "Activation code: KYT5WY47TV. Software licence, not a USI.",
+            "KYT5WY47TV",
+            "USI",
+        ),
+        (
+            "BSB-like branch code: 834-688. Internal routing - not a bank BSB.",
+            "834-688",
+            "AU_BANK_ACCOUNT",
+        ),
+        (
+            "Server IP: 192.168.166.68. Internal infrastructure - not a user IP.",
+            "192.168.166.68",
+            "IP_ADDRESS",
+        ),
+        (
+            "Server IP: 192.168.166.68. Internal infrastructure - not a user IP.",
+            "Server IP: 192.168.166.68. Internal infrastructure - not a user IP.",
+            "GEOLOCATION_INFORMATION",
+        ),
+        (
+            "Vehicle fleet code: FLEET-9570. Internal - not a licence plate.",
+            "FLEET-9570",
+            "VEHICLE_ID",
+        ),
+    ]
+
+    for text, value, span_type in examples:
+        start = text.index(value)
+        cleaned, _ = safe_postprocess_spans(
+            text,
+            [Span(start=start, end=start + len(value), type=span_type, value=value, confidence=1.0)],
+            {"postprocess": {}},
+        )
+        assert cleaned == []
+
+
+def test_safe_postprocess_keeps_positive_payment_account_ip_and_vehicle_contexts() -> None:
+    examples = [
+        ("Payment card: 4111 6279 6888 8750", "4111 6279 6888 8750", "PAYMENT_CARD_NUMBER"),
+        ("BSB 697-894 for refund account", "697-894", "AU_BANK_ACCOUNT"),
+        ("Last login IP: 203.0.113.45", "203.0.113.45", "IP_ADDRESS"),
+        ("Vehicle REGO: CXT72Q", "CXT72Q", "VEHICLE_ID"),
+    ]
+
+    for text, value, span_type in examples:
+        start = text.index(value)
+        cleaned, _ = safe_postprocess_spans(
+            text,
+            [Span(start=start, end=start + len(value), type=span_type, value=value, confidence=1.0)],
+            {"postprocess": {}},
+        )
+        assert [(s.type, s.value) for s in cleaned] == [(span_type, value)]
 
 
 def test_registry_driven_contextual_text_fields() -> None:
@@ -362,7 +834,7 @@ def test_registry_driven_contextual_text_fields() -> None:
     assert ("ADDRESS", "Level 6, 76 High Street, Redfern NSW 2016") in pairs
     assert ("ADDRESS", "7/68, 178 City Road, Northbridge WA 6003") in pairs
     assert ("NEXT_OF_KIN", "Tahlia Park") in pairs
-    assert ("PRONOUN", "he/they") in pairs
+    assert ("PRONOUN", "he/they") not in pairs
     assert ("MEDICAL_INFORMATION", "migraine + anxiety flare-up") in pairs
 
 
@@ -1019,6 +1491,70 @@ def test_safe_postprocess_keeps_personal_email_login_ip_and_emergency_phone() ->
         ("IP_ADDRESS", "203.45.67.89"),
         ("PHONE", "0412 345 678"),
     ]
+
+
+def test_safe_postprocess_rescues_au_international_landline_after_telephone_and_fax() -> None:
+    text = "Telephone: 61286278300, Fax: 61286278387"
+
+    cleaned, _ = safe_postprocess_spans(text, [], {"postprocess": {}})
+
+    assert [(s.type, s.value, s.source, s.confidence) for s in cleaned] == [
+        ("PHONE", "61286278300", "rule", 1.0),
+        ("PHONE", "61286278387", "rule", 1.0),
+    ]
+
+
+def test_safe_postprocess_drops_public_document_template_false_positives() -> None:
+    examples = [
+        (
+            "Find out more about living and studying in Australia at https://www.studyaustralia.gov.au/",
+            "https://www.studyaustralia.gov.au",
+            "WORK_EMAIL",
+        ),
+        (
+            "A. INFORMATION FOR OVERSEAS STUDENTS",
+            "STUDENTS",
+            "CITIZENSHIP_STATUS",
+        ),
+        (
+            "Created: 20/04/2026 11:24:39 Updated: 20/04/2026 11:24:39",
+            "20/04/2026",
+            "PASSPORT_EXPIRY",
+        ),
+        (
+            "Course: Master of Computer Science [111671D]",
+            "111671D",
+            "CENTRELINK_REFERENCE_NUMBER",
+        ),
+        (
+            "Created: 20/04/2026 11:24:39 Updated: 20/04/2026 11:24:39",
+            "2026 11",
+            "PAYMENT_CARD_NUMBER",
+        ),
+    ]
+
+    for text, value, span_type in examples:
+        start = text.index(value)
+        cleaned, _ = safe_postprocess_spans(
+            text,
+            [Span(start=start, end=start + len(value), type=span_type, value=value, confidence=0.9)],
+            {"postprocess": {}},
+        )
+        assert cleaned == []
+
+
+def test_safe_postprocess_keeps_real_website_history_context() -> None:
+    text = "Website history flag: student.example.edu.au/account-reset"
+    value = "student.example.edu.au/account-reset"
+    start = text.index(value)
+
+    cleaned, _ = safe_postprocess_spans(
+        text,
+        [Span(start=start, end=start + len(value), type="WEBSITE_HISTORY", value=value, confidence=0.9)],
+        {"postprocess": {}},
+    )
+
+    assert [(s.type, s.value) for s in cleaned] == [("WEBSITE_HISTORY", value)]
 
 
 def test_safe_postprocess_drops_operational_numeric_and_example_plate_false_positives() -> None:

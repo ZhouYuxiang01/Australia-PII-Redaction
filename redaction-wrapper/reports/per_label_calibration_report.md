@@ -1,0 +1,80 @@
+# Per-Label Top1 Threshold Calibration
+
+Total labels: 73  |  Overridden: 33
+Default threshold: 0.2  |  Min F1 gain to override: 0.005
+
+| Label | N_pos | N_neg | Missed | Default F1 | Best τ | Best F1 | Gain | Decision |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| PASSPORT_EXPIRY | 87 | 343 | 0 | 0.3405 | 0.84 | 0.8914 | +0.5509 | override |
+| AU_TFN | 253 | 681 | 0 | 0.5622 | 0.85 | 0.9056 | +0.3434 | override |
+| CITIZENSHIP_STATUS | 83 | 94 | 0 | 0.6803 | 0.74 | 0.994 | +0.3137 | override |
+| PAYMENT_CARD_NUMBER | 278 | 2185 | 3 | 0.3594 | 0.68 | 0.6692 | +0.3098 | override |
+| SOCIAL_MEDIA_ID | 53 | 184 | 0 | 0.5024 | 0.54 | 0.791 | +0.2886 | override |
+| STUDENT_ID | 320 | 660 | 0 | 0.7152 | 0.41 | 0.9984 | +0.2832 | override |
+| PHONE | 549 | 642 | 0 | 0.6769 | 0.79 | 0.9393 | +0.2624 | override |
+| IHI | 160 | 198 | 0 | 0.7425 | 0.44 | 0.9969 | +0.2544 | override |
+| VEHICLE_ID | 86 | 476 | 94 | 0.2583 | 0.38 | 0.4393 | +0.1810 | override |
+| AU_PASSPORT | 343 | 517 | 0 | 0.8245 | 0.55 | 0.9928 | +0.1683 | override |
+| PENSION_CARD_NUMBER | 52 | 161 | 10 | 0.7536 | 0.32 | 0.9123 | +0.1587 | override |
+| ADDRESS | 1182 | 427 | 0 | 0.848 | 0.34 | 0.9731 | +0.1251 | override |
+| AU_BANK_ACCOUNT | 376 | 184 | 33 | 0.8346 | 0.59 | 0.9363 | +0.1017 | override |
+| EMPLOYEE_NUMBER | 121 | 51 | 0 | 0.9272 | 0.49 | 0.9959 | +0.0687 | override |
+| SUBJECT_RESULTS | 152 | 21 | 0 | 0.9354 | 0.29 | 1.0 | +0.0646 | override |
+| EMAIL | 526 | 465 | 0 | 0.6962 | 0.83 | 0.7515 | +0.0553 | override |
+| DEVICE_ID | 73 | 145 | 0 | 0.9359 | 0.5 | 0.9865 | +0.0506 | override |
+| WAM_SCORE | 180 | 31 | 0 | 0.4202 | 0.71 | 0.4615 | +0.0413 | override |
+| AU_DRIVERS_LICENCE | 246 | 78 | 0 | 0.9457 | 0.25 | 0.9771 | +0.0314 | override |
+| LONGITUDE | 18 | 190 | 56 | 0.1094 | 0.84 | 0.1348 | +0.0254 | override |
+| SPECIAL_CONSIDERATION | 105 | 8 | 0 | 0.9722 | 0.46 | 0.9906 | +0.0184 | override |
+| FACIAL_RECOGNITION | 34 | 7 | 0 | 0.9714 | 0.22 | 0.9855 | +0.0141 | override |
+| ABORIGINALITY | 92 | 6 | 1 | 0.9634 | 0.8 | 0.9735 | +0.0101 | override |
+| SCHOLARSHIP | 152 | 3 | 0 | 0.9902 | 0.45 | 1.0 | +0.0098 | override |
+| UAC_ID | 38 | 62 | 48 | 0.6032 | 0.21 | 0.6129 | +0.0097 | override |
+| CREDIT_CARD_EXPIRY | 174 | 83 | 0 | 0.8309 | 0.57 | 0.839 | +0.0081 | override |
+| IP_ADDRESS | 73 | 1 | 0 | 0.9932 | 0.32 | 1.0 | +0.0068 | override |
+| SOCIAL_MEDIA_HISTORY | 72 | 2 | 2 | 0.973 | 0.36 | 0.9796 | +0.0066 | override |
+| SANCTIONS | 152 | 28 | 0 | 0.9935 | 0.27 | 1.0 | +0.0065 | override |
+| MEDICARE_EXPIRY | 154 | 8 | 0 | 0.984 | 0.43 | 0.9903 | +0.0063 | override |
+| MILITARY_VETERAN_STATUS | 90 | 2 | 0 | 0.9945 | 0.25 | 1.0 | +0.0055 | override |
+| GENDER | 20 | 19 | 30 | 0.4494 | 0.55 | 0.4545 | +0.0051 | override |
+| SOCIO_ECONOMIC_STATUS | 96 | 4 | 1 | 0.9897 | 0.26 | 0.9948 | +0.0051 | override |
+| RACIAL_ETHNIC_ORIGIN | 88 | 4 | 8 | 0.9305 | 0.6 | 0.9348 | +0.0043 | keep_default_(gain=+0.0043) |
+| CONTRACT_TYPE | 114 | 5 | 4 | 0.9432 | 0.58 | 0.9474 | +0.0042 | keep_default_(gain=+0.0042) |
+| GEOLOCATION_INFORMATION | 57 | 81 | 0 | 0.566 | 0.48 | 0.5686 | +0.0026 | keep_default_(gain=+0.0026) |
+| PERSON | 1933 | 32 | 4 | 0.9926 | 0.46 | 0.9936 | +0.0010 | keep_default_(gain=+0.0010) |
+| AUDIO_INFORMATION | 62 | 204 | 0 | 1.0 | 0.18 | 1.0 | +0.0000 | keep_default_(gain=+0.0000) |
+| CAMERA_FOOTAGE_AUDIO | 62 | 0 | 0 | 1.0 | 0.05 | 1.0 | +0.0000 | keep_default_(gain=+0.0000) |
+| CARING_RESPONSIBILITIES | 90 | 2 | 0 | 0.9945 | 0.06 | 0.9945 | +0.0000 | keep_default_(gain=+0.0000) |
+| CENTRELINK_REFERENCE_NUMBER | 87 | 1 | 0 | 0.9942 | 0.12 | 0.9942 | +0.0000 | keep_default_(gain=+0.0000) |
+| COOKIE_INFORMATION | 72 | 0 | 0 | 1.0 | 0.05 | 1.0 | +0.0000 | keep_default_(gain=+0.0000) |
+| COUNSELLING_RECORDS | 105 | 0 | 0 | 1.0 | 0.05 | 1.0 | +0.0000 | keep_default_(gain=+0.0000) |
+| CRIMINAL_RECORDS | 87 | 1 | 0 | 0.9943 | 0.05 | 0.9943 | +0.0000 | keep_default_(gain=+0.0000) |
+| DATE_OF_BIRTH | 1091 | 59 | 0 | 0.9755 | 0.09 | 0.9755 | +0.0000 | keep_default_(gain=+0.0000) |
+| DISABILITY_OR_SPECIFIC_CONDITION | 105 | 0 | 0 | 1.0 | 0.05 | 1.0 | +0.0000 | keep_default_(gain=+0.0000) |
+| EMPLOYMENT_INFORMATION | 114 | 7 | 8 | 0.9204 | 0.05 | 0.9204 | +0.0000 | keep_default_(gain=+0.0000) |
+| FINGERPRINT | 42 | 0 | 0 | 1.0 | 0.05 | 1.0 | +0.0000 | keep_default_(gain=+0.0000) |
+| LATITUDE | 22 | 78 | 47 | 0.3077 | 0.05 | 0.3077 | +0.0000 | keep_default_(gain=+0.0000) |
+| MARITAL_STATUS | 88 | 3 | 2 | 0.9888 | 0.17 | 0.9888 | +0.0000 | keep_default_(gain=+0.0000) |
+| MEDICAL_CERTIFICATE | 105 | 0 | 0 | 1.0 | 0.05 | 1.0 | +0.0000 | keep_default_(gain=+0.0000) |
+| MEDICAL_INFORMATION | 102 | 0 | 3 | 0.9855 | 0.05 | 0.9855 | +0.0000 | keep_default_(gain=+0.0000) |
+| MEDICARE_NUMBER | 159 | 2 | 0 | 0.9293 | 0.2 | 0.9293 | +0.0000 | keep_default_(gain=+0.0000) |
+| NATIONALITY | 82 | 8 | 5 | 0.7808 | 0.05 | 0.7808 | +0.0000 | keep_default_(gain=+0.0000) |
+| NATIONAL_IDENTITY_CARD | 86 | 1 | 0 | 0.9942 | 0.05 | 0.9942 | +0.0000 | keep_default_(gain=+0.0000) |
+| NEXT_OF_KIN | 61 | 0 | 0 | 0.8269 | 0.05 | 0.8269 | +0.0000 | keep_default_(gain=+0.0000) |
+| PASSPORT_START_DATE | 76 | 0 | 0 | 1.0 | 0.05 | 1.0 | +0.0000 | keep_default_(gain=+0.0000) |
+| PERSONAL_DEBT | 90 | 0 | 0 | 0.5246 | 0.05 | 0.5246 | +0.0000 | keep_default_(gain=+0.0000) |
+| PERSONNEL_NUMBER | 112 | 7 | 1 | 0.9956 | 0.13 | 0.9956 | +0.0000 | keep_default_(gain=+0.0000) |
+| PRONOUN | 38 | 1 | 59 | 0.5588 | 0.05 | 0.5588 | +0.0000 | keep_default_(gain=+0.0000) |
+| RELIGION_BELIEF | 97 | 1 | 0 | 0.9949 | 0.05 | 0.9949 | +0.0000 | keep_default_(gain=+0.0000) |
+| SALARY | 306 | 37 | 5 | 0.7197 | 0.12 | 0.7197 | +0.0000 | keep_default_(gain=+0.0000) |
+| SALARY_WAGE_EXPECTATION | 47 | 55 | 4 | 0.55 | 0.12 | 0.55 | +0.0000 | keep_default_(gain=+0.0000) |
+| SEXUAL_ORIENTATION | 95 | 0 | 2 | 0.9896 | 0.05 | 0.9896 | +0.0000 | keep_default_(gain=+0.0000) |
+| SIGNATURE | 51 | 1 | 0 | 1.0 | 0.12 | 1.0 | +0.0000 | keep_default_(gain=+0.0000) |
+| SOCIAL_MEDIA_ACCOUNT | 14 | 1 | 0 | 0.9655 | 0.05 | 0.9655 | +0.0000 | keep_default_(gain=+0.0000) |
+| USERNAME | 73 | 0 | 0 | 1.0 | 0.05 | 1.0 | +0.0000 | keep_default_(gain=+0.0000) |
+| USI | 87 | 266 | 0 | 1.0 | 0.09 | 1.0 | +0.0000 | keep_default_(gain=+0.0000) |
+| VOICE_RECOGNITION | 41 | 0 | 0 | 1.0 | 0.05 | 1.0 | +0.0000 | keep_default_(gain=+0.0000) |
+| WEBSITE_HISTORY | 73 | 0 | 0 | 1.0 | 0.05 | 1.0 | +0.0000 | keep_default_(gain=+0.0000) |
+| WORKERS_COMPENSATION_CLAIM | 62 | 0 | 0 | 1.0 | 0.05 | 1.0 | +0.0000 | keep_default_(gain=+0.0000) |
+| WORK_EMAIL | 0 | 0 | 3 | 0.0 | — | 0.0 | +0.0000 | skip_low_sample |
+| WORK_PHONE | 41 | 0 | 4 | 0.9157 | 0.05 | 0.9157 | +0.0000 | keep_default_(gain=+0.0000) |

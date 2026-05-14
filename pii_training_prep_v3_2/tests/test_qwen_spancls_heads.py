@@ -4,8 +4,10 @@ import torch
 
 from pii_prep.qwen_spancls_heads import (
     build_head,
+    build_targets,
     classification_metrics,
     fit_temperature,
+    parse_weight_overrides,
     select_features,
     soft_cross_entropy,
 )
@@ -38,6 +40,38 @@ class QwenSpanClsHeadTests(unittest.TestCase):
         loss = soft_cross_entropy(logits, targets, weights)
 
         self.assertGreater(float(loss), 0.0)
+
+    def test_build_targets_can_boost_hard_negative_sources_and_non_pii_label(self):
+        labels = ["PERSON", "NON_PII"]
+        records = [
+            {
+                "source": "candidate_level_negative",
+                "top_type": "NON_PII",
+                "target_distribution": {"NON_PII": 1.0},
+                "training_weight": 0.5,
+            },
+            {
+                "source": "sonnet_high_conf",
+                "top_type": "PERSON",
+                "target_distribution": {"PERSON": 0.95, "NON_PII": 0.05},
+                "training_weight": 0.8,
+            },
+        ]
+
+        _targets, weights, labels_outside = build_targets(
+            records,
+            labels,
+            source_weight_overrides={"candidate_level_negative": 3.0},
+            label_weight_overrides={"NON_PII": 2.0},
+        )
+
+        self.assertEqual(labels_outside, {})
+        self.assertAlmostEqual(float(weights[0]), 3.0)
+        self.assertAlmostEqual(float(weights[1]), 0.8)
+
+    def test_parse_weight_overrides(self):
+        self.assertEqual(parse_weight_overrides("candidate_level_negative=3,NON_PII=2.5"), {"candidate_level_negative": 3.0, "NON_PII": 2.5})
+        self.assertEqual(parse_weight_overrides(""), {})
 
     def test_temperature_scaling_returns_positive_temperature(self):
         logits = torch.tensor([[4.0, 0.0], [0.0, 4.0], [2.0, 1.0]])

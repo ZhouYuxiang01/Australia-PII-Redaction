@@ -84,6 +84,7 @@ def _build_hybrid_opf_qwen(cfg: dict[str, Any]) -> RedactionBackend:
         qwen_verifier_require_trigger=bool(cfg.get("qwen_verifier_require_trigger", False)),
         qwen_verifier_min_risk_score=float(cfg.get("qwen_verifier_min_risk_score", 0.25)),
         qwen_verifier_low_top1_threshold=float(cfg.get("qwen_verifier_low_top1_threshold", 0.70)),
+        per_label_thresholds_path=cfg.get("per_label_thresholds_path"),
     )
 
 

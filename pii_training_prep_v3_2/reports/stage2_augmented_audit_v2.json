@@ -5,8 +5,8 @@
   "offset_mismatch_count": 0,
   "duplicate_record_ids": [],
   "duplicate_record_id_count": 0,
-  "total_records": 100991,
-  "total_spans": 140732,
+  "total_records": 101051,
+  "total_spans": 140792,
   "label_distribution": {
     "ABORIGINALITY": 1000,
     "ADDRESS": 11672,
@@ -52,7 +52,7 @@
     "NATIONALITY": 900,
     "NATIONAL_IDENTITY_CARD": 900,
     "NEXT_OF_KIN": 700,
-    "NON_PII": 3930,
+    "NON_PII": 3990,
     "NUMBER_PLATE": 930,
     "PASSPORT_EXPIRY": 900,
     "PASSPORT_NUMBER": 3400,
@@ -90,10 +90,10 @@
     "WORK_PHONE": 1200
   },
   "non_pii_distribution": {
-    "top_type_count": 3930,
-    "candidate_count": 140732,
-    "probability_sum": 10492.267846,
-    "probability_mean": 0.074555
+    "top_type_count": 3990,
+    "candidate_count": 140792,
+    "probability_sum": 10547.324668,
+    "probability_mean": 0.074914
   },
   "per_label_count": {
     "ABORIGINALITY": 1000,
@@ -140,7 +140,7 @@
     "NATIONALITY": 900,
     "NATIONAL_IDENTITY_CARD": 900,
     "NEXT_OF_KIN": 700,
-    "NON_PII": 3930,
+    "NON_PII": 3990,
     "NUMBER_PLATE": 930,
     "PASSPORT_EXPIRY": 900,
     "PASSPORT_NUMBER": 3400,
@@ -182,12 +182,20 @@
   "all_80_classes_represented": true,
   "missing_classes": [],
   "stage1_record_count": 94991,
-  "stage2_record_count": 6000,
+  "stage2_record_count": 6060,
   "merged_into_model_training": false,
   "student_training_started": false,
   "inputs": {
     "stage1_path": "data/processed/stage1_v3_2_canonical.jsonl",
     "stage2_path": "data/generated/stage2_full_teacher_converted.jsonl",
+    "stage2_paths": [
+      "data/generated/stage2_full_teacher_converted.jsonl",
+      "data/generated/stage2_hard_negative_teacher_converted.jsonl"
+    ],
+    "stage2_row_count_by_input": {
+      "data/generated/stage2_full_teacher_converted.jsonl": 6000,
+      "data/generated/stage2_hard_negative_teacher_converted.jsonl": 60
+    },
     "training_label_space": "pii_schema/training_label_space_80.json",
     "stage2_quality_report": "reports/stage2_full_teacher_quality_report.json",
     "stage2_warning_examples": "reports/stage2_full_teacher_warning_examples.json"
@@ -200,7 +208,7 @@
     "strong_positive_not_confident_count": 90
   },
   "source_record_distribution": {
-    "candidate_level_negative": 3900,
+    "candidate_level_negative": 3960,
     "chat": 706,
     "clinical": 2105,
     "document_level_negative": 75991,
@@ -214,7 +222,7 @@
     "system_log": 450
   },
   "source_span_distribution": {
-    "candidate_level_negative": 3900,
+    "candidate_level_negative": 3960,
     "qwen_5way_ranking": 2100,
     "sonnet_high_conf": 111413,
     "sonnet_low_conf": 23319

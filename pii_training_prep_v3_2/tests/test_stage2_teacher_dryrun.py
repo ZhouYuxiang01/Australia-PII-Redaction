@@ -51,6 +51,20 @@ class Stage2TeacherDryRunTests(unittest.TestCase):
 
         self.assertGreater(dist["NON_PII"], dist["PAYMENT_CARD_NUMBER"])
 
+    def test_hard_negative_calibration_promotes_non_pii_for_public_context(self):
+        dist = verdicts_to_distribution(
+            {"BANK_ACCOUNT_NUMBER": "strong_for", "BANK_ACCOUNT_INFORMATION": "weak_for", "NON_PII": "weak_against"},
+            ["BANK_ACCOUNT_NUMBER", "BANK_ACCOUNT_INFORMATION", "NON_PII"],
+            {
+                "context_type": "hard_negative_context",
+                "span_value": "Southern Mutual",
+                "context": 'Bank name written as "Southern Mutual", account number is stored elsewhere.',
+            },
+        )
+
+        self.assertEqual(max(dist, key=dist.get), "NON_PII")
+        self.assertGreater(dist["NON_PII"], dist["BANK_ACCOUNT_NUMBER"])
+
     def test_json_prompt_includes_context_specific_rules(self):
         prompt = build_json_only_prompt(
             {

@@ -1,0 +1,49 @@
+{
+  "_meta": {
+    "default_top1_threshold": 0.2,
+    "sweep_range": [
+      0.05,
+      0.85
+    ],
+    "sweep_step": 0.01,
+    "min_positives": 10,
+    "min_f1_gain": 0.005,
+    "labels_overridden": 33,
+    "labels_total": 73
+  },
+  "top1_prob_min": {
+    "ABORIGINALITY": 0.8,
+    "ADDRESS": 0.34,
+    "AU_BANK_ACCOUNT": 0.59,
+    "AU_DRIVERS_LICENCE": 0.25,
+    "AU_PASSPORT": 0.55,
+    "AU_TFN": 0.85,
+    "CITIZENSHIP_STATUS": 0.74,
+    "CREDIT_CARD_EXPIRY": 0.57,
+    "DEVICE_ID": 0.5,
+    "EMAIL": 0.83,
+    "EMPLOYEE_NUMBER": 0.49,
+    "FACIAL_RECOGNITION": 0.22,
+    "GENDER": 0.55,
+    "IHI": 0.44,
+    "IP_ADDRESS": 0.32,
+    "LONGITUDE": 0.84,
+    "MEDICARE_EXPIRY": 0.43,
+    "MILITARY_VETERAN_STATUS": 0.25,
+    "PASSPORT_EXPIRY": 0.84,
+    "PAYMENT_CARD_NUMBER": 0.68,
+    "PENSION_CARD_NUMBER": 0.32,
+    "PHONE": 0.79,
+    "SANCTIONS": 0.27,
+    "SCHOLARSHIP": 0.45,
+    "SOCIAL_MEDIA_HISTORY": 0.36,
+    "SOCIAL_MEDIA_ID": 0.54,
+    "SOCIO_ECONOMIC_STATUS": 0.26,
+    "SPECIAL_CONSIDERATION": 0.46,
+    "STUDENT_ID": 0.41,
+    "SUBJECT_RESULTS": 0.29,
+    "UAC_ID": 0.21,
+    "VEHICLE_ID": 0.38,
+    "WAM_SCORE": 0.71
+  }
+}

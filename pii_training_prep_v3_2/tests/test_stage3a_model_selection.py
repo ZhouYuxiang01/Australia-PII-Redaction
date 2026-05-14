@@ -16,10 +16,49 @@ class Stage3AModelSelectionTests(unittest.TestCase):
             "c": {"metrics": {"after_temperature": {"dev": {"nll": 0.10, "ece": 0.05, "top3_accuracy": 0.8}, "test": {"nll": 0.50}}}, "temperature": 3.0},
         }
 
-        selected = choose_best_model(reports)
+        selected = choose_best_model(reports, run_dir_name="custom_heads")
 
         self.assertEqual(selected["selected_model"], "c")
+        self.assertEqual(selected["selected_checkpoint"], "runs/custom_heads/c/head.pt")
         self.assertEqual(selected["selection_sort_key"], [0.1, 0.05, -0.8])
+
+    def test_choose_best_model_can_prioritize_hard_negative_dev_recall(self):
+        reports = {
+            "low_nll_bad_negatives": {
+                "metrics": {
+                    "after_temperature": {
+                        "dev": {
+                            "nll": 0.05,
+                            "ece": 0.01,
+                            "top3_accuracy": 1.0,
+                            "non_pii_accuracy": 0.20,
+                            "per_source_accuracy": {"candidate_level_negative": 0.10},
+                        }
+                    }
+                },
+                "temperature": 1.0,
+            },
+            "higher_nll_good_negatives": {
+                "metrics": {
+                    "after_temperature": {
+                        "dev": {
+                            "nll": 0.10,
+                            "ece": 0.03,
+                            "top3_accuracy": 0.98,
+                            "non_pii_accuracy": 0.95,
+                            "per_source_accuracy": {"candidate_level_negative": 0.90},
+                        }
+                    }
+                },
+                "temperature": 1.0,
+            },
+        }
+
+        selected = choose_best_model(reports, selection_strategy="hard_negative_aware")
+
+        self.assertEqual(selected["selected_model"], "higher_nll_good_negatives")
+        self.assertEqual(selected["selection_strategy"], "hard_negative_aware")
+        self.assertEqual(selected["selection_sort_key"][0], 0.1)
 
     def test_leakage_summary_reports_cross_split_duplicates(self):
         rows = {
