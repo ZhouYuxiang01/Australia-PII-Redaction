@@ -1,76 +1,93 @@
-# ZYX Project Workspace
+# Australia PII Redaction
 
-This repository is a multi-track PII redaction workspace containing:
+Repository: <https://github.com/ZhouYuxiang01/Australia-PII-Redaction>
 
-- OPF token-classifier training and evaluation pipelines
-- Qwen (LoRA / full SFT) model training and redaction demo services
-- A model-agnostic redaction wrapper API (shared OCR/policy/schema surface)
-- Supporting experiments, outputs, and archived migration content
+This repository contains an Australian personally identifiable information
+(PII) redaction workspace. It combines data preparation, model training,
+evaluation, and a backend-pluggable redaction service for detecting and
+redacting Australian PII spans in text and files.
 
-## 1) Repository map
+## What This Project Contains
 
-- `opf_au_pii/`: OPF AU-PII data pipeline, training/eval scripts, calibration/audit tools
-- `Qwen3.5_9b_base_Distill/`: Qwen 9B base + LoRA distill route, demo API/UI docs and scripts
-- `Qwen3.5_4b_base_Full_73class/`: Qwen 4B full supervised route for 73-class setup
-- `Qwen3_4b_instruct_Distill/`: Qwen 3 4B instruct distill track
-- `redaction-wrapper/`: backend-pluggable redaction service (OPF/Qwen backends)
-- `LSJ/`: migrated legacy content that was moved out of the original ZYX layout
+- OPF token-classifier training and evaluation pipelines for Australian PII.
+- Qwen-based span classification and redaction experiments.
+- A model-agnostic FastAPI redaction wrapper with shared OCR, post-processing,
+  policy, schema, and UI layers.
+- Evaluation reports, error analyses, and final experiment summaries.
 
-## 2) OPF small-model finetune -> training workflow (documented)
+## Repository Structure
 
-This section is the practical workflow for OPF in this repo, with the exact docs/scripts to read in order.
+```text
+.
+├── opf_au_pii/                         OPF AU-PII training, eval, audit, and synthesis tools
+├── pii_training_prep_v3_2/             Data preparation and Qwen/OPF training datasets
+├── redaction-wrapper/                  Backend-pluggable redaction API, OCR, policy, and UI
+├── Qwen3.5_9b_base_Distill/            Qwen 9B LoRA/distillation experiments
+├── Qwen3.5_4b_base_Full_73class/       Qwen 4B full supervised 73-class experiments
+├── Qwen3_4b_instruct_Distill/          Qwen 3 4B instruct distillation track
+└── reports/                            Cross-project notes and inspection reports
+```
 
-### Step A. Understand project structure and current best checkpoints
+Large local artifacts such as raw datasets, generated datasets, checkpoints,
+model outputs, and run directories are intentionally kept out of git where
+possible.
 
-Read:
+## Main Results
 
-- `opf_au_pii/README_PROJECT_STRUCTURE.md`
+The main result summaries live in:
 
-Key points:
+- `pii_training_prep_v3_2/reports/final_experiment_summary.md`
+- `pii_training_prep_v3_2/reports/final_results_tables.md`
 
-- Current best listed checkpoint: `runs/final/opf_73class_v3_full/checkpoint/`
-- Previous baseline checkpoint: `runs/final/opf_73class_v2b_full/checkpoint/`
-- Canonical taxonomy and label space paths are under `opf_au_pii/configs/`
+Key reported metrics:
 
-### Step B. Understand OPF train command semantics
+| Component | Test Metric | Value |
+|---|---:|---:|
+| OPF-only hard-label detector | Detection F1 | 0.9793 |
+| OPF-only hard-label detector | Span F1 | 0.9725 |
+| OPF-only hard-label detector | Token accuracy | 99.15% |
+| Qwen span classification head | Top-1 accuracy | 98.53% |
 
-Read:
+The OPF test predictions and metrics are available at:
 
-- `opf_au_pii/privacy-filter/FINETUNING.md`
+- `pii_training_prep_v3_2/reports/stage3b_opf_hard_test_eval.json`
+- `pii_training_prep_v3_2/reports/stage3b_opf_hard_test_predictions.jsonl`
 
-Key points:
+## Redaction Wrapper
 
-- Minimal command: `opf train train.jsonl --output-dir <checkpoint_dir>`
-- Recommended: provide `--validation-dataset`
-- For this project, use custom ontology via `--label-space-json`
-- Output checkpoint artifacts include model weights and finetune summary
+The `redaction-wrapper/` package provides a shared API and UI around different
+redaction backends. It handles normalization, span post-processing, policy
+decisions, deterministic redaction, OCR/PDF text extraction, FastAPI routes, and
+the browser demo.
 
-### Step C. Use the one-command orchestrator for prepare/train/eval
-
-Read:
-
-- `opf_au_pii/scripts/run_opf_pipeline.py`
-
-This script orchestrates:
-
-- Optional dataset preparation from raw JSON (`--raw-json`, `--prepare-script`)
-- Label-space validation and run artifact capture
-- Safety default: if no mode is provided, it defaults to `--smoke`
-- Modes:
-  - `--smoke`: tiny prefix subsets for sanity train
-  - `--train`: full training
-  - `--prepare-only`: schema/prepare stage only
-  - `--eval-only`: evaluate an existing checkpoint
-- Optional post-train eval:
-  - `--eval-on-test`
-  - `--char-eval` (calls `scripts/eval_char_spans_v2.py`)
-
-Typical commands:
+Quick start:
 
 ```bash
-cd /home/admin/ZYX/opf_au_pii
+cd redaction-wrapper
+export WRAPPER_BACKEND_CONFIG=$PWD/configs/backends/opf-v3.json
+export WRAPPER_POLICY_CONFIG=$PWD/configs/policies/opf-v3-default-v1.json
+./scripts/run_server.sh
+```
 
-# 1) Smoke run (recommended first)
+Then open:
+
+- Browser demo: `http://127.0.0.1:8090/`
+- FastAPI docs: `http://127.0.0.1:8090/docs`
+
+## OPF AU-PII Pipeline
+
+The `opf_au_pii/` directory contains the OPF 73-class Australian PII experiment.
+Important entry points include:
+
+- `opf_au_pii/README_PROJECT_STRUCTURE.md`
+- `opf_au_pii/scripts/run_opf_pipeline.py`
+- `opf_au_pii/scripts/train_eval_v3.sh`
+- `opf_au_pii/scripts/eval_char_spans_v2.py`
+
+Example smoke run:
+
+```bash
+cd opf_au_pii
 python3 scripts/run_opf_pipeline.py \
   --smoke \
   --data-dir data/processed/data_opf \
@@ -79,100 +96,42 @@ python3 scripts/run_opf_pipeline.py \
   --run-dir runs/ablations/smoke_v1 \
   --eval-on-test \
   --char-eval
-
-# 2) Full train run
-python3 scripts/run_opf_pipeline.py \
-  --train \
-  --data-dir data/processed/data_opf \
-  --taxonomy configs/taxonomy_v1.1.1.yaml \
-  --label-space configs/custom_label_space_73.v1.1.1.json \
-  --run-dir runs/final/opf_73class_vX \
-  --eval-on-test \
-  --char-eval
-
-# 3) Evaluate an existing checkpoint only
-python3 scripts/run_opf_pipeline.py \
-  --eval-only \
-  --checkpoint runs/final/opf_73class_v3_full/checkpoint \
-  --data-dir data/processed/data_opf \
-  --run-dir runs/final/opf_73class_v3_evalonly \
-  --eval-on-test \
-  --char-eval
 ```
 
-### Step D. Reproduce the v3 recipe (v2b + synthetic)
+## Data Preparation
 
-Read:
+The `pii_training_prep_v3_2/` directory contains the data preparation pipeline
+for Australian PII span-distribution training data and downstream model
+evaluation.
 
-- `opf_au_pii/scripts/train_eval_v3.sh`
+Useful files:
 
-What it does:
+- Test split: `pii_training_prep_v3_2/data/splits/test.jsonl`
+- OPF test format: `pii_training_prep_v3_2/data/train/opf_test_opf_format.jsonl`
+- Qwen span-classifier test format: `pii_training_prep_v3_2/data/train/qwen_spancls_test.jsonl`
+- Qwen4B token-classifier test format: `pii_training_prep_v3_2/data/train/qwen4b_tokencls_test.jsonl`
 
-- Concatenates `v2b` train split + strict synthetic data into `train_v3_full.jsonl`
-- Runs OPF training with fixed hyperparameters and custom label space
-- Evaluates on `external_1000` positive/hard negatives/trap (if present)
-- Runs character-level span metrics on positive split
-
-Run:
+Run tests:
 
 ```bash
-cd /home/admin/ZYX/opf_au_pii
-bash scripts/train_eval_v3.sh
+cd pii_training_prep_v3_2
+python3 -m unittest discover -s tests -v
 ```
 
-### Step E. Audit and synth-improvement loop (optional, for iteration)
+## Recommended Workflow
 
-Start from the script list in:
+1. Prepare or validate the dataset split under `pii_training_prep_v3_2/`.
+2. Run OPF smoke training before full training.
+3. Train or evaluate the selected OPF checkpoint.
+4. Review aggregate metrics and per-label span metrics.
+5. Audit misses and false positives, then feed targeted examples into the next
+   data or training iteration.
+6. Expose the selected checkpoint through `redaction-wrapper/` for API and UI
+   testing.
 
-- `opf_au_pii/README_PROJECT_STRUCTURE.md`
+## Notes
 
-Useful loop components:
-
-- `scripts/audit_diff.py` -> find disagreement cases
-- `scripts/audit_run.py` -> LLM-assisted audit
-- `scripts/audit_summary.py` -> aggregate verdicts
-- `scripts/synth_data.py` / `scripts/synth_filter.py` / `scripts/synth_remap_strict.py` -> build and filter synthetic expansions
-
-## 3) Running the services
-
-### A. Qwen 9B demo API/UI
-
-Read:
-
-- `Qwen3.5_9b_base_Distill/docs/redaction_demo_api.md`
-
-Entry points:
-
-- API health: `/api/health`
-- Redaction: `/api/redact`
-- File redaction (PDF/image/text): `/api/redact-file`
-- Demo page: `/`
-
-### B. Redaction wrapper (backend-pluggable)
-
-Read:
-
-- `redaction-wrapper/README.md`
-
-Quick start:
-
-```bash
-cd /home/admin/ZYX/redaction-wrapper
-export WRAPPER_BACKEND_CONFIG=$PWD/configs/backends/opf-v3.json
-export WRAPPER_POLICY_CONFIG=$PWD/configs/policies/opf-v3-default-v1.json
-./scripts/run_server.sh
-```
-
-## 4) Suggested working order for new experiments
-
-1. Validate schema/taxonomy and run smoke training first.
-2. Run full OPF training with frozen config snapshots under a new `runs/*` path.
-3. Evaluate both aggregate metrics and character-level metrics.
-4. Audit errors and feed high-quality synthetic data back into next iteration.
-5. Expose the selected checkpoint through `redaction-wrapper` for stable API integration.
-
-## 5) Notes
-
-- Large model/checkpoint artifacts are intentionally ignored by git in this workspace.
-- Keep all experiment runs under new run directories to preserve reproducibility.
-- Prefer recording run-time parameters in `run_config.json` (already done by `run_opf_pipeline.py`).
+- The project is research-oriented and includes multiple experiment tracks.
+- Checkpoint paths in reports may refer to local training-server locations.
+- Keep new experiment outputs under fresh `runs/` or `reports/` paths so results
+  remain reproducible.
