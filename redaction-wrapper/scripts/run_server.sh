@@ -21,8 +21,8 @@ set -uo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "${REPO_ROOT}"
 
-DEFAULT_BACKEND="${REPO_ROOT}/configs/backends/hybrid-opf-qwen.json"
-DEFAULT_POLICY="${REPO_ROOT}/configs/policies/hybrid-80class-v1.json"
+DEFAULT_BACKEND="${REPO_ROOT}/configs/backends/hybrid-opf-qwen9b-hn.json"
+DEFAULT_POLICY="${REPO_ROOT}/configs/policies/hybrid-80class-v2-4b.json"
 
 while getopts "b:p:" opt; do
   case $opt in

@@ -16,8 +16,8 @@ Currently bundled backends:
 
 ```bash
 # 1. Pick a backend + policy
-export WRAPPER_BACKEND_CONFIG=$PWD/configs/backends/opf-v3.json
-export WRAPPER_POLICY_CONFIG=$PWD/configs/policies/opf-v3-default-v1.json
+export WRAPPER_BACKEND_CONFIG=$PWD/configs/backends/hybrid-opf-qwen9b-hn.json
+export WRAPPER_POLICY_CONFIG=$PWD/configs/policies/hybrid-80class-v2-4b.json
 
 # 2. Launch
 ./scripts/run_server.sh
