@@ -6,13 +6,14 @@ This repository contains the deployable mainline for automatic Australian PII id
 OPF candidate detector + Qwen 3.5 9B hard-negative span-head + risk/redaction policy
 ```
 
-Older training routes, ablations, reports, and previous model experiments are preserved in the `legacy-models-archive` branch.
+Older training routes, ablations, historical reports, and previous model experiments are preserved in the `legacy-models-archive` branch.
 
 ## Repository Structure
 
 - `pii-redaction-service/`: deployable FastAPI service, web demo, post-processing policy, backend config, API schema, file input, and tests.
 - `hybrid-pii-model-runtime/`: minimal runtime support for the latest hybrid backend, including label spaces, risk metadata, Qwen span-head inference code, and expected local artifact paths.
 - `opf-runtime/`: OPF runtime package used by the hybrid service when `opf` is not already installed in the selected Python environment.
+- `pii_training_prep_v3_2/`: reproducibility-focused training pipeline for the final hybrid route, including stage-3 dataset construction, Qwen span embedding cache, Qwen span-head training, model selection, and lightweight tests.
 - `API.md`: customer-facing API description.
 
 ## Open-Source Model References
@@ -229,6 +230,36 @@ The service provides:
 - `/` web demo
 - `/docs` FastAPI docs
 
+## Reproducing Training
+
+The final hybrid training pipeline is kept in `main` so the deployed artifacts
+can be reproduced without switching branches:
+
+```text
+pii_training_prep_v3_2/
+```
+
+That directory contains the scripts for:
+
+- merging augmented and hard-negative teacher rows;
+- building OPF and Qwen span-classification splits;
+- caching frozen Qwen 3.5 9B span embeddings;
+- training and selecting the Qwen 9B hard-negative span-head;
+- preparing OPF-format data for `opf train`.
+
+The Qwen backbone is frozen. The trained artifact is only the lightweight
+span-head at:
+
+```text
+hybrid-pii-model-runtime/runs/qwen9b_hn_spancls_heads/last_linear/head.pt
+```
+
+Full commands are documented in:
+
+```text
+pii_training_prep_v3_2/README.md
+```
+
 ## Runtime Artifacts and Large Files
 
 Large model artifacts are intentionally ignored by Git. The latest hybrid config expects:
@@ -241,7 +272,7 @@ The Qwen span-head is lightweight and may be versioned. The OPF checkpoint and o
 
 ## Legacy Models and Training Code
 
-Earlier model routes and full training/evaluation code were removed from `main` to keep the default branch focused on the final hybrid demo. They are preserved in:
+Earlier model routes, historical reports, generated training data, and old experiment workspaces are preserved in:
 
 ```bash
 git switch legacy-models-archive
@@ -253,7 +284,7 @@ That branch includes:
 - `Qwen3.5_4b_base_Full_73class/`: earlier Qwen 4B full supervised 73-class route.
 - `Qwen3_4b_instruct_Distill/`: earlier Qwen 3 4B instruct distillation route.
 - `opf_au_pii/`: standalone OPF training/evaluation route, AU PII label space, taxonomy configs, and OPF training utilities.
-- `pii_training_prep_v3_2/`: full backend training and data preparation workspace, including OPF/Qwen span-head training, teacher data, calibration workflows, and historical reports.
+- `pii_training_prep_v3_2/`: the full historical backend training workspace, including teacher data, calibration workflows, reports, caches, and earlier variants. The final reproducibility pipeline is also present in `main`.
 - `redaction-wrapper/`: previous service name before it was renamed to `pii-redaction-service/`.
 
 ## Notes
