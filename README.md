@@ -239,8 +239,14 @@ can be reproduced without switching branches:
 pii_training_prep_v3_2/
 ```
 
-That directory contains the scripts for:
+That directory now includes the compact reproducibility inputs for the final
+route, including the synthetic 19,000-record source dataset and converted
+stage-2 teacher rows. Large regenerated artifacts remain outside Git.
 
+It contains the scripts for:
+
+- converting the 19k source data into stage-1 span distributions;
+- canonicalizing labels against the AU PII taxonomy;
 - merging augmented and hard-negative teacher rows;
 - building OPF and Qwen span-classification splits;
 - caching frozen Qwen 3.5 9B span embeddings;

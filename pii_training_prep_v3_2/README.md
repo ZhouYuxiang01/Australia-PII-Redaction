@@ -11,6 +11,14 @@ It intentionally does not include old experiments, generated datasets, embedding
 caches, checkpoints, or model weights. Those artifacts are large and should be
 prepared separately on the training machine.
 
+It does include the compact reproducibility inputs for the final route:
+
+```text
+data/raw/au_pii_19000_final.json
+data/generated/stage2_full_teacher_converted.jsonl
+data/generated/stage2_hard_negative_teacher_converted.jsonl
+```
+
 ## Scope
 
 The final service uses two trained artifacts:
@@ -30,15 +38,29 @@ scripts/build_stage3_datasets.py        build OPF and Qwen span-classification s
 scripts/cache_qwen_span_embeddings.py   cache frozen Qwen span embeddings
 scripts/train_qwen_spancls_heads.py     train candidate span classifier heads
 scripts/select_stage3a_model.py         select/calibrate the best span head
+scripts/build_stage1_dataset.py         convert the 19k source JSON into stage-1 distributions
+scripts/reconcile_taxonomy.py           canonicalize labels against the 79-label AU PII schema
+scripts/generate_stage2_samples.py      regenerate stage-2 seed examples and teacher prompts
+scripts/run_stage2_full_teacher.py      rerun full teacher calls if the 27B teacher is available
+scripts/run_stage2_hard_negative_teacher.py rerun hard-negative teacher calls
 src/pii_prep/                           implementation modules used by those scripts
 tests/                                  lightweight unit tests for the pipeline code
 ```
 
 ## Expected Inputs
 
-The scripts expect the project root to contain the schema files already tracked
-in `hybrid-pii-model-runtime/pii_schema/`, plus local data under
-`pii_training_prep_v3_2/data/`.
+The scripts expect local base models to be available on the training machine.
+The default paths used during this project were:
+
+```text
+Qwen span-head backbone: /home/admin/model/Qwen3.5-9B-Base
+Optional teacher model:  /home/admin/model/qwen3.5-27b
+OPF base checkpoint:    /home/admin/.opf/privacy_filter
+```
+
+The repository tracks the synthetic 19k source dataset and the converted teacher
+outputs that were used for the final route. It does not track regenerated
+processed data, train/dev/test splits, embedding caches, or model checkpoints.
 
 The important generated inputs are:
 
@@ -49,6 +71,45 @@ data/generated/stage2_hard_negative_teacher_converted.jsonl
 
 If the hard-negative teacher file exists, `merge_stage2_augmented.py` includes it
 in the merged stage-2 training data.
+
+## Rebuild Data From Source Inputs
+
+Run from this directory:
+
+```bash
+PYTHONPATH=src python3 scripts/build_stage1_dataset.py
+
+PYTHONPATH=src python3 scripts/reconcile_taxonomy.py
+
+PYTHONPATH=src python3 scripts/merge_stage2_augmented.py
+
+PYTHONPATH=src python3 scripts/build_stage3_datasets.py
+```
+
+Those commands regenerate:
+
+```text
+data/processed/stage1_v3_2.jsonl
+data/processed/stage1_v3_2_canonical.jsonl
+data/processed/stage2_v3_2_augmented.jsonl
+data/splits/{train,dev,test}.jsonl
+data/train/qwen_spancls_{train,dev,test}.jsonl
+data/train/opf_hard_{train,dev,test}.jsonl
+```
+
+The checked-in `stage2_*_teacher_converted.jsonl` files let this path run without
+rerunning the teacher model. To regenerate those teacher files instead, first
+run:
+
+```bash
+PYTHONPATH=src python3 scripts/generate_stage2_samples.py
+PYTHONPATH=src python3 scripts/run_stage2_full_teacher.py \
+  --base-url http://localhost:8000/v1 \
+  --model qwen3.5-27b
+PYTHONPATH=src python3 scripts/run_stage2_hard_negative_teacher.py \
+  --base-url http://localhost:8000/v1 \
+  --model qwen3.5-27b
+```
 
 ## Qwen 9B Span-Head Reproduction
 

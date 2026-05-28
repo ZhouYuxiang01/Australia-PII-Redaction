@@ -43,6 +43,20 @@ Thumbs.db
 **/data/external_eval/
 **/data/eval_external_1000/
 pii_training_prep_v3_2/data/
+!pii_training_prep_v3_2/data/
+!pii_training_prep_v3_2/data/README.md
+!pii_training_prep_v3_2/data/raw/
+pii_training_prep_v3_2/data/raw/*
+!pii_training_prep_v3_2/data/raw/au_pii_19000_final.json
+!pii_training_prep_v3_2/data/generated/
+pii_training_prep_v3_2/data/generated/*
+!pii_training_prep_v3_2/data/generated/stage2_full_teacher_converted.jsonl
+!pii_training_prep_v3_2/data/generated/stage2_hard_negative_teacher_converted.jsonl
+pii_training_prep_v3_2/data/cache/
+pii_training_prep_v3_2/data/processed/
+pii_training_prep_v3_2/data/splits/
+pii_training_prep_v3_2/data/train/
+pii_training_prep_v3_2/reports/
 pii_training_prep_v3_2/nohup.out
 
 # Temporary / local files
