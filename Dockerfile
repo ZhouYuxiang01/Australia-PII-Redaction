@@ -22,8 +22,12 @@ WORKDIR /app
 
 COPY requirements-docker.txt /app/requirements-docker.txt
 RUN python3 -m pip install --upgrade pip setuptools wheel \
-    && python3 -m pip install --index-url https://download.pytorch.org/whl/cu121 torch \
+    && python3 -m pip install "torch==2.11.0" \
     && python3 -m pip install -r /app/requirements-docker.txt
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends build-essential python3-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY opf-runtime /app/opf-runtime
 RUN python3 -m pip install /app/opf-runtime

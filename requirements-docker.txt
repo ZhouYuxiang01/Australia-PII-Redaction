@@ -1,7 +1,7 @@
 accelerate
 fastapi
 huggingface_hub
-numpy
+numpy<2
 packaging
 peft
 pillow

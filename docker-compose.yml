@@ -6,6 +6,7 @@ services:
     image: zyx/pii-redaction-service:latest
     container_name: pii-redaction-service
     restart: unless-stopped
+    gpus: all
     ports:
       - "${WRAPPER_PORT:-8090}:8090"
     environment:
