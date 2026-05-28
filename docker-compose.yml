@@ -1,0 +1,36 @@
+services:
+  pii-redaction-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: zyx/pii-redaction-service:latest
+    container_name: pii-redaction-service
+    restart: unless-stopped
+    ports:
+      - "${WRAPPER_PORT:-8090}:8090"
+    environment:
+      WRAPPER_HOST: "0.0.0.0"
+      WRAPPER_PORT: "8090"
+      WRAPPER_PYTHON: "python3"
+      WRAPPER_BACKEND_CONFIG: "/app/pii-redaction-service/configs/backends/hybrid-opf-qwen9b-hn.json"
+      WRAPPER_POLICY_CONFIG: "/app/pii-redaction-service/configs/policies/hybrid-80class-v2-4b.json"
+      WRAPPER_SERVICE_ROOT: "/app/pii-redaction-service"
+      REDACTION_PII_PROJECT_ROOT: "/app/hybrid-pii-model-runtime"
+      REDACTION_QWEN_BACKBONE: "/models/Qwen3.5-9B-Base"
+      WRAPPER_QWEN_VL_MODEL: "/models/Qwen3.5-9B-Base"
+      NVIDIA_VISIBLE_DEVICES: "${NVIDIA_VISIBLE_DEVICES:-all}"
+      NVIDIA_DRIVER_CAPABILITIES: "compute,utility"
+    volumes:
+      - ./hybrid-pii-model-runtime:/app/hybrid-pii-model-runtime:ro
+      - ${QWEN_MODEL_PATH:-/home/admin/model/Qwen3.5-9B-Base}:/models/Qwen3.5-9B-Base:ro
+      - pii-redaction-logs:/app/pii-redaction-service/scripts/logs
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  pii-redaction-logs:

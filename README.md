@@ -208,16 +208,17 @@ This is more suitable for deployment because speed is controlled, output is stru
 
 ## Running the Service
 
+For local, Docker, and deployment details, see:
+
+```text
+pii-redaction-service/README.md
+```
+
+The shortest local launch path is:
+
 ```bash
 cd pii-redaction-service
 ./scripts/run_server.sh
-```
-
-The default config is:
-
-```text
-pii-redaction-service/configs/backends/hybrid-opf-qwen9b-hn.json
-pii-redaction-service/configs/policies/hybrid-80class-v2-4b.json
 ```
 
 The service provides:
@@ -227,14 +228,6 @@ The service provides:
 - `POST /api/redact-file`
 - `/` web demo
 - `/docs` FastAPI docs
-
-## Testing
-
-Lightweight tests that do not load the large models:
-
-```bash
-PYTHONPATH=$PWD/pii-redaction-service:$PWD/opf-runtime pytest -q pii-redaction-service/tests
-```
 
 ## Runtime Artifacts and Large Files
 

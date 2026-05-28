@@ -1,0 +1,13 @@
+accelerate
+fastapi
+huggingface_hub
+numpy
+packaging
+peft
+pillow
+pydantic
+python-multipart
+safetensors
+tiktoken
+transformers
+uvicorn[standard]

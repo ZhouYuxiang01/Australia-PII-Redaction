@@ -92,5 +92,5 @@
   "output_top_k": 5,
   "redact_threshold": 0.7,
   "review_threshold": 0.25,
-  "per_label_thresholds_path": "/home/admin/ZYX/pii-redaction-service/configs/postprocess/per_label_thresholds.json"
+  "per_label_thresholds_path": "${WRAPPER_SERVICE_ROOT:-/home/admin/ZYX/pii-redaction-service}/configs/postprocess/per_label_thresholds.json"
 }

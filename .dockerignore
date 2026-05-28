@@ -1,0 +1,42 @@
+.git
+.gitignore
+.pytest_cache
+**/__pycache__
+**/*.py[cod]
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+**/.venv
+**/.venv-*
+**/venv
+.venv*
+
+# Local logs and scratch files
+**/logs
+**/*.log
+*.tmp
+*.swp
+
+# Large model/training artifacts are mounted at runtime instead.
+**/outputs
+**/checkpoint
+**/checkpoint-*
+**/checkpoints
+**/*.safetensors
+**/*.pt
+**/*.pth
+**/*.ckpt
+**/*.bin
+**/*.onnx
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+
+# Dataset artifacts
+**/data/raw
+**/data/processed
+**/data/external_eval
+**/data/eval_external_1000
+pii_training_prep_v3_2/data
+pii_training_prep_v3_2/nohup.out
