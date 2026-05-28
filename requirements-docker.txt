@@ -9,5 +9,6 @@ pydantic
 python-multipart
 safetensors
 tiktoken
+torchvision==0.26.0
 transformers
 uvicorn[standard]
