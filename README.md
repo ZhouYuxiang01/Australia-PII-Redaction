@@ -241,7 +241,9 @@ pii_training_prep_v3_2/
 
 That directory now includes the compact reproducibility inputs for the final
 route, including the synthetic 19,000-record source dataset and converted
-stage-2 teacher rows. Large regenerated artifacts remain outside Git.
+stage-2 teacher rows. It also includes the held-out 1,000-record external test
+dataset requested for customer review. Large regenerated artifacts remain
+outside Git.
 
 It contains the scripts for:
 

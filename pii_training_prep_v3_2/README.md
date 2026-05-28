@@ -15,6 +15,7 @@ It does include the compact reproducibility inputs for the final route:
 
 ```text
 data/raw/au_pii_19000_final.json
+data/external_eval/au_pii_test_1000.json
 data/generated/stage2_full_teacher_converted.jsonl
 data/generated/stage2_hard_negative_teacher_converted.jsonl
 ```
@@ -58,9 +59,10 @@ Optional teacher model:  /home/admin/model/qwen3.5-27b
 OPF base checkpoint:    /home/admin/.opf/privacy_filter
 ```
 
-The repository tracks the synthetic 19k source dataset and the converted teacher
-outputs that were used for the final route. It does not track regenerated
-processed data, train/dev/test splits, embedding caches, or model checkpoints.
+The repository tracks the synthetic 19k source dataset, the held-out 1,000-record
+test dataset, and the converted teacher outputs that were used for the final
+route. It does not track regenerated processed data, train/dev/test splits,
+embedding caches, or model checkpoints.
 
 The important generated inputs are:
 

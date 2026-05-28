@@ -52,6 +52,9 @@ pii_training_prep_v3_2/data/raw/*
 pii_training_prep_v3_2/data/generated/*
 !pii_training_prep_v3_2/data/generated/stage2_full_teacher_converted.jsonl
 !pii_training_prep_v3_2/data/generated/stage2_hard_negative_teacher_converted.jsonl
+!pii_training_prep_v3_2/data/external_eval/
+pii_training_prep_v3_2/data/external_eval/*
+!pii_training_prep_v3_2/data/external_eval/au_pii_test_1000.json
 pii_training_prep_v3_2/data/cache/
 pii_training_prep_v3_2/data/processed/
 pii_training_prep_v3_2/data/splits/

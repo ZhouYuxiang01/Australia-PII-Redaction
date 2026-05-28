@@ -6,6 +6,7 @@ the final hybrid training pipeline from source inputs.
 Tracked:
 
 - `raw/au_pii_19000_final.json`: synthetic 19,000-record Australian PII source dataset.
+- `external_eval/au_pii_test_1000.json`: held-out 1,000-record AU PII test dataset.
 - `generated/stage2_full_teacher_converted.jsonl`: converted Qwen teacher rows used for stage-2 augmentation.
 - `generated/stage2_hard_negative_teacher_converted.jsonl`: converted hard-negative teacher rows.
 
