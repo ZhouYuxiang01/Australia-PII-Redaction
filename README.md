@@ -14,7 +14,19 @@ Older training routes, ablations, historical reports, and previous model experim
 - `hybrid-pii-model-runtime/`: minimal runtime support for the latest hybrid backend, including label spaces, risk metadata, Qwen span-head inference code, and expected local artifact paths.
 - `opf-runtime/`: OPF runtime package used by the hybrid service when `opf` is not already installed in the selected Python environment.
 - `pii_training_prep_v3_2/`: reproducibility-focused training pipeline for the final hybrid route, including stage-3 dataset construction, Qwen span embedding cache, Qwen span-head training, model selection, and lightweight tests.
+- `docs/`: customer handover documents mapping the requested deliverables to model, API, deployment, artifact, and evaluation evidence.
 - `API.md`: customer-facing API description.
+
+## Customer Handover Documents
+
+For customer review and deliverable sign-off, start with:
+
+- `docs/README.md`: handover package index, including links to API documentation, final report, and presentation deck.
+- `docs/DELIVERABLES.md`: checklist mapping D1-D4 requirements to repository evidence.
+- `docs/MODEL_CARD.md`: trained model architecture, intended use, training data, metrics, limitations, and licence notes.
+- `docs/EVALUATION_REPORT.md`: evaluation methodology, datasets, component metrics, end-to-end wrapper results, robustness, and success criteria.
+- `docs/ARTIFACT_MANIFEST.md`: required runtime artifacts, sizes, checksums, paths, and loading instructions.
+- `docs/DEPLOYMENT.md`: local/Docker launch, environment variables, health checks, smoke tests, and operations notes.
 
 ## Open-Source Model References
 

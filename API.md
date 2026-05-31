@@ -1,12 +1,20 @@
 # Australia PII Redaction API Document
 
 Version: 1.0  
-Last updated: 2026-05-14
+Last updated: 2026-06-01
 
 This document describes the customer-facing HTTP API for the Australia PII
 Redaction service. The API detects Australian personally identifiable
 information (PII), returns structured span metadata, and can optionally produce
 a redacted version of the input.
+
+Related handover documents:
+
+- `docs/DELIVERABLES.md`: customer deliverable checklist.
+- `docs/MODEL_CARD.md`: model architecture, artifacts, training data, metrics, and limitations.
+- `docs/EVALUATION_REPORT.md`: evaluation methodology and quantitative results.
+- `docs/DEPLOYMENT.md`: launch, operations, and failure-mode notes.
+- `pii-redaction-service/schemas/redaction-output-v1.schema.json`: machine-readable response schema.
 
 ## 1. Base URL
 
@@ -59,13 +67,13 @@ Example response:
 {
   "status": "ok",
   "backend": {
-    "name": "hybrid-opf-qwen",
-    "model_version": "opf-qwen-hybrid",
+    "name": "hybrid-opf-qwen9b-hn",
+    "model_version": "opf-hard-79-qwen9b-hn-spanhead-v1",
     "loaded": true,
-    "supported_types": ["PERSON", "EMAIL_ADDRESS", "DATE_OF_BIRTH"]
+    "supported_types": ["PERSON", "EMAIL", "DATE_OF_BIRTH"]
   },
   "policy_id": "hybrid-80class-v2-4b",
-  "model_version": "opf-qwen-hybrid",
+  "model_version": "opf-hard-79-qwen9b-hn-spanhead-v1",
   "schema_version": "redaction-output-v1"
 }
 ```
@@ -156,8 +164,8 @@ Example response:
     }
   ],
   "metadata": {
-    "model_version": "opf-qwen-hybrid",
-    "taxonomy_version": "au_pii_80class",
+    "model_version": "opf-hard-79-qwen9b-hn-spanhead-v1",
+    "taxonomy_version": "au-pii-80-v1",
     "schema_version": "redaction-output-v1",
     "policy_id": "hybrid-80class-v2-4b",
     "normalization": "NFC",
@@ -165,7 +173,7 @@ Example response:
     "redaction_mode": "replace_with_tag",
     "redact_review_types": [],
     "created_at": "2026-05-14T05:00:00+00:00",
-    "backend_name": "hybrid-opf-qwen",
+    "backend_name": "hybrid-opf-qwen9b-hn",
     "backend_route": "text_input",
     "latency_ms": 42.7,
     "input_length": 60
@@ -207,14 +215,14 @@ extraction metadata:
   "redacted_text": "...",
   "spans": [],
   "metadata": {
-    "model_version": "opf-qwen-hybrid",
-    "taxonomy_version": "au_pii_80class",
+    "model_version": "opf-hard-79-qwen9b-hn-spanhead-v1",
+    "taxonomy_version": "au-pii-80-v1",
     "schema_version": "redaction-output-v1",
     "policy_id": "hybrid-80class-v2-4b",
     "normalization": "NFC",
     "raw_offset_mapping_applied": false,
     "redaction_mode": "replace_with_tag",
-    "backend_name": "hybrid-opf-qwen",
+    "backend_name": "hybrid-opf-qwen9b-hn",
     "backend_route": "file_upload",
     "latency_ms": 812.3,
     "input_length": 1450,

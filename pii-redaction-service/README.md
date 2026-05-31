@@ -2,6 +2,10 @@
 
 Deployable FastAPI service and web demo for Australian PII detection and redaction.
 
+This README is the operational guide for the inference wrapper. For customer
+handover evidence, see `../docs/README.md`; for the full API reference, see
+`../API.md`; for deployment and failure-mode notes, see `../docs/DEPLOYMENT.md`.
+
 The bundled backend is the latest hybrid model route:
 
 - OPF high-recall candidate span detection.
@@ -102,5 +106,5 @@ pii-redaction-service/
 ```
 
 The service expects companion runtime files in `../hybrid-pii-model-runtime`.
-Large local artifacts such as OPF checkpoints and Qwen head weights remain
-ignored by Git; the config records their expected paths.
+For artifact sizes, checksums, and external model dependencies, see
+`../docs/ARTIFACT_MANIFEST.md`.

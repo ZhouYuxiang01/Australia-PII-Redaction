@@ -7,6 +7,11 @@ to reproduce the deployed hybrid backend:
 OPF candidate detector + frozen Qwen 3.5 9B backbone + trained span classifier head
 ```
 
+This README is the reproduction guide for data preparation and training. For
+customer handover evidence, see `../docs/README.md`; for model summary and
+evaluation results, see `../docs/MODEL_CARD.md` and
+`../docs/EVALUATION_REPORT.md`.
+
 It intentionally does not include old experiments, generated datasets, embedding
 caches, checkpoints, or model weights. Those artifacts are large and should be
 prepared separately on the training machine.
