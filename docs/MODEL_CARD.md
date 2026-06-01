@@ -43,7 +43,7 @@ The model should not be treated as:
 | Component | Role | Main artifact/config |
 |---|---|---|
 | OPF / Privacy Filter | High-recall span candidate detection over full text | `hybrid-pii-model-runtime/runs/opf_hard_79/` |
-| Qwen 3.5 9B Base | Frozen backbone for span embeddings and type calibration | `REDACTION_QWEN_BACKBONE`, default `/home/admin/model/Qwen3.5-9B-Base` |
+| Qwen 3.5 9B Base | Frozen backbone for span embeddings, type calibration, and default image/scanned-PDF text transcription | `REDACTION_QWEN_BACKBONE` and `WRAPPER_QWEN_VL_MODEL`, default `/home/admin/model/Qwen3.5-9B-Base` |
 | Qwen span-head | Lightweight classifier over OPF/fallback candidate spans | `hybrid-pii-model-runtime/runs/qwen9b_hn_spancls_heads/last_linear/head.pt` |
 | Policy layer | Thresholding, risk, deterministic rescue rules, overlap handling, final redaction | `pii-redaction-service/configs/policies/hybrid-80class-v2-4b.json` |
 | API wrapper | FastAPI service, file input, response schema, web demo | `pii-redaction-service/` |
@@ -81,6 +81,22 @@ The API reports the active supported categories from:
 ```http
 GET /api/health
 ```
+
+## Multimodal File Handling
+
+For plain text files and PDFs with an embedded text layer, the service extracts
+text directly and sends it through the same OPF + Qwen span-head + policy
+pipeline used by `/api/redact`.
+
+For images and scanned-PDF pages, the final deployment configuration uses
+`Qwen/Qwen3.5-9B-Base` as the image-text-to-text model for visible-text
+transcription. The transcribed text is then processed by the same redaction
+pipeline. In Docker, both `REDACTION_QWEN_BACKBONE` and `WRAPPER_QWEN_VL_MODEL`
+point to `/models/Qwen3.5-9B-Base` by default.
+
+The repository also supports overriding `WRAPPER_QWEN_VL_MODEL` if a different
+vision-language model is required, but the delivered/default route is the Qwen
+3.5 9B Base configuration.
 
 ## Training Data Summary
 
@@ -161,7 +177,7 @@ End-to-end wrapper evaluation on 9,659 test records:
 |---|---:|
 | OPF checkpoint directory | 2.7 GB |
 | Qwen span-head checkpoint | 1.3 MB |
-| Qwen 3.5 9B Base backbone | External local dependency, not included in this repo |
+| Qwen 3.5 9B Base backbone / image-text-to-text model | External local dependency, not included in this repo |
 
 Runtime defaults use CUDA and `bf16` for the hybrid backend. Large models are not
 loaded by the lightweight unit tests.

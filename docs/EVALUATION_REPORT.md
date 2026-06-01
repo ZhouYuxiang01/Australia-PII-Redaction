@@ -169,7 +169,7 @@ The system includes explicit mechanisms for common failure modes:
 | Runtime dtype default | `bf16` |
 | OPF artifact size | 2.7 GB |
 | Qwen span-head artifact size | 1.3 MB |
-| Qwen backbone | External local model path, default `/home/admin/model/Qwen3.5-9B-Base` |
+| Qwen backbone and default image-text-to-text model | External local model path, default `/home/admin/model/Qwen3.5-9B-Base` |
 
 ## Success Criteria Confirmation
 
@@ -177,7 +177,7 @@ The system includes explicit mechanisms for common failure modes:
 |---|---|---|
 | Detect Australian PII over text | Met | OPF and wrapper metrics above; API supports `/api/redact`. |
 | Return structured spans and redacted text | Met | `API.md`, response schema, FastAPI wrapper. |
-| Support file input | Met | `/api/redact-file` supports text, image, and PDF input. |
+| Support file input | Met | `/api/redact-file` supports text, image, and PDF input. Images and scanned PDFs are transcribed with the configured Qwen 3.5 9B image-text-to-text model before redaction. |
 | Preserve uncertain cases for human review | Met | Policy emits `review`; wrapper eval recorded 2,342 review decisions. |
 | Provide reproducible training pipeline | Met | `pii_training_prep_v3_2/README.md` and reports. |
 | Provide deployable wrapper | Met | `pii-redaction-service/`, Dockerfile, compose file, FastAPI docs. |

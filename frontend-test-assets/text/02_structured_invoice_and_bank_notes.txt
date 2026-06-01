@@ -1,0 +1,65 @@
+Synthetic Invoice Review
+========================
+
+Document type: Plain text with table-like layout
+Generated: 2026-05-30T09:18:44+10:00
+Classification hint: finance, invoice, bank details, mixed identifiers
+
+Vendor
+------
+Acme Data Fixtures Pty Ltd
+ABN-like: 12 345 678 901
+Contact: Priya Raman
+Email: accounts.receivable@example.test
+Phone: +61 2 5550 0199
+Postal address:
+  Level 9
+  123 Testing Avenue
+  Melbourne VIC 3000
+
+Client
+------
+Northwind Synthetic Operations
+Attn: Omar Ellis
+Client ref: NW-SYN-2026-00077
+Email: omar.ellis+finance@example.invalid
+
+Line items
+----------
+| Item code | Description                         | Qty | Unit price | GST   | Total    |
+|----------:|-------------------------------------|----:|-----------:|------:|---------:|
+| TXT-001   | Text extraction baseline             |  12 |     140.00 | 168.00| 1,848.00 |
+| OCR-EDGE  | OCR edge-case image annotation       |   4 |     275.50 | 110.20| 1,212.20 |
+| PDF-MIX   | Multi-page PDF redaction fixture     |   2 |     500.00 | 100.00| 1,100.00 |
+| QA-RUSH   | Same-day regression verification     |   1 |     950.00 |  95.00| 1,045.00 |
+
+Subtotal: AUD 4,732.00
+GST:      AUD   473.20
+Total:    AUD 5,205.20
+
+Payment instructions
+--------------------
+Bank: Example Mutual Bank
+BSB-like: 012-345
+Account number-like: 987654321
+Account name: Acme Data Fixtures Pty Ltd
+SWIFT-like: EXMPAU2S
+Reference: INV-2026-000314 / NW-SYN-2026-00077
+
+Card note from customer
+-----------------------
+The user typed "4111 1111 1111 1111" in a comment field. This is a test card number, not a real card. They also pasted an expiry-like value "12/29" and CVV-like "123". Frontend should treat this as sensitive-looking content.
+
+Audit trail
+-----------
+2026-05-30 09:17:52 | user=system             | action=create_invoice | ip=198.51.100.28
+2026-05-30 09:18:03 | user=priya.r@example.test | action=edit_bank_note | ip=198.51.100.29
+2026-05-30 09:18:44 | user=system             | action=export_txt     | sha256=2f7c0a2d8b6e3b9f4c1a000000000000000000000000000000000000000000000
+
+Rendering traps
+---------------
+1. Table columns should remain readable in monospace preview.
+2. Currency, commas, and decimal values should not be merged.
+3. Hyphenated financial identifiers should survive copy/paste.
+4. The frontend should not interpret the pipe table as executable markup.
+

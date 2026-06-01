@@ -1,0 +1,70 @@
+Synthetic Long-Form Note: Policy, Medical, and Operational Content
+=================================================================
+
+This file is intentionally verbose. It helps test scrolling, search, multiline selection, text wrapping, section navigation, and redaction overlays in longer documents.
+
+Patient-like intake section
+---------------------------
+Name: Grace Williams
+Patient ref: PT-SYN-2026-00145
+Email: grace.williams.patient@example.test
+Mobile: +61 499 888 777
+Date of birth: 1975-11-24
+Residential address: 18 Fictional Court, Adelaide SA 5000
+Medicare-like number: 2345 67890 1
+Private health member-like ID: HCF-SYN-778899
+
+Clinical note
+-------------
+Grace attended a routine synthetic consultation to validate document handling workflows. She reported no acute symptoms. The clinician recorded a fake medication list for extraction testing:
+
+1. Atorvastatin 20 mg, once daily
+2. Metformin XR 500 mg, twice daily
+3. Salbutamol inhaler, as needed
+
+These values are not medical advice. They are included only to test whether a frontend can display medical-looking text with numbers, units, and abbreviations.
+
+Operational policy excerpt
+--------------------------
+Before a reviewer exports a redacted copy, they must confirm that all high-confidence detections have been handled. The system should make unresolved high-confidence detections visible without blocking lower-risk review flows. If the user marks a detection as false positive, the UI should preserve that decision when the preview refreshes.
+
+The following phrases are deliberately repetitive to test search highlighting:
+manual review required; manual review required; manual review required.
+urgent bank update; urgent bank update; urgent bank update.
+passport renewal; passport renewal; passport renewal.
+
+Embedded form response
+----------------------
+Question: What happened?
+Answer: "I uploaded my licence, but the preview showed the wrong page count. The file name was grace_licence_scan_final_FINAL_v3.txt even though it was a text export."
+
+Question: What browser did you use?
+Answer: Chrome 126 on macOS, screen size 1440x900, timezone Australia/Sydney.
+
+Question: Can support contact you?
+Answer: Yes, via grace.williams.patient@example.test or +61 499 888 777 between 09:00 and 16:00.
+
+Consent-like declaration
+------------------------
+I understand this is a synthetic fixture and that no real patient, policyholder, or customer data should be inferred from it. I agree that the fake data may be used to test upload, preview, parsing, redaction, export, and audit behavior in a local development environment.
+
+Boundary values
+---------------
+Empty-looking value:
+""
+
+Whitespace-looking value:
+"   "
+
+Special characters:
+~ ! @ # $ % ^ & * ( ) _ + - = { } [ ] : ; " ' < > , . ? / \ |
+
+ASCII samples:
+Cafe without accent: cafe
+English sample: This is a frontend test text.
+Plain sentence sample: Short text for layout testing.
+Right arrow text: A -> B -> C
+
+End marker
+----------
+END_OF_SYNTHETIC_LONG_FORM_NOTE

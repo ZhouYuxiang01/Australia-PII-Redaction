@@ -75,9 +75,28 @@ dependency and is not included in the repository.
 | `WRAPPER_MAX_UPLOAD_BYTES` | `26214400` | Maximum upload size, 25 MB. |
 | `WRAPPER_MAX_FILE_TEXT_CHARS` | `12000` | Maximum extracted text length from uploaded files. |
 | `WRAPPER_MAX_PDF_OCR_PAGES` | `8` | Maximum scanned-PDF pages for visual transcription. |
-| `WRAPPER_QWEN_VL_MODEL` | unset | Optional VLM path for image/scanned-PDF text transcription. |
-| `WRAPPER_QWEN_VL_DEVICE` | `cuda` or `cpu` | Optional VLM device. |
-| `WRAPPER_QWEN_VL_DTYPE` | `bfloat16` or `float16` | Optional VLM dtype. |
+| `WRAPPER_QWEN_VL_MODEL` | `/home/admin/model/Qwen3.5-9B-Base` locally, `/models/Qwen3.5-9B-Base` in Docker | Image/scanned-PDF text transcription model. The delivered/default route uses Qwen 3.5 9B Base. |
+| `WRAPPER_QWEN_VL_DEVICE` | `cuda` or `cpu` | Visual transcription device. |
+| `WRAPPER_QWEN_VL_DTYPE` | `bfloat16` or `float16` | Visual transcription dtype. |
+
+## Multimodal Input Path
+
+Text inputs and text-layer PDFs are read directly. Images and scanned-PDF pages
+are transcribed first using the configured Qwen image-text-to-text model. In the
+delivered/default deployment, this is the same local Qwen 3.5 9B Base artifact:
+
+```text
+/home/admin/model/Qwen3.5-9B-Base
+```
+
+Docker maps that model to:
+
+```text
+/models/Qwen3.5-9B-Base
+```
+
+The extracted or transcribed text then enters the same OPF + Qwen span-head +
+policy pipeline as normal text input.
 
 ## Health Check
 
@@ -112,8 +131,8 @@ curl -X POST http://127.0.0.1:8090/api/redact-file \
 ```
 
 Supported inputs include plain text, markdown, CSV/TSV/JSON/log files, images,
-and PDFs. Text-layer PDFs are read directly; scanned pages and images require the
-visual transcription model.
+and PDFs. Text-layer PDFs are read directly; scanned pages and images use the
+configured Qwen 3.5 9B image-text-to-text transcription path by default.
 
 ## Logs and Diagnostics
 

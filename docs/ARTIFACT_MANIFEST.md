@@ -17,8 +17,8 @@ hybrid backend.
 
 | Dependency | Default path | Required | Notes |
 |---|---|---|---|
-| Qwen 3.5 9B Base backbone | `/home/admin/model/Qwen3.5-9B-Base` | Yes | Not included in this repository. Override with `REDACTION_QWEN_BACKBONE`. |
-| Optional Qwen-VL model for image/scanned-PDF transcription | Set by `WRAPPER_QWEN_VL_MODEL` | Only for image/scanned PDF support | Text-layer PDFs and plain text do not require the VLM path. |
+| Qwen 3.5 9B Base backbone and default image-text-to-text model | `/home/admin/model/Qwen3.5-9B-Base` | Yes | Not included in this repository. Used by both `REDACTION_QWEN_BACKBONE` and `WRAPPER_QWEN_VL_MODEL` in the delivered/default route. |
+| Optional alternate vision-language model | Set by `WRAPPER_QWEN_VL_MODEL` | No | Override only if deployment intentionally uses a different image/scanned-PDF transcription model. |
 
 ## Schema and Label Artifacts
 
@@ -43,6 +43,7 @@ The default service reads artifacts using:
 ```text
 REDACTION_PII_PROJECT_ROOT=/home/admin/ZYX/hybrid-pii-model-runtime
 REDACTION_QWEN_BACKBONE=/home/admin/model/Qwen3.5-9B-Base
+WRAPPER_QWEN_VL_MODEL=/home/admin/model/Qwen3.5-9B-Base
 WRAPPER_SERVICE_ROOT=/home/admin/ZYX/pii-redaction-service
 ```
 

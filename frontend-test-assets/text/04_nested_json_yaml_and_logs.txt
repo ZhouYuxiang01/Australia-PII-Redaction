@@ -1,0 +1,79 @@
+Synthetic Mixed Structured Content
+=================================
+
+The following blocks intentionally combine JSON, YAML, logs, markdown, and text. A frontend preview should keep them readable and should not execute anything.
+
+JSON payload
+------------
+{
+  "case_id": "CASE-2026-000481",
+  "created_at": "2026-05-31T22:10:05+10:00",
+  "subject": {
+    "full_name": "Alicia Morgan",
+    "aliases": ["Ali M.", "A. Morgan", "Test Alias"],
+    "email": "alicia.morgan.synthetic@example.test",
+    "phone_numbers": ["+61 477 777 001", "+1-202-555-0144"],
+    "address": {
+      "line1": "Apartment 5, 42 Demo Road",
+      "suburb": "Parramatta",
+      "state": "NSW",
+      "postcode": "2150",
+      "country": "AU"
+    }
+  },
+  "documents": [
+    {"type": "passport", "number": "X00012345", "country": "NZ", "expiry": "2030-10-01"},
+    {"type": "driver_licence", "number": "VIC-9999-0000", "state": "VIC"},
+    {"type": "bank_statement", "account_like": "1234567890", "bsb_like": "111-222"}
+  ],
+  "risk": {
+    "score": 0.73,
+    "reasons": ["new_device", "velocity_check", "manual_review_keyword"],
+    "notes": "Customer wrote: \"please update my bank account urgently\"."
+  }
+}
+
+YAML block
+----------
+review:
+  id: REVIEW-SYN-2026-44
+  reviewer: "Sam Taylor"
+  reviewer_email: "sam.taylor@example.invalid"
+  tags:
+    - pii
+    - frontend
+    - upload-preview
+  thresholds:
+    redact_confidence: 0.65
+    warn_confidence: 0.40
+  sample_values:
+    medicare_like: "2234 56789 1"
+    tfn_like: "987 654 321"
+    uuid: "2d797f6e-2d55-4a20-9fae-4bd3a7b26000"
+
+Logs
+----
+2026-05-31T22:10:06.101+10:00 INFO  upload.accepted user=sam.taylor@example.invalid file=04_nested_json_yaml_and_logs.txt size=4096
+2026-05-31T22:10:06.205+10:00 DEBUG parser.detected mime=text/plain encoding=utf-8 confidence=0.99
+2026-05-31T22:10:06.490+10:00 WARN  detector.hit label=EMAIL span="alicia.morgan.synthetic@example.test" confidence=0.98
+2026-05-31T22:10:06.491+10:00 WARN  detector.hit label=PHONE span="+61 477 777 001" confidence=0.94
+2026-05-31T22:10:06.500+10:00 INFO  preview.rendered lines=78 duration_ms=142
+
+Markdown-ish task list
+----------------------
+- [x] Upload text
+- [x] Detect encoding
+- [ ] Render redaction overlays
+- [ ] Export reviewed copy
+
+SQL-ish snippet
+---------------
+SELECT customer_id, email, phone
+FROM synthetic_customers
+WHERE email = 'alicia.morgan.synthetic@example.test'
+  AND created_at >= '2026-01-01';
+
+Potential script-looking text
+-----------------------------
+<script>alert("This is inert text and should be escaped in HTML preview.");</script>
+<img src=x onerror="alert('escape me too')">

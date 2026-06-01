@@ -8,10 +8,10 @@ services:
     restart: unless-stopped
     gpus: all
     ports:
-      - "${WRAPPER_PORT:-8090}:8090"
+      - "${WRAPPER_PORT:-8091}:8091"
     environment:
       WRAPPER_HOST: "0.0.0.0"
-      WRAPPER_PORT: "8090"
+      WRAPPER_PORT: "8091"
       WRAPPER_PYTHON: "python3"
       WRAPPER_BACKEND_CONFIG: "/app/pii-redaction-service/configs/backends/hybrid-opf-qwen9b-hn.json"
       WRAPPER_POLICY_CONFIG: "/app/pii-redaction-service/configs/policies/hybrid-80class-v2-4b.json"

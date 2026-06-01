@@ -1,0 +1,62 @@
+From: "Elena Park" <elena.park@example.test>
+To: security-review@example.invalid
+Cc: "Noah Singh" <noah.singh+legal@example.test>, privacy@example.invalid
+Date: Fri, 29 May 2026 18:42:11 +1000
+Subject: Re: Access review for shared workspace - synthetic thread
+Message-ID: <20260529184211.abc123@example.test>
+
+Hi team,
+
+Please review the access request below. The attached documents will be added separately as PDF and image fixtures, but this text file should be enough to exercise the email preview.
+
+Requested access:
+- Workspace: ZYX-demo-redaction
+- Requester: Daniel Foster
+- Requester email: daniel.foster.contractor@example.test
+- Temporary phone: +61 400 000 123
+- Contractor ID: CTR-2026-88421
+- Expiry: 2026-06-14 23:59 AEST
+
+Business reason:
+Daniel is helping verify uploads that include long English text, scanned invoices, passport-like pages, and image screenshots. He should only receive "reviewer" access.
+
+Quoted material begins below.
+
+> From: Daniel Foster <daniel.foster.contractor@example.test>
+> Sent: Friday, 29 May 2026 17:58
+> To: Elena Park <elena.park@example.test>
+> Subject: Access for test workspace
+>
+> Hi Elena,
+>
+> I need access to the workspace for the June frontend run.
+> My synthetic onboarding details are:
+>
+> Address: 9 Example Lane, Brisbane QLD 4000
+> DOB-like: 1988-02-03
+> Emergency contact: Jordan Foster, +61 488 000 321
+> Identity check reference: KYC-SYN-0009921
+>
+> I will upload:
+> 1. A text file containing nested JSON.
+> 2. A PDF with selectable text and a scanned page.
+> 3. A PNG screenshot with handwritten-looking notes.
+>
+> Thanks,
+> Daniel
+
+Security review checklist
+-------------------------
+[x] Temporary role requested
+[x] Expiry date present
+[ ] Manager approval captured
+[ ] Data handling reminder acknowledged
+
+Footer noise
+------------
+This email and any attachments may contain confidential synthetic information for test purposes only. If you received this by mistake, delete it from your test case and notify nobody because this is not a real email.
+
+Raw header-ish values for parser tests:
+X-Originating-IP: [192.0.2.88]
+X-Trace-ID: trace-01J123456789ABCDEFGHJKMNPQ
+DKIM-Signature: v=1; a=rsa-sha256; d=example.test; s=test; bh=fakehash==; b=fakesignature==

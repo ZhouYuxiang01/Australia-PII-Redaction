@@ -1,0 +1,63 @@
+CASE FILE: Synthetic Customer Support Escalation
+Created: 2026-05-28 14:35:09 AEST
+Priority: High
+Locale: English only
+
+IMPORTANT: All personal data in this fixture is synthetic and reserved for frontend testing.
+
+Summary
+-------
+Customer "Maya Chen" reported that a billing address changed after a failed checkout flow. The front-end should preserve whitespace, punctuation, multiline blocks, long English tokens, and fake identifiers.
+
+Customer profile
+----------------
+Name: Maya Chen
+Preferred name: Maya
+Email: maya.chen.test+vip@example.test
+Backup email: m_chen_2026@sample.invalid
+Phone AU: +61 412 345 678
+Phone US-style entry: (415) 555-0198
+Date of birth: 1991-07-16
+Passport: P1234567
+Driver licence: NSW 1234 5678
+Medicare-like number: 2123 45678 1
+Tax file number-like value: 123 456 782
+Customer ID: CUST-AU-00048192
+IP observed: 203.0.113.42
+IPv6 observed: 2001:db8:85a3::8a2e:370:7334
+Device ID: ios:7f3a9c10-4a6b-41bc-9dc7-6d1f2c8a0001
+
+Address history
+---------------
+1. Current:
+   Unit 12B, 88 Example Street
+   Surry Hills NSW 2010
+   Australia
+
+2. Previous:
+   4F Sakura Building, 1-2-3 Test-cho
+   Shibuya-ku, Tokyo 150-0002
+   Japan
+
+Chat excerpt
+------------
+[14:29:01] Agent: Hi Maya, I can see order ORD-2026-05-28-9981 failed at payment step 3.
+[14:29:33] Customer: My billing address changed, but I did not confirm the update.
+[14:30:10] Agent: I will compare the profile update event and checkout event.
+[14:30:52] Customer: Please don't send anything to the old address.
+[14:31:40] System: risk_score=0.82; reason="address mismatch + repeated card attempts"
+
+Edge-case text
+--------------
+Long token: CUSTOMERREFERENCE-THISISAVERYLONGUNBROKENSTRING-ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789-abcdefghijklmnopqrstuvwxyz-END
+
+Odd punctuation: "double quotes", 'straight quotes', backticks `like this`, pipes |, tabs	inside	line, emoji-like text [not actual emoji], and slash-heavy paths /api/v1/customers/CUST-AU-00048192/profile.
+
+Address note: The billing address may have changed after checkout.
+
+Expected frontend checks
+------------------------
+- Correctly render English text with punctuation-heavy content.
+- Preserve indentation in address blocks.
+- Detect fake PII-like values without crashing on punctuation.
+- Avoid horizontal layout breakage on the long token.

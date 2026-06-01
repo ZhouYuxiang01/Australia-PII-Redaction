@@ -418,9 +418,10 @@ The current hybrid OPF + Qwen backend supports the following PII categories:
 | `WORK_EMAIL` |
 | `WORK_PHONE` |
 
-For image and scanned-PDF uploads, the VLM is used to transcribe visible text
-first. PII detection then runs on the transcribed text and supports the same
-PII categories listed above.
+For image and scanned-PDF uploads, the configured Qwen image-text-to-text model
+is used to transcribe visible text first. In the delivered/default deployment,
+this is `Qwen/Qwen3.5-9B-Base` via `WRAPPER_QWEN_VL_MODEL`. PII detection then
+runs on the transcribed text and supports the same PII categories listed above.
 
 ## 9. Deployment Configuration
 
@@ -432,11 +433,11 @@ export WRAPPER_POLICY_CONFIG=/path/to/configs/policies/hybrid-80class-v2-4b.json
 ./scripts/run_server.sh
 ```
 
-Optional Qwen-VL text extraction settings:
+Qwen image/scanned-PDF text extraction settings:
 
 | Environment variable | Description |
 |---|---|
-| `WRAPPER_QWEN_VL_MODEL` | Local model path used for image/scanned PDF transcription. |
+| `WRAPPER_QWEN_VL_MODEL` | Local model path used for image/scanned PDF transcription. Default route: `/home/admin/model/Qwen3.5-9B-Base`. |
 | `WRAPPER_QWEN_VL_DEVICE` | Inference device, for example `cuda` or `cpu`. |
 | `WRAPPER_QWEN_VL_DTYPE` | Model dtype, for example `bfloat16` or `float16`. |
 | `WRAPPER_QWEN_VL_MAX_NEW_TOKENS` | Maximum generated transcription tokens. |

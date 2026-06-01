@@ -53,6 +53,22 @@ BACKEND_NAME="$(python3 -c "import json,sys; print(json.load(open('${WRAPPER_BAC
 LOG_PATH="${LOG_DIR}/pii_redaction_service_${BACKEND_NAME}_${PORT}.log"
 export PYTHONPATH="${REPO_ROOT}:${REPO_ROOT}/../opf-runtime:${PYTHONPATH:-}"
 
+# Fail before the expensive import/model path if the requested port is already
+# bound. Otherwise it is too easy to keep talking to an older server process.
+if command -v ss >/dev/null 2>&1 && ss -ltn "sport = :${PORT}" | tail -n +2 | grep -q .; then
+    {
+      echo "FATAL: port ${PORT} is already in use; server not started."
+      echo "Processes matching uvicorn/redaction:"
+      ps -ef | grep -E 'uvicorn|redaction\.api\.server|run_server' | grep -v grep || true
+      echo ""
+      echo "Use a different port, for example:"
+      echo "  WRAPPER_PORT=8091 ${REPO_ROOT}/scripts/run_server.sh"
+      echo ""
+      echo "Or stop the existing process before starting this service."
+    } | tee -a "${LOG_PATH}"
+    exit 1
+fi
+
 {
   echo "START $(date -Is)"
   echo "BACKEND_CONFIG=${WRAPPER_BACKEND_CONFIG}"
